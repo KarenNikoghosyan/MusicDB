@@ -14,7 +14,6 @@ private let reuseIdentifier = "cell"
 class SearchMusicViewController: UIViewController {
     var tracks: [Track] = []
     var ds = TrackAPIDataSource()
-    var width: CGFloat?
     
     @IBOutlet weak var trackSearchBar: UISearchBar!
     @IBOutlet weak var searchTracksCollectionView: UICollectionView!
@@ -25,19 +24,13 @@ class SearchMusicViewController: UIViewController {
         searchTracksCollectionView.delegate = self
         searchTracksCollectionView.dataSource = self
         
-        if UIDevice.current.orientation.isLandscape {
-            width = searchTracksCollectionView.bounds.width / 6
-        } else {
-            width = searchTracksCollectionView.bounds.width / 3
-        }
-        
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-
-        searchTracksCollectionView.reloadData()
-    }
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        super.viewWillTransition(to: size, with: coordinator)
+//
+//        searchTracksCollectionView.reloadData()
+//    }
 }
 
 extension SearchMusicViewController: UISearchBarDelegate {
@@ -102,10 +95,12 @@ extension SearchMusicViewController: UICollectionViewDelegate, UICollectionViewD
 extension SearchMusicViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if UIDevice.current.orientation.isLandscape{
-            return CGSize(width: width ?? collectionView.bounds.width / 6, height: 160)
-        } else {
-            return CGSize(width: width ?? collectionView.bounds.width / 3, height: 160)
+        if UIScreen.main.bounds.width > UIScreen.main.bounds.height{
+            return CGSize(width: collectionView.bounds.width / 6.0, height: 160)
+        }
+        
+        else {
+            return CGSize(width: collectionView.bounds.width / 3.0, height: 160)
         }
         
     }

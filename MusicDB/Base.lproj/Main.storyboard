@@ -66,7 +66,11 @@
                                                         </imageView>
                                                     </subviews>
                                                     <constraints>
+                                                        <constraint firstItem="jaL-Z6-IN1" firstAttribute="top" secondItem="fra-aQ-ZGl" secondAttribute="bottom" id="C4h-9f-j9p"/>
                                                         <constraint firstItem="fra-aQ-ZGl" firstAttribute="trailing" secondItem="jaL-Z6-IN1" secondAttribute="trailing" id="WgF-qq-uOe"/>
+                                                        <constraint firstAttribute="bottom" secondItem="jaL-Z6-IN1" secondAttribute="bottom" id="Zu3-hT-IVI"/>
+                                                        <constraint firstAttribute="trailing" secondItem="jaL-Z6-IN1" secondAttribute="trailing" id="dRO-sZ-XxJ"/>
+                                                        <constraint firstItem="jaL-Z6-IN1" firstAttribute="leading" secondItem="y1S-F5-u0A" secondAttribute="leading" id="oXM-nH-leD"/>
                                                         <constraint firstItem="fra-aQ-ZGl" firstAttribute="leading" secondItem="jaL-Z6-IN1" secondAttribute="leading" id="teX-gO-13v"/>
                                                     </constraints>
                                                 </stackView>
