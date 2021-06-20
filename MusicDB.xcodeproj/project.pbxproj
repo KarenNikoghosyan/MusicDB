@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		780DE671267F8E3A00D34944 /* DetailsMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780DE670267F8E3A00D34944 /* DetailsMusicViewController.swift */; };
 		788A7578267B9E9800DFE2B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A7577267B9E9800DFE2B0 /* AppDelegate.swift */; };
 		788A757A267B9E9800DFE2B0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A7579267B9E9800DFE2B0 /* SceneDelegate.swift */; };
 		788A757F267B9E9800DFE2B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 788A757D267B9E9800DFE2B0 /* Main.storyboard */; };
 		788A7582267B9E9800DFE2B0 /* MusicDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 788A7580267B9E9800DFE2B0 /* MusicDB.xcdatamodeld */; };
 		788A7584267B9E9900DFE2B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 788A7583267B9E9900DFE2B0 /* Assets.xcassets */; };
 		788A7587267B9E9900DFE2B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 788A7585267B9E9900DFE2B0 /* LaunchScreen.storyboard */; };
-		788A7593267BAD6B00DFE2B0 /* SwipeableTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A7592267BAD6B00DFE2B0 /* SwipeableTabBarController.swift */; };
+		788A7593267BAD6B00DFE2B0 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A7592267BAD6B00DFE2B0 /* TabBarController.swift */; };
 		788A7597267BB2C200DFE2B0 /* HomeMusicCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A7596267BB2C200DFE2B0 /* HomeMusicCollectionViewController.swift */; };
 		788A759B267CAC2100DFE2B0 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A759A267CAC2100DFE2B0 /* Track.swift */; };
 		788A75A1267CBCD100DFE2B0 /* TrackAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A75A0267CBCD100DFE2B0 /* TrackAPIDataSource.swift */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		19F7095CD6768CCD409C8DFD /* Pods-MusicDB.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusicDB.release.xcconfig"; path = "Target Support Files/Pods-MusicDB/Pods-MusicDB.release.xcconfig"; sourceTree = "<group>"; };
 		59EF270114FAAA2DD10857B8 /* Pods-MusicDB.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusicDB.debug.xcconfig"; path = "Target Support Files/Pods-MusicDB/Pods-MusicDB.debug.xcconfig"; sourceTree = "<group>"; };
+		780DE670267F8E3A00D34944 /* DetailsMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsMusicViewController.swift; sourceTree = "<group>"; };
 		788A7574267B9E9800DFE2B0 /* MusicDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		788A7577267B9E9800DFE2B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		788A7579267B9E9800DFE2B0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -33,7 +35,7 @@
 		788A7583267B9E9900DFE2B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		788A7586267B9E9900DFE2B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		788A7588267B9E9900DFE2B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		788A7592267BAD6B00DFE2B0 /* SwipeableTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableTabBarController.swift; sourceTree = "<group>"; };
+		788A7592267BAD6B00DFE2B0 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		788A7596267BB2C200DFE2B0 /* HomeMusicCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMusicCollectionViewController.swift; sourceTree = "<group>"; };
 		788A759A267CAC2100DFE2B0 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		788A75A0267CBCD100DFE2B0 /* TrackAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAPIDataSource.swift; sourceTree = "<group>"; };
@@ -60,6 +62,14 @@
 				9C4311E65E99F27D50977DCE /* Pods_MusicDB.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		780DE66F267F8E1600D34944 /* details */ = {
+			isa = PBXGroup;
+			children = (
+				780DE670267F8E3A00D34944 /* DetailsMusicViewController.swift */,
+			);
+			path = details;
 			sourceTree = "<group>";
 		};
 		788A756B267B9E9800DFE2B0 = {
@@ -111,9 +121,10 @@
 		788A758F267B9F2B00DFE2B0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				780DE66F267F8E1600D34944 /* details */,
 				788A7595267BADE100DFE2B0 /* search */,
 				788A7594267BADDC00DFE2B0 /* home */,
-				788A7592267BAD6B00DFE2B0 /* SwipeableTabBarController.swift */,
+				788A7592267BAD6B00DFE2B0 /* TabBarController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -295,11 +306,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				780DE671267F8E3A00D34944 /* DetailsMusicViewController.swift in Sources */,
 				788A75B0267DF91000DFE2B0 /* SearchTrackCollectionViewCell.swift in Sources */,
 				788A7578267B9E9800DFE2B0 /* AppDelegate.swift in Sources */,
 				788A757A267B9E9800DFE2B0 /* SceneDelegate.swift in Sources */,
 				788A75AA267DED1200DFE2B0 /* SearchMusicViewController.swift in Sources */,
-				788A7593267BAD6B00DFE2B0 /* SwipeableTabBarController.swift in Sources */,
+				788A7593267BAD6B00DFE2B0 /* TabBarController.swift in Sources */,
 				788A7582267B9E9800DFE2B0 /* MusicDB.xcdatamodeld in Sources */,
 				788A75A1267CBCD100DFE2B0 /* TrackAPIDataSource.swift in Sources */,
 				788A7597267BB2C200DFE2B0 /* HomeMusicCollectionViewController.swift in Sources */,

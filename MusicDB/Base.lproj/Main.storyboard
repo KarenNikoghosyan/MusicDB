@@ -9,16 +9,17 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Swipeable Tab Bar Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="lx4-3H-eIY">
             <objects>
-                <tabBarController id="HtQ-Gv-axj" customClass="SwipeableTabBarController" customModule="SwipeableTabBarController" sceneMemberID="viewController">
+                <tabBarController id="HtQ-Gv-axj" customClass="TabBarController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="12b-6r-pRf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
+                        <outlet property="tracksTabBar" destination="12b-6r-pRf" id="bYN-Cq-nmr"/>
                         <segue destination="PdU-oc-jEd" kind="relationship" relationship="viewControllers" id="xc7-lu-sti"/>
                         <segue destination="kS8-rI-kNd" kind="relationship" relationship="viewControllers" id="fwc-IQ-sSH"/>
                     </connections>
@@ -130,11 +131,41 @@
                     <connections>
                         <outlet property="searchTracksCollectionView" destination="BSY-Sw-PYH" id="xdI-gQ-Hrd"/>
                         <outlet property="trackSearchBar" destination="bUc-oZ-3I3" id="oyq-Wa-ly4"/>
+                        <segue destination="U7H-HD-5R9" kind="presentation" identifier="toDetails" id="dBr-ud-96E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g7A-t8-Tym" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="432" y="-11"/>
+        </scene>
+        <!--Details Music View Controller-->
+        <scene sceneID="N6h-qw-vSP">
+            <objects>
+                <viewController id="U7H-HD-5R9" customClass="DetailsMusicViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yG8-RH-lPX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XqL-lN-KxK">
+                                <rect key="frame" x="16" y="16" width="194" height="193"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="15m-T5-NEr"/>
+                        <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="XqL-lN-KxK" firstAttribute="leading" secondItem="15m-T5-NEr" secondAttribute="leading" constant="16" id="FTN-Ug-vRN"/>
+                            <constraint firstItem="15m-T5-NEr" firstAttribute="bottom" secondItem="XqL-lN-KxK" secondAttribute="bottom" constant="599" id="V8f-Gx-SVt"/>
+                            <constraint firstItem="XqL-lN-KxK" firstAttribute="top" secondItem="15m-T5-NEr" secondAttribute="top" constant="16" id="WVk-08-aqd"/>
+                            <constraint firstItem="15m-T5-NEr" firstAttribute="trailing" secondItem="XqL-lN-KxK" secondAttribute="trailing" constant="204" id="eMx-d1-xeo"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="detailsImageView" destination="XqL-lN-KxK" id="uBV-TK-cuW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="js3-BE-A3t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1394.2028985507247" y="330.13392857142856"/>
         </scene>
         <!--Home-->
         <scene sceneID="nnx-d8-db1">
@@ -166,12 +197,18 @@
                         </connections>
                     </collectionView>
                     <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="gqy-jW-7gw"/>
+                    <connections>
+                        <segue destination="U7H-HD-5R9" kind="presentation" id="NqS-Qw-gks"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zBD-61-hwv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="432" y="706"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="dBr-ud-96E"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>

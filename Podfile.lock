@@ -3,6 +3,7 @@ PODS:
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
   - PKHUD (5.3.0)
+  - RAMAnimatedTabBarController (5.2.0)
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
@@ -13,6 +14,7 @@ PODS:
 DEPENDENCIES:
   - NVActivityIndicatorView
   - PKHUD
+  - RAMAnimatedTabBarController
   - SDWebImage
   - SwipeableTabBarController
   - UIScrollView-InfiniteScroll
@@ -22,6 +24,7 @@ SPEC REPOS:
   trunk:
     - NVActivityIndicatorView
     - PKHUD
+    - RAMAnimatedTabBarController
     - SDWebImage
     - SwipeableTabBarController
     - UIScrollView-InfiniteScroll
@@ -30,11 +33,12 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
+  RAMAnimatedTabBarController: 6863a386e7ae2ab227cd60aa73ab8ff56cdacfdd
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SwipeableTabBarController: 3f0cb293ce45bf02bed80190319bcbcb16708e0b
   UIScrollView-InfiniteScroll: 3ef456bcbe759c19f510a383cff96e6647c98c98
   ViewAnimator: a9ceed80266e00fd435ec4fb99b2df64d580d0e4
 
-PODFILE CHECKSUM: 74c8f3b15af419ccb6d7ca4ee4b0b835f03932e8
+PODFILE CHECKSUM: af5889bb6619d05197cc99ef179ec3191e07bddd
 
 COCOAPODS: 1.10.1

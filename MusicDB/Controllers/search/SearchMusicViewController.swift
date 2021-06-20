@@ -109,6 +109,18 @@ extension SearchMusicViewController: UICollectionViewDelegate, UICollectionViewD
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let track = tracks[indexPath.item]
+        performSegue(withIdentifier: "toDetails", sender: track)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let dest = segue.destination as? DetailsMusicViewController,
+              let track = sender as? Track else {return}
+        
+        dest.track = track
+    }
 }
 
 extension SearchMusicViewController: UICollectionViewDelegateFlowLayout {
