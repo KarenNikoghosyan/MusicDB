@@ -11,5 +11,6 @@ target 'MusicDB' do
   pod 'UIScrollView-InfiniteScroll'
   pod 'SwipeableTabBarController'
   pod "ViewAnimator"
+  pod 'NVActivityIndicatorView'
 
 end
