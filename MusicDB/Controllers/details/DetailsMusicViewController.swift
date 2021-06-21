@@ -45,6 +45,8 @@ class DetailsMusicViewController: UIViewController {
         detailsAlbumTitleLabel.text = track.album.title
         
         let duration = Double(track.duration) / 60.0
-        detailsDurationLabel.text = String(format: "%.2f", duration) + " Minutes"
+        let durationString = String(format: "%.2f", duration) + " Minutes"
+        let newDurationString = durationString.replacingOccurrences(of: ".", with: ":")
+        detailsDurationLabel.text = newDurationString
     }
 }
