@@ -18,25 +18,24 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <outlet property="tracksTabBar" destination="12b-6r-pRf" id="bYN-Cq-nmr"/>
-                        <segue destination="PdU-oc-jEd" kind="relationship" relationship="viewControllers" id="xc7-lu-sti"/>
-                        <segue destination="kS8-rI-kNd" kind="relationship" relationship="viewControllers" id="fwc-IQ-sSH"/>
+                        <segue destination="ytK-Cn-2rt" kind="relationship" relationship="viewControllers" id="k20-C7-Uvy"/>
+                        <segue destination="aTY-fp-TzV" kind="relationship" relationship="viewControllers" id="6gX-m4-m3Z"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RXY-e2-u6t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-499" y="330"/>
+            <point key="canvasLocation" x="-539" y="1000"/>
         </scene>
-        <!--Search-->
+        <!--Search Music View Controller-->
         <scene sceneID="fit-Ug-e53">
             <objects>
                 <viewController id="PdU-oc-jEd" customClass="SearchMusicViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nOD-00-jNk">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BSY-Sw-PYH">
-                                <rect key="frame" x="0.0" y="130" width="414" height="766"/>
+                                <rect key="frame" x="0.0" y="51" width="414" height="757"/>
                                 <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lUT-RD-ERF">
                                     <size key="itemSize" width="170" height="160"/>
@@ -90,12 +89,9 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Track" translatesAutoresizingMaskIntoConstraints="NO" id="bUc-oZ-3I3">
-                                <rect key="frame" x="0.0" y="86" width="414" height="44"/>
-                                <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="MYA-W3-g6z"/>
-                                </constraints>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Track" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bUc-oZ-3I3">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="51"/>
+                                <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="0.19523263243494424" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <scopeButtonTitles>
@@ -103,30 +99,21 @@
                                     <string>Title</string>
                                 </scopeButtonTitles>
                             </searchBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOQ-yf-UIY">
-                                <rect key="frame" x="16" y="55" width="80.5" height="27"/>
-                                <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="C4p-P3-Cv8"/>
-                        <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="BSY-Sw-PYH" firstAttribute="trailing" secondItem="C4p-P3-Cv8" secondAttribute="trailing" id="0lr-iq-l3O"/>
-                            <constraint firstItem="bUc-oZ-3I3" firstAttribute="top" secondItem="wOQ-yf-UIY" secondAttribute="bottom" constant="4" id="72D-sG-dQl"/>
-                            <constraint firstItem="wOQ-yf-UIY" firstAttribute="leading" secondItem="C4p-P3-Cv8" secondAttribute="leading" constant="16" id="BRS-5j-FlO"/>
-                            <constraint firstItem="BSY-Sw-PYH" firstAttribute="top" secondItem="bUc-oZ-3I3" secondAttribute="bottom" id="BSb-xt-G9T"/>
-                            <constraint firstItem="C4p-P3-Cv8" firstAttribute="trailing" secondItem="bUc-oZ-3I3" secondAttribute="trailing" id="GWK-u8-tPa"/>
-                            <constraint firstItem="wOQ-yf-UIY" firstAttribute="top" secondItem="C4p-P3-Cv8" secondAttribute="top" constant="11" id="Imq-di-Buj"/>
-                            <constraint firstAttribute="bottom" secondItem="BSY-Sw-PYH" secondAttribute="bottom" id="aT3-IX-7YX"/>
-                            <constraint firstItem="bUc-oZ-3I3" firstAttribute="leading" secondItem="C4p-P3-Cv8" secondAttribute="leading" id="dJN-n1-Fz5"/>
-                            <constraint firstItem="BSY-Sw-PYH" firstAttribute="top" secondItem="bUc-oZ-3I3" secondAttribute="bottom" id="ojp-pW-nq8"/>
-                            <constraint firstItem="BSY-Sw-PYH" firstAttribute="leading" secondItem="C4p-P3-Cv8" secondAttribute="leading" id="uHz-dZ-fnL"/>
-                            <constraint firstItem="C4p-P3-Cv8" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wOQ-yf-UIY" secondAttribute="trailing" symbolic="YES" id="w25-PP-oU4"/>
+                            <constraint firstItem="BSY-Sw-PYH" firstAttribute="leading" secondItem="C4p-P3-Cv8" secondAttribute="leading" id="Icw-vf-hI0"/>
+                            <constraint firstItem="bUc-oZ-3I3" firstAttribute="top" secondItem="C4p-P3-Cv8" secondAttribute="top" id="Lun-XO-9BO"/>
+                            <constraint firstItem="BSY-Sw-PYH" firstAttribute="top" secondItem="bUc-oZ-3I3" secondAttribute="bottom" id="S7P-cs-bnF"/>
+                            <constraint firstItem="BSY-Sw-PYH" firstAttribute="trailing" secondItem="C4p-P3-Cv8" secondAttribute="trailing" id="TcL-Ge-HBT"/>
+                            <constraint firstItem="bUc-oZ-3I3" firstAttribute="leading" secondItem="C4p-P3-Cv8" secondAttribute="leading" id="U8O-8B-APi"/>
+                            <constraint firstItem="C4p-P3-Cv8" firstAttribute="trailing" secondItem="bUc-oZ-3I3" secondAttribute="trailing" id="Xmr-mg-zBw"/>
+                            <constraint firstAttribute="bottom" secondItem="BSY-Sw-PYH" secondAttribute="bottom" id="bne-SE-7T5"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="FCz-iE-7xQ"/>
+                    <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" id="UXX-Ib-6wt"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="searchTracksCollectionView" destination="BSY-Sw-PYH" id="xdI-gQ-Hrd"/>
                         <outlet property="trackSearchBar" destination="bUc-oZ-3I3" id="oyq-Wa-ly4"/>
@@ -135,7 +122,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g7A-t8-Tym" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="432" y="-11"/>
+            <point key="canvasLocation" x="-1465.217391304348" y="2574.7767857142858"/>
         </scene>
         <!--Details Music View Controller-->
         <scene sceneID="N6h-qw-vSP">
@@ -246,14 +233,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="js3-BE-A3t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1394.2028985507247" y="330.13392857142856"/>
+            <point key="canvasLocation" x="-539" y="3360"/>
         </scene>
-        <!--Home-->
+        <!--Home Music Collection View Controller-->
         <scene sceneID="nnx-d8-db1">
             <objects>
                 <collectionViewController id="kS8-rI-kNd" customClass="HomeMusicCollectionViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="gkp-Cg-Kzu">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1WM-Kl-3yh">
@@ -277,14 +264,54 @@
                             <outlet property="delegate" destination="kS8-rI-kNd" id="DhH-h4-PX6"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="gqy-jW-7gw"/>
+                    <navigationItem key="navigationItem" id="2sl-s3-NuD"/>
                     <connections>
                         <segue destination="U7H-HD-5R9" kind="presentation" id="NqS-Qw-gks"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zBD-61-hwv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="432" y="706"/>
+            <point key="canvasLocation" x="-539" y="2575"/>
+        </scene>
+        <!--Home-->
+        <scene sceneID="93v-jd-q18">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aTY-fp-TzV" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="gqy-jW-7gw"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="y75-uX-MMU">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="kS8-rI-kNd" kind="relationship" relationship="rootViewController" id="0tT-MX-VX6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W3K-L2-SEH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-539" y="1821"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="XdU-S4-XYL">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ytK-Cn-2rt" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="qju-QI-7l1"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Eps-B9-XhU">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="PdU-oc-jEd" kind="relationship" relationship="rootViewController" id="ykb-zQ-Qpw"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sFO-Nl-YOc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1465" y="1821"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

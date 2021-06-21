@@ -26,6 +26,8 @@ class SearchMusicViewController: UIViewController {
         searchTracksCollectionView.delegate = self
         searchTracksCollectionView.dataSource = self
         
+        setupNavigationItems()
+        
         loadSearchLabel()
     }
     
@@ -33,6 +35,28 @@ class SearchMusicViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
 
         searchTracksCollectionView.reloadData()
+    }
+    
+    func setupNavigationItems() {
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.layoutIfNeeded()
+        
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+            
+        label.text = "Search"
+        label.font = UIFont.boldSystemFont(ofSize: 34)
+        label.textColor = .white
+        
+        label.textAlignment = .left
+            
+        navigationItem.titleView = label
+            
+        if let navigationBar = navigationController?.navigationBar {
+            label.widthAnchor.constraint(equalTo: navigationBar.widthAnchor, constant: -40).isActive = true
+        }
     }
     
     func loadSearchLabel() {

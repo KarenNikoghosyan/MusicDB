@@ -14,6 +14,8 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupNavigationItems()
+        
         collectionView.collectionViewLayout = createCompositionalLayout()
 
         // Uncomment the following line to preserve selection between presentations
@@ -88,6 +90,12 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     
     }
     */
+    
+    func setupNavigationItems() {
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.layoutIfNeeded()
+    }
 
 }
 
