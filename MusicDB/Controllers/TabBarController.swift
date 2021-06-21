@@ -7,7 +7,7 @@
 
 import UIKit
 import SwipeableTabBarController
-import RAMAnimatedTabBarController
+//import RAMAnimatedTabBarController
 
 class TabBarController: SwipeableTabBarController {
     
@@ -20,9 +20,10 @@ class TabBarController: SwipeableTabBarController {
     }
 }
 
-class CustomTabBarContoller: RAMAnimatedTabBarController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("Test2")
-    }
-}
+//TODO:
+//class CustomTabBarContoller: RAMAnimatedTabBarController {
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        print("Test2")
+//    }
+//}

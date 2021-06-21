@@ -4,54 +4,68 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>PKHUD-PKHUDResources.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
-		<key>PKHUD.xcscheme</key>
+		<key>NVActivityIndicatorView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>Pods-MusicDB.xcscheme</key>
+		<key>PKHUD-PKHUDResources.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>SDWebImage.xcscheme</key>
+		<key>PKHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>Pods-MusicDB.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>SwipeableTabBarController.xcscheme</key>
+		<key>RAMAnimatedTabBarController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
-		<key>UIScrollView-InfiniteScroll.xcscheme</key>
+		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
-		<key>ViewAnimator.xcscheme</key>
+		<key>SwipeableTabBarController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>6</integer>
+		</dict>
+		<key>UIScrollView-InfiniteScroll.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>ViewAnimator.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>8</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>

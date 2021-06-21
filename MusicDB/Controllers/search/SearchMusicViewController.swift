@@ -15,6 +15,7 @@ private let reuseIdentifier = "cell"
 class SearchMusicViewController: UIViewController {
     var tracks: [Track] = []
     var ds = TrackAPIDataSource()
+    let searchLabel = UILabel()
     
     @IBOutlet weak var trackSearchBar: UISearchBar!
     @IBOutlet weak var searchTracksCollectionView: UICollectionView!
@@ -25,15 +26,29 @@ class SearchMusicViewController: UIViewController {
         searchTracksCollectionView.delegate = self
         searchTracksCollectionView.dataSource = self
         
-        trackSearchBar.searchTextField.textColor = .white
-        trackSearchBar.searchTextField.leftView?.tintColor = .white
-        
+        loadSearchLabel()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
         searchTracksCollectionView.reloadData()
+    }
+    
+    func loadSearchLabel() {
+        trackSearchBar.searchTextField.textColor = .white
+        trackSearchBar.searchTextField.leftView?.tintColor = .white
+        
+        searchLabel.text = "Search for artists, songs and more."
+        searchLabel.textColor = .white
+        
+        view.addSubview(searchLabel)
+        searchLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            searchLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            searchLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            searchLabel.heightAnchor.constraint(equalToConstant: 40)
+        ])
     }
 }
 
@@ -50,12 +65,14 @@ extension SearchMusicViewController: UISearchBarDelegate {
             activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         activityIndicatorView.startAnimating()
+        self.searchLabel.isHidden = true
         
         tracks.removeAll()
         searchTracksCollectionView.reloadData()
         
         if searchText.count <= 0 {
             activityIndicatorView.stopAnimating()
+            searchLabel.isHidden = false
             return
         }
         
@@ -70,6 +87,7 @@ extension SearchMusicViewController: UISearchBarDelegate {
                     
                     self.searchTracksCollectionView.animate(animations: [animation])
                     activityIndicatorView.stopAnimating()
+                    
                 } else if let error = error {
                     //TODO: Popup message
                     print(error)
@@ -120,6 +138,24 @@ extension SearchMusicViewController: UICollectionViewDelegate, UICollectionViewD
               let track = sender as? Track else {return}
         
         dest.track = track
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.4) {
+            if let cell = collectionView.cellForItem(at: indexPath) as? SearchTrackCollectionViewCell {
+                cell.searchTrackImageView.transform = .init(scaleX: 0.98, y: 0.98)
+                cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.4) {
+            if let cell = collectionView.cellForItem(at: indexPath) as? SearchTrackCollectionViewCell {
+                cell.searchTrackImageView.transform = .identity
+                cell.contentView.backgroundColor = .clear
+            }
+        }
     }
 }
 
