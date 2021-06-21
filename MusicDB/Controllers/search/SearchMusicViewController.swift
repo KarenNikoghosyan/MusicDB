@@ -145,6 +145,7 @@ extension SearchMusicViewController: UICollectionViewDelegate, UICollectionViewD
                 cell.searchTrackImageView.image = #imageLiteral(resourceName: "No_Photo_Available")
             }
         
+            cell.searchTrackImageView.tintColor = .white
             cell.searchTrackImageView.layer.cornerRadius = 10
             cell.searchTrackTitle.text = track.title_short
         }
