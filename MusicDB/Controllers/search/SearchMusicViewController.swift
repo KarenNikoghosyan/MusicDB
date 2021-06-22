@@ -22,6 +22,8 @@ class SearchMusicViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        hideKeyboardWhenTapped()
+        
         trackSearchBar.delegate = self
         searchTracksCollectionView.delegate = self
         searchTracksCollectionView.dataSource = self
