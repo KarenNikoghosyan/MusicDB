@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import SafariServices
 
 class DetailsMusicViewController: UIViewController {
     var track: Track?
@@ -24,6 +25,14 @@ class DetailsMusicViewController: UIViewController {
     
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var detailsDurationLabel: UILabel!
+    
+    @IBAction func goToWebsiteTapped(_ sender: UIButton) {
+        guard let track = track,
+              let url = URL(string: "\(track.link)") else {return}
+        
+        let sfVC = SFSafariViewController(url: url)
+        present(sfVC, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

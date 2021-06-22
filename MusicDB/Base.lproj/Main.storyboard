@@ -187,6 +187,16 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wFv-Wf-muY">
+                                <rect key="frame" x="184" y="148" width="144" height="32"/>
+                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="15"/>
+                                <state key="normal" title="OPEN IN WEBSITE">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="goToWebsiteTapped:" destination="U7H-HD-5R9" eventType="touchUpInside" id="LNz-a4-Pje"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="15m-T5-NEr"/>
                         <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
@@ -206,6 +216,7 @@
                             <constraint firstItem="15m-T5-NEr" firstAttribute="trailing" secondItem="WC3-Dt-a8g" secondAttribute="trailing" constant="6" id="Lxx-Ih-kaG"/>
                             <constraint firstItem="WC3-Dt-a8g" firstAttribute="bottom" secondItem="tbV-9g-9Ye" secondAttribute="bottom" id="Qon-CC-wpc"/>
                             <constraint firstItem="15m-T5-NEr" firstAttribute="trailing" secondItem="Mfw-eD-dyq" secondAttribute="trailing" constant="6" id="TiX-Al-zpD"/>
+                            <constraint firstItem="wFv-Wf-muY" firstAttribute="leading" secondItem="XqL-lN-KxK" secondAttribute="trailing" constant="8" id="UXC-ot-cD5"/>
                             <constraint firstItem="7Xf-x2-P7p" firstAttribute="leading" secondItem="Da2-6A-KUq" secondAttribute="trailing" constant="4" id="Vxb-aG-K56"/>
                             <constraint firstItem="Cbr-ub-r2y" firstAttribute="bottom" secondItem="5OX-sI-an2" secondAttribute="bottom" id="ZzN-2h-FZP"/>
                             <constraint firstItem="WC3-Dt-a8g" firstAttribute="leading" secondItem="tbV-9g-9Ye" secondAttribute="trailing" constant="4" id="eUT-TJ-aB5"/>
@@ -215,6 +226,7 @@
                             <constraint firstItem="7Xf-x2-P7p" firstAttribute="top" secondItem="Da2-6A-KUq" secondAttribute="top" id="roL-ku-XmK"/>
                             <constraint firstItem="tbV-9g-9Ye" firstAttribute="leading" secondItem="XqL-lN-KxK" secondAttribute="trailing" constant="8" id="s3s-o7-9zs"/>
                             <constraint firstItem="GxC-Xt-1vC" firstAttribute="leading" secondItem="XqL-lN-KxK" secondAttribute="trailing" constant="8" id="sdd-wA-yPG"/>
+                            <constraint firstItem="wFv-Wf-muY" firstAttribute="top" secondItem="GxC-Xt-1vC" secondAttribute="bottom" constant="12" id="vXg-Oj-ewN"/>
                             <constraint firstItem="Cbr-ub-r2y" firstAttribute="top" secondItem="5OX-sI-an2" secondAttribute="top" id="xhI-Bo-Hl9"/>
                             <constraint firstItem="15m-T5-NEr" firstAttribute="trailing" secondItem="7Xf-x2-P7p" secondAttribute="trailing" constant="6" id="z5x-43-gAt"/>
                         </constraints>
