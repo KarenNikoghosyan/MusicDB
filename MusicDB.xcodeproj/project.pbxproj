@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7809D1572682142C006F0ADD /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7809D1562682142C006F0ADD /* UIViewController+Extensions.swift */; };
 		780DE671267F8E3A00D34944 /* DetailsMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780DE670267F8E3A00D34944 /* DetailsMusicViewController.swift */; };
+		7876D20C26828D2A009D0669 /* MediaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7876D20B26828D2A009D0669 /* MediaPlayer.swift */; };
 		788A7578267B9E9800DFE2B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A7577267B9E9800DFE2B0 /* AppDelegate.swift */; };
 		788A757A267B9E9800DFE2B0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A7579267B9E9800DFE2B0 /* SceneDelegate.swift */; };
 		788A757F267B9E9800DFE2B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 788A757D267B9E9800DFE2B0 /* Main.storyboard */; };
@@ -29,6 +30,7 @@
 		59EF270114FAAA2DD10857B8 /* Pods-MusicDB.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusicDB.debug.xcconfig"; path = "Target Support Files/Pods-MusicDB/Pods-MusicDB.debug.xcconfig"; sourceTree = "<group>"; };
 		7809D1562682142C006F0ADD /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		780DE670267F8E3A00D34944 /* DetailsMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsMusicViewController.swift; sourceTree = "<group>"; };
+		7876D20B26828D2A009D0669 /* MediaPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayer.swift; sourceTree = "<group>"; };
 		788A7574267B9E9800DFE2B0 /* MusicDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		788A7577267B9E9800DFE2B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		788A7579267B9E9800DFE2B0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,7 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				78EA417E267F504B009828DD /* Extensions */,
-				788A7591267B9F3D00DFE2B0 /* Storyboards */,
 				788A7590267B9F3400DFE2B0 /* Models */,
 				788A758F267B9F2B00DFE2B0 /* Controllers */,
 				788A758E267B9F2400DFE2B0 /* Views */,
@@ -136,15 +137,9 @@
 			children = (
 				788A759A267CAC2100DFE2B0 /* Track.swift */,
 				788A75A0267CBCD100DFE2B0 /* TrackAPIDataSource.swift */,
+				7876D20B26828D2A009D0669 /* MediaPlayer.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		788A7591267B9F3D00DFE2B0 /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Storyboards;
 			sourceTree = "<group>";
 		};
 		788A7594267BADDC00DFE2B0 /* home */ = {
@@ -315,6 +310,7 @@
 				788A757A267B9E9800DFE2B0 /* SceneDelegate.swift in Sources */,
 				788A75AA267DED1200DFE2B0 /* SearchMusicViewController.swift in Sources */,
 				788A7593267BAD6B00DFE2B0 /* TabBarController.swift in Sources */,
+				7876D20C26828D2A009D0669 /* MediaPlayer.swift in Sources */,
 				7809D1572682142C006F0ADD /* UIViewController+Extensions.swift in Sources */,
 				788A7582267B9E9800DFE2B0 /* MusicDB.xcdatamodeld in Sources */,
 				788A75A1267CBCD100DFE2B0 /* TrackAPIDataSource.swift in Sources */,

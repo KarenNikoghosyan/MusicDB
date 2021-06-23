@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -197,6 +198,28 @@
                                     <action selector="goToWebsiteTapped:" destination="U7H-HD-5R9" eventType="touchUpInside" id="LNz-a4-Pje"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="06l-eu-bjH" customClass="LoadyButton" customModule="Loady">
+                                <rect key="frame" x="16" y="188" width="160" height="50"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="afn-T6-wY4"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <state key="normal" title="Preview" image="play.circle" catalog="system">
+                                    <color key="titleColor" systemColor="groupTableViewBackgroundColor"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundFillColor">
+                                        <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="loadingColor">
+                                        <color key="value" systemColor="systemGreenColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="15m-T5-NEr"/>
                         <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
@@ -207,18 +230,23 @@
                             <constraint firstItem="XqL-lN-KxK" firstAttribute="leading" secondItem="15m-T5-NEr" secondAttribute="leading" constant="16" id="4Dk-p6-8XI"/>
                             <constraint firstItem="5OX-sI-an2" firstAttribute="leading" secondItem="XqL-lN-KxK" secondAttribute="trailing" constant="8" id="5fB-n4-kjR"/>
                             <constraint firstItem="XqL-lN-KxK" firstAttribute="top" secondItem="15m-T5-NEr" secondAttribute="top" constant="16" id="7IB-eL-HDE"/>
+                            <constraint firstItem="06l-eu-bjH" firstAttribute="leading" secondItem="XqL-lN-KxK" secondAttribute="leading" id="8uE-kb-ice"/>
                             <constraint firstItem="GxC-Xt-1vC" firstAttribute="top" secondItem="tbV-9g-9Ye" secondAttribute="bottom" constant="12" id="9Bp-uw-6bX"/>
                             <constraint firstItem="Mfw-eD-dyq" firstAttribute="bottom" secondItem="GxC-Xt-1vC" secondAttribute="bottom" id="DgS-rb-ryQ"/>
+                            <constraint firstItem="06l-eu-bjH" firstAttribute="trailing" secondItem="XqL-lN-KxK" secondAttribute="trailing" id="EUc-P4-2OG"/>
                             <constraint firstItem="Da2-6A-KUq" firstAttribute="top" secondItem="XqL-lN-KxK" secondAttribute="top" id="Heq-d7-Lo6"/>
                             <constraint firstItem="Da2-6A-KUq" firstAttribute="leading" secondItem="XqL-lN-KxK" secondAttribute="trailing" constant="8" id="Hi8-6F-Iew"/>
                             <constraint firstItem="tbV-9g-9Ye" firstAttribute="top" secondItem="5OX-sI-an2" secondAttribute="bottom" constant="12" id="HiK-VK-tOb"/>
                             <constraint firstItem="Mfw-eD-dyq" firstAttribute="top" secondItem="GxC-Xt-1vC" secondAttribute="top" id="It8-9j-bsp"/>
+                            <constraint firstItem="15m-T5-NEr" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wFv-Wf-muY" secondAttribute="trailing" symbolic="YES" id="KjG-7u-TXb"/>
                             <constraint firstItem="15m-T5-NEr" firstAttribute="trailing" secondItem="WC3-Dt-a8g" secondAttribute="trailing" constant="6" id="Lxx-Ih-kaG"/>
                             <constraint firstItem="WC3-Dt-a8g" firstAttribute="bottom" secondItem="tbV-9g-9Ye" secondAttribute="bottom" id="Qon-CC-wpc"/>
                             <constraint firstItem="15m-T5-NEr" firstAttribute="trailing" secondItem="Mfw-eD-dyq" secondAttribute="trailing" constant="6" id="TiX-Al-zpD"/>
                             <constraint firstItem="wFv-Wf-muY" firstAttribute="leading" secondItem="XqL-lN-KxK" secondAttribute="trailing" constant="8" id="UXC-ot-cD5"/>
                             <constraint firstItem="7Xf-x2-P7p" firstAttribute="leading" secondItem="Da2-6A-KUq" secondAttribute="trailing" constant="4" id="Vxb-aG-K56"/>
+                            <constraint firstItem="06l-eu-bjH" firstAttribute="leading" secondItem="15m-T5-NEr" secondAttribute="leading" constant="16" id="WTY-3L-ffE"/>
                             <constraint firstItem="Cbr-ub-r2y" firstAttribute="bottom" secondItem="5OX-sI-an2" secondAttribute="bottom" id="ZzN-2h-FZP"/>
+                            <constraint firstItem="06l-eu-bjH" firstAttribute="top" secondItem="XqL-lN-KxK" secondAttribute="bottom" constant="12" id="cCE-tN-5wf"/>
                             <constraint firstItem="WC3-Dt-a8g" firstAttribute="leading" secondItem="tbV-9g-9Ye" secondAttribute="trailing" constant="4" id="eUT-TJ-aB5"/>
                             <constraint firstItem="15m-T5-NEr" firstAttribute="trailing" secondItem="Cbr-ub-r2y" secondAttribute="trailing" constant="6" id="fbO-6b-JKm"/>
                             <constraint firstItem="5OX-sI-an2" firstAttribute="top" secondItem="Da2-6A-KUq" secondAttribute="bottom" constant="12" id="oEO-Zb-ytA"/>
@@ -240,6 +268,8 @@
                         <outlet property="detailsImageView" destination="XqL-lN-KxK" id="uBV-TK-cuW"/>
                         <outlet property="detailsTitleLabel" destination="7Xf-x2-P7p" id="JYr-zA-KJD"/>
                         <outlet property="durationLabel" destination="GxC-Xt-1vC" id="4zj-Pe-z83"/>
+                        <outlet property="goToWebsiteButton" destination="wFv-Wf-muY" id="chO-YY-0mV"/>
+                        <outlet property="previewButton" destination="06l-eu-bjH" id="whw-HX-KTg"/>
                         <outlet property="titleLabel" destination="Da2-6A-KUq" id="diR-NJ-E0w"/>
                     </connections>
                 </viewController>
@@ -332,5 +362,15 @@
     <resources>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+        <image name="play.circle" catalog="system" width="128" height="121"/>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

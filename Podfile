@@ -12,5 +12,6 @@ target 'MusicDB' do
   pod 'SwipeableTabBarController'
   pod "ViewAnimator"
   pod 'NVActivityIndicatorView'
+  pod 'loady'
 
 end

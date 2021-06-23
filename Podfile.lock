@@ -1,4 +1,5 @@
 PODS:
+  - loady (1.0.7)
   - NVActivityIndicatorView (5.1.1):
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
@@ -11,6 +12,7 @@ PODS:
   - ViewAnimator (3.1.0)
 
 DEPENDENCIES:
+  - loady
   - NVActivityIndicatorView
   - PKHUD
   - SDWebImage
@@ -20,6 +22,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - loady
     - NVActivityIndicatorView
     - PKHUD
     - SDWebImage
@@ -28,6 +31,7 @@ SPEC REPOS:
     - ViewAnimator
 
 SPEC CHECKSUMS:
+  loady: f2acbcbd53bdeb55425e478304da2f7ff3ec706e
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
@@ -35,6 +39,6 @@ SPEC CHECKSUMS:
   UIScrollView-InfiniteScroll: 3ef456bcbe759c19f510a383cff96e6647c98c98
   ViewAnimator: a9ceed80266e00fd435ec4fb99b2df64d580d0e4
 
-PODFILE CHECKSUM: 74c8f3b15af419ccb6d7ca4ee4b0b835f03932e8
+PODFILE CHECKSUM: 864dbdbae6636c057b66deced55e6ed97be0d631
 
 COCOAPODS: 1.10.1
