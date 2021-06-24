@@ -16,12 +16,13 @@ class DetailsMusicCollectionViewCell: UICollectionViewCell {
     func populate(track: Track) {
         detailsTrackLabel.text = track.title_short
         
-        guard let url = URL(string: "\(track.album?.cover ?? "")") else {
-            print("Test")
+        guard let url = URL(string: "\(track.album.cover)") else {
+            detailsTrackImageView.tintColor = .white
             detailsTrackImageView.layer.cornerRadius = 20
             detailsTrackImageView.image = #imageLiteral(resourceName: "No_Photo_Available")
             return
         }
+        detailsTrackImageView.tintColor = .white
         detailsTrackImageView.layer.cornerRadius = 20
         detailsTrackImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
     }

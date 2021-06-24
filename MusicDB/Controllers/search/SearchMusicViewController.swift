@@ -139,7 +139,7 @@ extension SearchMusicViewController: UICollectionViewDelegate, UICollectionViewD
         if let cell = cell as? SearchTrackCollectionViewCell {
             let track = tracks[indexPath.item]
             
-            if let url = URL(string: "\(track.album?.cover ?? "")") {
+            if let url = URL(string: "\(track.album.cover)") {
                 cell.searchTrackImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
             }
             else {

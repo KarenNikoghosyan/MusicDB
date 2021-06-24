@@ -36,7 +36,6 @@ struct TrackAPIDataSource {
             callback(nil, .invalidURL(url: urlComponents))
             return
         }
-        print(url)
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             

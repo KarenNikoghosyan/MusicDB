@@ -28,7 +28,7 @@ struct Track: Codable {
     let md5_image: String
     let position: Int?
     let artist: Artist
-    let album: Album?
+    let album: Album
     let type: String
 }
 
