@@ -104,7 +104,7 @@ extension SearchMusicViewController: UISearchBarDelegate {
         
         let animation = AnimationType.from(direction: .top, offset: 30.0)
         
-            ds.fetchTrucks(from: .search, with: ["q":searchText]) {[weak self] tracks, error in
+        ds.fetchTrucks(from: .search, id: nil, path: nil, with: ["q":searchText]) {[weak self] tracks, error in
                 if let tracks = tracks {
                     guard let self = self else {return}
                     
@@ -139,7 +139,7 @@ extension SearchMusicViewController: UICollectionViewDelegate, UICollectionViewD
         if let cell = cell as? SearchTrackCollectionViewCell {
             let track = tracks[indexPath.item]
             
-            if let url = URL(string: "\(track.album.cover)") {
+            if let url = URL(string: "\(track.album?.cover ?? "")") {
                 cell.searchTrackImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
             }
             else {

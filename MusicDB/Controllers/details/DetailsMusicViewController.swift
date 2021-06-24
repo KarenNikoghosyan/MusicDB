@@ -12,6 +12,13 @@ import Loady
 
 class DetailsMusicViewController: UIViewController {
     var track: Track?
+    var tracks: [Track] = []
+    var album: [Track] = []
+    var ds = TrackAPIDataSource()
+    
+    @IBOutlet weak var artistCollectionView: UICollectionView!
+    @IBOutlet weak var albumCollectionView: UICollectionView!
+    
     
     @IBOutlet weak var detailsImageView: UIImageView!
     
@@ -36,7 +43,7 @@ class DetailsMusicViewController: UIViewController {
         }
         
         guard let track = track,
-              let url = URL(string: "\(track.link)") else {return}
+              let url = URL(string: "\(track.link ?? "Can't load the link")") else {return}
         
         let sfVC = SFSafariViewController(url: url)
         present(sfVC, animated: true)
@@ -46,12 +53,24 @@ class DetailsMusicViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        artistCollectionView.delegate = self
+        artistCollectionView.dataSource = self
+        
+        albumCollectionView.delegate = self
+        albumCollectionView.dataSource = self
+        
+        let nib = UINib(nibName: "DetailsMusicCollectionViewCell", bundle: .main)
+        artistCollectionView.register(nib, forCellWithReuseIdentifier: "cellArtist")
+        albumCollectionView.register(nib, forCellWithReuseIdentifier: "cellAlbum")
+     
+        fetchTracks()
+        
         self.previewButton.addTarget(self, action: #selector(animateButton(_:)), for: .touchUpInside)
         
         self.previewButton.setAnimation(LoadyAnimationType.android())
         
         guard let track = track,
-              let url = URL(string: "\(track.album.cover_medium ?? "")") else {
+              let url = URL(string: "\(track.album?.cover_medium ?? "")") else {
             detailsImageView.tintColor = .white
             detailsImageView.image = #imageLiteral(resourceName: "No_Photo_Available")
             detailsImageView.layer.cornerRadius = 20
@@ -64,7 +83,7 @@ class DetailsMusicViewController: UIViewController {
         
         detailsTitleLabel.text = track.title_short
         detailsArtistNameLabel.text = track.artist.name
-        detailsAlbumTitleLabel.text = track.album.title
+        detailsAlbumTitleLabel.text = track.album?.title
         
         let duration = Double(track.duration) / 60.0
         let durationString = String(format: "%.2f", duration) + " Minutes"
@@ -78,6 +97,7 @@ class DetailsMusicViewController: UIViewController {
         if isBeingDismissed {
             MediaPlayer.shared.stopAudio()
             previewButton.stopLoading()
+            previewButton.setImage(UIImage(systemName: "play.circle"), for: .normal)
         }
     }
     
@@ -96,4 +116,62 @@ class DetailsMusicViewController: UIViewController {
             MediaPlayer.shared.loadAudio(url: url)
         }
     }
+    
+    func fetchTracks() {
+        ds.fetchTrucks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":100]) {[weak self] tracks, error in
+            if let tracks = tracks {
+                self?.tracks = tracks
+                self?.artistCollectionView.reloadData()
+            } else if let error = error {
+                //TODO: Dialog
+                print(error)
+            }
+        }
+        ds.fetchTrucks(from: .album, id: track?.album?.id, path: "/tracks", with: ["limit":100]) {[weak self] tracks, error in
+            if let album = tracks {
+                self?.album = album
+                self?.albumCollectionView.reloadData()
+            } else if let error = error {
+                //TODO: Dialog
+                print(error)
+            }
+        }
+    }
+}
+
+extension DetailsMusicViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == self.artistCollectionView {
+            return tracks.count
+        }
+        return album.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == self.artistCollectionView {
+            let cellA = collectionView.dequeueReusableCell(withReuseIdentifier: "cellArtist", for: indexPath)
+            let track = tracks[indexPath.item]
+            
+            if let cellA = cellA as? DetailsMusicCollectionViewCell {
+                cellA.populate(track: track)
+            }
+            return cellA
+        }
+        
+        else {
+            let cellB = collectionView.dequeueReusableCell(withReuseIdentifier: "cellAlbum", for: indexPath)
+            let track = album[indexPath.item]
+            
+            if let cellB = cellB as? DetailsMusicCollectionViewCell {
+                cellB.populate(track: track)
+            }
+            return cellB
+        }
+    }
+    
 }

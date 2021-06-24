@@ -12,11 +12,18 @@ struct TrackAPIDataSource {
     
     enum EndPoint: String {
         case search = "/search"
+        case artist = "/artist"
+        case album = "/album"
     }
     
-    func fetchTrucks(from endpoint: EndPoint, with params: [String:Any], callback: @escaping TrackDSCallback) {
+    func fetchTrucks(from endpoint: EndPoint, id: Int?, path: String? ,with params: [String:Any], callback: @escaping TrackDSCallback) {
         var urlComponents = URLComponents(string: TrackAPIDataSource.baseURL)
-        urlComponents?.path = endpoint.rawValue
+        
+        if id == nil {
+            urlComponents?.path = endpoint.rawValue
+        } else {
+            urlComponents?.path = endpoint.rawValue + "/\(id ?? 0)\(path ?? "No path found")"
+        }
         
         let params = params
         var queryItems: [URLQueryItem] = []
@@ -29,6 +36,7 @@ struct TrackAPIDataSource {
             callback(nil, .invalidURL(url: urlComponents))
             return
         }
+        print(url)
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             

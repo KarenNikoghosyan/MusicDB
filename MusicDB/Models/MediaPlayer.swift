@@ -6,23 +6,23 @@
 //
 
 import AVFoundation
-var player: AVAudioPlayer?
 
 class MediaPlayer {
+    var player: AVAudioPlayer?
     
     public static let shared = MediaPlayer()
     
     func loadAudio(url: URL) {
 
-        DispatchQueue.main.async {
+        DispatchQueue.main.async {[weak self] in
             do {
                 let data = try Data(contentsOf: url)
-                player = try AVAudioPlayer(data: data)
+                self?.player = try AVAudioPlayer(data: data)
             } catch {
                 //TODO: Popup
                 print(error)
             }
-            if let player = player {
+            if let player = self?.player {
                 player.prepareToPlay()
                 player.volume = 1.0
                 player.play()

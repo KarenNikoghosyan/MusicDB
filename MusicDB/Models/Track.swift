@@ -18,7 +18,7 @@ struct Track: Codable {
     let title: String
     let title_short: String
     let title_version: String?
-    let link: String
+    let link: String?
     let duration: Int
     let rank: Int
     let explicit_lyrics: Bool
@@ -28,19 +28,19 @@ struct Track: Codable {
     let md5_image: String
     let position: Int?
     let artist: Artist
-    let album: Album
+    let album: Album?
     let type: String
 }
 
 struct Artist: Codable {
     let id: Int
     let name: String
-    let link: String
-    let picture: String
-    let picture_small: String
-    let picture_medium: String
-    let picture_big: String
-    let picture_xl: String
+    let link: String?
+    let picture: String?
+    let picture_small: String?
+    let picture_medium: String?
+    let picture_big: String?
+    let picture_xl: String?
     let radio: Bool?
     let tracklist: String
     let type: String
