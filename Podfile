@@ -13,5 +13,6 @@ target 'MusicDB' do
   pod "ViewAnimator"
   pod 'NVActivityIndicatorView'
   pod 'loady'
+  pod 'WCLShineButton'
 
 end

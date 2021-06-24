@@ -10,6 +10,7 @@ PODS:
   - SwipeableTabBarController (3.4.1)
   - UIScrollView-InfiniteScroll (1.1.0)
   - ViewAnimator (3.1.0)
+  - WCLShineButton (1.0.8)
 
 DEPENDENCIES:
   - loady
@@ -19,6 +20,7 @@ DEPENDENCIES:
   - SwipeableTabBarController
   - UIScrollView-InfiniteScroll
   - ViewAnimator
+  - WCLShineButton
 
 SPEC REPOS:
   trunk:
@@ -29,6 +31,7 @@ SPEC REPOS:
     - SwipeableTabBarController
     - UIScrollView-InfiniteScroll
     - ViewAnimator
+    - WCLShineButton
 
 SPEC CHECKSUMS:
   loady: f2acbcbd53bdeb55425e478304da2f7ff3ec706e
@@ -38,7 +41,8 @@ SPEC CHECKSUMS:
   SwipeableTabBarController: 3f0cb293ce45bf02bed80190319bcbcb16708e0b
   UIScrollView-InfiniteScroll: 3ef456bcbe759c19f510a383cff96e6647c98c98
   ViewAnimator: a9ceed80266e00fd435ec4fb99b2df64d580d0e4
+  WCLShineButton: 315ee9b0024b1cc56dba34fb6a8878937eb8d0b1
 
-PODFILE CHECKSUM: 864dbdbae6636c057b66deced55e6ed97be0d631
+PODFILE CHECKSUM: 4913da3c224c93b391042c7580278041ce8d114b
 
 COCOAPODS: 1.10.1

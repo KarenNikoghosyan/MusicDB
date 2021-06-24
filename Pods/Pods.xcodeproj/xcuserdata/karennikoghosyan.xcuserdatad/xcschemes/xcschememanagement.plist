@@ -60,6 +60,13 @@
 			<key>orderHint</key>
 			<integer>8</integer>
 		</dict>
+		<key>WCLShineButton.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 		<key>loady.xcscheme</key>
 		<dict>
 			<key>isShown</key>

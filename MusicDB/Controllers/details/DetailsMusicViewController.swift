@@ -9,6 +9,8 @@ import UIKit
 import SDWebImage
 import SafariServices
 import Loady
+import ViewAnimator
+import WCLShineButton
 
 class DetailsMusicViewController: UIViewController {
     var track: Track?
@@ -44,15 +46,18 @@ class DetailsMusicViewController: UIViewController {
         
         let sfVC = SFSafariViewController(url: url)
         present(sfVC, animated: true)
+        stopAudio()
     }
     
     @IBOutlet weak var previewButton: LoadyButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let notifactionCenter = NotificationCenter.default
+        notifactionCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        
         artistCollectionView.delegate = self
         artistCollectionView.dataSource = self
-        
         
         let nib = UINib(nibName: "DetailsMusicCollectionViewCell", bundle: .main)
         artistCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
@@ -89,18 +94,14 @@ class DetailsMusicViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         if isBeingDismissed {
-            MediaPlayer.shared.stopAudio()
-            previewButton.stopLoading()
-            previewButton.setImage(UIImage(systemName: "play.circle"), for: .normal)
+            stopAudio()
         }
     }
     
     @IBAction func animateButton(_ sender: UIButton) {
         if let button = sender as? LoadyButton {
             if button.loadingIsShowing() {
-                button.stopLoading()
-                button.setImage(UIImage(systemName: "play.circle"), for: .normal)
-                MediaPlayer.shared.stopAudio()
+                stopAudio()
                 return
             }
             button.startLoading()
@@ -108,19 +109,37 @@ class DetailsMusicViewController: UIViewController {
             guard let str = track?.preview,
                   let url = URL(string: str) else {return}
             MediaPlayer.shared.loadAudio(url: url)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 30) {[weak self] in
+                self?.stopAudio()
+            }
         }
     }
     
+    func stopAudio() {
+        MediaPlayer.shared.stopAudio()
+        previewButton.stopLoading()
+        previewButton.setImage(UIImage(systemName: "play.circle"), for: .normal)
+    }
+    
     func fetchTracks() {
+        let animation = AnimationType.from(direction: .right, offset: 30.0)
+        
         ds.fetchTrucks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":100]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.tracks = tracks
                 self?.artistCollectionView.reloadData()
+                
+                self?.artistCollectionView.animate(animations: [animation])
             } else if let error = error {
                 //TODO: Dialog
                 print(error)
             }
         }
+    }
+    
+    @objc func appMovedToBackground() {
+        stopAudio()
     }
 }
 
@@ -161,3 +180,4 @@ extension DetailsMusicViewController: UICollectionViewDelegate, UICollectionView
 //        return 0
 //    }
 //}
+

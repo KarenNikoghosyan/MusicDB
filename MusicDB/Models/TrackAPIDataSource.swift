@@ -75,7 +75,6 @@ struct TrackAPIDataSource {
             
         }.resume()
     }
-    
 }
 
 typealias TrackDSCallback = ([Track]?, _ error: TrackAPIDataSourceError?)->Void
