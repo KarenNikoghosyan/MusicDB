@@ -10,11 +10,8 @@ import SDWebImage
 import ViewAnimator
 import NVActivityIndicatorView
 
-private let reuseIdentifier = "cell"
-
-class SearchMusicViewController: UIViewController {
-    var tracks: [Track] = []
-    var ds = TrackAPIDataSource()
+class SearchMusicViewController: BaseViewController {
+   
     let searchLabel = UILabel()
     
     @IBOutlet weak var trackSearchBar: UISearchBar!
@@ -27,6 +24,9 @@ class SearchMusicViewController: UIViewController {
         trackSearchBar.delegate = self
         searchTracksCollectionView.delegate = self
         searchTracksCollectionView.dataSource = self
+        
+        let nib = UINib(nibName: "DetailsMusicCollectionViewCell", bundle: .main)
+        searchTracksCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
         
         setupNavigationItems()
         
@@ -126,39 +126,6 @@ extension SearchMusicViewController: UISearchBarDelegate {
                 }
             }
     }
-}
-
-extension SearchMusicViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tracks.count
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        
-        if let cell = cell as? SearchTrackCollectionViewCell {
-            let track = tracks[indexPath.item]
-            
-            if let url = URL(string: "\(track.album.cover)") {
-                cell.searchTrackImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
-            }
-            else {
-                cell.searchTrackImageView.layer.cornerRadius = 10
-                cell.searchTrackImageView.image = #imageLiteral(resourceName: "No_Photo_Available")
-            }
-        
-            cell.searchTrackImageView.tintColor = .white
-            cell.searchTrackImageView.layer.cornerRadius = 10
-            cell.searchTrackTitle.text = track.title_short
-        }
-        
-        return cell
-    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let track = tracks[indexPath.item]
@@ -172,45 +139,5 @@ extension SearchMusicViewController: UICollectionViewDelegate, UICollectionViewD
         dest.track = track
     }
     
-    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.4) {
-            if let cell = collectionView.cellForItem(at: indexPath) as? SearchTrackCollectionViewCell {
-                cell.searchTrackImageView.transform = .init(scaleX: 0.98, y: 0.98)
-                cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
-            }
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.4) {
-            if let cell = collectionView.cellForItem(at: indexPath) as? SearchTrackCollectionViewCell {
-                cell.searchTrackImageView.transform = .identity
-                cell.contentView.backgroundColor = .clear
-            }
-        }
-    }
 }
 
-extension SearchMusicViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if UIScreen.main.bounds.width > UIScreen.main.bounds.height{
-            return CGSize(width: collectionView.bounds.width / 6.0, height: 160)
-        } else {
-            return CGSize(width: collectionView.bounds.width / 3.0, height: 160)
-        }
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets.zero
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-}

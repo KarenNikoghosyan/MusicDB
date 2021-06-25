@@ -18,12 +18,15 @@ class DetailsMusicCollectionViewCell: UICollectionViewCell {
         
         guard let url = URL(string: "\(track.album.cover)") else {
             detailsTrackImageView.tintColor = .white
-            detailsTrackImageView.layer.cornerRadius = 20
+            
+            detailsTrackImageView.layer.cornerRadius = 25
             detailsTrackImageView.image = #imageLiteral(resourceName: "No_Photo_Available")
             return
         }
-        detailsTrackImageView.tintColor = .white
-        detailsTrackImageView.layer.cornerRadius = 20
-        detailsTrackImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
+        
+        detailsTrackImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo")) {[weak self] image, error, cacheType, url in
+            self?.detailsTrackImageView.tintColor = .white
+            self?.detailsTrackImageView.layer.cornerRadius = 25
+        }
     }
 }

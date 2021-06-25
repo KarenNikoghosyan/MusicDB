@@ -12,10 +12,8 @@ import Loady
 import ViewAnimator
 import WCLShineButton
 
-class DetailsMusicViewController: UIViewController {
+class DetailsMusicViewController: BaseViewController {
     var track: Track?
-    var tracks: [Track] = []
-    var ds = TrackAPIDataSource()
     
     @IBOutlet weak var artistCollectionView: UICollectionView!
     
@@ -51,8 +49,13 @@ class DetailsMusicViewController: UIViewController {
     
     @IBOutlet weak var previewButton: LoadyButton!
     
+    @IBOutlet weak var likedButton: WCLShineButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        createLikeButton()
+        
         let notifactionCenter = NotificationCenter.default
         notifactionCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         
@@ -72,13 +75,14 @@ class DetailsMusicViewController: UIViewController {
               let url = URL(string: "\(track.album.cover_medium ?? "")") else {
             detailsImageView.tintColor = .white
             detailsImageView.image = #imageLiteral(resourceName: "No_Photo_Available")
-            detailsImageView.layer.cornerRadius = 20
+            detailsImageView.layer.cornerRadius = 25
             return
         }
         
-        detailsImageView.tintColor = .white
-        detailsImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
-        detailsImageView.layer.cornerRadius = 20
+        detailsImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo")) {[weak self] image, error, cacheType, url in
+            self?.detailsImageView.tintColor = .white
+            self?.detailsImageView.layer.cornerRadius = 25
+        }
         
         detailsTitleLabel.text = track.title_short
         detailsArtistNameLabel.text = track.artist.name
@@ -96,6 +100,17 @@ class DetailsMusicViewController: UIViewController {
         if isBeingDismissed {
             stopAudio()
         }
+    }
+    
+    func createLikeButton() {
+        var param = WCLShineParams()
+        param.bigShineColor = UIColor(rgb: (153,152,38))
+        param.smallShineColor = UIColor(rgb: (102,102,102))
+        
+        likedButton.image = .heart
+        
+        likedButton.fillColor = UIColor(rgb: (255,0,0))
+        likedButton.color = UIColor(rgb: (100,100,100))
     }
     
     @IBAction func animateButton(_ sender: UIButton) {
@@ -141,27 +156,6 @@ class DetailsMusicViewController: UIViewController {
     @objc func appMovedToBackground() {
         stopAudio()
     }
-}
-
-extension DetailsMusicViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tracks.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        let track = tracks[indexPath.item]
-            
-        if let cell = cell as? DetailsMusicCollectionViewCell {
-            cell.populate(track: track)
-        }
-        return cell
-    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
      
@@ -174,25 +168,5 @@ extension DetailsMusicViewController: UICollectionViewDelegate, UICollectionView
             detailsVC.track = track
             parentVC?.present(detailsVC, animated: true)
         }
-        
-        
     }
 }
-//
-//extension DetailsMusicViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: 50, height: collectionView.bounds.height / 2)
-//    }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets.zero
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
-//}
-
