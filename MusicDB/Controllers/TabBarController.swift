@@ -28,7 +28,6 @@ class TabBarController: SwipeableTabBarController {
 
         tabBar.tintColor = .yellow
         tabBar.barTintColor = UIColor(red: 80.0/255, green: 80.0/255, blue: 80.0/255, alpha: 1)
-        
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {

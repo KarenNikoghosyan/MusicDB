@@ -6,9 +6,7 @@
 //
 
 import UIKit
-import SDWebImage
 import ViewAnimator
-import NVActivityIndicatorView
 
 class SearchMusicViewController: BaseViewController {
    
@@ -86,16 +84,7 @@ class SearchMusicViewController: BaseViewController {
 extension SearchMusicViewController: UISearchBarDelegate {
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        let activityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .ballPulse, color: .white, padding: 0)
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(activityIndicatorView)
-        NSLayoutConstraint.activate([
-            activityIndicatorView.widthAnchor.constraint(equalToConstant: 40),
-            activityIndicatorView.heightAnchor.constraint(equalToConstant: 40),
-            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        activityIndicatorView.startAnimating()
+        loadActivityIndicator()
         self.searchLabel.isHidden = true
         
         tracks.removeAll()
@@ -117,12 +106,12 @@ extension SearchMusicViewController: UISearchBarDelegate {
                     self.searchTracksCollectionView.reloadData()
                     
                     self.searchTracksCollectionView.animate(animations: [animation])
-                    activityIndicatorView.stopAnimating()
+                    self.activityIndicatorView.stopAnimating()
                     
                 } else if let error = error {
                     //TODO: Popup message
                     print(error)
-                    activityIndicatorView.stopAnimating()
+                    self?.activityIndicatorView.stopAnimating()
                 }
             }
     }

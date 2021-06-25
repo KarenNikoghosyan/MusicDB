@@ -24,9 +24,8 @@ class DetailsMusicCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        detailsTrackImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo")) {[weak self] image, error, cacheType, url in
-            self?.detailsTrackImageView.tintColor = .white
-            self?.detailsTrackImageView.layer.cornerRadius = 25
-        }
+        detailsTrackImageView.tintColor = .white
+        detailsTrackImageView.layer.cornerRadius = 25
+        detailsTrackImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
     }
 }

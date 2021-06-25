@@ -14,6 +14,7 @@ import WCLShineButton
 
 class DetailsMusicViewController: BaseViewController {
     var track: Track?
+    let noTracksLabel = UILabel()
     
     @IBOutlet weak var artistCollectionView: UICollectionView!
     
@@ -48,14 +49,15 @@ class DetailsMusicViewController: BaseViewController {
     }
     
     @IBOutlet weak var previewButton: LoadyButton!
-    
     @IBOutlet weak var likedButton: WCLShineButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadActivityIndicator()
         
         createLikeButton()
-        
+        loadNoTracksLabel()
+  
         let notifactionCenter = NotificationCenter.default
         notifactionCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         
@@ -79,10 +81,9 @@ class DetailsMusicViewController: BaseViewController {
             return
         }
         
-        detailsImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo")) {[weak self] image, error, cacheType, url in
-            self?.detailsImageView.tintColor = .white
-            self?.detailsImageView.layer.cornerRadius = 25
-        }
+        detailsImageView.tintColor = .white
+        detailsImageView.layer.cornerRadius = 25
+        detailsImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
         
         detailsTitleLabel.text = track.title_short
         detailsArtistNameLabel.text = track.artist.name
@@ -101,7 +102,7 @@ class DetailsMusicViewController: BaseViewController {
             stopAudio()
         }
     }
-    
+  
     func createLikeButton() {
         var param = WCLShineParams()
         param.bigShineColor = UIColor(rgb: (153,152,38))
@@ -112,6 +113,24 @@ class DetailsMusicViewController: BaseViewController {
         likedButton.fillColor = UIColor(rgb: (255,0,0))
         likedButton.color = UIColor(rgb: (100,100,100))
     }
+    
+    func loadNoTracksLabel() {
+        noTracksLabel.text = "No Tracks Found"
+        noTracksLabel.font = UIFont.init(name: "Futura", size: 20)
+        noTracksLabel.textColor = .white
+        noTracksLabel.textAlignment = .center
+        
+        view.addSubview(noTracksLabel)
+        
+        noTracksLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            noTracksLabel.topAnchor.constraint(equalTo: artistCollectionView.topAnchor, constant: 24),
+            noTracksLabel.leadingAnchor.constraint(equalTo: artistCollectionView.leadingAnchor, constant: 16),
+            noTracksLabel.trailingAnchor.constraint(equalTo: artistCollectionView.trailingAnchor, constant: 16)
+        ])
+        noTracksLabel.isHidden = true
+    }
+    
     
     @IBAction func animateButton(_ sender: UIButton) {
         if let button = sender as? LoadyButton {
@@ -142,10 +161,18 @@ class DetailsMusicViewController: BaseViewController {
         
         ds.fetchTrucks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":100]) {[weak self] tracks, error in
             if let tracks = tracks {
-                self?.tracks = tracks
-                self?.artistCollectionView.reloadData()
                 
-                self?.artistCollectionView.animate(animations: [animation])
+                guard let self = self else {return}
+                self.tracks = tracks
+                self.artistCollectionView.reloadData()
+                
+                self.artistCollectionView.animate(animations: [animation])
+                self.activityIndicatorView.stopAnimating()
+                
+                if tracks.count <= 0 {
+                    self.noTracksLabel.isHidden = false
+                }
+                
             } else if let error = error {
                 //TODO: Dialog
                 print(error)

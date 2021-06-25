@@ -6,10 +6,25 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 class BaseViewController: UIViewController {
     var tracks: [Track] = []
     var ds = TrackAPIDataSource()
+    
+    let activityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .ballPulse, color: .white, padding: 0)
+    
+    func loadActivityIndicator() {
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicatorView)
+        NSLayoutConstraint.activate([
+            activityIndicatorView.widthAnchor.constraint(equalToConstant: 40),
+            activityIndicatorView.heightAnchor.constraint(equalToConstant: 40),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        activityIndicatorView.startAnimating()
+    }
 }
 
 extension BaseViewController: UICollectionViewDelegate, UICollectionViewDataSource {

@@ -186,6 +186,15 @@
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="uqF-OD-bMT">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8Oo-vH-Vbv">
+                                                    <rect key="frame" x="-150" y="-196.66666666666669" width="428" height="520.33333333333326"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="128" height="128"/>
                                     </collectionViewCell>
@@ -310,6 +319,8 @@
                                 <exclude reference="EQr-wf-6NV"/>
                                 <exclude reference="mJu-hK-Vsg"/>
                                 <exclude reference="Gw4-nF-3m5"/>
+                                <exclude reference="vSd-bM-yDd"/>
+                                <exclude reference="viJ-R7-k77"/>
                                 <exclude reference="DYW-gn-gaU"/>
                                 <exclude reference="IQJ-cJ-C5s"/>
                                 <exclude reference="SGf-X2-Sxn"/>
@@ -318,8 +329,6 @@
                                 <exclude reference="AgD-Pz-1dj"/>
                                 <exclude reference="Rus-kE-hpz"/>
                                 <exclude reference="eMx-oO-hiF"/>
-                                <exclude reference="vSd-bM-yDd"/>
-                                <exclude reference="viJ-R7-k77"/>
                                 <exclude reference="9fO-7n-Gr2"/>
                                 <exclude reference="zwU-Kz-Hv4"/>
                             </mask>
@@ -335,6 +344,12 @@
                                 <include reference="Gw4-nF-3m5"/>
                                 <exclude reference="cMA-DK-kek"/>
                                 <exclude reference="yYu-Ed-B0i"/>
+                                <exclude reference="8uE-kb-ice"/>
+                                <exclude reference="EUc-P4-2OG"/>
+                                <exclude reference="WTY-3L-ffE"/>
+                                <exclude reference="cCE-tN-5wf"/>
+                                <include reference="vSd-bM-yDd"/>
+                                <include reference="viJ-R7-k77"/>
                                 <include reference="DYW-gn-gaU"/>
                                 <include reference="IQJ-cJ-C5s"/>
                                 <exclude reference="Pku-vH-AvK"/>
@@ -347,12 +362,6 @@
                                 <exclude reference="YVH-41-j2q"/>
                                 <exclude reference="dbJ-vX-PcG"/>
                                 <include reference="eMx-oO-hiF"/>
-                                <exclude reference="8uE-kb-ice"/>
-                                <exclude reference="EUc-P4-2OG"/>
-                                <exclude reference="WTY-3L-ffE"/>
-                                <exclude reference="cCE-tN-5wf"/>
-                                <include reference="vSd-bM-yDd"/>
-                                <include reference="viJ-R7-k77"/>
                                 <exclude reference="3OQ-me-xQK"/>
                                 <include reference="9fO-7n-Gr2"/>
                                 <include reference="zwU-Kz-Hv4"/>
