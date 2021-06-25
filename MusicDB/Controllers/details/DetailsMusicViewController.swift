@@ -162,6 +162,21 @@ extension DetailsMusicViewController: UICollectionViewDelegate, UICollectionView
         }
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+     
+        let parentVC = presentingViewController
+            
+        dismiss(animated: true) {[weak self] in
+            let detailsVC = DetailsMusicViewController.storyboardInstance(storyboardID: "Main", restorationID: "detailsScreen") as! DetailsMusicViewController
+            
+            let track = self?.tracks[indexPath.item]
+            detailsVC.track = track
+            parentVC?.present(detailsVC, animated: true)
+        }
+        
+        
+    }
 }
 //
 //extension DetailsMusicViewController: UICollectionViewDelegateFlowLayout {

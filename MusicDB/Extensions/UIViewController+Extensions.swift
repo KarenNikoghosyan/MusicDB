@@ -18,3 +18,10 @@ extension UIViewController {
         view.endEditing(true)
     }
 }
+
+extension UIViewController {
+    class func storyboardInstance(storyboardID: String, restorationID: String)->UIViewController {
+        let storyboard = UIStoryboard(name: storyboardID, bundle: nil)
+        return storyboard.instantiateViewController(withIdentifier: restorationID)
+    }
+}

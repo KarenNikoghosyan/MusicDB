@@ -128,7 +128,7 @@
         <!--Details Music View Controller-->
         <scene sceneID="N6h-qw-vSP">
             <objects>
-                <viewController id="U7H-HD-5R9" customClass="DetailsMusicViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="detailsScreen" id="U7H-HD-5R9" customClass="DetailsMusicViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yG8-RH-lPX">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="872"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -331,6 +331,8 @@
                                 <exclude reference="EQr-wf-6NV"/>
                                 <exclude reference="mJu-hK-Vsg"/>
                                 <exclude reference="Gw4-nF-3m5"/>
+                                <exclude reference="vSd-bM-yDd"/>
+                                <exclude reference="viJ-R7-k77"/>
                                 <exclude reference="DYW-gn-gaU"/>
                                 <exclude reference="IQJ-cJ-C5s"/>
                                 <exclude reference="SGf-X2-Sxn"/>
@@ -338,8 +340,6 @@
                                 <exclude reference="0b5-ff-NS9"/>
                                 <exclude reference="AgD-Pz-1dj"/>
                                 <exclude reference="eMx-oO-hiF"/>
-                                <exclude reference="vSd-bM-yDd"/>
-                                <exclude reference="viJ-R7-k77"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -352,6 +352,12 @@
                                 <include reference="Gw4-nF-3m5"/>
                                 <exclude reference="cMA-DK-kek"/>
                                 <exclude reference="yYu-Ed-B0i"/>
+                                <exclude reference="8uE-kb-ice"/>
+                                <exclude reference="EUc-P4-2OG"/>
+                                <exclude reference="WTY-3L-ffE"/>
+                                <exclude reference="cCE-tN-5wf"/>
+                                <include reference="vSd-bM-yDd"/>
+                                <include reference="viJ-R7-k77"/>
                                 <include reference="DYW-gn-gaU"/>
                                 <include reference="IQJ-cJ-C5s"/>
                                 <exclude reference="Pku-vH-AvK"/>
@@ -363,12 +369,6 @@
                                 <exclude reference="YVH-41-j2q"/>
                                 <exclude reference="dbJ-vX-PcG"/>
                                 <include reference="eMx-oO-hiF"/>
-                                <exclude reference="8uE-kb-ice"/>
-                                <exclude reference="EUc-P4-2OG"/>
-                                <exclude reference="WTY-3L-ffE"/>
-                                <exclude reference="cCE-tN-5wf"/>
-                                <include reference="vSd-bM-yDd"/>
-                                <include reference="viJ-R7-k77"/>
                             </mask>
                         </variation>
                     </view>
@@ -389,7 +389,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="js3-BE-A3t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-539" y="3360"/>
+            <point key="canvasLocation" x="-540" y="3349"/>
         </scene>
         <!--Home Music Collection View Controller-->
         <scene sceneID="nnx-d8-db1">
