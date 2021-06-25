@@ -11,6 +11,7 @@ import ViewAnimator
 class SearchMusicViewController: BaseViewController {
    
     let searchLabel = UILabel()
+    let noTracksLabel = UILabel()
     
     @IBOutlet weak var trackSearchBar: UISearchBar!
     @IBOutlet weak var searchTracksCollectionView: UICollectionView!
@@ -29,6 +30,7 @@ class SearchMusicViewController: BaseViewController {
         setupNavigationItems()
         
         loadSearchLabel()
+        loadNoTracksLabel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -79,6 +81,23 @@ class SearchMusicViewController: BaseViewController {
             searchLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
+    
+    func loadNoTracksLabel() {
+        noTracksLabel.text = "No Tracks Found"
+        noTracksLabel.font = UIFont.init(name: "Futura", size: 20)
+        noTracksLabel.textColor = .white
+        noTracksLabel.textAlignment = .center
+        
+        view.addSubview(noTracksLabel)
+        
+        noTracksLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            noTracksLabel.topAnchor.constraint(equalTo: searchTracksCollectionView.topAnchor, constant: 24),
+            noTracksLabel.leadingAnchor.constraint(equalTo: searchTracksCollectionView.leadingAnchor, constant: 0),
+            noTracksLabel.trailingAnchor.constraint(equalTo: searchTracksCollectionView.trailingAnchor, constant: 0)
+        ])
+        noTracksLabel.isHidden = true
+    }
 }
 
 extension SearchMusicViewController: UISearchBarDelegate {
@@ -107,6 +126,12 @@ extension SearchMusicViewController: UISearchBarDelegate {
                     
                     self.searchTracksCollectionView.animate(animations: [animation])
                     self.activityIndicatorView.stopAnimating()
+                    
+                    if tracks.count <= 0 {
+                        self.noTracksLabel.isHidden = false
+                    } else {
+                        self.noTracksLabel.isHidden = true
+                    }
                     
                 } else if let error = error {
                     //TODO: Popup message

@@ -125,12 +125,11 @@ class DetailsMusicViewController: BaseViewController {
         noTracksLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             noTracksLabel.topAnchor.constraint(equalTo: artistCollectionView.topAnchor, constant: 24),
-            noTracksLabel.leadingAnchor.constraint(equalTo: artistCollectionView.leadingAnchor, constant: 16),
-            noTracksLabel.trailingAnchor.constraint(equalTo: artistCollectionView.trailingAnchor, constant: 16)
+            noTracksLabel.leadingAnchor.constraint(equalTo: artistCollectionView.leadingAnchor, constant: 0),
+            noTracksLabel.trailingAnchor.constraint(equalTo: artistCollectionView.trailingAnchor, constant: 0)
         ])
         noTracksLabel.isHidden = true
     }
-    
     
     @IBAction func animateButton(_ sender: UIButton) {
         if let button = sender as? LoadyButton {
@@ -159,7 +158,7 @@ class DetailsMusicViewController: BaseViewController {
     func fetchTracks() {
         let animation = AnimationType.from(direction: .right, offset: 30.0)
         
-        ds.fetchTrucks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":100]) {[weak self] tracks, error in
+        ds.fetchTrucks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":200]) {[weak self] tracks, error in
             if let tracks = tracks {
                 
                 guard let self = self else {return}
@@ -171,6 +170,8 @@ class DetailsMusicViewController: BaseViewController {
                 
                 if tracks.count <= 0 {
                     self.noTracksLabel.isHidden = false
+                } else {
+                    self.noTracksLabel.isHidden = true
                 }
                 
             } else if let error = error {
