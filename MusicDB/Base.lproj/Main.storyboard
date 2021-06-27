@@ -419,7 +419,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="Home" id="2sl-s3-NuD"/>
                     <connections>
-                        <segue destination="U7H-HD-5R9" kind="presentation" id="NqS-Qw-gks"/>
+                        <segue destination="U7H-HD-5R9" kind="presentation" identifier="toDetails" id="NqS-Qw-gks"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zBD-61-hwv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

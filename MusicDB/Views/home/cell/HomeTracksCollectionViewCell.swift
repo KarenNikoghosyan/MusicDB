@@ -25,7 +25,7 @@ class HomeTracksCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(track: Track) {
+    func configure(track: Track, with imageQuality: String) {
         
         topChartImageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(topChartImageView)
@@ -37,29 +37,7 @@ class HomeTracksCollectionViewCell: UICollectionViewCell {
             topChartImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         
-        guard let url = URL(string: track.album.cover) else {
-            
-            topChartImageView.image = #imageLiteral(resourceName: "No_Photo_Available")
-            return
-        }
-        
-        topChartImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
-    }
-    
-    func configure(chartTrack: ChartTrack) {
-        
-        topChartImageView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(topChartImageView)
-        
-        NSLayoutConstraint.activate([
-            topChartImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            topChartImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            topChartImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            topChartImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
-        
-        guard let str = chartTrack.album.cover_big,
-              let url = URL(string: str) else {
+        guard let url = URL(string: imageQuality) else {
             
             topChartImageView.image = #imageLiteral(resourceName: "No_Photo_Available")
             return

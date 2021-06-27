@@ -9,16 +9,14 @@ import UIKit
 
 class HomeMusicCollectionViewController: UICollectionViewController {
     
-    let headerID = "headerID"
     let sections: [Int] = [1, 2, 3, 4]
     
-    var chart: [ChartTrack] = []
+    var topTracks: [Track] = []
     var hipHop: [Track] = []
     var dance: [Track] = []
     var jazz: [Track] = []
     
     var tracksDS = GenreAPIDataSource()
-    var chartDS = ChartAPIDataSource()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +24,11 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         fetchTracks()
         
         collectionView.register(HomeTracksCollectionViewCell.self, forCellWithReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifer)
-        collectionView.register(GenresCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerID)
+        
+        collectionView.register(TopChartCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "topChartHeader")
+        collectionView.register(HipHopCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "hipHopHeader")
+        collectionView.register(DanceCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "danceHeader")
+        collectionView.register(JazzCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "jazzHeader")
         
         collectionView.collectionViewLayout = createCompositionalLayout()
     }
@@ -58,7 +60,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         let section = NSCollectionLayoutSection(group: group)
 
         section.orthogonalScrollingBehavior = .groupPaging
-        section.contentInsets.leading = 15
+        section.contentInsets.leading = 8
         
         section.boundarySupplementaryItems = [
             NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -82,7 +84,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         let section = NSCollectionLayoutSection(group: group)
         
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets.leading = 15
+        section.contentInsets.leading = 8
         
         section.boundarySupplementaryItems = [
             NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -97,16 +99,16 @@ class HomeMusicCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-            case 0:
-                return chart.count
-            case 1:
-                return hipHop.count
-            case 2:
-                return dance.count
-            case 3:
-                return jazz.count
-            default:
-                return 10
+        case 0:
+            return topTracks.count
+        case 1:
+            return hipHop.count
+        case 2:
+            return dance.count
+        case 3:
+            return jazz.count
+        default:
+            return 10
         }
     }
 
@@ -115,44 +117,84 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifer, for: indexPath) as! HomeTracksCollectionViewCell
         
         switch indexPath.section {
-            case 0:
-                if indexPath.item < chart.count {
-                    let chartTrack = chart[indexPath.item]
-                    cell.configure(chartTrack: chartTrack)
-                }
-            case 1:
-                if indexPath.item < hipHop.count {
-                    let track = hipHop[indexPath.item]
-                    cell.configure(track: track)
-                }
-            case 2:
-                if indexPath.item < dance.count {
-                    let track = dance[indexPath.item]
-                    cell.configure(track: track)
-                }
-            case 3:
-                if indexPath.item < jazz.count {
-                    let track = jazz[indexPath.item]
-                    cell.configure(track: track)
-                }
+        case 0:
+            if indexPath.item < topTracks.count {
+                let track = topTracks[indexPath.item]
+                cell.configure(track: track, with: "\(track.album.cover_big ?? "")")
+            }
+        case 1:
+            if indexPath.item < hipHop.count {
+                let track = hipHop[indexPath.item]
+                cell.configure(track: track, with: "\(track.album.cover)")
+            }
+        case 2:
+            if indexPath.item < dance.count {
+                let track = dance[indexPath.item]
+                cell.configure(track: track, with: "\(track.album.cover)")
+            }
+        case 3:
+            if indexPath.item < jazz.count {
+                let track = jazz[indexPath.item]
+                cell.configure(track: track, with: "\(track.album.cover)")
+            }
         default: break
             
         }
-        
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerID, for: indexPath)
+        switch indexPath.section {
+        case 0:
+            let topChartheader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "topChartHeader", for: indexPath)
+            return topChartheader
+        case 1:
+            let hipHopHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "hipHopHeader", for: indexPath)
+            return hipHopHeader
+        case 2:
+            let danceHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "danceHeader", for: indexPath)
+            return danceHeader
+        case 3:
+            let jazzHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "jazzHeader", for: indexPath)
+            return jazzHeader
+        default: break
         
-        return header
+        }
+        return UICollectionReusableView()
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.section {
+        
+        case 0:
+            let topTracks = topTracks[indexPath.item]
+            performSegue(withIdentifier: "toDetails", sender: topTracks)
+        case 1:
+            let hipHipTracks = hipHop[indexPath.item]
+            performSegue(withIdentifier: "toDetails", sender: hipHipTracks)
+        case 2:
+            let danceTracks = dance[indexPath.item]
+            performSegue(withIdentifier: "toDetails", sender: danceTracks)
+        case 3:
+            let jazzTracks = jazz[indexPath.item]
+            performSegue(withIdentifier: "toDetails", sender: jazzTracks)
+        default: break
+        }
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let dest = segue.destination as? DetailsMusicViewController,
+              let track = sender as? Track else {return}
+        
+        dest.track = track
     }
     
     func fetchTracks() {
-        chartDS.fetchTrucks(from: .chart, with: ["limit" : 50]) {[weak self] chartTracks, error in
-            if let chartTracks = chartTracks {
-                self?.chart = chartTracks
+        tracksDS.fetchGenres(from: .chart, with: "/0/tracks", with: ["limit" : 50]) {[weak self] topTracks, error in
+            if let topTracks = topTracks {
+                self?.topTracks = topTracks
                 self?.collectionView.reloadData()
             } else if let error = error {
                 print(error)
