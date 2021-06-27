@@ -112,6 +112,7 @@ extension SearchMusicViewController: UISearchBarDelegate {
         if searchText.count <= 0 {
             activityIndicatorView.stopAnimating()
             searchLabel.isHidden = false
+            noTracksLabel.isHidden = true
             return
         }
         

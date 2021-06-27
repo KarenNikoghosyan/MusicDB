@@ -7,124 +7,180 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
-
 class HomeMusicCollectionViewController: UICollectionViewController {
-
+    
+    let headerID = "headerID"
+    let sections: [Int] = [1, 2, 3, 4]
+    
+    var chart: [ChartTrack] = []
+    var hipHop: [Track] = []
+    var dance: [Track] = []
+    var jazz: [Track] = []
+    
+    var tracksDS = GenreAPIDataSource()
+    var chartDS = ChartAPIDataSource()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavigationItems()
+        fetchTracks()
+        
+        collectionView.register(HomeTracksCollectionViewCell.self, forCellWithReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifer)
+        collectionView.register(GenresCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerID)
         
         collectionView.collectionViewLayout = createCompositionalLayout()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
     }
+    
+    private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
 
-    /*
-    // MARK: - Navigation
+        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+         switch sectionNumber {
+
+            case 0: return self.chartLayoutSection()
+            default: return self.tracksLayoutSection()
+         }
+       }
     }
-    */
+    
+    private func chartLayoutSection() -> NSCollectionLayoutSection {
 
-    // MARK: UICollectionViewDataSource
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
 
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets.bottom = 15
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(350), heightDimension: .absolute(350))
+
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.contentInsets = .init(top: 0, leading: 15, bottom: 0, trailing: 2)
+
+        let section = NSCollectionLayoutSection(group: group)
+
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.contentInsets.leading = 15
+        
+        section.boundarySupplementaryItems = [
+            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        ]
+
+        return section
+    }
+    
+    private func tracksLayoutSection() -> NSCollectionLayoutSection {
+
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets.bottom = 15
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(150), heightDimension: .absolute(150))
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.contentInsets = .init(top: 0, leading: 15, bottom: 0, trailing: 2)
+       
+        let section = NSCollectionLayoutSection(group: group)
+        
+        section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets.leading = 15
+        
+        section.boundarySupplementaryItems = [
+            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        ]
+        
+        return section
+    }
+    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return sections.count
     }
-
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        switch section {
+            case 0:
+                return chart.count
+            case 1:
+                return hipHop.count
+            case 2:
+                return dance.count
+            case 3:
+                return jazz.count
+            default:
+                return 10
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifer, for: indexPath) as! HomeTracksCollectionViewCell
+        
+        switch indexPath.section {
+            case 0:
+                if indexPath.item < chart.count {
+                    let chartTrack = chart[indexPath.item]
+                    cell.configure(chartTrack: chartTrack)
+                }
+            case 1:
+                if indexPath.item < hipHop.count {
+                    let track = hipHop[indexPath.item]
+                    cell.configure(track: track)
+                }
+            case 2:
+                if indexPath.item < dance.count {
+                    let track = dance[indexPath.item]
+                    cell.configure(track: track)
+                }
+            case 3:
+                if indexPath.item < jazz.count {
+                    let track = jazz[indexPath.item]
+                    cell.configure(track: track)
+                }
+        default: break
+            
+        }
+        
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerID, for: indexPath)
+        
+        return header
+    }
     
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
+    func fetchTracks() {
+        chartDS.fetchTrucks(from: .chart, with: ["limit" : 50]) {[weak self] chartTracks, error in
+            if let chartTracks = chartTracks {
+                self?.chart = chartTracks
+                self?.collectionView.reloadData()
+            } else if let error = error {
+                print(error)
+            }
+        }
+        tracksDS.fetchGenres(from: .chart, with: "/116/tracks", with: ["limit" : 50]) {[weak self] tracks, error in
+            if let tracks = tracks {
+                self?.hipHop = tracks
+                self?.collectionView.reloadData()
+            } else if let error = error {
+                print(error)
+            }
+        }
+        tracksDS.fetchGenres(from: .chart, with: "/113/tracks", with: ["limit" : 50]) {[weak self] tracks, error in
+            if let tracks = tracks {
+                self?.dance = tracks
+                self?.collectionView.reloadData()
+            } else if let error = error {
+                print(error)
+            }
+        }
+        tracksDS.fetchGenres(from: .chart, with: "/129/tracks", with: ["limit" : 100]) {[weak self] tracks, error in
+            if let tracks = tracks {
+                self?.jazz = tracks
+                self?.collectionView.reloadData()
+            } else if let error = error {
+                print(error)
+            }
+        }
     }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-    
-    func setupNavigationItems() {
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.layoutIfNeeded()
-    }
-
-}
-
-func createCompositionalLayout()-> UICollectionViewCompositionalLayout {
-    let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-    let item = NSCollectionLayoutItem(layoutSize: itemSize)
-    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension: .fractionalWidth(0.5))
-    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-    let section = NSCollectionLayoutSection(group: group)
-    let layout = UICollectionViewCompositionalLayout(section: section)
-    return layout
-}
-
-func generateLayout()-> UICollectionViewLayout {
-    //1
-     let itemSize = NSCollectionLayoutSize(
-       widthDimension: .fractionalWidth(1.0),
-       heightDimension: .fractionalHeight(1.0))
-     let fullPhotoItem = NSCollectionLayoutItem(layoutSize: itemSize)
-     //2
-     let groupSize = NSCollectionLayoutSize(
-       widthDimension: .fractionalWidth(1.0),
-       heightDimension: .fractionalWidth(2/3))
-     let group = NSCollectionLayoutGroup.horizontal(
-       layoutSize: groupSize,
-       subitem: fullPhotoItem,
-       count: 1)
-     //3
-     let section = NSCollectionLayoutSection(group: group)
-     let layout = UICollectionViewCompositionalLayout(section: section)
-     return layout
 }
