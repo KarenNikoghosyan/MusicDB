@@ -19,6 +19,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     var pop: [Track] = []
     var classical: [Track] = []
     var topAlbums: [TopAlbums] = []
+    var rock: [Track] = []
     
     let tracksDS = GenreAPIDataSource()
     let topArtistsDS = TopArtistsAPIDataSource()
@@ -41,6 +42,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         collectionView.register(PopCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "popHeader")
         collectionView.register(ClassicalCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "classicalHeader")
         collectionView.register(TopAlbumsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "topAlbumsHeader")
+        collectionView.register(RockCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "rockHeader")
         
         collectionView.collectionViewLayout = createCompositionalLayout()
     }
@@ -155,7 +157,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 8
+        return 9
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -174,8 +176,10 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             return pop.count
         case 6:
             return classical.count
-        default:
+        case 7:
             return topAlbums.count
+        default:
+            return rock.count
         }
     }
 
@@ -247,12 +251,21 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             }
             return cell
             
-        default:
+        case 7:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopAlbumsCollectionViewCell.reuseIdentifier, for: indexPath) as! TopAlbumsCollectionViewCell
             
             if indexPath.item < topAlbums.count {
                 let album = topAlbums[indexPath.item]
                 cell.configure(album: album)
+            }
+            return cell
+            
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier, for: indexPath) as! HomeTracksCollectionViewCell
+            
+            if indexPath.item < rock.count {
+                let track = rock[indexPath.item]
+                cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
             }
             return cell
         }
@@ -282,9 +295,12 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         case 6:
             let classicalHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "classicalHeader", for: indexPath)
             return classicalHeader
-        default:
+        case 7:
             let topAlbumsHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "topAlbumsHeader", for: indexPath)
             return topAlbumsHeader
+        default:
+            let rockHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "rockHeader", for: indexPath)
+            return rockHeader
         }
     }
     
@@ -302,8 +318,8 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             }
             
             if let cell = collectionView.cellForItem(at: indexPath) as? TopAlbumsCollectionViewCell {
-                cell.imageView.transform = .init(scaleX: 0.90, y: 0.90)
-                cell.subtitle.transform = .init(scaleX: 0.90, y: 0.90)
+                cell.imageView.transform = .init(scaleX: 0.95, y: 0.95)
+                cell.subtitle.transform = .init(scaleX: 0.95, y: 0.95)
                 cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
             }
         }
@@ -357,12 +373,15 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         case 6:
             let classicalTracks = classical[indexPath.item]
             performSegue(withIdentifier: "toDetails", sender: classicalTracks)
-        default:
+        case 7:
             let topAlbums = topAlbums[indexPath.item]
             guard let url = URL(string: "\(topAlbums.link)") else {return}
             
             let sfVC = SFSafariViewController(url: url)
             present(sfVC, animated: true)
+        default:
+            let rockTracks = rock[indexPath.item]
+            performSegue(withIdentifier: "toDetails", sender: rockTracks)
         }
         
     }
@@ -434,6 +453,14 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         topAlbumsDS.fetchTopAlbums(from: .chart, with: "/0/albums", with: ["limit" : 15]) {[weak self] albums, error in
             if let albums = albums {
                 self?.topAlbums = albums
+                self?.collectionView.reloadData()
+            } else if let error = error {
+                print(error)
+            }
+        }
+        tracksDS.fetchGenres(from: .chart, with: "/152/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
+            if let tracks = tracks {
+                self?.rock = tracks
                 self?.collectionView.reloadData()
             } else if let error = error {
                 print(error)

@@ -17,13 +17,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFt-46-sB1">
-                        <rect key="frame" x="4" y="0.0" width="192" height="18.5"/>
-                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
+                        <rect key="frame" x="4" y="0.0" width="192" height="14.5"/>
+                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="11"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aUF-Tm-Nv3">
-                        <rect key="frame" x="4" y="22.5" width="192" height="183.5"/>
+                        <rect key="frame" x="4" y="18.5" width="192" height="187.5"/>
                     </imageView>
                 </subviews>
                 <constraints>
