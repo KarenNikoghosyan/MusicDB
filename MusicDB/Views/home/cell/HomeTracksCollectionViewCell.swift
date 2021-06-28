@@ -1,5 +1,5 @@
 //
-//  TopChartsCollectionViewCell.swift
+//  HomeTracksCollectionViewCell.swift
 //  MusicDB
 //
 //  Created by Karen Nikoghosyan on 27/06/2021.

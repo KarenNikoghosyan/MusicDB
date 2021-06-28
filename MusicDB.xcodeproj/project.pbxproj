@@ -30,6 +30,10 @@
 		788A759B267CAC2100DFE2B0 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A759A267CAC2100DFE2B0 /* Track.swift */; };
 		788A75A1267CBCD100DFE2B0 /* TrackAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A75A0267CBCD100DFE2B0 /* TrackAPIDataSource.swift */; };
 		788A75AA267DED1200DFE2B0 /* SearchMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A75A9267DED1200DFE2B0 /* SearchMusicViewController.swift */; };
+		78CB8FEC268924AC00E90CE4 /* TopArtistsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CB8FEB268924AC00E90CE4 /* TopArtistsCollectionReusableView.swift */; };
+		78CB8FEE2689280000E90CE4 /* TopArtistsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CB8FED2689280000E90CE4 /* TopArtistsCollectionViewCell.swift */; };
+		78CB8FF026892E1900E90CE4 /* TopArtists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CB8FEF26892E1900E90CE4 /* TopArtists.swift */; };
+		78CB8FF226892F8700E90CE4 /* ArtistAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CB8FF126892F8700E90CE4 /* ArtistAPIDataSource.swift */; };
 		8ED2CE98960D7F2A8C808AF5 /* Pods_MusicDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C4311E65E99F27D50977DCE /* Pods_MusicDB.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +65,10 @@
 		788A759A267CAC2100DFE2B0 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		788A75A0267CBCD100DFE2B0 /* TrackAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAPIDataSource.swift; sourceTree = "<group>"; };
 		788A75A9267DED1200DFE2B0 /* SearchMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicViewController.swift; sourceTree = "<group>"; };
+		78CB8FEB268924AC00E90CE4 /* TopArtistsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopArtistsCollectionReusableView.swift; sourceTree = "<group>"; };
+		78CB8FED2689280000E90CE4 /* TopArtistsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopArtistsCollectionViewCell.swift; sourceTree = "<group>"; };
+		78CB8FEF26892E1900E90CE4 /* TopArtists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopArtists.swift; sourceTree = "<group>"; };
+		78CB8FF126892F8700E90CE4 /* ArtistAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistAPIDataSource.swift; sourceTree = "<group>"; };
 		9C4311E65E99F27D50977DCE /* Pods_MusicDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MusicDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -115,6 +123,7 @@
 			children = (
 				788A75A0267CBCD100DFE2B0 /* TrackAPIDataSource.swift */,
 				78638A6F268742D3001A756E /* GenreAPIDataSource.swift */,
+				78CB8FF126892F8700E90CE4 /* ArtistAPIDataSource.swift */,
 			);
 			path = datasource;
 			sourceTree = "<group>";
@@ -123,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				78892CAE26888CCF00A12F41 /* HomeTracksCollectionViewCell.swift */,
+				78CB8FED2689280000E90CE4 /* TopArtistsCollectionViewCell.swift */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -134,6 +144,7 @@
 				78892CBB2688ED4F00A12F41 /* HipHopCollectionReusableView.swift */,
 				78892CBD2688EEA700A12F41 /* DanceCollectionReusableView.swift */,
 				78892CBF2688EEC800A12F41 /* JazzCollectionReusableView.swift */,
+				78CB8FEB268924AC00E90CE4 /* TopArtistsCollectionReusableView.swift */,
 			);
 			path = header;
 			sourceTree = "<group>";
@@ -200,6 +211,7 @@
 			children = (
 				78892CB42688C2E100A12F41 /* datasource */,
 				788A759A267CAC2100DFE2B0 /* Track.swift */,
+				78CB8FEF26892E1900E90CE4 /* TopArtists.swift */,
 				7876D20B26828D2A009D0669 /* MediaPlayer.swift */,
 			);
 			path = Models;
@@ -361,10 +373,14 @@
 				78892CAF26888CCF00A12F41 /* HomeTracksCollectionViewCell.swift in Sources */,
 				788A75AA267DED1200DFE2B0 /* SearchMusicViewController.swift in Sources */,
 				78614DF726862A60000125C2 /* BaseViewController.swift in Sources */,
+				78CB8FEC268924AC00E90CE4 /* TopArtistsCollectionReusableView.swift in Sources */,
 				788A7593267BAD6B00DFE2B0 /* TabBarController.swift in Sources */,
+				78CB8FF026892E1900E90CE4 /* TopArtists.swift in Sources */,
 				7876D20C26828D2A009D0669 /* MediaPlayer.swift in Sources */,
 				78892CC02688EEC800A12F41 /* JazzCollectionReusableView.swift in Sources */,
+				78CB8FEE2689280000E90CE4 /* TopArtistsCollectionViewCell.swift in Sources */,
 				78892CBE2688EEA700A12F41 /* DanceCollectionReusableView.swift in Sources */,
+				78CB8FF226892F8700E90CE4 /* ArtistAPIDataSource.swift in Sources */,
 				78638A70268742D3001A756E /* GenreAPIDataSource.swift in Sources */,
 				7809D1572682142C006F0ADD /* UIViewController+Extensions.swift in Sources */,
 				788A7582267B9E9800DFE2B0 /* MusicDB.xcdatamodeld in Sources */,
