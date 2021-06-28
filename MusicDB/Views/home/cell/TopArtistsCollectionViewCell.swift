@@ -20,6 +20,7 @@ class TopArtistsCollectionViewCell: UICollectionViewCell {
         name.font = UIFont.preferredFont(forTextStyle: .title2)
         name.textColor = .white
 
+        imageView.tintColor = .white
         imageView.layer.cornerRadius = 28
         imageView.clipsToBounds = true
 
@@ -43,7 +44,7 @@ class TopArtistsCollectionViewCell: UICollectionViewCell {
     func configure(artist: TopArtists) {
         name.text = artist.name
         
-        guard let url = URL(string: artist.picture_small) else {
+        guard let url = URL(string: artist.pictureSmall ?? "") else {
             imageView.image = #imageLiteral(resourceName: "No_Photo_Available")
             return
         }

@@ -1,5 +1,5 @@
 //
-//  ArtistAPIDataSource.swift
+//  TopAlbumsAPIDataSource.swift
 //  MusicDB
 //
 //  Created by Karen Nikoghosyan on 28/06/2021.
@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct ArtistAPIDataSource {
+struct TopAlbumsAPIDataSource {
     private static let baseURL = "https://api.deezer.com"
     
     enum EndPoint: String {
         case chart = "/chart"
     }
     
-    func fetchTopArtists(from endpoint: EndPoint, with path: String ,with params: [String:Any], callback: @escaping ArtistDSCallback) {
-        var urlComponents = URLComponents(string: ArtistAPIDataSource.baseURL)
+    func fetchTopAlbums(from endpoint: EndPoint, with path: String ,with params: [String:Any], callback: @escaping TopAlbumsDSCallback) {
+        var urlComponents = URLComponents(string: TopAlbumsAPIDataSource.baseURL)
         
         urlComponents?.path = endpoint.rawValue + "\(path)"
         
@@ -56,7 +56,7 @@ struct ArtistAPIDataSource {
             }
             
             do {
-                let result = try JSONDecoder().decode(TopArtistsAPIResponse.self, from: data)
+                let result = try JSONDecoder().decode(TopAlbumsAPIResponse.self, from: data)
                 DispatchQueue.main.async {
                     callback(result.data, nil)
                 }
@@ -70,9 +70,9 @@ struct ArtistAPIDataSource {
     }
 }
 
-typealias ArtistDSCallback = ([TopArtists]?, _ error: ArtistAPIDataSourceError?)->Void
+typealias TopAlbumsDSCallback = ([TopAlbums]?, _ error: TopAlbumsAPIDataSourceError?)->Void
 
-enum ArtistAPIDataSourceError: Error {
+enum TopAlbumsAPIDataSourceError: Error {
     case invalidURL(url: URLComponents?)
     case connectionFailed(cause: Error?)
     case jsonDecodingFailed(cause: Error)

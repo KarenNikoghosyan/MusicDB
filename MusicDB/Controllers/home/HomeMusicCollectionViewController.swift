@@ -16,23 +16,31 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     var dance: [Track] = []
     var jazz: [Track] = []
     var topArtists: [TopArtists] = []
+    var pop: [Track] = []
+    var classical: [Track] = []
+    var topAlbums: [TopAlbums] = []
     
     let tracksDS = GenreAPIDataSource()
-    let topArtistsDS = ArtistAPIDataSource()
+    let topArtistsDS = TopArtistsAPIDataSource()
+    let topAlbumsDS = TopAlbumsAPIDataSource()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         fetchTracks()
         
-        collectionView.register(HomeTracksCollectionViewCell.self, forCellWithReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifer)
+        collectionView.register(HomeTracksCollectionViewCell.self, forCellWithReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier)
         collectionView.register(TopArtistsCollectionViewCell.self, forCellWithReuseIdentifier: TopArtistsCollectionViewCell.reuseIdentifier)
+        collectionView.register(TopAlbumsCollectionViewCell.self, forCellWithReuseIdentifier: TopAlbumsCollectionViewCell.reuseIdentifier)
         
         collectionView.register(TopChartCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "topChartHeader")
         collectionView.register(HipHopCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "hipHopHeader")
         collectionView.register(DanceCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "danceHeader")
         collectionView.register(JazzCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "jazzHeader")
-        collectionView.register(TopArtistsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "topArtists")
+        collectionView.register(TopArtistsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "topArtistsHeader")
+        collectionView.register(PopCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "popHeader")
+        collectionView.register(ClassicalCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "classicalHeader")
+        collectionView.register(TopAlbumsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "topAlbumsHeader")
         
         collectionView.collectionViewLayout = createCompositionalLayout()
     }
@@ -45,6 +53,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
 
          case 0: return self.chartLayoutSection()
          case 4: return self.topArtistsSection()
+         case 7: return self.topAlbumsSection()
          default: return self.tracksLayoutSection()
         }
     }
@@ -117,6 +126,28 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         return section
     }
     
+    private func topAlbumsSection() -> NSCollectionLayoutSection {
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.33))
+
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .fractionalWidth(0.55))
+        
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+
+        let section = NSCollectionLayoutSection(group: group)
+        
+        section.orthogonalScrollingBehavior = .groupPagingCentered
+        section.contentInsets.leading = 8
+
+        let layoutSectionHeader = createSectionHeader()
+        section.boundarySupplementaryItems = [layoutSectionHeader]
+
+        return section
+    }
+    
     func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         
@@ -124,7 +155,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 5
+        return 8
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -137,8 +168,14 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             return dance.count
         case 3:
             return jazz.count
-        default:
+        case 4:
             return topArtists.count
+        case 5:
+            return pop.count
+        case 6:
+            return classical.count
+        default:
+            return topAlbums.count
         }
     }
 
@@ -146,52 +183,76 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         
         switch indexPath.section {
         case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifer, for: indexPath) as! HomeTracksCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier, for: indexPath) as! HomeTracksCollectionViewCell
             
             if indexPath.item < topTracks.count {
                 let track = topTracks[indexPath.item]
-                cell.configure(track: track, with: "\(track.album.cover_big ?? "")")
-                
+                cell.configure(track: track, with: "\(track.album.coverBig ?? "")")
             }
             return cell
             
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifer, for: indexPath) as! HomeTracksCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier, for: indexPath) as! HomeTracksCollectionViewCell
             
             if indexPath.item < hipHop.count {
                 
                 let track = hipHop[indexPath.item]
-                cell.configure(track: track, with: "\(track.album.cover)")
-                
+                cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
             }
             return cell
             
         case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifer, for: indexPath) as! HomeTracksCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier, for: indexPath) as! HomeTracksCollectionViewCell
             
             if indexPath.item < dance.count {
                 
                 let track = dance[indexPath.item]
-                cell.configure(track: track, with: "\(track.album.cover)")
+                cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
             }
             return cell
             
         case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifer, for: indexPath) as! HomeTracksCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier, for: indexPath) as! HomeTracksCollectionViewCell
             
             if indexPath.item < jazz.count {
                 let track = jazz[indexPath.item]
-                cell.configure(track: track, with: "\(track.album.cover)")
-                
+                cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
             }
             return cell
             
-        default:
+        case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopArtistsCollectionViewCell.reuseIdentifier, for: indexPath) as! TopArtistsCollectionViewCell
             
             if indexPath.item < topArtists.count {
                 let artist = topArtists[indexPath.item]
                 cell.configure(artist: artist)
+            }
+            return cell
+            
+        case 5:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier, for: indexPath) as! HomeTracksCollectionViewCell
+            
+            if indexPath.item < pop.count {
+                let track = pop[indexPath.item]
+                cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
+            }
+            return cell
+            
+        case 6:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier, for: indexPath) as! HomeTracksCollectionViewCell
+            
+            if indexPath.item < classical.count {
+                let track = classical[indexPath.item]
+                cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
+            }
+            return cell
+            
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopAlbumsCollectionViewCell.reuseIdentifier, for: indexPath) as! TopAlbumsCollectionViewCell
+            
+            if indexPath.item < topAlbums.count {
+                let album = topAlbums[indexPath.item]
+                cell.configure(album: album)
             }
             return cell
         }
@@ -212,9 +273,18 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         case 3:
             let jazzHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "jazzHeader", for: indexPath)
             return jazzHeader
+        case 4:
+            let topArtistsHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "topArtistsHeader", for: indexPath)
+            return topArtistsHeader
+        case 5:
+            let popHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "popHeader", for: indexPath)
+            return popHeader
+        case 6:
+            let classicalHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "classicalHeader", for: indexPath)
+            return classicalHeader
         default:
-            let topArtists = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "topArtists", for: indexPath)
-            return topArtists
+            let topAlbumsHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "topAlbumsHeader", for: indexPath)
+            return topAlbumsHeader
         }
     }
     
@@ -230,6 +300,12 @@ class HomeMusicCollectionViewController: UICollectionViewController {
                 cell.name.transform = .init(scaleX: 0.90, y: 0.90)
                 cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
             }
+            
+            if let cell = collectionView.cellForItem(at: indexPath) as? TopAlbumsCollectionViewCell {
+                cell.imageView.transform = .init(scaleX: 0.90, y: 0.90)
+                cell.subtitle.transform = .init(scaleX: 0.90, y: 0.90)
+                cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
+            }
         }
     }
     
@@ -243,6 +319,12 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             if let cell = collectionView.cellForItem(at: indexPath) as? TopArtistsCollectionViewCell {
                 cell.imageView.transform = .identity
                 cell.name.transform = .identity
+                cell.contentView.backgroundColor = .clear
+            }
+            
+            if let cell = collectionView.cellForItem(at: indexPath) as? TopAlbumsCollectionViewCell {
+                cell.imageView.transform = .identity
+                cell.subtitle.transform = .identity
                 cell.contentView.backgroundColor = .clear
             }
         }
@@ -264,14 +346,23 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             let jazzTracks = jazz[indexPath.item]
             performSegue(withIdentifier: "toDetails", sender: jazzTracks)
         case 4:
-            
             let topArtists = topArtists[indexPath.item]
             guard let url = URL(string: "\(topArtists.link)") else {return}
             
             let sfVC = SFSafariViewController(url: url)
             present(sfVC, animated: true)
+        case 5:
+            let popTracks = pop[indexPath.item]
+            performSegue(withIdentifier: "toDetails", sender: popTracks)
+        case 6:
+            let classicalTracks = classical[indexPath.item]
+            performSegue(withIdentifier: "toDetails", sender: classicalTracks)
+        default:
+            let topAlbums = topAlbums[indexPath.item]
+            guard let url = URL(string: "\(topAlbums.link)") else {return}
             
-        default: break
+            let sfVC = SFSafariViewController(url: url)
+            present(sfVC, animated: true)
         }
         
     }
@@ -284,7 +375,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     }
     
     func fetchTracks() {
-        tracksDS.fetchGenres(from: .chart, with: "/0/tracks", with: ["limit" : 50]) {[weak self] topTracks, error in
+        tracksDS.fetchGenres(from: .chart, with: "/0/tracks", with: ["limit" : 35]) {[weak self] topTracks, error in
             if let topTracks = topTracks {
                 self?.topTracks = topTracks
                 self?.collectionView.reloadData()
@@ -292,7 +383,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
                 print(error)
             }
         }
-        tracksDS.fetchGenres(from: .chart, with: "/116/tracks", with: ["limit" : 50]) {[weak self] tracks, error in
+        tracksDS.fetchGenres(from: .chart, with: "/116/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.hipHop = tracks
                 self?.collectionView.reloadData()
@@ -300,7 +391,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
                 print(error)
             }
         }
-        tracksDS.fetchGenres(from: .chart, with: "/113/tracks", with: ["limit" : 50]) {[weak self] tracks, error in
+        tracksDS.fetchGenres(from: .chart, with: "/113/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.dance = tracks
                 self?.collectionView.reloadData()
@@ -308,7 +399,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
                 print(error)
             }
         }
-        tracksDS.fetchGenres(from: .chart, with: "/129/tracks", with: ["limit" : 100]) {[weak self] tracks, error in
+        tracksDS.fetchGenres(from: .chart, with: "/129/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.jazz = tracks
                 self?.collectionView.reloadData()
@@ -316,9 +407,33 @@ class HomeMusicCollectionViewController: UICollectionViewController {
                 print(error)
             }
         }
-        topArtistsDS.fetchTopArtists(from: .chart, with: "/0/artists", with: ["limit" : 5]) {[weak self] artists, error in
+        topArtistsDS.fetchTopArtists(from: .chart, with: "/0/artists", with: ["limit" : 7]) {[weak self] artists, error in
             if let artists = artists {
                 self?.topArtists = artists
+                self?.collectionView.reloadData()
+            } else if let error = error {
+                print(error)
+            }
+        }
+        tracksDS.fetchGenres(from: .chart, with: "/132/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
+            if let tracks = tracks {
+                self?.pop = tracks
+                self?.collectionView.reloadData()
+            } else if let error = error {
+                print(error)
+            }
+        }
+        tracksDS.fetchGenres(from: .chart, with: "/98/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
+            if let tracks = tracks {
+                self?.classical = tracks
+                self?.collectionView.reloadData()
+            } else if let error = error {
+                print(error)
+            }
+        }
+        topAlbumsDS.fetchTopAlbums(from: .chart, with: "/0/albums", with: ["limit" : 15]) {[weak self] albums, error in
+            if let albums = albums {
+                self?.topAlbums = albums
                 self?.collectionView.reloadData()
             } else if let error = error {
                 print(error)

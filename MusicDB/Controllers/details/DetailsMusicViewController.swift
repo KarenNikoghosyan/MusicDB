@@ -74,7 +74,7 @@ class DetailsMusicViewController: BaseViewController {
         self.previewButton.setAnimation(LoadyAnimationType.android())
         
         guard let track = track,
-              let url = URL(string: "\(track.album.cover_medium ?? "")") else {
+              let url = URL(string: "\(track.album.coverMedium ?? "")") else {
             detailsImageView.tintColor = .white
             detailsImageView.image = #imageLiteral(resourceName: "No_Photo_Available")
             detailsImageView.layer.cornerRadius = 25
@@ -85,7 +85,7 @@ class DetailsMusicViewController: BaseViewController {
         detailsImageView.layer.cornerRadius = 25
         detailsImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
         
-        detailsTitleLabel.text = track.title_short
+        detailsTitleLabel.text = track.titleShort
         detailsArtistNameLabel.text = track.artist.name
         detailsAlbumTitleLabel.text = track.album.title
         

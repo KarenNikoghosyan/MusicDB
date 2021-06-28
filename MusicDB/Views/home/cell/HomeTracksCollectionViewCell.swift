@@ -10,7 +10,7 @@ import SDWebImage
 
 class HomeTracksCollectionViewCell: UICollectionViewCell {
     
-    static let reuseIdentifer = "topChartsCell"
+    static let reuseIdentifier = "topChartsCell"
     let topChartImageView = UIImageView()
     
     override init(frame: CGRect) {
