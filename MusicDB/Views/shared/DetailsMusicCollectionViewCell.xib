@@ -16,8 +16,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="200" height="210"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFt-46-sB1">
-                        <rect key="frame" x="4" y="0.0" width="192" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFt-46-sB1">
+                        <rect key="frame" x="16" y="0.0" width="180" height="14.5"/>
                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="11"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -32,7 +32,7 @@
                     <constraint firstAttribute="trailing" secondItem="aUF-Tm-Nv3" secondAttribute="trailing" constant="4" id="1WS-Ia-S53"/>
                     <constraint firstAttribute="trailing" secondItem="KFt-46-sB1" secondAttribute="trailing" constant="4" id="3Vg-84-P1d"/>
                     <constraint firstItem="KFt-46-sB1" firstAttribute="top" secondItem="0dr-hr-2vQ" secondAttribute="top" id="48b-NC-a3I"/>
-                    <constraint firstItem="KFt-46-sB1" firstAttribute="leading" secondItem="0dr-hr-2vQ" secondAttribute="leading" constant="4" id="8np-az-KKa"/>
+                    <constraint firstItem="KFt-46-sB1" firstAttribute="leading" secondItem="0dr-hr-2vQ" secondAttribute="leading" constant="16" id="8np-az-KKa"/>
                     <constraint firstItem="aUF-Tm-Nv3" firstAttribute="leading" secondItem="0dr-hr-2vQ" secondAttribute="leading" constant="4" id="PIG-hT-bVF"/>
                     <constraint firstItem="aUF-Tm-Nv3" firstAttribute="top" secondItem="KFt-46-sB1" secondAttribute="bottom" constant="4" id="bHw-zl-Hz1"/>
                 </constraints>

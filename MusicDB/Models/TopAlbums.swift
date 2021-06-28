@@ -52,9 +52,7 @@ struct TopAlbums {
         case recordType = "record_type"
         case tracklist
         case explicitLyrics = "explicit_lyrics"
-        case position
-        case artist
-        case type
+        case position, artist, type
     }
 }
 
