@@ -11,38 +11,48 @@ import SDWebImage
 class HomeTracksCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "topChartsCell"
-    let topChartImageView = UIImageView()
     
+    let label = UILabel()
+    let imageView = UIImageView()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        label.font = UIFont.init(name: "Futura", size: 14)
+        label.textColor = .white
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
+
+        imageView.tintColor = .white
+        imageView.layer.cornerRadius = 20
+        imageView.clipsToBounds = true
         
-        topChartImageView.tintColor = .white
-        topChartImageView.layer.cornerRadius = 20
-        topChartImageView.layer.masksToBounds = true
+        let stackView = UIStackView(arrangedSubviews: [label, imageView])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        contentView.addSubview(stackView)
+
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+
     }
+
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func configure(track: Track, with imageQuality: String) {
-        
-        topChartImageView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(topChartImageView)
-        
-        NSLayoutConstraint.activate([
-            topChartImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            topChartImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            topChartImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            topChartImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
+        label.text = "  " + track.titleShort
         
         guard let url = URL(string: imageQuality) else {
-            
-            topChartImageView.image = #imageLiteral(resourceName: "No_Photo_Available")
+            imageView.image = #imageLiteral(resourceName: "No_Photo_Available")
             return
         }
         
-        topChartImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
+        imageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
     }
 }
