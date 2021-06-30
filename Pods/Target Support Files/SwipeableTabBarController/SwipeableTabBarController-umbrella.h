@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "SwipeableTabBarController.h"
 
 FOUNDATION_EXPORT double SwipeableTabBarControllerVersionNumber;
 FOUNDATION_EXPORT const unsigned char SwipeableTabBarControllerVersionString[];

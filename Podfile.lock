@@ -7,7 +7,7 @@ PODS:
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
-  - SwipeableTabBarController (3.4.1)
+  - SwipeableTabBarController (3.4.2)
   - UIScrollView-InfiniteScroll (1.1.0)
   - ViewAnimator (3.1.0)
   - WCLShineButton (1.0.8)
@@ -38,7 +38,7 @@ SPEC CHECKSUMS:
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
-  SwipeableTabBarController: 3f0cb293ce45bf02bed80190319bcbcb16708e0b
+  SwipeableTabBarController: 9a218bdee9426d1bfe36d7962f852024bb08d61b
   UIScrollView-InfiniteScroll: 3ef456bcbe759c19f510a383cff96e6647c98c98
   ViewAnimator: a9ceed80266e00fd435ec4fb99b2df64d580d0e4
   WCLShineButton: 315ee9b0024b1cc56dba34fb6a8878937eb8d0b1
