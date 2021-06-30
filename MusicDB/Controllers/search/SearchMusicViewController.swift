@@ -102,14 +102,20 @@ class SearchMusicViewController: BaseViewController {
 
 extension SearchMusicViewController: UISearchBarDelegate {
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reload(_:)), object: searchBar)
+            perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.5)
+    }
+    
+    @objc func reload(_ searchBar: UISearchBar) {
         loadActivityIndicator()
         self.searchLabel.isHidden = true
         
         tracks.removeAll()
         searchTracksCollectionView.reloadData()
         
-        if searchText.count <= 0 {
+        guard let text = searchBar.text else {return}
+        
+        if text.count <= 0 {
             activityIndicatorView.stopAnimating()
             searchLabel.isHidden = false
             noTracksLabel.isHidden = true
@@ -118,7 +124,7 @@ extension SearchMusicViewController: UISearchBarDelegate {
         
         let animation = AnimationType.from(direction: .top, offset: 30.0)
         
-        ds.fetchTrucks(from: .search, id: nil, path: nil, with: ["q":searchText]) {[weak self] tracks, error in
+        ds.fetchTrucks(from: .search, id: nil, path: nil, with: ["q":text]) {[weak self] tracks, error in
                 if let tracks = tracks {
                     guard let self = self else {return}
                     
@@ -153,6 +159,4 @@ extension SearchMusicViewController: UISearchBarDelegate {
         
         dest.track = track
     }
-    
 }
-

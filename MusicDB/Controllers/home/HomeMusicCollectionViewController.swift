@@ -8,6 +8,7 @@
 import UIKit
 import ViewAnimator
 import SafariServices
+import PKHUD
 
 class HomeMusicCollectionViewController: UICollectionViewController {
         
@@ -24,9 +25,11 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     let tracksDS = GenreAPIDataSource()
     let topArtistsDS = TopArtistsAPIDataSource()
     let topAlbumsDS = TopAlbumsAPIDataSource()
+    var counter: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        HUD.show(HUDContentType.progress, onView: self.view)
         
         fetchTracks()
         
@@ -473,10 +476,15 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     }
     
     func loadSectionAndAnimation(in section: Int) {
+        counter += 1
         collectionView.reloadSections([section])
         
         let animation = AnimationType.from(direction: .right, offset: 30.0)
         let cells = collectionView.visibleCells(in: section)
         UIView.animate(views: cells, animations: [animation])
+        
+        if counter == collectionView.numberOfSections {
+            HUD.flash(.success, delay: 0.5)
+        }
     }
 }
