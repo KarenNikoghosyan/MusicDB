@@ -49,6 +49,7 @@ class TopArtistsCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        imageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
+        imageView.sd_imageIndicator = SDWebImageActivityIndicator.white
+        imageView.sd_setImage(with: url)
     }
 }

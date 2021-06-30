@@ -83,7 +83,8 @@ class DetailsMusicViewController: BaseViewController {
         
         detailsImageView.tintColor = .white
         detailsImageView.layer.cornerRadius = 25
-        detailsImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
+        detailsImageView.sd_imageIndicator = SDWebImageActivityIndicator.white
+        detailsImageView.sd_setImage(with: url)
         
         detailsTitleLabel.text = track.titleShort
         detailsArtistNameLabel.text = track.artist.name

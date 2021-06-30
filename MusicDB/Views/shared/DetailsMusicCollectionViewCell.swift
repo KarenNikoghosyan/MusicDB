@@ -26,6 +26,8 @@ class DetailsMusicCollectionViewCell: UICollectionViewCell {
         
         detailsTrackImageView.tintColor = .white
         detailsTrackImageView.layer.cornerRadius = 25
-        detailsTrackImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "photo"))
+        
+        detailsTrackImageView.sd_imageIndicator = SDWebImageActivityIndicator.white
+        detailsTrackImageView.sd_setImage(with: url)
     }
 }
