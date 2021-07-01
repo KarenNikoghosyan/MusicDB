@@ -14,5 +14,6 @@ target 'MusicDB' do
   pod 'NVActivityIndicatorView'
   pod 'loady'
   pod 'WCLShineButton'
+  pod 'ReachabilitySwift'
 
 end

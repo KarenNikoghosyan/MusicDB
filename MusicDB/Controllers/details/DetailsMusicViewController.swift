@@ -53,6 +53,7 @@ class DetailsMusicViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         loadActivityIndicator()
         
         createLikeButton()
@@ -133,6 +134,7 @@ class DetailsMusicViewController: BaseViewController {
     }
     
     @IBAction func animateButton(_ sender: UIButton) {
+        
         if let button = sender as? LoadyButton {
             if button.loadingIsShowing() {
                 stopAudio()

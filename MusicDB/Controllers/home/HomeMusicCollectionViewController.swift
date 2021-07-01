@@ -29,6 +29,12 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if !ConnectionManager.shared.hasConnectivity() {
+            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+            HUD.flash(.error, delay: 0.5)
+        }
+        
         HUD.show(HUDContentType.progress, onView: self.view)
         
         fetchTracks()
@@ -486,5 +492,22 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         if counter == collectionView.numberOfSections {
             HUD.flash(.success, delay: 0.5)
         }
+    }
+    
+    func showAlertWithActions(title: String? = nil, message: String? = nil) {
+        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
+            if !ConnectionManager.shared.hasConnectivity() {
+                self?.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+            } else {
+                self?.fetchTracks()
+            }
+        }))
+        vc.addAction(.init(title: "Go Offline", style: .default, handler: {[weak self] action in
+            self?.collectionView.reloadData()
+        }))
+        
+        present(vc, animated: true)
     }
 }

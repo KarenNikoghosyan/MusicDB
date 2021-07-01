@@ -18,6 +18,8 @@
 		782E485E268A3423005C8E4F /* TopAlbumsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E485D268A3423005C8E4F /* TopAlbumsCollectionReusableView.swift */; };
 		782E4860268A345B005C8E4F /* TopAlbumsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E485F268A345B005C8E4F /* TopAlbumsCollectionViewCell.swift */; };
 		782E4862268A4092005C8E4F /* RockCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E4861268A4092005C8E4F /* RockCollectionReusableView.swift */; };
+		7834B413268E712800D1161C /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7834B412268E712800D1161C /* LoadingViewController.swift */; };
+		783FDEF7268E2F4F0048CC84 /* UICollectionViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783FDEF6268E2F4F0048CC84 /* UICollectionViewController+Extensions.swift */; };
 		78614DF726862A60000125C2 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78614DF626862A60000125C2 /* BaseViewController.swift */; };
 		78638A70268742D3001A756E /* GenreAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78638A6F268742D3001A756E /* GenreAPIDataSource.swift */; };
 		7876D20C26828D2A009D0669 /* MediaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7876D20B26828D2A009D0669 /* MediaPlayer.swift */; };
@@ -37,6 +39,7 @@
 		788A759B267CAC2100DFE2B0 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A759A267CAC2100DFE2B0 /* Track.swift */; };
 		788A75A1267CBCD100DFE2B0 /* TrackAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A75A0267CBCD100DFE2B0 /* TrackAPIDataSource.swift */; };
 		788A75AA267DED1200DFE2B0 /* SearchMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A75A9267DED1200DFE2B0 /* SearchMusicViewController.swift */; };
+		78AD8C23268D0A74004BF30C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD8C22268D0A74004BF30C /* ConnectionManager.swift */; };
 		78CB8FEC268924AC00E90CE4 /* TopArtistsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CB8FEB268924AC00E90CE4 /* TopArtistsCollectionReusableView.swift */; };
 		78CB8FEE2689280000E90CE4 /* TopArtistsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CB8FED2689280000E90CE4 /* TopArtistsCollectionViewCell.swift */; };
 		78CB8FF026892E1900E90CE4 /* TopArtists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CB8FEF26892E1900E90CE4 /* TopArtists.swift */; };
@@ -58,6 +61,8 @@
 		782E485D268A3423005C8E4F /* TopAlbumsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAlbumsCollectionReusableView.swift; sourceTree = "<group>"; };
 		782E485F268A345B005C8E4F /* TopAlbumsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAlbumsCollectionViewCell.swift; sourceTree = "<group>"; };
 		782E4861268A4092005C8E4F /* RockCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCollectionReusableView.swift; sourceTree = "<group>"; };
+		7834B412268E712800D1161C /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		783FDEF6268E2F4F0048CC84 /* UICollectionViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewController+Extensions.swift"; sourceTree = "<group>"; };
 		78614DF626862A60000125C2 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		78638A6F268742D3001A756E /* GenreAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreAPIDataSource.swift; sourceTree = "<group>"; };
 		7876D20B26828D2A009D0669 /* MediaPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayer.swift; sourceTree = "<group>"; };
@@ -79,6 +84,7 @@
 		788A759A267CAC2100DFE2B0 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		788A75A0267CBCD100DFE2B0 /* TrackAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAPIDataSource.swift; sourceTree = "<group>"; };
 		788A75A9267DED1200DFE2B0 /* SearchMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicViewController.swift; sourceTree = "<group>"; };
+		78AD8C22268D0A74004BF30C /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		78CB8FEB268924AC00E90CE4 /* TopArtistsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopArtistsCollectionReusableView.swift; sourceTree = "<group>"; };
 		78CB8FED2689280000E90CE4 /* TopArtistsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopArtistsCollectionViewCell.swift; sourceTree = "<group>"; };
 		78CB8FEF26892E1900E90CE4 /* TopArtists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopArtists.swift; sourceTree = "<group>"; };
@@ -217,6 +223,7 @@
 		788A758F267B9F2B00DFE2B0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				78B0047A268E6E5100963AAD /* loading */,
 				780DE66F267F8E1600D34944 /* details */,
 				788A7595267BADE100DFE2B0 /* search */,
 				788A7594267BADDC00DFE2B0 /* home */,
@@ -234,6 +241,7 @@
 				78CB8FEF26892E1900E90CE4 /* TopArtists.swift */,
 				782E4859268A258D005C8E4F /* TopAlbums.swift */,
 				7876D20B26828D2A009D0669 /* MediaPlayer.swift */,
+				78AD8C22268D0A74004BF30C /* ConnectionManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -254,10 +262,19 @@
 			path = search;
 			sourceTree = "<group>";
 		};
+		78B0047A268E6E5100963AAD /* loading */ = {
+			isa = PBXGroup;
+			children = (
+				7834B412268E712800D1161C /* LoadingViewController.swift */,
+			);
+			path = loading;
+			sourceTree = "<group>";
+		};
 		78EA417E267F504B009828DD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				7809D1562682142C006F0ADD /* UIViewController+Extensions.swift */,
+				783FDEF6268E2F4F0048CC84 /* UICollectionViewController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -394,6 +411,7 @@
 				78892CAF26888CCF00A12F41 /* HomeTracksCollectionViewCell.swift in Sources */,
 				788A75AA267DED1200DFE2B0 /* SearchMusicViewController.swift in Sources */,
 				782E4860268A345B005C8E4F /* TopAlbumsCollectionViewCell.swift in Sources */,
+				7834B413268E712800D1161C /* LoadingViewController.swift in Sources */,
 				78614DF726862A60000125C2 /* BaseViewController.swift in Sources */,
 				782E4858268A1E3A005C8E4F /* ClassicalCollectionReusableView.swift in Sources */,
 				78CB8FEC268924AC00E90CE4 /* TopArtistsCollectionReusableView.swift in Sources */,
@@ -404,6 +422,7 @@
 				78CB8FEE2689280000E90CE4 /* TopArtistsCollectionViewCell.swift in Sources */,
 				78892CBE2688EEA700A12F41 /* DanceCollectionReusableView.swift in Sources */,
 				78CB8FF226892F8700E90CE4 /* TopArtistsAPIDataSource.swift in Sources */,
+				78AD8C23268D0A74004BF30C /* ConnectionManager.swift in Sources */,
 				78638A70268742D3001A756E /* GenreAPIDataSource.swift in Sources */,
 				7809D1572682142C006F0ADD /* UIViewController+Extensions.swift in Sources */,
 				788A7582267B9E9800DFE2B0 /* MusicDB.xcdatamodeld in Sources */,
@@ -411,6 +430,7 @@
 				782E485A268A258D005C8E4F /* TopAlbums.swift in Sources */,
 				782E4862268A4092005C8E4F /* RockCollectionReusableView.swift in Sources */,
 				78027EE5268351E800526A0C /* DetailsMusicCollectionViewCell.swift in Sources */,
+				783FDEF7268E2F4F0048CC84 /* UICollectionViewController+Extensions.swift in Sources */,
 				788A75A1267CBCD100DFE2B0 /* TrackAPIDataSource.swift in Sources */,
 				782E485C268A2A41005C8E4F /* TopAlbumsAPIDataSource.swift in Sources */,
 				782E485E268A3423005C8E4F /* TopAlbumsCollectionReusableView.swift in Sources */,

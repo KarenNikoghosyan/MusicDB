@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HtQ-Gv-axj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hAa-yq-IQV">
     <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
@@ -9,10 +9,67 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Loading View Controller-->
+        <scene sceneID="0f8-5U-zkN">
+            <objects>
+                <viewController id="hAa-yq-IQV" customClass="LoadingViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fdn-aj-fZV">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MusicDB" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Npc-A1-7OO">
+                                <rect key="frame" x="0.0" y="206" width="428" height="59"/>
+                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="45"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Vnd-NK-01K">
+                                <rect key="frame" x="84" y="297" width="260" height="168"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="168" id="6y2-2I-9Yp"/>
+                                    <constraint firstAttribute="width" constant="260" id="xZE-OD-0om"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="mLE-Hc-dCp"/>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Npc-A1-7OO" firstAttribute="top" secondItem="mLE-Hc-dCp" secondAttribute="top" constant="39" id="C9z-gS-tGM"/>
+                            <constraint firstItem="Npc-A1-7OO" firstAttribute="leading" secondItem="mLE-Hc-dCp" secondAttribute="leading" id="ERl-8x-4CN"/>
+                            <constraint firstItem="Vnd-NK-01K" firstAttribute="centerX" secondItem="Npc-A1-7OO" secondAttribute="centerX" id="PXG-GZ-B7D"/>
+                            <constraint firstItem="Vnd-NK-01K" firstAttribute="top" secondItem="Npc-A1-7OO" secondAttribute="bottom" constant="32" id="PfP-Yb-3SJ"/>
+                            <constraint firstItem="mLE-Hc-dCp" firstAttribute="trailing" secondItem="Npc-A1-7OO" secondAttribute="trailing" id="eMy-Zq-ib3"/>
+                            <constraint firstItem="Vnd-NK-01K" firstAttribute="centerY" secondItem="fdn-aj-fZV" secondAttribute="centerY" id="lXi-BO-x0h"/>
+                            <constraint firstItem="Npc-A1-7OO" firstAttribute="top" secondItem="mLE-Hc-dCp" secondAttribute="top" constant="162" id="mVO-2f-4ca"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="C9z-gS-tGM"/>
+                                <exclude reference="lXi-BO-x0h"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <include reference="C9z-gS-tGM"/>
+                                <exclude reference="mVO-2f-4ca"/>
+                                <include reference="lXi-BO-x0h"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="logoImageView" destination="Vnd-NK-01K" id="XYo-wV-shu"/>
+                        <segue destination="HtQ-Gv-axj" kind="presentation" identifier="toLogin" modalPresentationStyle="fullScreen" id="Vqz-gd-d13"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lPJ-2U-NDf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-541" y="269"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="lx4-3H-eIY">
             <objects>
                 <tabBarController id="HtQ-Gv-axj" customClass="TabBarController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="XVx-tV-e5J"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="12b-6r-pRf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -35,7 +92,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="428" height="838"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BSY-Sw-PYH">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BSY-Sw-PYH">
                                 <rect key="frame" x="0.0" y="51" width="428" height="787"/>
                                 <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lUT-RD-ERF">
@@ -170,7 +227,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wzH-Ry-WYA">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wzH-Ry-WYA">
                                 <rect key="frame" x="0.0" y="293.66666666666669" width="428" height="520.33333333333326"/>
                                 <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="L0b-km-tKt">
@@ -392,7 +449,7 @@
         <scene sceneID="nnx-d8-db1">
             <objects>
                 <collectionViewController id="kS8-rI-kNd" customClass="HomeMusicCollectionViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="gkp-Cg-Kzu">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" dataMode="prototypes" id="gkp-Cg-Kzu">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -478,6 +535,7 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="house" catalog="system" width="128" height="106"/>
+        <image name="logo" width="512" height="512"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="play.circle" catalog="system" width="128" height="121"/>
         <systemColor name="groupTableViewBackgroundColor">

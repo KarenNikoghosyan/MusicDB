@@ -4,6 +4,7 @@ PODS:
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
   - PKHUD (5.3.0)
+  - ReachabilitySwift (5.0.0)
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
@@ -16,6 +17,7 @@ DEPENDENCIES:
   - loady
   - NVActivityIndicatorView
   - PKHUD
+  - ReachabilitySwift
   - SDWebImage
   - SwipeableTabBarController
   - UIScrollView-InfiniteScroll
@@ -27,6 +29,7 @@ SPEC REPOS:
     - loady
     - NVActivityIndicatorView
     - PKHUD
+    - ReachabilitySwift
     - SDWebImage
     - SwipeableTabBarController
     - UIScrollView-InfiniteScroll
@@ -37,12 +40,13 @@ SPEC CHECKSUMS:
   loady: f2acbcbd53bdeb55425e478304da2f7ff3ec706e
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SwipeableTabBarController: 9a218bdee9426d1bfe36d7962f852024bb08d61b
   UIScrollView-InfiniteScroll: 3ef456bcbe759c19f510a383cff96e6647c98c98
   ViewAnimator: a9ceed80266e00fd435ec4fb99b2df64d580d0e4
   WCLShineButton: 315ee9b0024b1cc56dba34fb6a8878937eb8d0b1
 
-PODFILE CHECKSUM: 4913da3c224c93b391042c7580278041ce8d114b
+PODFILE CHECKSUM: a3ef21f3edc72e5ea4a4cae5dd950c4ee444d602
 
 COCOAPODS: 1.10.1
