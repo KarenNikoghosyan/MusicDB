@@ -23,6 +23,7 @@
 		78614DF726862A60000125C2 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78614DF626862A60000125C2 /* BaseViewController.swift */; };
 		78638A70268742D3001A756E /* GenreAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78638A6F268742D3001A756E /* GenreAPIDataSource.swift */; };
 		7876D20C26828D2A009D0669 /* MediaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7876D20B26828D2A009D0669 /* MediaPlayer.swift */; };
+		7884C89D268F8CBB00FE1FBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7884C89C268F8CBB00FE1FBE /* GoogleService-Info.plist */; };
 		78892CAF26888CCF00A12F41 /* HomeTracksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78892CAE26888CCF00A12F41 /* HomeTracksCollectionViewCell.swift */; };
 		78892CBA2688D54300A12F41 /* TopChartCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78892CB92688D54300A12F41 /* TopChartCollectionReusableView.swift */; };
 		78892CBC2688ED4F00A12F41 /* HipHopCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78892CBB2688ED4F00A12F41 /* HipHopCollectionReusableView.swift */; };
@@ -66,6 +67,7 @@
 		78614DF626862A60000125C2 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		78638A6F268742D3001A756E /* GenreAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreAPIDataSource.swift; sourceTree = "<group>"; };
 		7876D20B26828D2A009D0669 /* MediaPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayer.swift; sourceTree = "<group>"; };
+		7884C89C268F8CBB00FE1FBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		78892CAE26888CCF00A12F41 /* HomeTracksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTracksCollectionViewCell.swift; sourceTree = "<group>"; };
 		78892CB92688D54300A12F41 /* TopChartCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopChartCollectionReusableView.swift; sourceTree = "<group>"; };
 		78892CBB2688ED4F00A12F41 /* HipHopCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HipHopCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				788A7583267B9E9900DFE2B0 /* Assets.xcassets */,
 				788A7585267B9E9900DFE2B0 /* LaunchScreen.storyboard */,
 				788A7588267B9E9900DFE2B0 /* Info.plist */,
+				7884C89C268F8CBB00FE1FBE /* GoogleService-Info.plist */,
 				788A7580267B9E9800DFE2B0 /* MusicDB.xcdatamodeld */,
 			);
 			path = MusicDB;
@@ -349,6 +352,7 @@
 			files = (
 				788A7587267B9E9900DFE2B0 /* LaunchScreen.storyboard in Resources */,
 				78027EE6268351E800526A0C /* DetailsMusicCollectionViewCell.xib in Resources */,
+				7884C89D268F8CBB00FE1FBE /* GoogleService-Info.plist in Resources */,
 				788A7584267B9E9900DFE2B0 /* Assets.xcassets in Resources */,
 				788A757F267B9E9800DFE2B0 /* Main.storyboard in Resources */,
 			);

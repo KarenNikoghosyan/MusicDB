@@ -19,42 +19,28 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MusicDB" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Npc-A1-7OO">
                                 <rect key="frame" x="0.0" y="206" width="428" height="59"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="59" id="KYf-e7-F8L"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="45"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Vnd-NK-01K">
                                 <rect key="frame" x="84" y="297" width="260" height="168"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="168" id="6y2-2I-9Yp"/>
-                                    <constraint firstAttribute="width" constant="260" id="xZE-OD-0om"/>
-                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mLE-Hc-dCp"/>
                         <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="Npc-A1-7OO" firstAttribute="top" secondItem="mLE-Hc-dCp" secondAttribute="top" constant="39" id="C9z-gS-tGM"/>
-                            <constraint firstItem="Npc-A1-7OO" firstAttribute="leading" secondItem="mLE-Hc-dCp" secondAttribute="leading" id="ERl-8x-4CN"/>
-                            <constraint firstItem="Vnd-NK-01K" firstAttribute="centerX" secondItem="Npc-A1-7OO" secondAttribute="centerX" id="PXG-GZ-B7D"/>
-                            <constraint firstItem="Vnd-NK-01K" firstAttribute="top" secondItem="Npc-A1-7OO" secondAttribute="bottom" constant="32" id="PfP-Yb-3SJ"/>
-                            <constraint firstItem="mLE-Hc-dCp" firstAttribute="trailing" secondItem="Npc-A1-7OO" secondAttribute="trailing" id="eMy-Zq-ib3"/>
-                            <constraint firstItem="Vnd-NK-01K" firstAttribute="centerY" secondItem="fdn-aj-fZV" secondAttribute="centerY" id="lXi-BO-x0h"/>
-                            <constraint firstItem="Npc-A1-7OO" firstAttribute="top" secondItem="mLE-Hc-dCp" secondAttribute="top" constant="162" id="mVO-2f-4ca"/>
+                            <constraint firstItem="Npc-A1-7OO" firstAttribute="centerX" secondItem="fdn-aj-fZV" secondAttribute="centerX" id="3Mz-ZG-zO2"/>
+                            <constraint firstItem="Npc-A1-7OO" firstAttribute="centerX" secondItem="Vnd-NK-01K" secondAttribute="centerX" id="4m5-yC-IG3"/>
+                            <constraint firstItem="Vnd-NK-01K" firstAttribute="leading" secondItem="mLE-Hc-dCp" secondAttribute="leading" constant="84" id="6cc-BN-0gc"/>
+                            <constraint firstItem="Npc-A1-7OO" firstAttribute="top" secondItem="mLE-Hc-dCp" secondAttribute="top" constant="162" id="Jem-8z-Jqc"/>
+                            <constraint firstItem="Vnd-NK-01K" firstAttribute="top" secondItem="Npc-A1-7OO" secondAttribute="bottom" constant="32" id="OTb-BW-VaA"/>
+                            <constraint firstItem="mLE-Hc-dCp" firstAttribute="bottom" secondItem="Vnd-NK-01K" secondAttribute="bottom" constant="427" id="cfm-Jg-ydM"/>
+                            <constraint firstItem="Npc-A1-7OO" firstAttribute="leading" secondItem="mLE-Hc-dCp" secondAttribute="leading" id="q1e-d7-4fS"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="C9z-gS-tGM"/>
-                                <exclude reference="lXi-BO-x0h"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=compact">
-                            <mask key="constraints">
-                                <include reference="C9z-gS-tGM"/>
-                                <exclude reference="mVO-2f-4ca"/>
-                                <include reference="lXi-BO-x0h"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="logoImageView" destination="Vnd-NK-01K" id="XYo-wV-shu"/>
@@ -64,6 +50,42 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lPJ-2U-NDf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-541" y="269"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="0Jo-7X-zsG">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="gOU-ut-ZqD" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="L6e-dt-Mjx">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="n4i-mD-ZVr"/>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <connections>
+                        <segue destination="D4c-T8-gPI" kind="presentation" identifier="toRegister" id="lay-yG-JQN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bi6-cD-ye1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="583" y="269"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="PpQ-qS-Cpy">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="D4c-T8-gPI" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Jle-NP-y3S">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="IwG-DA-aig"/>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <connections>
+                        <segue destination="gOU-ut-ZqD" kind="presentation" identifier="toLogin" id="yuW-DV-6vn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bWz-Wq-Luf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1436" y="269"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="lx4-3H-eIY">
@@ -175,14 +197,14 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5OX-sI-an2">
-                                <rect key="frame" x="184" y="49" width="109.66666666666669" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Artist Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5OX-sI-an2">
+                                <rect key="frame" x="184" y="49" width="109.33333333333331" height="21"/>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cbr-ub-r2y">
-                                <rect key="frame" x="297.66666666666669" y="49" width="124.33333333333331" height="21"/>
+                                <rect key="frame" x="297.33333333333331" y="49" width="124.66666666666669" height="21"/>
                                 <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -193,7 +215,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WC3-Dt-a8g">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WC3-Dt-a8g">
                                 <rect key="frame" x="290" y="82" width="132" height="21"/>
                                 <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -531,7 +553,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dBr-ud-96E"/>
+        <segue reference="yuW-DV-6vn"/>
+        <segue reference="NqS-Qw-gks"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="house" catalog="system" width="128" height="106"/>

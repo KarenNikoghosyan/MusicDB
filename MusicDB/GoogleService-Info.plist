@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>885240881238-gsgkh7fscoqn220pkavjmoceja26ktob.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.885240881238-gsgkh7fscoqn220pkavjmoceja26ktob</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDI8G86-rMjFXPYe8PuVhpfxLQlMHhmVJQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>885240881238</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>edu.karen.nikoghosyan.MusicDB</string>
+	<key>PROJECT_ID</key>
+	<string>musicdb-29c08</string>
+	<key>STORAGE_BUCKET</key>
+	<string>musicdb-29c08.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:885240881238:ios:13a586c5921cc9a4881bf7</string>
+</dict>
+</plist>
