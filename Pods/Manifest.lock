@@ -98,6 +98,7 @@ PODS:
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
+  - SkyFloatingLabelTextField (4.0.0)
   - SwipeableTabBarController (3.4.2)
   - UIScrollView-InfiniteScroll (1.1.0)
   - ViewAnimator (3.1.0)
@@ -111,6 +112,7 @@ DEPENDENCIES:
   - PKHUD
   - ReachabilitySwift
   - SDWebImage
+  - SkyFloatingLabelTextField
   - SwipeableTabBarController
   - UIScrollView-InfiniteScroll
   - ViewAnimator
@@ -135,6 +137,7 @@ SPEC REPOS:
     - PromisesObjC
     - ReachabilitySwift
     - SDWebImage
+    - SkyFloatingLabelTextField
     - SwipeableTabBarController
     - UIScrollView-InfiniteScroll
     - ViewAnimator
@@ -158,11 +161,12 @@ SPEC CHECKSUMS:
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  SkyFloatingLabelTextField: 79ddc40e4ad59707fedbb48d605417aee48bb78a
   SwipeableTabBarController: 9a218bdee9426d1bfe36d7962f852024bb08d61b
   UIScrollView-InfiniteScroll: 3ef456bcbe759c19f510a383cff96e6647c98c98
   ViewAnimator: a9ceed80266e00fd435ec4fb99b2df64d580d0e4
   WCLShineButton: 315ee9b0024b1cc56dba34fb6a8878937eb8d0b1
 
-PODFILE CHECKSUM: ae633245865b785a83b3600860c375a86718c9b2
+PODFILE CHECKSUM: 358aae3e9235bc6f998bb557deb6f87db11af282
 
 COCOAPODS: 1.10.1

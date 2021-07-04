@@ -68,15 +68,14 @@ extension BaseViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 extension BaseViewController: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if UIScreen.main.bounds.width > UIScreen.main.bounds.height{
-            return CGSize(width: collectionView.bounds.width / 6.0, height: 160)
-        } else {
-            return CGSize(width: collectionView.bounds.width / 3.0, height: 160)
-        }
-        
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//
+//        if UIScreen.main.bounds.width > UIScreen.main.bounds.height{
+//            return CGSize(width: collectionView.bounds.width / 6.0, height: collectionView.bounds.width / 6.0)
+//        } else {
+//            return CGSize(width: collectionView.bounds.width / 3.0, height: collectionView.bounds.width / 2.0)
+//        }
+//    }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0

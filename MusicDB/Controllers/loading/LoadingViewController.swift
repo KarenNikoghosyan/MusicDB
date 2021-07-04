@@ -19,10 +19,10 @@ class LoadingViewController: UIViewController {
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicatorView)
         NSLayoutConstraint.activate([
+            activityIndicatorView.widthAnchor.constraint(equalToConstant: 40),
             activityIndicatorView.heightAnchor.constraint(equalToConstant: 40),
-            activityIndicatorView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 36),
-            activityIndicatorView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            activityIndicatorView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            activityIndicatorView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 24),
+            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         activityIndicatorView.startAnimating()
 

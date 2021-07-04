@@ -25,3 +25,12 @@ extension UIViewController {
         return storyboard.instantiateViewController(withIdentifier: restorationID)
     }
 }
+
+extension UIViewController {
+    func showViewControllerAlert(title: String? = nil, message: String? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alert.addAction(.init(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+}

@@ -22,19 +22,18 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aUF-Tm-Nv3">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aUF-Tm-Nv3">
                         <rect key="frame" x="4" y="18.5" width="192" height="187.5"/>
                     </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="aUF-Tm-Nv3" secondAttribute="bottom" constant="4" id="01R-25-atk"/>
-                    <constraint firstItem="aUF-Tm-Nv3" firstAttribute="top" secondItem="KFt-46-sB1" secondAttribute="bottom" constant="4" id="1RE-bU-w98"/>
                     <constraint firstAttribute="trailing" secondItem="aUF-Tm-Nv3" secondAttribute="trailing" constant="4" id="1WS-Ia-S53"/>
                     <constraint firstAttribute="trailing" secondItem="KFt-46-sB1" secondAttribute="trailing" constant="4" id="3Vg-84-P1d"/>
                     <constraint firstItem="KFt-46-sB1" firstAttribute="top" secondItem="0dr-hr-2vQ" secondAttribute="top" id="48b-NC-a3I"/>
                     <constraint firstItem="KFt-46-sB1" firstAttribute="leading" secondItem="0dr-hr-2vQ" secondAttribute="leading" constant="16" id="8np-az-KKa"/>
                     <constraint firstItem="aUF-Tm-Nv3" firstAttribute="leading" secondItem="0dr-hr-2vQ" secondAttribute="leading" constant="4" id="PIG-hT-bVF"/>
-                    <constraint firstItem="aUF-Tm-Nv3" firstAttribute="top" secondItem="KFt-46-sB1" secondAttribute="bottom" constant="4" id="bHw-zl-Hz1"/>
+                    <constraint firstItem="aUF-Tm-Nv3" firstAttribute="top" secondItem="KFt-46-sB1" secondAttribute="bottom" constant="4" id="ymo-qB-s1a"/>
                 </constraints>
             </collectionViewCellContentView>
             <size key="customSize" width="199" height="213"/>
