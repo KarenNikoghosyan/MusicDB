@@ -27,9 +27,13 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     let topAlbumsDS = TopAlbumsAPIDataSource()
     var counter: Int = 0
     
+    @IBAction func signOut(_ sender: UIBarButtonItem) {
+        showAlertAndSegue(title: "Sign out from MusicDB?", message: "You're about to sign out, do you want to proceed?")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         if !ConnectionManager.shared.hasConnectivity() {
             showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
             HUD.flash(.error, delay: 0.5)
@@ -510,4 +514,5 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         
         present(vc, animated: true)
     }
+   
 }

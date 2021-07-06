@@ -15,6 +15,9 @@ class SearchMusicViewController: BaseViewController {
     
     @IBOutlet weak var trackSearchBar: UISearchBar!
     @IBOutlet weak var searchTracksCollectionView: UICollectionView!
+    @IBAction func signOut(_ sender: UIBarButtonItem) {
+        showAlertAndSegue(title: "Sign out from MusicDB?", message: "You're about to sign out, do you want to proceed?")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,25 +48,9 @@ class SearchMusicViewController: BaseViewController {
     }
     
     func setupNavigationItems() {
-        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-        
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-            
-        label.text = "Search"
-        label.font = UIFont.boldSystemFont(ofSize: 34)
-        label.textColor = .white
-        
-        label.textAlignment = .left
-            
-        navigationItem.titleView = label
-            
-        if let navigationBar = navigationController?.navigationBar {
-            label.widthAnchor.constraint(equalTo: navigationBar.widthAnchor, constant: -40).isActive = true
-        }
     }
     
     func loadSearchLabel() {

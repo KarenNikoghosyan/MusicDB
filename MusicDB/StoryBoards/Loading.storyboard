@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XSt-p0-w67">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Loading View Controller-->
+        <scene sceneID="Zds-C8-0VR">
+            <objects>
+                <viewController id="XSt-p0-w67" customClass="LoadingViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yPb-zp-jhT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MusicDB" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OH0-1A-Qea">
+                                <rect key="frame" x="8" y="172" width="398" height="58.5"/>
+                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="45"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="35"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="90"/>
+                                </variation>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="gQC-lu-za0">
+                                <rect key="frame" x="107" y="246.5" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="fEF-bF-UBp">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="100"/>
+                                        <variation key="heightClass=regular-widthClass=regular" constant="400"/>
+                                    </constraint>
+                                    <constraint firstAttribute="height" constant="200" id="wnS-Xp-UZs">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="100"/>
+                                        <variation key="heightClass=regular-widthClass=regular" constant="400"/>
+                                    </constraint>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="eTo-7o-xzi"/>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="gQC-lu-za0" firstAttribute="centerX" secondItem="yPb-zp-jhT" secondAttribute="centerX" id="BK2-DS-Igw"/>
+                            <constraint firstItem="gQC-lu-za0" firstAttribute="top" secondItem="OH0-1A-Qea" secondAttribute="bottom" constant="16" id="BMj-ls-huw">
+                                <variation key="heightClass=regular-widthClass=regular" constant="24"/>
+                            </constraint>
+                            <constraint firstItem="eTo-7o-xzi" firstAttribute="trailing" secondItem="OH0-1A-Qea" secondAttribute="trailing" constant="8" id="gnJ-UO-CLK"/>
+                            <constraint firstItem="OH0-1A-Qea" firstAttribute="top" secondItem="eTo-7o-xzi" secondAttribute="top" constant="128" id="kAx-Fj-26C">
+                                <variation key="heightClass=compact-widthClass=compact" constant="32"/>
+                                <variation key="heightClass=compact-widthClass=regular" constant="32"/>
+                                <variation key="heightClass=regular-widthClass=regular" constant="180"/>
+                            </constraint>
+                            <constraint firstItem="OH0-1A-Qea" firstAttribute="leading" secondItem="eTo-7o-xzi" secondAttribute="leading" constant="8" id="wCK-Ju-by2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="logoImageView" destination="gQC-lu-za0" id="Dxs-Rz-osi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ivl-4E-z1F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-252" y="-458"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="logo" width="512" height="512"/>
+    </resources>
+</document>

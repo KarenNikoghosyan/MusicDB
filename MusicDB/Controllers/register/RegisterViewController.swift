@@ -25,15 +25,19 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func registerTapped(_ sender: LoadyButton) {
         guard let name = registerNameTextField.text, name.count > 1, let email = registerEmailTextField.text, email.isEmail(), let password = registerPasswordTextField.text, password.count > 5, let confirmedPassword = registerConfirmedPasswordTextField.text, confirmedPassword == password else {
-            showViewControllerAlert(title: "Error, Cannot Proceed", message: "Please check the fields")
+            showViewControllerAlert(title: "Error", message: "Please check the fields")
             return
         }
         
-        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+        Auth.auth().createUser(withEmail: email, password: password) {[weak self] result, error in
             if error == nil {
                 Auth.auth().signIn(withEmail: email, password: password) {[weak self] _, _ in
-                    self?.performSegue(withIdentifier: "toHome", sender: nil)
+                    let storyboard = UIStoryboard(name: "Main", bundle: .main)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "mainStoryboard")
+                    self?.present(vc, animated: true)
                 }
+            } else {
+                self?.showViewControllerAlert(title: "Error", message: "Account cannot be created at this moment, please try again later")
             }
         }
     }

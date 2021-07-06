@@ -7,12 +7,31 @@
 
 import UIKit
 import SkyFloatingLabelTextField
+import Loady
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var loginEmailTextField: SkyFloatingLabelTextFieldWithIcon!
     @IBOutlet weak var loginPasswordTextField: SkyFloatingLabelTextFieldWithIcon!
     @IBAction func signUpTapped(_ sender: UIButton) {
         performSegue(withIdentifier: "toRegister", sender: nil)
+    }
+    @IBAction func loginTapped(_ sender: LoadyButton) {
+        guard let email = loginEmailTextField.text, email.isEmail(),
+              let password = loginPasswordTextField.text, password.count > 5 else {
+            showViewControllerAlert(title: "Error", message: "Please check the fields")
+            return
+        }
+        
+        Auth.auth().signIn(withEmail: email, password: password) {[weak self] result, error in
+            if error == nil {
+                let storyboard = UIStoryboard(name: "Main", bundle: .main)
+                let vc = storyboard.instantiateViewController(withIdentifier: "mainStoryboard")
+                self?.present(vc, animated: true)
+            } else {
+                self?.showViewControllerAlert(title: "Error", message: "There's a problem with signing you in, please try again later")
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -22,8 +41,6 @@ class LoginViewController: UIViewController {
         loginEmailTextField.becomeFirstResponder()
         
         setUpTextFields()
-        
-        
     }
     
     func setupNavigationItems() {
@@ -43,6 +60,7 @@ class LoginViewController: UIViewController {
         loginEmailTextField.iconType = .image
         loginEmailTextField.iconColor = .lightGray
         loginEmailTextField.iconImage = UIImage(systemName: "envelope")
+        loginEmailTextField.addTarget(self, action: #selector(emailTextFieldDidChange(_:)), for: .editingChanged)
         
         loginPasswordTextField.placeholder = "Password"
         loginPasswordTextField.title = "Password"
@@ -54,5 +72,38 @@ class LoginViewController: UIViewController {
         loginPasswordTextField.iconType = .image
         loginPasswordTextField.iconColor = .lightGray
         loginPasswordTextField.iconImage = UIImage(systemName: "lock")
+        loginPasswordTextField.addTarget(self, action: #selector(passwordTextFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    @objc func emailTextFieldDidChange(_ textField: UITextField) {
+            if let text = textField.text {
+                if let floatingLabelTextField = textField as? SkyFloatingLabelTextFieldWithIcon {
+                    if !text.isEmail() {
+                        floatingLabelTextField.errorMessage = "Invalid email"
+                    } else {
+                        floatingLabelTextField.errorMessage = nil
+                    }
+                    
+                    if text.count == 0 {
+                        floatingLabelTextField.errorMessage = nil
+                    }
+                }
+            }
+        }
+    
+    @objc func passwordTextFieldDidChange(_ textField: UITextField) {
+        if let text = textField.text {
+            if let floatingLabelTextField = textField as? SkyFloatingLabelTextFieldWithIcon {
+                if text.count < 6 {
+                    floatingLabelTextField.errorMessage = "Password is too short"
+                } else {
+                    floatingLabelTextField.errorMessage = nil
+                }
+                
+                if text.count == 0 {
+                    floatingLabelTextField.errorMessage = nil
+                }
+            }
+        }
     }
 }
