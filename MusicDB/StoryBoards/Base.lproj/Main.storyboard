@@ -22,11 +22,12 @@
                     <connections>
                         <segue destination="ytK-Cn-2rt" kind="relationship" relationship="viewControllers" id="k20-C7-Uvy"/>
                         <segue destination="aTY-fp-TzV" kind="relationship" relationship="viewControllers" id="6gX-m4-m3Z"/>
+                        <segue destination="xdQ-7a-Y0w" kind="relationship" relationship="viewControllers" id="VT6-X4-bAp"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RXY-e2-u6t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-539" y="1000"/>
+            <point key="canvasLocation" x="-506" y="996"/>
         </scene>
         <!--Search-->
         <scene sceneID="fit-Ug-e53">
@@ -290,6 +291,9 @@
                                     <constraint firstAttribute="height" constant="35" id="JXc-Kc-SAx"/>
                                     <constraint firstAttribute="width" constant="35" id="O84-Hf-U4F"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="likedButtonTapped:" destination="U7H-HD-5R9" eventType="valueChanged" id="DEU-DA-FXt"/>
+                                </connections>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="15m-T5-NEr"/>
@@ -345,7 +349,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="js3-BE-A3t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-541.12149532710282" y="3348.5961123110155"/>
+            <point key="canvasLocation" x="-506" y="3340"/>
         </scene>
         <!--Home-->
         <scene sceneID="nnx-d8-db1">
@@ -389,7 +393,37 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zBD-61-hwv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-539" y="2575"/>
+            <point key="canvasLocation" x="-506" y="2574"/>
+        </scene>
+        <!--Liked-->
+        <scene sceneID="B8m-CX-kbo">
+            <objects>
+                <tableViewController id="YAM-6s-wda" customClass="LikedTableViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="XKc-Mh-6j5">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="oB0-Ax-zqm">
+                                <rect key="frame" x="0.0" y="24.333333969116211" width="428" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oB0-Ax-zqm" id="maq-z9-ZAs">
+                                    <rect key="frame" x="0.0" y="0.0" width="428" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="YAM-6s-wda" id="ohU-Qx-abL"/>
+                            <outlet property="delegate" destination="YAM-6s-wda" id="0df-Ke-c4z"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Liked" id="Fnq-df-YRc"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5pf-SX-NKN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="390" y="2574"/>
         </scene>
         <!--Home-->
         <scene sceneID="93v-jd-q18">
@@ -415,7 +449,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W3K-L2-SEH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-541" y="1753"/>
+            <point key="canvasLocation" x="-506" y="1753"/>
         </scene>
         <!--Search-->
         <scene sceneID="XdU-S4-XYL">
@@ -443,11 +477,38 @@
             </objects>
             <point key="canvasLocation" x="-1466" y="1753"/>
         </scene>
+        <!--Liked-->
+        <scene sceneID="cfu-bz-x9D">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xdQ-7a-Y0w" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Liked" image="heart.fill" catalog="system" id="sQs-jI-jQ0"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="9g4-Rm-5nc">
+                        <rect key="frame" x="0.0" y="44" width="428" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="YAM-6s-wda" kind="relationship" relationship="rootViewController" id="Z4C-tf-uZH"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W3X-6l-sG5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="391" y="1753"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dBr-ud-96E"/>
+        <segue reference="NqS-Qw-gks"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="icon_signout_landscape" width="18" height="18"/>
         <image name="icon_signout_potrait" width="25" height="25"/>

@@ -16,7 +16,10 @@ target 'MusicDB' do
   pod 'WCLShineButton'
   pod 'ReachabilitySwift'
   pod 'SkyFloatingLabelTextField'
+  pod 'Loaf'
+  pod 'LGButton'
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
-
+  pod 'Firebase/Firestore'
+  
 end

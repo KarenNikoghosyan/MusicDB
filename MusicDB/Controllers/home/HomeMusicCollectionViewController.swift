@@ -9,6 +9,7 @@ import UIKit
 import ViewAnimator
 import SafariServices
 import PKHUD
+import Loaf
 
 class HomeMusicCollectionViewController: UICollectionViewController {
         
@@ -58,6 +59,14 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         collectionView.register(RockCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "rockHeader")
         
         collectionView.collectionViewLayout = createCompositionalLayout()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        NotificationCenter.default.addObserver(forName: .LoadAlert, object: nil, queue: .main) { _ in
+            
+            Loaf("Account was successfully created", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
+        }
     }
     
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {

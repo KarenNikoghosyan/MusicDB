@@ -11,6 +11,7 @@ import SafariServices
 import Loady
 import ViewAnimator
 import WCLShineButton
+import Loaf
 
 class DetailsMusicViewController: BaseViewController {
     var track: Track?
@@ -50,6 +51,9 @@ class DetailsMusicViewController: BaseViewController {
     
     @IBOutlet weak var previewButton: LoadyButton!
     @IBOutlet weak var likedButton: WCLShineButton!
+    @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
+        Loaf("The track was added to your liked page", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

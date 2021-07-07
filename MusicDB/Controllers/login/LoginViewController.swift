@@ -9,6 +9,7 @@ import UIKit
 import SkyFloatingLabelTextField
 import Loady
 import FirebaseAuth
+import LGButton
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var loginEmailTextField: SkyFloatingLabelTextFieldWithIcon!
@@ -16,7 +17,8 @@ class LoginViewController: UIViewController {
     @IBAction func signUpTapped(_ sender: UIButton) {
         performSegue(withIdentifier: "toRegister", sender: nil)
     }
-    @IBAction func loginTapped(_ sender: LoadyButton) {
+    
+    @IBAction func loginTapped(_ sender: LGButton) {
         guard let email = loginEmailTextField.text, email.isEmail(),
               let password = loginPasswordTextField.text, password.count > 5 else {
             showViewControllerAlert(title: "Error", message: "Please check the fields")
@@ -41,6 +43,11 @@ class LoginViewController: UIViewController {
         loginEmailTextField.becomeFirstResponder()
         
         setUpTextFields()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
     }
     
     func setupNavigationItems() {

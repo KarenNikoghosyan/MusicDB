@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -58,39 +59,65 @@
                                     <constraint firstAttribute="height" constant="50" id="eO5-CC-1Qh"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dJ-R7-ZlJ" customClass="LoadyButton" customModule="Loady">
-                                <rect key="frame" x="228" y="409.5" width="140" height="45"/>
-                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aa1-9B-UTV" customClass="LGButton" customModule="LGButton">
+                                <rect key="frame" x="228" y="409.5" width="140" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="140" id="Mb6-G7-sjA"/>
-                                    <constraint firstAttribute="height" constant="45" id="SHS-L4-qDs"/>
+                                    <constraint firstAttribute="width" constant="140" id="4oe-bl-nfn"/>
+                                    <constraint firstAttribute="height" constant="50" id="G8W-Qi-hXU"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="18"/>
-                                <color key="tintColor" systemColor="systemBlueColor"/>
-                                <state key="normal" title="LOGIN" image="arrow.right.circle" catalog="system">
-                                    <color key="titleColor" systemColor="groupTableViewBackgroundColor"/>
-                                </state>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                        <color key="value" red="0.0" green="0.51764705879999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundFillColor">
+                                    <userDefinedRuntimeAttribute type="string" keyPath="titleString" value="LOG IN"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showTouchFeedback" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="gradientStartColor">
+                                        <color key="value" systemColor="systemGreenColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="gradientEndColor">
+                                        <color key="value" systemColor="systemGreenColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="gradientHorizontal" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="6"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                         <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="loadingColor">
-                                        <color key="value" systemColor="systemGreenColor"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftIconFontSize">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="leftIconColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rightIconFontSize">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="titleFontSize">
+                                        <real key="value" value="16"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="titleFontName" value="Futura Bold"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="rightImageSrc">
+                                        <imageReference key="value" image="arrow.right.circle" catalog="system" symbolScale="large"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="rightImageColor">
+                                        <color key="value" systemColor="systemRedColor"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="loginTapped:" destination="2Wn-t2-KDg" eventType="touchUpInside" id="bEO-gE-VIy"/>
+                                    <action selector="loginTapped:" destination="2Wn-t2-KDg" eventType="touchUpInside" id="H2n-1m-8Ym"/>
                                 </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7LL-8Z-YNg"/>
                         <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="IXe-RB-fcp" firstAttribute="leading" secondItem="7LL-8Z-YNg" secondAttribute="leading" constant="46" id="6Sn-ka-fd2"/>
-                            <constraint firstItem="7LL-8Z-YNg" firstAttribute="trailing" secondItem="7dJ-R7-ZlJ" secondAttribute="trailing" constant="46" id="Cc0-dZ-F2Y"/>
                             <constraint firstItem="WuR-W1-pKg" firstAttribute="top" secondItem="7LL-8Z-YNg" secondAttribute="top" constant="140" id="EIg-bP-olS">
                                 <variation key="heightClass=compact-widthClass=compact" constant="16"/>
                                 <variation key="heightClass=compact-widthClass=regular" constant="28"/>
@@ -105,15 +132,13 @@
                                 <variation key="heightClass=compact-widthClass=regular" constant="250"/>
                             </constraint>
                             <constraint firstItem="7LL-8Z-YNg" firstAttribute="trailing" secondItem="crb-Hf-kRS" secondAttribute="trailing" constant="46" id="Ufd-qm-bQ7"/>
+                            <constraint firstItem="aa1-9B-UTV" firstAttribute="top" secondItem="Qrl-2J-jAI" secondAttribute="bottom" constant="36" id="aMp-7F-tYt"/>
+                            <constraint firstItem="7LL-8Z-YNg" firstAttribute="trailing" secondItem="aa1-9B-UTV" secondAttribute="trailing" constant="46" id="arV-O9-pcJ"/>
                             <constraint firstItem="Qrl-2J-jAI" firstAttribute="leading" secondItem="7LL-8Z-YNg" secondAttribute="leading" constant="46" id="fX9-b4-ibn"/>
                             <constraint firstItem="7LL-8Z-YNg" firstAttribute="trailing" secondItem="WuR-W1-pKg" secondAttribute="trailing" constant="46" id="g7p-is-PCU"/>
                             <constraint firstItem="7LL-8Z-YNg" firstAttribute="trailing" secondItem="IXe-RB-fcp" secondAttribute="trailing" constant="46" id="h3C-qO-8j4"/>
                             <constraint firstItem="CXS-6e-ToL" firstAttribute="top" secondItem="mWx-h5-Icx" secondAttribute="top" id="h7r-OY-0qT"/>
                             <constraint firstItem="crb-Hf-kRS" firstAttribute="leading" secondItem="7LL-8Z-YNg" secondAttribute="leading" constant="46" id="qxv-Qy-mNn"/>
-                            <constraint firstItem="7dJ-R7-ZlJ" firstAttribute="top" secondItem="Qrl-2J-jAI" secondAttribute="bottom" constant="36" id="si5-FB-xz3">
-                                <variation key="heightClass=compact-widthClass=compact" constant="12"/>
-                                <variation key="heightClass=compact-widthClass=regular" constant="16"/>
-                            </constraint>
                             <constraint firstItem="crb-Hf-kRS" firstAttribute="top" secondItem="IXe-RB-fcp" secondAttribute="bottom" constant="36" id="um5-of-HHG">
                                 <variation key="heightClass=compact-widthClass=compact" constant="16"/>
                                 <variation key="heightClass=compact-widthClass=regular" constant="18"/>
@@ -181,33 +206,6 @@
                                                     <constraint firstAttribute="height" constant="50" id="wXy-Vc-Va5"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R5G-i0-XJc" customClass="LoadyButton" customModule="Loady">
-                                                <rect key="frame" x="242" y="546" width="140" height="45"/>
-                                                <color key="backgroundColor" systemColor="systemGreenColor"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="45" id="fhn-SZ-7Jd"/>
-                                                    <constraint firstAttribute="width" constant="140" id="smy-gR-E0P"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="18"/>
-                                                <color key="tintColor" systemColor="systemBlueColor"/>
-                                                <state key="normal" title="SIGN UP" image="arrow.right.circle" catalog="system">
-                                                    <color key="titleColor" systemColor="groupTableViewBackgroundColor"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="10"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundFillColor">
-                                                        <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="loadingColor">
-                                                        <color key="value" systemColor="systemGreenColor"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="registerTapped:" destination="JEF-aL-Pda" eventType="touchUpInside" id="KvL-cA-pZA"/>
-                                                </connections>
-                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEk-pv-m6Y">
                                                 <rect key="frame" x="64" y="784" width="215" height="36"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
@@ -232,6 +230,61 @@
                                                     <action selector="backButtonTapped:" destination="JEF-aL-Pda" eventType="touchUpInside" id="pSq-QI-zgc"/>
                                                 </connections>
                                             </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G4Y-Pu-YwX" customClass="LGButton" customModule="LGButton">
+                                                <rect key="frame" x="222" y="546" width="160" height="50"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="2oY-0z-sZi"/>
+                                                    <constraint firstAttribute="width" constant="160" id="eox-5Q-7xd"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
+                                                        <color key="value" red="0.0" green="0.51764705879999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleString" value="SIGN UP"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showTouchFeedback" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="gradientStartColor">
+                                                        <color key="value" systemColor="systemGreenColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="gradientEndColor">
+                                                        <color key="value" systemColor="systemGreenColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="gradientHorizontal" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="6"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="2"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="leftIconFontSize">
+                                                        <real key="value" value="20"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="leftIconColor">
+                                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="rightIconFontSize">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="titleFontSize">
+                                                        <real key="value" value="16"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="titleFontName" value="Futura Bold"/>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="rightImageSrc">
+                                                        <imageReference key="value" image="arrow.right.circle" catalog="system" symbolScale="large"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="rightImageColor">
+                                                        <color key="value" systemColor="systemRedColor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="registerTapped:" destination="JEF-aL-Pda" eventType="touchUpInside" id="NKH-Ti-AoZ"/>
+                                                    <action selector="registerTapped:" destination="JEF-aL-Pda" eventType="valueChanged" id="lM3-2h-sHs"/>
+                                                </connections>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -240,9 +293,6 @@
                                             <constraint firstItem="Kba-pl-yGg" firstAttribute="top" secondItem="Tig-Pz-DTF" secondAttribute="bottom" constant="36" id="7B2-Ti-nN9"/>
                                             <constraint firstAttribute="bottom" secondItem="JEk-pv-m6Y" secondAttribute="bottom" constant="180" id="7Hq-vg-M1c">
                                                 <variation key="heightClass=compact-widthClass=regular" constant="300"/>
-                                            </constraint>
-                                            <constraint firstAttribute="trailing" secondItem="R5G-i0-XJc" secondAttribute="trailing" constant="46" id="8R1-t6-C5g">
-                                                <variation key="heightClass=compact-widthClass=regular" constant="170"/>
                                             </constraint>
                                             <constraint firstAttribute="trailing" secondItem="BP9-Hs-z0X" secondAttribute="trailing" constant="46" id="BfN-R5-vNO">
                                                 <variation key="heightClass=compact-widthClass=regular" constant="170"/>
@@ -258,17 +308,20 @@
                                             </constraint>
                                             <constraint firstItem="BP9-Hs-z0X" firstAttribute="leading" secondItem="hNw-kH-8w7" secondAttribute="leading" constant="46" id="H2J-vt-30n"/>
                                             <constraint firstAttribute="trailing" secondItem="Tig-Pz-DTF" secondAttribute="trailing" constant="46" id="McO-9r-8sH"/>
-                                            <constraint firstItem="R5G-i0-XJc" firstAttribute="top" secondItem="BP9-Hs-z0X" secondAttribute="bottom" constant="36" id="N4F-oI-f7P"/>
                                             <constraint firstItem="JEk-pv-m6Y" firstAttribute="leading" secondItem="hNw-kH-8w7" secondAttribute="leading" constant="64" id="ORU-lv-E0l"/>
                                             <constraint firstItem="wVW-Nd-iNk" firstAttribute="top" secondItem="hNw-kH-8w7" secondAttribute="top" constant="46" id="Oey-PN-kUI"/>
                                             <constraint firstAttribute="trailing" secondItem="Kba-pl-yGg" secondAttribute="trailing" constant="46" id="Q2e-G1-bdL">
                                                 <variation key="heightClass=compact-widthClass=regular" constant="170"/>
                                             </constraint>
+                                            <constraint firstItem="G4Y-Pu-YwX" firstAttribute="top" secondItem="BP9-Hs-z0X" secondAttribute="bottom" constant="36" id="RuS-PF-mYH"/>
                                             <constraint firstItem="4c1-EN-6AL" firstAttribute="top" secondItem="JEk-pv-m6Y" secondAttribute="top" id="bca-2y-ZDc"/>
                                             <constraint firstAttribute="height" constant="1000" id="ct6-BB-S3s"/>
                                             <constraint firstItem="BP9-Hs-z0X" firstAttribute="top" secondItem="lpK-wx-LCL" secondAttribute="bottom" constant="16" id="eAX-ms-3yW"/>
                                             <constraint firstItem="Rzg-1L-AKG" firstAttribute="leading" secondItem="hNw-kH-8w7" secondAttribute="leading" constant="46" id="eZw-qu-eC3"/>
                                             <constraint firstAttribute="trailing" secondItem="4c1-EN-6AL" secondAttribute="trailing" constant="16" id="f83-TB-tJ4"/>
+                                            <constraint firstAttribute="trailing" secondItem="G4Y-Pu-YwX" secondAttribute="trailing" constant="46" id="fPx-HA-ORx">
+                                                <variation key="heightClass=compact-widthClass=regular" constant="170"/>
+                                            </constraint>
                                             <constraint firstItem="lpK-wx-LCL" firstAttribute="leading" secondItem="hNw-kH-8w7" secondAttribute="leading" constant="46" id="oMY-JP-m5y"/>
                                             <constraint firstItem="lpK-wx-LCL" firstAttribute="top" secondItem="Rzg-1L-AKG" secondAttribute="bottom" constant="16" id="p4B-gB-eTB"/>
                                             <constraint firstItem="Tig-Pz-DTF" firstAttribute="leading" secondItem="hNw-kH-8w7" secondAttribute="leading" constant="46" id="pyy-M7-7pG"/>
@@ -332,14 +385,11 @@
     <resources>
         <image name="arrow.left" catalog="system" width="128" height="98"/>
         <image name="arrow.right.circle" catalog="system" width="128" height="121"/>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

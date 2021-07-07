@@ -30,7 +30,6 @@ class LoadingViewController: UIViewController {
             activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         activityIndicatorView.startAnimating()
-
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {[weak self] in
             
             guard let self = self else {return}

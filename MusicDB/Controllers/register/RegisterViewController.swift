@@ -9,6 +9,8 @@ import UIKit
 import SkyFloatingLabelTextField
 import Loady
 import FirebaseAuth
+import FirebaseFirestore
+import LGButton
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var registerNameTextField: SkyFloatingLabelTextFieldWithIcon!
@@ -23,7 +25,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         dismiss(animated: true)
     }
     
-    @IBAction func registerTapped(_ sender: LoadyButton) {
+    @IBAction func registerTapped(_ sender: LGButton) {
+
         guard let name = registerNameTextField.text, name.count > 1, let email = registerEmailTextField.text, email.isEmail(), let password = registerPasswordTextField.text, password.count > 5, let confirmedPassword = registerConfirmedPasswordTextField.text, confirmedPassword == password else {
             showViewControllerAlert(title: "Error", message: "Please check the fields")
             return
@@ -31,13 +34,28 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         Auth.auth().createUser(withEmail: email, password: password) {[weak self] result, error in
             if error == nil {
-                Auth.auth().signIn(withEmail: email, password: password) {[weak self] _, _ in
-                    let storyboard = UIStoryboard(name: "Main", bundle: .main)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "mainStoryboard")
-                    self?.present(vc, animated: true)
+                guard let userID = Auth.auth().currentUser?.uid else {return}
+                
+                let db = Firestore.firestore()
+                db.collection("users").document(userID).setData([
+                    "name" : name,
+                    "trackIDs" : []
+                ]) {[weak self] error in
+                    if let error = error {
+                        print("\(error.localizedDescription)")
+                    } else {
+                        
+                        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+                        let vc = storyboard.instantiateViewController(withIdentifier: "mainStoryboard")
+                        self?.present(vc, animated: true, completion: {
+                            NotificationCenter.default.post(name: .LoadAlert, object: nil)
+                        })
+                        
+                    }
                 }
+                
             } else {
-                self?.showViewControllerAlert(title: "Error", message: "Account cannot be created at this moment, please try again later")
+                self?.showViewControllerAlert(title: "Error", message: "Account is already exists")
             }
         }
     }
@@ -168,4 +186,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+}
+
+extension Notification.Name {
+    static let LoadAlert = Notification.Name(rawValue: "")
 }
