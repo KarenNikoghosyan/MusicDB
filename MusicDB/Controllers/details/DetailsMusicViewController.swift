@@ -12,10 +12,16 @@ import Loady
 import ViewAnimator
 import WCLShineButton
 import Loaf
+import FirebaseFirestore
+import FirebaseAuth
 
 class DetailsMusicViewController: BaseViewController {
+    
+    weak var delegate: LikedTracksDelegate?
     var track: Track?
     let noTracksLabel = UILabel()
+    var isLiked: Bool = false
+    let db = Firestore.firestore()
     
     @IBOutlet weak var artistCollectionView: UICollectionView!
     
@@ -52,12 +58,61 @@ class DetailsMusicViewController: BaseViewController {
     @IBOutlet weak var previewButton: LoadyButton!
     @IBOutlet weak var likedButton: WCLShineButton!
     @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
-        Loaf("The track was added to your liked page", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
+        
+        guard let userID = Auth.auth().currentUser?.uid else {return}
+        
+        if !isLiked {
+            Loaf("The track was added to your liked page", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
+            
+            db.collection("users").document(userID).updateData([
+                "trackIDs" : FieldValue.arrayUnion([track?.id as Any])
+            ]) {[weak self] error in
+                if let error = error {
+                    print("\(error.localizedDescription)")
+                } else {
+                    guard let track = self?.track else {return}
+                    DispatchQueue.main.async {
+                        self?.delegate?.addTrack(track: track)
+                    }
+                }
+            }
+            isLiked = true
+        } else {
+            Loaf("The track was removed from your liked page", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
+            
+            db.collection("users").document(userID).updateData([
+                "trackIDs" : FieldValue.arrayRemove([track?.id as Any])
+            ]) {[weak self] error in
+                if let error = error {
+                    print("\(error.localizedDescription)")
+                } else {
+                    guard let track = self?.track else {return}
+                    DispatchQueue.main.async {
+                        self?.delegate?.removeTrack(track: track)
+                    }
+                }
+            }
+            isLiked = false
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        guard let userID = Auth.auth().currentUser?.uid else {return}
+        db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
+            guard let self = self else {return}
+            
+            guard let arrIDs: [Int] = snapshot?.get("trackIDs") as? [Int] else {return}
+            if arrIDs.contains(self.track?.id ?? 0) {
+                self.likedButton.isSelected = true
+                self.isLiked = true
+            } else {
+                self.likedButton.isSelected = false
+                self.isLiked = false
+            }
+        }
+
         loadActivityIndicator()
         
         createLikeButton()
@@ -73,7 +128,18 @@ class DetailsMusicViewController: BaseViewController {
         artistCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
      
         fetchTracks()
+        setUpViews()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
+        if isBeingDismissed {
+            stopAudio()
+        }
+    }
+    
+    func setUpViews() {
         self.previewButton.addTarget(self, action: #selector(animateButton(_:)), for: .touchUpInside)
         
         self.previewButton.setAnimation(LoadyAnimationType.android())
@@ -99,14 +165,6 @@ class DetailsMusicViewController: BaseViewController {
         let durationString = String(format: "%.2f", duration) + " Minutes"
         let newDurationString = durationString.replacingOccurrences(of: ".", with: ":")
         detailsDurationLabel.text = newDurationString
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if isBeingDismissed {
-            stopAudio()
-        }
     }
   
     func createLikeButton() {
@@ -194,6 +252,7 @@ class DetailsMusicViewController: BaseViewController {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
      
+        Loaf.dismiss(sender: self, animated: true)
         let parentVC = presentingViewController
             
         dismiss(animated: true) {[weak self] in
@@ -204,4 +263,9 @@ class DetailsMusicViewController: BaseViewController {
             parentVC?.present(detailsVC, animated: true)
         }
     }
+}
+
+protocol LikedTracksDelegate: AnyObject {
+    func addTrack(track: Track)
+    func removeTrack(track: Track)
 }

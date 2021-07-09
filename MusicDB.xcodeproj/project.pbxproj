@@ -24,6 +24,7 @@
 		782E4862268A4092005C8E4F /* RockCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E4861268A4092005C8E4F /* RockCollectionReusableView.swift */; };
 		7834B413268E712800D1161C /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7834B412268E712800D1161C /* LoadingViewController.swift */; };
 		78614DF726862A60000125C2 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78614DF626862A60000125C2 /* BaseViewController.swift */; };
+		7862B8672697A2D2000E3056 /* SingleTrackAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862B8662697A2D2000E3056 /* SingleTrackAPIDataSource.swift */; };
 		78638A70268742D3001A756E /* GenreAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78638A6F268742D3001A756E /* GenreAPIDataSource.swift */; };
 		7876D20C26828D2A009D0669 /* MediaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7876D20B26828D2A009D0669 /* MediaPlayer.swift */; };
 		7884C89D268F8CBB00FE1FBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7884C89C268F8CBB00FE1FBE /* GoogleService-Info.plist */; };
@@ -75,6 +76,7 @@
 		782E4861268A4092005C8E4F /* RockCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCollectionReusableView.swift; sourceTree = "<group>"; };
 		7834B412268E712800D1161C /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		78614DF626862A60000125C2 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		7862B8662697A2D2000E3056 /* SingleTrackAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTrackAPIDataSource.swift; sourceTree = "<group>"; };
 		78638A6F268742D3001A756E /* GenreAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreAPIDataSource.swift; sourceTree = "<group>"; };
 		7876D20B26828D2A009D0669 /* MediaPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayer.swift; sourceTree = "<group>"; };
 		7884C89C268F8CBB00FE1FBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				78638A6F268742D3001A756E /* GenreAPIDataSource.swift */,
 				78CB8FF126892F8700E90CE4 /* TopArtistsAPIDataSource.swift */,
 				782E485B268A2A41005C8E4F /* TopAlbumsAPIDataSource.swift */,
+				7862B8662697A2D2000E3056 /* SingleTrackAPIDataSource.swift */,
 			);
 			path = datasource;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				78892CC02688EEC800A12F41 /* JazzCollectionReusableView.swift in Sources */,
 				7828BB3826908018001CA735 /* RegisterViewController.swift in Sources */,
 				78CB8FEE2689280000E90CE4 /* TopArtistsCollectionViewCell.swift in Sources */,
+				7862B8672697A2D2000E3056 /* SingleTrackAPIDataSource.swift in Sources */,
 				78892CBE2688EEA700A12F41 /* DanceCollectionReusableView.swift in Sources */,
 				78CB8FF226892F8700E90CE4 /* TopArtistsAPIDataSource.swift in Sources */,
 				78AD8C23268D0A74004BF30C /* ConnectionManager.swift in Sources */,
