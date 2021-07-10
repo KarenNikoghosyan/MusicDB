@@ -58,6 +58,7 @@ class SearchMusicViewController: BaseViewController {
         trackSearchBar.searchTextField.leftView?.tintColor = .white
         
         searchLabel.text = "Search for artists, songs and more."
+        searchLabel.font = UIFont.init(name: "Futura", size: 18)
         searchLabel.textColor = .white
         
         view.addSubview(searchLabel)

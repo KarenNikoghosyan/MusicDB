@@ -17,7 +17,6 @@ import FirebaseAuth
 
 class DetailsMusicViewController: BaseViewController {
     
-    weak var delegate: LikedTracksDelegate?
     var track: Track?
     let noTracksLabel = UILabel()
     var isLiked: Bool = false
@@ -72,7 +71,7 @@ class DetailsMusicViewController: BaseViewController {
                 } else {
                     guard let track = self?.track else {return}
                     DispatchQueue.main.async {
-                        self?.delegate?.addTrack(track: track)
+                        NotificationCenter.default.post(name: .AddTrack, object: nil, userInfo: ["track": track])
                     }
                 }
             }
@@ -88,7 +87,7 @@ class DetailsMusicViewController: BaseViewController {
                 } else {
                     guard let track = self?.track else {return}
                     DispatchQueue.main.async {
-                        self?.delegate?.removeTrack(track: track)
+                        NotificationCenter.default.post(name: .RemoveTrack, object: nil, userInfo: ["track" : track])
                     }
                 }
             }
@@ -265,7 +264,7 @@ class DetailsMusicViewController: BaseViewController {
     }
 }
 
-protocol LikedTracksDelegate: AnyObject {
-    func addTrack(track: Track)
-    func removeTrack(track: Track)
+extension Notification.Name {
+    static let AddTrack = Notification.Name("addTrack")
+    static let RemoveTrack = Notification.Name("removeTrack")
 }

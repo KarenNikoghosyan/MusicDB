@@ -12,7 +12,7 @@ class BaseViewController: UIViewController {
     var tracks: [Track] = []
     var ds = TrackAPIDataSource()
     
-    let activityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .ballPulse, color: .white, padding: 0)
+    let activityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .ballPulse, color: .systemGreen, padding: 0)
     
     func loadActivityIndicator() {
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false

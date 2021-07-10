@@ -22,7 +22,7 @@
                     <connections>
                         <segue destination="ytK-Cn-2rt" kind="relationship" relationship="viewControllers" id="k20-C7-Uvy"/>
                         <segue destination="aTY-fp-TzV" kind="relationship" relationship="viewControllers" id="6gX-m4-m3Z"/>
-                        <segue destination="xdQ-7a-Y0w" kind="relationship" relationship="viewControllers" id="VT6-X4-bAp"/>
+                        <segue destination="55I-Qz-NVH" kind="relationship" relationship="viewControllers" id="gzX-o8-63g"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RXY-e2-u6t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -398,154 +398,163 @@
             <point key="canvasLocation" x="-506" y="2574"/>
         </scene>
         <!--Liked-->
-        <scene sceneID="B8m-CX-kbo">
+        <scene sceneID="ftl-ad-LUE">
             <objects>
-                <tableViewController id="YAM-6s-wda" customClass="LikedTableViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="165" estimatedRowHeight="165" sectionHeaderHeight="28" sectionFooterHeight="28" id="XKc-Mh-6j5">
+                <viewController id="1lj-aY-kZE" customClass="LikedMusicViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ru5-zY-YVH">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="tintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
-                        <color key="sectionIndexBackgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="sectionIndexTrackingBackgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" rowHeight="165" id="oB0-Ax-zqm" customClass="LikedTableViewCell" customModule="MusicDB" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24.333333969116211" width="428" height="165"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oB0-Ax-zqm" id="maq-z9-ZAs">
-                                    <rect key="frame" x="0.0" y="0.0" width="398.33333333333331" height="165"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cjr-Yp-ufv">
-                                            <rect key="frame" x="24" y="15" width="130" height="135"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="130" id="LYx-Ik-Tk9"/>
-                                            </constraints>
-                                        </imageView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="O5i-xq-VmP">
-                                            <rect key="frame" x="171" y="15" width="219.33333333333337" height="135"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="165" estimatedRowHeight="165" sectionHeaderHeight="28" sectionFooterHeight="28" id="A25-rz-eeg">
+                                <rect key="frame" x="0.0" y="88" width="428" height="838"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="separatorColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                                <color key="sectionIndexBackgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexTrackingBackgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" rowHeight="165" id="mmt-dU-e7F" customClass="LikedTableViewCell" customModule="MusicDB" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="428" height="165"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mmt-dU-e7F" id="Je3-uC-uAG">
+                                            <rect key="frame" x="0.0" y="0.0" width="398.33333333333331" height="165"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="7D8-pZ-snc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="219.33333333333334" height="37.666666666666664"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="w1c-pN-PE5">
+                                                    <rect key="frame" x="24" y="15" width="130" height="135"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="130" id="gHF-oT-lPW"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="PD0-ab-2wF">
+                                                    <rect key="frame" x="171" y="15" width="219.33333333333337" height="135"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xcb-22-Rgm">
-                                                            <rect key="frame" x="0.0" y="0.0" width="40.666666666666664" height="37.666666666666664"/>
-                                                            <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="16"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                            <variation key="heightClass=compact-widthClass=compact">
-                                                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
-                                                            </variation>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Das-yI-yfC">
-                                                            <rect key="frame" x="44.666666666666671" y="0.0" width="174.66666666666663" height="37.666666666666664"/>
-                                                            <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="yqv-Pp-wMx">
-                                                    <rect key="frame" x="0.0" y="32.666666666666657" width="219.33333333333334" height="37.333333333333343"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Artist Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1A-7y-W6S">
-                                                            <rect key="frame" x="0.0" y="0.0" width="109.33333333333333" height="37.333333333333336"/>
-                                                            <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="16"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                            <variation key="heightClass=compact-widthClass=compact">
-                                                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
-                                                            </variation>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ara-ey-xbG">
-                                                            <rect key="frame" x="113.33333333333331" y="0.0" width="106" height="37.333333333333336"/>
-                                                            <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="s4A-6d-Z4I">
-                                                    <rect key="frame" x="0.0" y="65" width="219.33333333333334" height="37.666666666666657"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Album Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaI-Ed-5iu">
-                                                            <rect key="frame" x="0.0" y="0.0" width="102" height="37.666666666666664"/>
-                                                            <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="16"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                            <variation key="heightClass=compact-widthClass=compact">
-                                                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
-                                                            </variation>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MFN-2m-jHF">
-                                                            <rect key="frame" x="106" y="0.0" width="113.33333333333331" height="37.666666666666664"/>
-                                                            <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="HqN-Q2-FRW">
-                                                    <rect key="frame" x="0.0" y="97.666666666666671" width="219.33333333333334" height="37.333333333333329"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duration:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2I-hz-KUa">
-                                                            <rect key="frame" x="0.0" y="0.0" width="80.666666666666671" height="37.333333333333336"/>
-                                                            <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="16"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                            <variation key="heightClass=compact-widthClass=compact">
-                                                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
-                                                            </variation>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIy-l8-bQO">
-                                                            <rect key="frame" x="84.666666666666671" y="0.0" width="134.66666666666663" height="37.333333333333336"/>
-                                                            <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="S1D-jh-spX">
+                                                            <rect key="frame" x="0.0" y="0.0" width="219.33333333333334" height="37.666666666666664"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yt1-v6-GLO">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="40.666666666666664" height="37.666666666666664"/>
+                                                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="16"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                    <variation key="heightClass=compact-widthClass=compact">
+                                                                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
+                                                                    </variation>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9dq-3f-6gV">
+                                                                    <rect key="frame" x="44.666666666666671" y="0.0" width="174.66666666666663" height="37.666666666666664"/>
+                                                                    <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="rb9-2A-NNF">
+                                                            <rect key="frame" x="0.0" y="32.666666666666657" width="219.33333333333334" height="37.333333333333343"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Artist Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="foH-9i-qas">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="109.33333333333333" height="37.333333333333336"/>
+                                                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="16"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                    <variation key="heightClass=compact-widthClass=compact">
+                                                                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
+                                                                    </variation>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r0V-zu-CzI">
+                                                                    <rect key="frame" x="113.33333333333331" y="0.0" width="106" height="37.333333333333336"/>
+                                                                    <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="b8h-zF-FQO">
+                                                            <rect key="frame" x="0.0" y="65" width="219.33333333333334" height="37.666666666666657"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Album Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyT-j3-q6r">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="102" height="37.666666666666664"/>
+                                                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="16"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                    <variation key="heightClass=compact-widthClass=compact">
+                                                                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
+                                                                    </variation>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S1y-oj-jIj">
+                                                                    <rect key="frame" x="106" y="0.0" width="113.33333333333331" height="37.666666666666664"/>
+                                                                    <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="936-ak-Ogz">
+                                                            <rect key="frame" x="0.0" y="97.666666666666671" width="219.33333333333334" height="37.333333333333329"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duration:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vX7-MI-coI">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="80.666666666666671" height="37.333333333333336"/>
+                                                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="16"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                    <variation key="heightClass=compact-widthClass=compact">
+                                                                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
+                                                                    </variation>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6d-43-ptD">
+                                                                    <rect key="frame" x="84.666666666666671" y="0.0" width="134.66666666666663" height="37.333333333333336"/>
+                                                                    <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
-                                        </stackView>
-                                    </subviews>
-                                    <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
-                                    <constraints>
-                                        <constraint firstItem="O5i-xq-VmP" firstAttribute="centerY" secondItem="maq-z9-ZAs" secondAttribute="centerY" id="Efr-ix-Rfa"/>
-                                        <constraint firstItem="Cjr-Yp-ufv" firstAttribute="leading" secondItem="maq-z9-ZAs" secondAttribute="leadingMargin" constant="4" id="Og0-ir-jv4"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="O5i-xq-VmP" secondAttribute="trailing" id="eFk-Bj-WdY"/>
-                                        <constraint firstItem="Cjr-Yp-ufv" firstAttribute="top" secondItem="maq-z9-ZAs" secondAttribute="topMargin" constant="4" id="mh8-0q-RqH"/>
-                                        <constraint firstItem="O5i-xq-VmP" firstAttribute="top" secondItem="Cjr-Yp-ufv" secondAttribute="top" id="qCh-35-OR4"/>
-                                        <constraint firstItem="Cjr-Yp-ufv" firstAttribute="centerY" secondItem="maq-z9-ZAs" secondAttribute="centerY" id="wE6-LV-IV3"/>
-                                        <constraint firstItem="O5i-xq-VmP" firstAttribute="leading" secondItem="Cjr-Yp-ufv" secondAttribute="trailing" constant="17" id="ybX-N6-vD4"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="likedTrackAlbumNameLabel" destination="MFN-2m-jHF" id="ar6-iI-0rc"/>
-                                    <outlet property="likedTrackArtistNameLabel" destination="ara-ey-xbG" id="dbe-Ho-w72"/>
-                                    <outlet property="likedTrackDurationLabel" destination="dIy-l8-bQO" id="B4S-8G-eGQ"/>
-                                    <outlet property="likedTrackImageView" destination="Cjr-Yp-ufv" id="oFS-wu-YbZ"/>
-                                    <outlet property="likedTrackTitleLabel" destination="Das-yI-yfC" id="0Tl-dH-MzB"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="YAM-6s-wda" id="ohU-Qx-abL"/>
-                            <outlet property="delegate" destination="YAM-6s-wda" id="0df-Ke-c4z"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Liked" id="Fnq-df-YRc">
-                        <barButtonItem key="rightBarButtonItem" image="icon_signout_potrait" landscapeImage="icon_signout_landscape" id="X0S-jN-KJo"/>
+                                            <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="w1c-pN-PE5" firstAttribute="top" secondItem="Je3-uC-uAG" secondAttribute="topMargin" constant="4" id="39i-Cp-REh"/>
+                                                <constraint firstItem="PD0-ab-2wF" firstAttribute="centerY" secondItem="Je3-uC-uAG" secondAttribute="centerY" id="F3A-4y-h1d"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="PD0-ab-2wF" secondAttribute="trailing" id="HJI-KN-QqF"/>
+                                                <constraint firstItem="w1c-pN-PE5" firstAttribute="leading" secondItem="Je3-uC-uAG" secondAttribute="leadingMargin" constant="4" id="mxU-r0-bv3"/>
+                                                <constraint firstItem="w1c-pN-PE5" firstAttribute="centerY" secondItem="Je3-uC-uAG" secondAttribute="centerY" id="qlf-6C-PkZ"/>
+                                                <constraint firstItem="PD0-ab-2wF" firstAttribute="top" secondItem="w1c-pN-PE5" secondAttribute="top" id="t0T-KT-GD2"/>
+                                                <constraint firstItem="PD0-ab-2wF" firstAttribute="leading" secondItem="w1c-pN-PE5" secondAttribute="trailing" constant="17" id="z1y-OK-hBj"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="likedTrackAlbumNameLabel" destination="S1y-oj-jIj" id="0mV-Wd-71P"/>
+                                            <outlet property="likedTrackArtistNameLabel" destination="r0V-zu-CzI" id="buc-Hx-soJ"/>
+                                            <outlet property="likedTrackDurationLabel" destination="B6d-43-ptD" id="Wef-7l-giS"/>
+                                            <outlet property="likedTrackImageView" destination="w1c-pN-PE5" id="bl4-2l-kRM"/>
+                                            <outlet property="likedTrackTitleLabel" destination="9dq-3f-6gV" id="Oml-xE-ENs"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="4N2-4T-b5A"/>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Liked" largeTitleDisplayMode="always" id="5qR-Rz-e5X">
+                        <barButtonItem key="rightBarButtonItem" image="icon_signout_potrait" landscapeImage="icon_signout_landscape" id="U9c-4E-8gL">
+                            <connections>
+                                <action selector="logOutTapped:" destination="1lj-aY-kZE" id="mdc-XY-WGJ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="U7H-HD-5R9" kind="presentation" identifier="toDetails" id="mJh-uW-8Mb"/>
+                        <outlet property="likedTableView" destination="A25-rz-eeg" id="zS8-3P-nUL"/>
+                        <segue destination="U7H-HD-5R9" kind="presentation" identifier="toDetails" id="geQ-gZ-cJu"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5pf-SX-NKN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yOa-Ng-Kws" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="389.71962616822429" y="2573.650107991361"/>
+            <point key="canvasLocation" x="478" y="2574"/>
         </scene>
         <!--Home-->
         <scene sceneID="93v-jd-q18">
@@ -600,15 +609,15 @@
             <point key="canvasLocation" x="-1466" y="1753"/>
         </scene>
         <!--Liked-->
-        <scene sceneID="cfu-bz-x9D">
+        <scene sceneID="B2K-tm-DB6">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xdQ-7a-Y0w" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Liked" image="heart.fill" catalog="system" id="sQs-jI-jQ0"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="55I-Qz-NVH" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Liked" image="heart.fill" catalog="system" id="3xJ-EQ-egu"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="9g4-Rm-5nc">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="teh-rI-RdC">
                         <rect key="frame" x="0.0" y="44" width="428" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -618,16 +627,16 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="YAM-6s-wda" kind="relationship" relationship="rootViewController" id="Z4C-tf-uZH"/>
+                        <segue destination="1lj-aY-kZE" kind="relationship" relationship="rootViewController" id="w5S-mD-Klm"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="W3X-6l-sG5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ct3-bx-Ghp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="391" y="1753"/>
+            <point key="canvasLocation" x="478" y="1753"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="mJh-uW-8Mb"/>
+        <segue reference="geQ-gZ-cJu"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
