@@ -10,6 +10,7 @@ import SkyFloatingLabelTextField
 import Loady
 import FirebaseAuth
 import LGButton
+import Loaf
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var loginEmailTextField: SkyFloatingLabelTextFieldWithIcon!
@@ -31,7 +32,7 @@ class LoginViewController: UIViewController {
                 let vc = storyboard.instantiateViewController(withIdentifier: "mainStoryboard")
                 self?.present(vc, animated: true)
             } else {
-                self?.showViewControllerAlert(title: "Error", message: "There's a problem with signing you in, please try again later")
+                self?.showViewControllerAlert(title: "Error", message: "There's a problem with signing in, please try again later")
             }
         }
     }
@@ -43,11 +44,6 @@ class LoginViewController: UIViewController {
         loginEmailTextField.becomeFirstResponder()
         
         setUpTextFields()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        
     }
     
     func setupNavigationItems() {

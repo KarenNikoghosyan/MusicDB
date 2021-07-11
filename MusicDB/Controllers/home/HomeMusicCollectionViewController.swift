@@ -10,6 +10,8 @@ import ViewAnimator
 import SafariServices
 import PKHUD
 import Loaf
+import FirebaseAuth
+import FirebaseFirestore
 
 class HomeMusicCollectionViewController: UICollectionViewController {
         
@@ -23,12 +25,15 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     var topAlbums: [TopAlbums] = []
     var rock: [Track] = []
     
+    let db = Firestore.firestore()
+    
     let tracksDS = GenreAPIDataSource()
     let topArtistsDS = TopArtistsAPIDataSource()
     let topAlbumsDS = TopAlbumsAPIDataSource()
     var counter: Int = 0
     
     @IBAction func signOut(_ sender: UIBarButtonItem) {
+        Loaf.dismiss(sender: self, animated: true)
         showAlertAndSegue(title: "Sign out from MusicDB?", message: "You're about to sign out, do you want to proceed?")
     }
     
@@ -43,6 +48,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         HUD.show(HUDContentType.progress, onView: self.view)
         
         fetchTracks()
+        showGreetingMessage()
         
         collectionView.register(HomeTracksCollectionViewCell.self, forCellWithReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier)
         collectionView.register(TopArtistsCollectionViewCell.self, forCellWithReuseIdentifier: TopArtistsCollectionViewCell.reuseIdentifier)
@@ -68,6 +74,17 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             Loaf("Account was successfully created", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
         }
         setTabBarSwipe(enabled: true)
+    }
+    
+    func showGreetingMessage() {
+        guard let userID = Auth.auth().currentUser?.uid else {return}
+        db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
+            guard let self = self else {return}
+            
+            guard let name: String = snapshot?.get("name") as? String else {return}
+            
+            Loaf("Welcome Back, \(name)", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(3.5))
+        }
     }
     
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
