@@ -139,6 +139,12 @@ class DetailsMusicViewController: BaseViewController {
         }
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        artistCollectionView?.reloadData()
+    }
+    
     func setUpViews() {
         self.previewButton.addTarget(self, action: #selector(animateButton(_:)), for: .touchUpInside)
         
