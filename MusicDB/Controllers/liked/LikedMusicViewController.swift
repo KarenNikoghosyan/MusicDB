@@ -86,6 +86,11 @@ class LikedMusicViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setTabBarSwipe(enabled: false)
+    }
+    
     func loadActivityIndicator() {
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicatorView)

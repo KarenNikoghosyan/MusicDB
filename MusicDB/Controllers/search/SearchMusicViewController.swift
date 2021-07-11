@@ -39,6 +39,7 @@ class SearchMusicViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         trackSearchBar.becomeFirstResponder()
+        setTabBarSwipe(enabled: true)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

@@ -67,6 +67,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             
             Loaf("Account was successfully created", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
         }
+        setTabBarSwipe(enabled: true)
     }
     
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {

@@ -40,6 +40,7 @@ class DetailsMusicViewController: BaseViewController {
     
     @IBOutlet weak var goToWebsiteButton: UIButton!
     @IBAction func goToWebsiteTapped(_ sender: UIButton) {
+        Loaf.dismiss(sender: self, animated: true)
         
         UIView.animate(withDuration: 0.4) {[weak self] in
             self?.goToWebsiteButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.4), for: .normal)
