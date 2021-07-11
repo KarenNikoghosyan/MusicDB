@@ -659,6 +659,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development: karen1111996@gmail.com (PDAA59T4Y3)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XC7MFC9869;
 				INFOPLIST_FILE = MusicDB/Info.plist;
@@ -679,7 +680,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MusicDB/MusicDBRelease.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development: karen1111996@gmail.com (PDAA59T4Y3)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XC7MFC9869;
 				INFOPLIST_FILE = MusicDB/Info.plist;
@@ -689,6 +690,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.karen.nikoghosyan.MusicDB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

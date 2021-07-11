@@ -71,7 +71,7 @@ class LoginViewController: UIViewController {
         loginPasswordTextField.selectedLineColor = .white
         loginPasswordTextField.selectedTitleColor = .white
         loginPasswordTextField.textColor = .white
-        loginPasswordTextField.isSecureTextEntry = true
+        loginPasswordTextField.enablePasswordToggle()
         loginPasswordTextField.iconType = .image
         loginPasswordTextField.iconColor = .lightGray
         loginPasswordTextField.iconImage = UIImage(systemName: "lock")

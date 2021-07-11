@@ -102,7 +102,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         registerPasswordTextField.selectedLineColor = .white
         registerPasswordTextField.selectedTitleColor = .white
         registerPasswordTextField.textColor = .white
-        registerPasswordTextField.isSecureTextEntry = true
+        registerPasswordTextField.enablePasswordToggle()
         registerPasswordTextField.iconType = .image
         registerPasswordTextField.iconColor = .lightGray
         registerPasswordTextField.iconImage = UIImage(systemName: "lock")
@@ -115,7 +115,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         registerConfirmedPasswordTextField.selectedLineColor = .white
         registerConfirmedPasswordTextField.selectedTitleColor = .white
         registerConfirmedPasswordTextField.textColor = .white
-        registerConfirmedPasswordTextField.isSecureTextEntry = true
+        registerConfirmedPasswordTextField.enablePasswordToggle()
         registerConfirmedPasswordTextField.iconType = .image
         registerConfirmedPasswordTextField.iconColor = .lightGray
         registerConfirmedPasswordTextField.iconImage = UIImage(systemName: "lock")
