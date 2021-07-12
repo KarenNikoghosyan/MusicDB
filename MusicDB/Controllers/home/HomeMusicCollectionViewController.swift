@@ -346,7 +346,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.3) {
             if let cell = collectionView.cellForItem(at: indexPath) as? HomeTracksCollectionViewCell {
                 cell.imageView.transform = .init(scaleX: 0.90, y: 0.90)
                 cell.label.transform = .init(scaleX: 0.95, y: 0.95)
@@ -368,7 +368,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.3) {
             if let cell = collectionView.cellForItem(at: indexPath) as? HomeTracksCollectionViewCell {
                 cell.imageView.transform = .identity
                 cell.label.transform = .identity
@@ -426,6 +426,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     }
     
     func toDetailsSegue(tracks: [Track], indexPath: IndexPath) {
+        Loaf.dismiss(sender: self, animated: true)
         let track = tracks[indexPath.item]
         performSegue(withIdentifier: "toDetails", sender: track)
     }

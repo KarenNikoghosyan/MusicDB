@@ -48,7 +48,7 @@ extension BaseViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.2) {
             if let cell = collectionView.cellForItem(at: indexPath) as? DetailsMusicCollectionViewCell {
                 cell.detailsTrackImageView.transform = .init(scaleX: 0.98, y: 0.98)
                 cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
@@ -57,7 +57,7 @@ extension BaseViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.2) {
             if let cell = collectionView.cellForItem(at: indexPath) as? DetailsMusicCollectionViewCell {
                 cell.detailsTrackImageView.transform = .identity
                 cell.contentView.backgroundColor = .clear
