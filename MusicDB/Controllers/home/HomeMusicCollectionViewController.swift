@@ -26,7 +26,8 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     var rock: [Track] = []
     
     let db = Firestore.firestore()
-    
+    let refreshControl = UIRefreshControl()
+
     let tracksDS = GenreAPIDataSource()
     let topArtistsDS = TopArtistsAPIDataSource()
     let topAlbumsDS = TopAlbumsAPIDataSource()
@@ -47,8 +48,8 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         
         HUD.show(HUDContentType.progress, onView: self.view)
         
+        loadRefreshControl()
         fetchTracks()
-        showGreetingMessage()
         
         collectionView.register(HomeTracksCollectionViewCell.self, forCellWithReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier)
         collectionView.register(TopArtistsCollectionViewCell.self, forCellWithReuseIdentifier: TopArtistsCollectionViewCell.reuseIdentifier)
@@ -65,28 +66,50 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         collectionView.register(RockCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "rockHeader")
         
         collectionView.collectionViewLayout = createCompositionalLayout()
+        
+        greetingMessage()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        NotificationCenter.default.addObserver(forName: .LoadAlert, object: nil, queue: .main) { _ in
-            
-            Loaf("Account was successfully created", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
-        }
+       
         setTabBarSwipe(enabled: true)
     }
     
-    func showGreetingMessage() {
+    func greetingMessage() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
         db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
             
             guard let name: String = snapshot?.get("name") as? String else {return}
             
-            Loaf("Welcome Back, \(name)", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(3.5))
+            Loaf("Welcome Back, \(name)", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(3.5))
         }
     }
     
+    func registrationMessage() {
+        Loaf("Account was successfully created", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
+    }
+    
+    func loadRefreshControl() {
+        guard let font = UIFont.init(name: "Futura-Bold", size: 13) else {return}
+        
+        let attributes: [NSAttributedString.Key: AnyObject] = [.foregroundColor : UIColor.systemGreen, .font : font]
+        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Tracks...", attributes: attributes)
+        refreshControl.tintColor = .systemGreen
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        
+        if #available(iOS 10.0, *) {
+            collectionView.refreshControl = refreshControl
+        } else {
+            collectionView.backgroundView = refreshControl
+        }
+    }
+    
+    @objc func refresh(_ refreshControl: UIRefreshControl) {
+        fetchTracks()
+    }
+
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
 
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
@@ -402,6 +425,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             toDetailsSegue(tracks: jazz, indexPath: indexPath)
         case 4:
             
+            Loaf.dismiss(sender: self, animated: true)
             let topArtists = topArtists[indexPath.item]
             guard let url = URL(string: "\(topArtists.link)") else {return}
 
@@ -414,6 +438,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             toDetailsSegue(tracks: classical, indexPath: indexPath)
         case 7:
             
+            Loaf.dismiss(sender: self, animated: true)
             let topAlbums = topAlbums[indexPath.item]
             guard let url = URL(string: "\(topAlbums.link)") else {return}
             
@@ -522,7 +547,9 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         UIView.animate(views: cells, animations: [animation])
         
         if counter == collectionView.numberOfSections {
+            counter = 0
             HUD.flash(.success, delay: 0.5)
+            refreshControl.endRefreshing()
         }
     }
     
@@ -542,5 +569,4 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         
         present(vc, animated: true)
     }
-   
 }

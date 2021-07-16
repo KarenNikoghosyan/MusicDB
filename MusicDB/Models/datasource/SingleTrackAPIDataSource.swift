@@ -57,7 +57,9 @@ struct SingleTrackAPIDataSource {
             }
             
             do {
-                let result = try JSONDecoder().decode(Track.self, from: data)
+                let context = Database.shared.context
+                let decoder = JSONDecoder(context: context)
+                let result = try decoder.decode(Track.self, from: data)
                 DispatchQueue.main.async {
                     callback(result, nil)
                 }

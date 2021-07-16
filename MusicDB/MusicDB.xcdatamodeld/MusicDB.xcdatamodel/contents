@@ -1,4 +1,126 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Album" representedClassName="Album" syncable="YES">
+        <attribute name="cover" optional="YES" attributeType="String"/>
+        <attribute name="coverBig" optional="YES" attributeType="String"/>
+        <attribute name="coverMedium" optional="YES" attributeType="String"/>
+        <attribute name="coverSmall" optional="YES" attributeType="String"/>
+        <attribute name="coverXL" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="md5Image" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="tracklist" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Artist" representedClassName="Artist" syncable="YES">
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="link" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="picture" optional="YES" attributeType="String"/>
+        <attribute name="pictureBig" optional="YES" attributeType="String"/>
+        <attribute name="pictureMedium" optional="YES" attributeType="String"/>
+        <attribute name="pictureSmall" optional="YES" attributeType="String"/>
+        <attribute name="pictureXL" optional="YES" attributeType="String"/>
+        <attribute name="radio" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="tracklist" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+    </entity>
+    <entity name="TopAlbums" representedClassName="TopAlbums" syncable="YES">
+        <attribute name="artist" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="TopAlbumsArtist"/>
+        <attribute name="cover" optional="YES" attributeType="String"/>
+        <attribute name="coverBig" optional="YES" attributeType="String"/>
+        <attribute name="coverMedium" optional="YES" attributeType="String"/>
+        <attribute name="coverSmall" optional="YES" attributeType="String"/>
+        <attribute name="coverXL" optional="YES" attributeType="String"/>
+        <attribute name="explicitLyrics" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="link" attributeType="String"/>
+        <attribute name="md5Image" attributeType="String"/>
+        <attribute name="position" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="recordType" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="tracklist" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+    </entity>
+    <entity name="TopAlbumsAPIResponse" representedClassName="TopAlbumsAPIResponse" syncable="YES">
+        <attribute name="data" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[TopAlbums]"/>
+        <attribute name="total" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="TopAlbumsArtist" representedClassName="TopAlbumsArtist" syncable="YES">
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="link" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="picture" optional="YES" attributeType="String"/>
+        <attribute name="pictureBig" optional="YES" attributeType="String"/>
+        <attribute name="pictureMedium" optional="YES" attributeType="String"/>
+        <attribute name="pictureSmall" optional="YES" attributeType="String"/>
+        <attribute name="pictureXL" optional="YES" attributeType="String"/>
+        <attribute name="radio" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="tracklist" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+    </entity>
+    <entity name="TopArtists" representedClassName="TopArtists" syncable="YES">
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="link" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="picture" optional="YES" attributeType="String"/>
+        <attribute name="pictureBig" optional="YES" attributeType="String"/>
+        <attribute name="pictureMedium" optional="YES" attributeType="String"/>
+        <attribute name="pictureSmall" optional="YES" attributeType="String"/>
+        <attribute name="pictureXL" optional="YES" attributeType="String"/>
+        <attribute name="position" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="radio" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="tracklist" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+    </entity>
+    <entity name="TopArtistsAPIResponse" representedClassName="TopArtistsAPIResponse" syncable="YES">
+        <attribute name="data" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[TopArtists]"/>
+        <attribute name="total" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Track" representedClassName="Track" syncable="YES">
+        <attribute name="album" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="Album"/>
+        <attribute name="artist" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="Artist"/>
+        <attribute name="duration" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="explicitContentCover" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="explicitContentLyrics" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="explicitLyrics" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="link" optional="YES" attributeType="String"/>
+        <attribute name="md5Image" attributeType="String"/>
+        <attribute name="position" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="preview" attributeType="String"/>
+        <attribute name="rank" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="titleShort" attributeType="String"/>
+        <attribute name="titleVersion" optional="YES" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+    </entity>
+    <entity name="TrackGenres" representedClassName="TrackGenres" syncable="YES">
+        <attribute name="classical" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Track]"/>
+        <attribute name="dance" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Track]"/>
+        <attribute name="hipHop" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Track]"/>
+        <attribute name="jazz" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Track]"/>
+        <attribute name="pop" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Track]"/>
+        <attribute name="rock" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Track]"/>
+        <attribute name="topAlbums" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[TopAlbums]"/>
+        <attribute name="topArtists" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[TopArtists]"/>
+        <attribute name="topTracks" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Track]"/>
+    </entity>
+    <entity name="TracksAPIResponse" representedClassName="TracksAPIResponse" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Track]"/>
+        <attribute name="next" optional="YES" attributeType="String"/>
+        <attribute name="total" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <elements>
+        <element name="Album" positionX="18" positionY="180" width="128" height="179"/>
+        <element name="Artist" positionX="54" positionY="225" width="128" height="194"/>
+        <element name="TopArtists" positionX="27" positionY="189" width="128" height="209"/>
+        <element name="TopArtistsAPIResponse" positionX="18" positionY="180" width="128" height="59"/>
+        <element name="Track" positionX="18" positionY="90" width="128" height="269"/>
+        <element name="TrackGenres" positionX="27" positionY="189" width="128" height="164"/>
+        <element name="TracksAPIResponse" positionX="-27" positionY="18" width="128" height="74"/>
+        <element name="TopAlbumsAPIResponse" positionX="18" positionY="180" width="128" height="59"/>
+        <element name="TopAlbums" positionX="27" positionY="189" width="128" height="254"/>
+        <element name="TopAlbumsArtist" positionX="36" positionY="198" width="128" height="194"/>
+    </elements>
 </model>

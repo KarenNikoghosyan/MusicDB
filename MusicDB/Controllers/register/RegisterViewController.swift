@@ -47,10 +47,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                         
                         let storyboard = UIStoryboard(name: "Main", bundle: .main)
                         let vc = storyboard.instantiateViewController(withIdentifier: "mainStoryboard")
-                        self?.present(vc, animated: true, completion: {
-                            NotificationCenter.default.post(name: .LoadAlert, object: nil)
-                        })
-                        
+                        self?.present(vc, animated: true)
                     }
                 }
                 
@@ -186,8 +183,4 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-}
-
-extension Notification.Name {
-    static let LoadAlert = Notification.Name(rawValue: "")
 }

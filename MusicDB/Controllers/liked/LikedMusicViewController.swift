@@ -60,7 +60,6 @@ class LikedMusicViewController: UIViewController {
                         if self.tracks.count == 0 {
                             self.noLikedLabel.isHidden = false
                         }
-                        
                         return
                     }
                 }

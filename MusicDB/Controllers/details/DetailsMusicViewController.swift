@@ -103,7 +103,7 @@ class DetailsMusicViewController: BaseViewController {
         db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
             
-            guard let arrIDs: [Int] = snapshot?.get("trackIDs") as? [Int] else {return}
+            guard let arrIDs: [Int32] = snapshot?.get("trackIDs") as? [Int32] else {return}
             if arrIDs.contains(self.track?.id ?? 0) {
                 self.likedButton.isSelected = true
                 self.isLiked = true
@@ -229,7 +229,7 @@ class DetailsMusicViewController: BaseViewController {
     func fetchTracks() {
         let animation = AnimationType.from(direction: .right, offset: 30.0)
         
-        ds.fetchTrucks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":200]) {[weak self] tracks, error in
+        ds.fetchTracks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":200]) {[weak self] tracks, error in
             if let tracks = tracks {
                 
                 guard let self = self else {return}
