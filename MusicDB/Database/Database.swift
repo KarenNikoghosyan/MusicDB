@@ -61,27 +61,4 @@ class Database {
             }
         }
     }
-    
-//    func add(track: TrackDatabase) {
-//        saveContext()
-//    }
-//
-//    func update() {
-//        saveContext()
-//    }
-//
-//    func delete(tracks: [GenreArrays]) {
-//        for (index, _) in tracks.enumerated() {
-//            context.delete(tracks[index])
-//        }
-//        saveContext()
-//    }
-//    
-//    func fetchTracks()->[GenreArrays] {
-//        let request: NSFetchRequest<GenreArrays> = GenreArrays.fetchRequest()
-//
-//        let tracks = try? context.fetch(request)
-//        return tracks ?? []
-//    }
-    
 }

@@ -16,7 +16,7 @@ struct TrackAPIDataSource {
         case album = "/album"
     }
     
-    func fetchTracks(from endpoint: EndPoint, id: Int32?, path: String? ,with params: [String:Any], callback: @escaping TrackDSCallback) {
+    func fetchTracks(from endpoint: EndPoint, id: Int?, path: String? ,with params: [String:Any], callback: @escaping TrackDSCallback) {
         var urlComponents = URLComponents(string: TrackAPIDataSource.baseURL)
         
         if id == nil {
@@ -63,9 +63,7 @@ struct TrackAPIDataSource {
             }
             
             do {
-                let context = Database.shared.context
-                let decoder = JSONDecoder(context: context)
-                let result = try decoder.decode(TracksAPIResponse.self, from: data)
+                let result = try JSONDecoder().decode(TracksAPIResponse.self, from: data)
                 DispatchQueue.main.async {
                     callback(result.data, nil)
                 }

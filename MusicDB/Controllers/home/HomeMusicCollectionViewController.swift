@@ -12,6 +12,7 @@ import PKHUD
 import Loaf
 import FirebaseAuth
 import FirebaseFirestore
+import CoreData
 
 class HomeMusicCollectionViewController: UICollectionViewController {
         
@@ -262,7 +263,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             let cell = populateHomeTracksCell(indexPath: indexPath)
 
             if indexPath.item < hipHop.count {
-                
                 let track = hipHop[indexPath.item]
                 cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
             }
@@ -272,7 +272,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             let cell = populateHomeTracksCell(indexPath: indexPath)
             
             if indexPath.item < dance.count {
-                
                 let track = dance[indexPath.item]
                 cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
             }
@@ -467,6 +466,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/0/tracks", with: ["limit" : 35]) {[weak self] topTracks, error in
             if let topTracks = topTracks {
                 self?.topTracks = topTracks
+
                 self?.loadSectionAndAnimation(in: 0)
             } else if let error = error {
                 print(error)
@@ -475,6 +475,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/116/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.hipHop = tracks
+
                 self?.loadSectionAndAnimation(in: 1)
             } else if let error = error {
                 print(error)
@@ -483,6 +484,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/113/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.dance = tracks
+
                 self?.loadSectionAndAnimation(in: 2)
             } else if let error = error {
                 print(error)
@@ -491,6 +493,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/129/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.jazz = tracks
+
                 self?.loadSectionAndAnimation(in: 3)
             } else if let error = error {
                 print(error)
@@ -499,6 +502,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         topArtistsDS.fetchTopArtists(from: .chart, with: "/0/artists", with: ["limit" : 8]) {[weak self] artists, error in
             if let artists = artists {
                 self?.topArtists = artists
+
                 self?.loadSectionAndAnimation(in: 4)
             } else if let error = error {
                 print(error)
@@ -507,6 +511,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/132/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.pop = tracks
+
                 self?.loadSectionAndAnimation(in: 5)
             } else if let error = error {
                 print(error)
@@ -515,6 +520,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/98/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.classical = tracks
+
                 self?.loadSectionAndAnimation(in: 6)
             } else if let error = error {
                 print(error)
@@ -523,6 +529,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         topAlbumsDS.fetchTopAlbums(from: .chart, with: "/0/albums", with: ["limit" : 15]) {[weak self] albums, error in
             if let albums = albums {
                 self?.topAlbums = albums
+
                 self?.loadSectionAndAnimation(in: 7)
             } else if let error = error {
                 print(error)
@@ -531,6 +538,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/152/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.rock = tracks
+
                 self?.loadSectionAndAnimation(in: 8)
             } else if let error = error {
                 print(error)

@@ -40,7 +40,8 @@ extension BaseViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
                 
         if let cell = cell as? DetailsMusicCollectionViewCell {
-            let track = tracks[indexPath.item]
+            let arrayTracks = Array(tracks)
+            let track = arrayTracks[indexPath.item]
             cell.populate(track: track)
         }
         

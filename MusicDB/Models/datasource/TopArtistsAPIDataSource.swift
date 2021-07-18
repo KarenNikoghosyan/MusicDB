@@ -56,9 +56,7 @@ struct TopArtistsAPIDataSource {
             }
             
             do {
-                let context = Database.shared.context
-                let decoder = JSONDecoder(context: context)
-                let result = try decoder.decode(TopArtistsAPIResponse.self, from: data)
+                let result = try JSONDecoder().decode(TopArtistsAPIResponse.self, from: data)
                 DispatchQueue.main.async {
                     callback(result.data, nil)
                 }

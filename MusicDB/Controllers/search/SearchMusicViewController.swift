@@ -92,7 +92,7 @@ class SearchMusicViewController: BaseViewController {
 extension SearchMusicViewController: UISearchBarDelegate {
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reload(_:)), object: searchBar)
-            perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.7)
+            perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.5)
     }
     
     @objc func reload(_ searchBar: UISearchBar) {
@@ -138,7 +138,8 @@ extension SearchMusicViewController: UISearchBarDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let track = tracks[indexPath.item]
+        let arrayTracks = Array(tracks)
+        let track = arrayTracks[indexPath.item]
         performSegue(withIdentifier: "toDetails", sender: track)
     }
     

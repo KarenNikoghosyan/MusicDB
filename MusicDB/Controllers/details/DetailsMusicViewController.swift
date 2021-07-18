@@ -103,7 +103,7 @@ class DetailsMusicViewController: BaseViewController {
         db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
             
-            guard let arrIDs: [Int32] = snapshot?.get("trackIDs") as? [Int32] else {return}
+            guard let arrIDs: [Int] = snapshot?.get("trackIDs") as? [Int] else {return}
             if arrIDs.contains(self.track?.id ?? 0) {
                 self.likedButton.isSelected = true
                 self.isLiked = true
@@ -262,9 +262,11 @@ class DetailsMusicViewController: BaseViewController {
         let parentVC = presentingViewController
             
         dismiss(animated: true) {[weak self] in
+            guard let self = self else {return}
             let detailsVC = DetailsMusicViewController.storyboardInstance(storyboardID: "Main", restorationID: "detailsScreen") as! DetailsMusicViewController
             
-            let track = self?.tracks[indexPath.item]
+            let tracks = Array(self.tracks)
+            let track = tracks[indexPath.item]
             detailsVC.track = track
             parentVC?.present(detailsVC, animated: true)
         }
