@@ -27,7 +27,7 @@ class SearchMusicViewController: BaseViewController {
         searchTracksCollectionView.delegate = self
         searchTracksCollectionView.dataSource = self
         
-        let nib = UINib(nibName: "DetailsMusicCollectionViewCell", bundle: .main)
+        let nib = UINib(nibName: "DetailsSearchMusicCollectionViewCell", bundle: .main)
         searchTracksCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
         
         setupNavigationItems()

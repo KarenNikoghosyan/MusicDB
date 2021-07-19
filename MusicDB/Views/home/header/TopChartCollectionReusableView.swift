@@ -18,6 +18,10 @@ class TopChartCollectionReusableView: UICollectionReusableView {
         label.textColor = .white
         
         addSubview(label)
+        
+        let button = createViewAllButton(label: label)
+        button.addTarget(self, action: #selector(topTracksViewAllTapped(_:)), for: .touchUpInside)
+        
     }
     
     override func layoutSubviews() {
@@ -27,6 +31,10 @@ class TopChartCollectionReusableView: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @IBAction func topTracksViewAllTapped(_ sender: UIButton) {
+        NotificationCenter.default.post(name: .ToViewAll, object: nil, userInfo: ["viewAll" : "Top Tracks", "genre" : "/0/tracks"])
     }
     
 }

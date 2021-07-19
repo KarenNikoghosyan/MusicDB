@@ -8,13 +8,9 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
-import ViewAnimator
-import NVActivityIndicatorView
 import Loaf
 
-class LikedMusicViewController: UIViewController {
-   
-    let activityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .ballPulse, color: .systemGreen, padding: 0)
+class LikedMusicViewController: BaseTableViewController {
     
     let noLikedLabel = UILabel()
     let ds = SingleTrackAPIDataSource()
@@ -34,6 +30,9 @@ class LikedMusicViewController: UIViewController {
         super.viewDidLoad()
         likedTableView.delegate = self
         likedTableView.dataSource = self
+        
+        let nib = UINib(nibName: "LikedGenreTableViewCell", bundle: .main)
+        likedTableView.register(nib, forCellReuseIdentifier: "cell")
         
         NotificationCenter.default.addObserver(forName: .AddTrack, object: nil, queue: .main) {[weak self] notification in
             if let track = notification.userInfo?["track"] as? Track {
@@ -90,19 +89,6 @@ class LikedMusicViewController: UIViewController {
         setTabBarSwipe(enabled: false)
     }
     
-    func loadActivityIndicator() {
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(activityIndicatorView)
-        NSLayoutConstraint.activate([
-            activityIndicatorView.widthAnchor.constraint(equalToConstant: 40),
-            activityIndicatorView.heightAnchor.constraint(equalToConstant: 40),
-            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        
-        activityIndicatorView.startAnimating()
-    }
-    
     func fetchTracks() {
         if tracksIDs?.count == 0 {
             activityIndicatorView.stopAnimating()
@@ -122,18 +108,17 @@ class LikedMusicViewController: UIViewController {
                 } else {
                     self.i = 0
                     
-                    let animation = AnimationType.from(direction: .right, offset: 30.0)
-
                     self.likedTableView.separatorColor = UIColor.darkGray
                     self.likedTableView.reloadData()
-                    let cells = self.likedTableView.visibleCells
                     
-                    UIView.animate(views: cells, animations: [animation])
+                    let cells = self.likedTableView.visibleCells
+                    UIView.animate(views: cells, animations: [self.animation])
                     self.activityIndicatorView.stopAnimating()
                 }
                 
             } else if let error = error {
                 print(error)
+                self?.activityIndicatorView.stopAnimating()
             }
         }
     }
@@ -152,25 +137,19 @@ class LikedMusicViewController: UIViewController {
         ])
         noLikedLabel.isHidden = true
     }
-}
 
-extension LikedMusicViewController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tracks.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.accessoryView = UIImageView(image: UIImage(systemName: "chevron.right"))
         cell.tintColor = .white
 
-        if let cell = cell as? LikedTableViewCell {
+        if let cell = cell as? LikedGenreTableViewCell {
             let track = tracks[indexPath.row]
             
             cell.populate(track: track)
@@ -230,21 +209,5 @@ extension LikedMusicViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
         dest.track = track
-    }
-    
-    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.2) {[weak self] in
-            if let cell = self?.likedTableView.cellForRow(at: indexPath) {
-                cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
-            }
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.4) {[weak self] in
-            if let cell = self?.likedTableView.cellForRow(at: indexPath) {
-                cell.contentView.backgroundColor = .clear
-            }
-        }
     }
 }

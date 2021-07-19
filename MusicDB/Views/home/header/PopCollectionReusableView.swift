@@ -18,6 +18,9 @@ class PopCollectionReusableView: UICollectionReusableView {
         label.textColor = .white
         
         addSubview(label)
+        
+        let button = createViewAllButton(label: label)
+        button.addTarget(self, action: #selector(popViewAllTapped(_:)), for: .touchUpInside)
     }
     
     override func layoutSubviews() {
@@ -27,5 +30,9 @@ class PopCollectionReusableView: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @IBAction func popViewAllTapped(_ sender: UIButton) {
+        NotificationCenter.default.post(name: .ToViewAll, object: nil, userInfo: ["viewAll" : "Pop", "genre" : "/132/tracks"])
     }
 }

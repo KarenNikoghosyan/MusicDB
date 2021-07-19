@@ -18,6 +18,9 @@ class HipHopCollectionReusableView: UICollectionReusableView {
         label.textColor = .white
         
         addSubview(label)
+        
+        let button = createViewAllButton(label: label)
+        button.addTarget(self, action: #selector(hipHopViewAllTapped(_:)), for: .touchUpInside)
     }
     
     override func layoutSubviews() {
@@ -27,5 +30,9 @@ class HipHopCollectionReusableView: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @IBAction func hipHopViewAllTapped(_ sender: UIButton) {
+        NotificationCenter.default.post(name: .ToViewAll, object: nil, userInfo: ["viewAll" : "Hip Hop", "genre" : "/116/tracks"])
     }
 }

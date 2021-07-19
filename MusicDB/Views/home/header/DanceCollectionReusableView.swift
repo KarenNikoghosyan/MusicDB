@@ -18,6 +18,9 @@ class DanceCollectionReusableView: UICollectionReusableView {
         label.textColor = .white
         
         addSubview(label)
+        
+        let button = createViewAllButton(label: label)
+        button.addTarget(self, action: #selector(danceViewAllTapped(_:)), for: .touchUpInside)
     }
     
     override func layoutSubviews() {
@@ -27,5 +30,9 @@ class DanceCollectionReusableView: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @IBAction func danceViewAllTapped(_ sender: UIButton) {
+        NotificationCenter.default.post(name: .ToViewAll, object: nil, userInfo: ["viewAll" : "Dance", "genre" : "/113/tracks"])
     }
 }

@@ -18,6 +18,9 @@ class ClassicalCollectionReusableView: UICollectionReusableView {
         label.textColor = .white
         
         addSubview(label)
+        
+        let button = createViewAllButton(label: label)
+        button.addTarget(self, action: #selector(classicalViewAllTapped(_:)), for: .touchUpInside)
     }
     
     override func layoutSubviews() {
@@ -27,5 +30,9 @@ class ClassicalCollectionReusableView: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @IBAction func classicalViewAllTapped(_ sender: UIButton) {
+        NotificationCenter.default.post(name: .ToViewAll, object: nil, userInfo: ["viewAll" : "Classical", "genre" : "/98/tracks"])
     }
 }

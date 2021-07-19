@@ -49,6 +49,16 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         
         HUD.show(HUDContentType.progress, onView: self.view)
         
+        NotificationCenter.default.addObserver(forName: .ToViewAll, object: nil, queue: .main) {[weak self] notification in
+            guard let self = self else {return}
+            
+            if let viewAll = notification.userInfo?["viewAll"] as? String,
+               let genre = notification.userInfo?["genre"] as? String {
+                Loaf.dismiss(sender: self, animated: true)
+                self.performSegue(withIdentifier: "toGenre", sender: [viewAll, genre])
+            }
+        }
+        
         loadRefreshControl()
         fetchTracks()
         
@@ -371,19 +381,14 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         UIView.animate(withDuration: 0.3) {
             if let cell = collectionView.cellForItem(at: indexPath) as? HomeTracksCollectionViewCell {
                 cell.imageView.transform = .init(scaleX: 0.90, y: 0.90)
-                cell.label.transform = .init(scaleX: 0.95, y: 0.95)
                 cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
             }
             
             if let cell = collectionView.cellForItem(at: indexPath) as? TopArtistsCollectionViewCell {
-                cell.imageView.transform = .init(scaleX: 0.90, y: 0.90)
-                cell.name.transform = .init(scaleX: 0.90, y: 0.90)
                 cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
             }
             
             if let cell = collectionView.cellForItem(at: indexPath) as? TopAlbumsCollectionViewCell {
-                cell.imageView.transform = .init(scaleX: 0.95, y: 0.95)
-                cell.subtitle.transform = .init(scaleX: 0.95, y: 0.95)
                 cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
             }
         }
@@ -456,10 +461,20 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let dest = segue.destination as? DetailsMusicViewController,
-              let track = sender as? Track else {return}
-        
-        dest.track = track
+        if segue.identifier == "toDetails" {
+            guard let dest = segue.destination as? DetailsMusicViewController,
+                  let track = sender as? Track else {return}
+
+            dest.track = track
+            
+        } else if segue.identifier == "toGenre" {
+            guard let dest = segue.destination as? UINavigationController,
+                  let targetController = dest.topViewController as? GenreMusicViewController,
+                  let data = sender as? [String] else {return}
+            
+            targetController.titleGenre = data[0]
+            targetController.path = data[1]
+        }
     }
     
     func fetchTracks() {
@@ -577,4 +592,8 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         
         present(vc, animated: true)
     }
+}
+
+extension Notification.Name {
+    static let ToViewAll = Notification.Name("toViewAll")
 }
