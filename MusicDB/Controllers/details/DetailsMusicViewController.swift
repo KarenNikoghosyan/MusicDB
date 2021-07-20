@@ -59,6 +59,11 @@ class DetailsMusicViewController: BaseViewController {
     @IBOutlet weak var likedButton: WCLShineButton!
     @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
         
+        if !Connectivity.isConnectedToInternet {
+            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+            likedButton.isSelected = false
+            return
+        }
         guard let userID = Auth.auth().currentUser?.uid else {return}
         
         if !isLiked {
@@ -99,21 +104,11 @@ class DetailsMusicViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let userID = Auth.auth().currentUser?.uid else {return}
-        db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
-            guard let self = self else {return}
-            
-            guard let arrIDs: [Int] = snapshot?.get("trackIDs") as? [Int] else {return}
-            if arrIDs.contains(self.track?.id ?? 0) {
-                self.likedButton.isSelected = true
-                self.isLiked = true
-            } else {
-                self.likedButton.isSelected = false
-                self.isLiked = false
-            }
+        if Connectivity.isConnectedToInternet {
+            fetchTracks()
+            checkLikedStatus()
+            loadActivityIndicator()
         }
-
-        loadActivityIndicator()
         
         createLikeButton()
         loadNoTracksLabel()
@@ -127,8 +122,15 @@ class DetailsMusicViewController: BaseViewController {
         let nib = UINib(nibName: "DetailsSearchMusicCollectionViewCell", bundle: .main)
         artistCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
      
-        fetchTracks()
         setUpViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !Connectivity.isConnectedToInternet {
+            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -143,6 +145,22 @@ class DetailsMusicViewController: BaseViewController {
         super.viewWillTransition(to: size, with: coordinator)
         
         artistCollectionView?.reloadData()
+    }
+    
+    func checkLikedStatus() {
+        guard let userID = Auth.auth().currentUser?.uid else {return}
+        db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
+            guard let self = self else {return}
+            
+            guard let arrIDs: [Int] = snapshot?.get("trackIDs") as? [Int] else {return}
+            if arrIDs.contains(self.track?.id ?? 0) {
+                self.likedButton.isSelected = true
+                self.isLiked = true
+            } else {
+                self.likedButton.isSelected = false
+                self.isLiked = false
+            }
+        }
     }
     
     func setUpViews() {
@@ -277,4 +295,21 @@ class DetailsMusicViewController: BaseViewController {
 extension Notification.Name {
     static let AddTrack = Notification.Name("addTrack")
     static let RemoveTrack = Notification.Name("removeTrack")
+}
+
+extension DetailsMusicViewController {
+    func showAlertWithActions(title: String? = nil, message: String? = nil) {
+        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
+            if !Connectivity.isConnectedToInternet {
+                self?.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+            } else {
+                self?.fetchTracks()
+                self?.checkLikedStatus()
+                self?.loadActivityIndicator()
+            }
+        }))
+        present(vc, animated: true)
+    }
 }

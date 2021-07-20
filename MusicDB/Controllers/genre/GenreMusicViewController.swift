@@ -18,6 +18,12 @@ class GenreMusicViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if Connectivity.isConnectedToInternet {
+            fetchTracks()
+            loadActivityIndicator()
+        }
+        
         genreTableView.delegate = self
         genreTableView.dataSource = self
         
@@ -26,9 +32,17 @@ class GenreMusicViewController: BaseTableViewController {
         
         self.title = titleGenre
         setupNavigationItems()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        loadActivityIndicator()
-        
+        if !Connectivity.isConnectedToInternet {
+            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+        }
+    }
+    
+    func fetchTracks() {
         ds.fetchGenres(from: .chart, with: path, with: ["limit" : 150]) {[weak self] tracks, error in
             if let tracks = tracks {
                 guard let self = self else {return}
@@ -83,5 +97,21 @@ class GenreMusicViewController: BaseTableViewController {
             return
         }
         dest.track = track
+    }
+}
+
+extension GenreMusicViewController {
+    func showAlertWithActions(title: String? = nil, message: String? = nil) {
+        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
+            if !Connectivity.isConnectedToInternet {
+                self?.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+             } else {
+                self?.fetchTracks()
+                self?.loadActivityIndicator()
+            }
+        }))
+        present(vc, animated: true)
     }
 }

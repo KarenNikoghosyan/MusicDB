@@ -91,6 +91,12 @@ class SearchMusicViewController: BaseViewController {
 
 extension SearchMusicViewController: UISearchBarDelegate {
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if !Connectivity.isConnectedToInternet {
+            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
+        
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reload(_:)), object: searchBar)
             perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.5)
     }
@@ -148,5 +154,18 @@ extension SearchMusicViewController: UISearchBarDelegate {
               let track = sender as? Track else {return}
         
         dest.track = track
+    }
+}
+
+extension SearchMusicViewController {
+    func showAlertWithActions(title: String? = nil, message: String? = nil) {
+        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
+            if !Connectivity.isConnectedToInternet {
+                self?.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+            }
+        }))
+        present(vc, animated: true)
     }
 }

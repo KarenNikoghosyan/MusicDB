@@ -28,6 +28,12 @@ class LikedMusicViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if Connectivity.isConnectedToInternet {
+            getUserLikedTracks()
+            loadActivityIndicator()
+        }
+        
         likedTableView.delegate = self
         likedTableView.dataSource = self
         
@@ -50,7 +56,7 @@ class LikedMusicViewController: BaseTableViewController {
         NotificationCenter.default.addObserver(forName: .RemoveTrack, object: nil, queue: .main) {[weak self] notification in
             if let track = notification.userInfo?["track"] as? Track {
                 guard let self = self else {return}
-                
+                print(track)
                 for (index, _) in self.tracks.enumerated() {
                     if self.tracks[index].id == track.id{
                         self.tracks.remove(at: index)
@@ -64,16 +70,25 @@ class LikedMusicViewController: BaseTableViewController {
                 }
             }
         }
-        
         loadNoLikedLabel()
-        loadActivityIndicator()
         
         likedTableView.separatorColor = UIColor.clear
 
         self.navigationItem.leftBarButtonItem = self.editButtonItem
         self.navigationItem.leftBarButtonItem?.tintColor = .systemGreen
         self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Futura-Bold", size: 16) as Any], for: .normal)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setTabBarSwipe(enabled: false)
         
+        if !Connectivity.isConnectedToInternet {
+            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+        }
+    }
+    
+    func getUserLikedTracks() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
         db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
@@ -82,11 +97,6 @@ class LikedMusicViewController: BaseTableViewController {
 
             self.fetchTracks()
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        setTabBarSwipe(enabled: false)
     }
     
     func fetchTracks() {
@@ -178,6 +188,11 @@ class LikedMusicViewController: BaseTableViewController {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
+            if !Connectivity.isConnectedToInternet {
+                showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+                return
+            }
+            
             guard let userID = Auth.auth().currentUser?.uid else {return}
 
             Loaf("The track was removed from your liked page", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
@@ -209,5 +224,21 @@ class LikedMusicViewController: BaseTableViewController {
             return
         }
         dest.track = track
+    }
+}
+
+extension LikedMusicViewController {
+    func showAlertWithActions(title: String? = nil, message: String? = nil) {
+        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
+            if !Connectivity.isConnectedToInternet {
+                self?.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+            } else {
+                self?.fetchTracks()
+                self?.loadActivityIndicator()
+            }
+        }))
+        present(vc, animated: true)
     }
 }

@@ -14,12 +14,12 @@ target 'MusicDB' do
   pod 'NVActivityIndicatorView'
   pod 'loady'
   pod 'WCLShineButton'
-  pod 'ReachabilitySwift'
   pod 'SkyFloatingLabelTextField'
   pod 'Loaf'
   pod 'LGButton'
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'Alamofire'
   
 end

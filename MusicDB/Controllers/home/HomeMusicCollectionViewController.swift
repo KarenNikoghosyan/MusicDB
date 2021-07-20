@@ -42,9 +42,13 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        if !ConnectionManager.shared.hasConnectivity() {
+        if !Connectivity.isConnectedToInternet {
             showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
             HUD.flash(.error, delay: 0.5)
+        } else {
+            fetchTracks()
+            loadRefreshControl()
+            greetingMessage()
         }
         
         HUD.show(HUDContentType.progress, onView: self.view)
@@ -58,9 +62,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
                 self.performSegue(withIdentifier: "toGenre", sender: [viewAll, genre])
             }
         }
-        
-        loadRefreshControl()
-        fetchTracks()
         
         collectionView.register(HomeTracksCollectionViewCell.self, forCellWithReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier)
         collectionView.register(TopArtistsCollectionViewCell.self, forCellWithReuseIdentifier: TopArtistsCollectionViewCell.reuseIdentifier)
@@ -77,8 +78,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         collectionView.register(RockCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "rockHeader")
         
         collectionView.collectionViewLayout = createCompositionalLayout()
-        
-        greetingMessage()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -575,25 +574,25 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             refreshControl.endRefreshing()
         }
     }
-    
-    func showAlertWithActions(title: String? = nil, message: String? = nil) {
-        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
-            if !ConnectionManager.shared.hasConnectivity() {
-                self?.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
-            } else {
-                self?.fetchTracks()
-            }
-        }))
-        vc.addAction(.init(title: "Go Offline", style: .default, handler: {[weak self] action in
-            self?.collectionView.reloadData()
-        }))
-        
-        present(vc, animated: true)
-    }
 }
 
 extension Notification.Name {
     static let ToViewAll = Notification.Name("toViewAll")
+}
+
+extension HomeMusicCollectionViewController {
+    func showAlertWithActions(title: String? = nil, message: String? = nil) {
+        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
+            if !Connectivity.isConnectedToInternet {
+                self?.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+            } else {
+                self?.fetchTracks()
+                self?.greetingMessage()
+                self?.loadRefreshControl()
+            }
+        }))
+        present(vc, animated: true)
+    }
 }
