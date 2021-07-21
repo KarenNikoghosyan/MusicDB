@@ -59,9 +59,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         registerNameTextField.becomeFirstResponder()
-        backButton.imageEdgeInsets = UIEdgeInsets(top: 30, left: 25, bottom: 30, right: 45)
             
         setUpTextFields()
     }
