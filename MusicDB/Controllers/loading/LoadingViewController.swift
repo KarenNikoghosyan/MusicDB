@@ -40,9 +40,15 @@ class LoadingViewController: UIViewController {
                 let vc = storyboard.instantiateViewController(withIdentifier: "mainStoryboard")
                 self.present(vc, animated: true)
             } else {
-                let storyboard = UIStoryboard(name: "Login", bundle: .main)
-                let vc = storyboard.instantiateViewController(withIdentifier: "loginStoryboard")
-                self.present(vc, animated: true)
+                if !UserDefaults.standard.isIntro() {
+                    let storyboard = UIStoryboard(name: "Intro", bundle: .main)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "introStoryboard")
+                    self.present(vc, animated: true)
+                } else {
+                    let storyboard = UIStoryboard(name: "Login", bundle: .main)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "loginStoryboard")
+                    self.present(vc, animated: true)
+                }
             }
         }
     }
