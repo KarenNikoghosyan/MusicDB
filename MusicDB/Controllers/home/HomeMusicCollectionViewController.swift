@@ -35,6 +35,11 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     var counter: Int = 0
     
     @IBAction func signOut(_ sender: UIBarButtonItem) {
+        
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
         Loaf.dismiss(sender: self, animated: true)
         showAlertAndSegue(title: "Sign out from MusicDB?", message: "You're about to sign out, do you want to proceed?")
     }
@@ -43,7 +48,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
                 
         if !Connectivity.isConnectedToInternet {
-            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+            showAlertAndReload(title: "No Internet Connection", message: "Failed to connect to the internet")
             HUD.flash(.error, delay: 0.5)
         } else {
             fetchTracks()
@@ -54,6 +59,11 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         HUD.show(HUDContentType.progress, onView: self.view)
         
         NotificationCenter.default.addObserver(forName: .ToViewAll, object: nil, queue: .main) {[weak self] notification in
+            
+            if !Connectivity.isConnectedToInternet {
+                self?.showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+                return
+            }
             guard let self = self else {return}
             
             if let viewAll = notification.userInfo?["viewAll"] as? String,
@@ -117,6 +127,11 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     }
     
     @objc func refresh(_ refreshControl: UIRefreshControl) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            collectionView.refreshControl?.endRefreshing()
+            return
+        }
         fetchTracks()
     }
 
@@ -455,6 +470,11 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     
     func toDetailsSegue(tracks: [Track], indexPath: IndexPath) {
         Loaf.dismiss(sender: self, animated: true)
+        
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
         let track = tracks[indexPath.item]
         performSegue(withIdentifier: "toDetails", sender: track)
     }
@@ -581,12 +601,12 @@ extension Notification.Name {
 }
 
 extension HomeMusicCollectionViewController {
-    func showAlertWithActions(title: String? = nil, message: String? = nil) {
+    func showAlertAndReload(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
             if !Connectivity.isConnectedToInternet {
-                self?.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+                self?.showAlertAndReload(title: "No Internet Connection", message: "Failed to connect to the internet")
             } else {
                 self?.fetchTracks()
                 self?.greetingMessage()

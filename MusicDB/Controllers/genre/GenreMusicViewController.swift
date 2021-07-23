@@ -88,6 +88,10 @@ class GenreMusicViewController: BaseTableViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
         performSegue(withIdentifier: "toDetails", sender: tracks[indexPath.row])
     }
 

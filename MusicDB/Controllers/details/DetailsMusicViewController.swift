@@ -42,6 +42,11 @@ class DetailsMusicViewController: BaseViewController {
     @IBAction func goToWebsiteTapped(_ sender: UIButton) {
         Loaf.dismiss(sender: self, animated: true)
         
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
+        
         UIView.animate(withDuration: 0.4) {[weak self] in
             self?.goToWebsiteButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.4), for: .normal)
             self?.goToWebsiteButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
@@ -60,8 +65,12 @@ class DetailsMusicViewController: BaseViewController {
     @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
         
         if !Connectivity.isConnectedToInternet {
-            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
-            likedButton.isSelected = false
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            if !isLiked {
+                likedButton.isSelected = false
+            } else {
+                likedButton.isSelected = true
+            }
             return
         }
         guard let userID = Auth.auth().currentUser?.uid else {return}
@@ -129,7 +138,7 @@ class DetailsMusicViewController: BaseViewController {
         super.viewDidAppear(animated)
         
         if !Connectivity.isConnectedToInternet {
-            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+            showAlertAndReload(title: "No Internet Connection", message: "Failed to connect to the internet")
         }
     }
     
@@ -221,6 +230,11 @@ class DetailsMusicViewController: BaseViewController {
     
     @IBAction func animateButton(_ sender: UIButton) {
         
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
+        
         if let button = sender as? LoadyButton {
             if button.loadingIsShowing() {
                 stopAudio()
@@ -278,14 +292,16 @@ class DetailsMusicViewController: BaseViewController {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
      
         Loaf.dismiss(sender: self, animated: true)
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
         let parentVC = presentingViewController
             
         dismiss(animated: true) {[weak self] in
-            guard let self = self else {return}
             let detailsVC = DetailsMusicViewController.storyboardInstance(storyboardID: "Main", restorationID: "detailsScreen") as! DetailsMusicViewController
             
-            let tracks = Array(self.tracks)
-            let track = tracks[indexPath.item]
+            let track = self?.tracks[indexPath.item]
             detailsVC.track = track
             parentVC?.present(detailsVC, animated: true)
         }
@@ -298,12 +314,12 @@ extension Notification.Name {
 }
 
 extension DetailsMusicViewController {
-    func showAlertWithActions(title: String? = nil, message: String? = nil) {
+    func showAlertAndReload(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
             if !Connectivity.isConnectedToInternet {
-                self?.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+                self?.showAlertAndReload(title: "No Internet Connection", message: "Failed to connect to the internet")
             } else {
                 self?.fetchTracks()
                 self?.checkLikedStatus()

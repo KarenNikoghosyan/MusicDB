@@ -16,6 +16,10 @@ class SearchMusicViewController: BaseViewController {
     @IBOutlet weak var trackSearchBar: UISearchBar!
     @IBOutlet weak var searchTracksCollectionView: UICollectionView!
     @IBAction func signOut(_ sender: UIBarButtonItem) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
         showAlertAndSegue(title: "Sign out from MusicDB?", message: "You're about to sign out, do you want to proceed?")
     }
     
@@ -91,9 +95,8 @@ class SearchMusicViewController: BaseViewController {
 
 extension SearchMusicViewController: UISearchBarDelegate {
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         if !Connectivity.isConnectedToInternet {
-            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
             return
         }
         
@@ -144,9 +147,12 @@ extension SearchMusicViewController: UISearchBarDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let arrayTracks = Array(tracks)
-        let track = arrayTracks[indexPath.item]
-        performSegue(withIdentifier: "toDetails", sender: track)
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
+        
+        performSegue(withIdentifier: "toDetails", sender: tracks[indexPath.item])
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -154,18 +160,5 @@ extension SearchMusicViewController: UISearchBarDelegate {
               let track = sender as? Track else {return}
         
         dest.track = track
-    }
-}
-
-extension SearchMusicViewController {
-    func showAlertWithActions(title: String? = nil, message: String? = nil) {
-        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
-            if !Connectivity.isConnectedToInternet {
-                self?.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
-            }
-        }))
-        present(vc, animated: true)
     }
 }

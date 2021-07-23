@@ -50,7 +50,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                         self?.present(vc, animated: true)
                     }
                 }
-                
             } else {
                 self?.showViewControllerAlert(title: "Error", message: "Account is already exists")
             }

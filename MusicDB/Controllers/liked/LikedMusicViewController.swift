@@ -23,6 +23,10 @@ class LikedMusicViewController: BaseTableViewController {
     
     @IBOutlet weak var likedTableView: UITableView!
     @IBAction func logOutTapped(_ sender: UIBarButtonItem) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
         showAlertAndSegue(title: "Sign out from MusicDB?", message: "You're about to sign out, do you want to proceed?")
     }
     
@@ -189,7 +193,7 @@ class LikedMusicViewController: BaseTableViewController {
         if editingStyle == .delete {
             
             if !Connectivity.isConnectedToInternet {
-                showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+                showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
                 return
             }
             
@@ -215,6 +219,10 @@ class LikedMusicViewController: BaseTableViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
         performSegue(withIdentifier: "toDetails", sender: tracks[indexPath.row])
     }
 
