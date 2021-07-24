@@ -16,13 +16,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IGO-a4-CS2">
-                                <rect key="frame" x="331" y="60" width="51" height="36"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IGO-a4-CS2">
+                                <rect key="frame" x="334" y="60" width="48" height="48"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="Hie-qB-hgK"/>
+                                    <constraint firstAttribute="width" constant="48" id="SZH-cd-iQO"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="YZc-3v-sDQ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="18"/>
-                                <state key="normal" title="Done">
+                                <state key="normal" image="tick_icon">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
@@ -44,6 +45,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="tick_icon" width="128" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

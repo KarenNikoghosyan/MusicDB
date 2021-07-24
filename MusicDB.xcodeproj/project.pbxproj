@@ -164,17 +164,6 @@
 			path = structs;
 			sourceTree = "<group>";
 		};
-		78027EDE2683431300526A0C /* shared */ = {
-			isa = PBXGroup;
-			children = (
-				78027EE3268351E800526A0C /* DetailsSearchMusicCollectionViewCell.swift */,
-				78027EE4268351E800526A0C /* DetailsSearchMusicCollectionViewCell.xib */,
-				78C5180926A585C000D9378B /* LikedGenreTableViewCell.swift */,
-				78C5180A26A585C000D9378B /* LikedGenreTableViewCell.xib */,
-			);
-			path = shared;
-			sourceTree = "<group>";
-		};
 		780C69DB269DD4250097DDC4 /* Database */ = {
 			isa = PBXGroup;
 			children = (
@@ -315,8 +304,9 @@
 		788A758E267B9F2400DFE2B0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				78F0FB9426AB6641005B0DDC /* liked_genre */,
+				78F0FB9326AB660D005B0DDC /* details_search */,
 				78892CAD26888C5E00A12F41 /* home */,
-				78027EDE2683431300526A0C /* shared */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -404,6 +394,24 @@
 				7834C33B26A82D3300AD6F23 /* UserDefaults+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		78F0FB9326AB660D005B0DDC /* details_search */ = {
+			isa = PBXGroup;
+			children = (
+				78027EE3268351E800526A0C /* DetailsSearchMusicCollectionViewCell.swift */,
+				78027EE4268351E800526A0C /* DetailsSearchMusicCollectionViewCell.xib */,
+			);
+			path = details_search;
+			sourceTree = "<group>";
+		};
+		78F0FB9426AB6641005B0DDC /* liked_genre */ = {
+			isa = PBXGroup;
+			children = (
+				78C5180926A585C000D9378B /* LikedGenreTableViewCell.swift */,
+				78C5180A26A585C000D9378B /* LikedGenreTableViewCell.xib */,
+			);
+			path = liked_genre;
 			sourceTree = "<group>";
 		};
 		F92BD59442FCC4C9BFE16A53 /* Pods */ = {
