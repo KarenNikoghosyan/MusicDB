@@ -65,6 +65,7 @@
 		78CB8FEC268924AC00E90CE4 /* TopArtistsCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CB8FEB268924AC00E90CE4 /* TopArtistsCollectionReusableView.swift */; };
 		78CB8FEE2689280000E90CE4 /* TopArtistsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CB8FED2689280000E90CE4 /* TopArtistsCollectionViewCell.swift */; };
 		78CB8FF226892F8700E90CE4 /* TopArtistsAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CB8FF126892F8700E90CE4 /* TopArtistsAPIDataSource.swift */; };
+		78F0FB9826ACB436005B0DDC /* Notification.Name+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F0FB9726ACB436005B0DDC /* Notification.Name+Extensions.swift */; };
 		8ED2CE98960D7F2A8C808AF5 /* Pods_MusicDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C4311E65E99F27D50977DCE /* Pods_MusicDB.framework */; };
 /* End PBXBuildFile section */
 
@@ -131,6 +132,7 @@
 		78CB8FEB268924AC00E90CE4 /* TopArtistsCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopArtistsCollectionReusableView.swift; sourceTree = "<group>"; };
 		78CB8FED2689280000E90CE4 /* TopArtistsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopArtistsCollectionViewCell.swift; sourceTree = "<group>"; };
 		78CB8FF126892F8700E90CE4 /* TopArtistsAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopArtistsAPIDataSource.swift; sourceTree = "<group>"; };
+		78F0FB9726ACB436005B0DDC /* Notification.Name+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name+Extensions.swift"; sourceTree = "<group>"; };
 		9C4311E65E99F27D50977DCE /* Pods_MusicDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MusicDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -392,6 +394,7 @@
 				78C5180226A4ED6E00D9378B /* UICollectionReusableView+Extensions.swift */,
 				78C5180D26A5993300D9378B /* UIImageView+Extensions.swift */,
 				7834C33B26A82D3300AD6F23 /* UserDefaults+Extensions.swift */,
+				78F0FB9726ACB436005B0DDC /* Notification.Name+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				7828BB3826908018001CA735 /* RegisterViewController.swift in Sources */,
 				78CB8FEE2689280000E90CE4 /* TopArtistsCollectionViewCell.swift in Sources */,
 				780C6A7226A03E6D0097DDC4 /* JSONDecoder+Extensions.swift in Sources */,
+				78F0FB9826ACB436005B0DDC /* Notification.Name+Extensions.swift in Sources */,
 				7862B8672697A2D2000E3056 /* SingleTrackAPIDataSource.swift in Sources */,
 				78892CBE2688EEA700A12F41 /* DanceCollectionReusableView.swift in Sources */,
 				78CB8FF226892F8700E90CE4 /* TopArtistsAPIDataSource.swift in Sources */,

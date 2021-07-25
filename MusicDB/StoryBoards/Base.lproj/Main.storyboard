@@ -22,12 +22,13 @@
                     <connections>
                         <segue destination="ytK-Cn-2rt" kind="relationship" relationship="viewControllers" id="k20-C7-Uvy"/>
                         <segue destination="aTY-fp-TzV" kind="relationship" relationship="viewControllers" id="6gX-m4-m3Z"/>
+                        <segue destination="Gao-pP-oiX" kind="relationship" relationship="viewControllers" id="1MR-Z1-cbc"/>
                         <segue destination="55I-Qz-NVH" kind="relationship" relationship="viewControllers" id="gzX-o8-63g"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RXY-e2-u6t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-506" y="962"/>
+            <point key="canvasLocation" x="-100" y="922"/>
         </scene>
         <!--Search-->
         <scene sceneID="fit-Ug-e53">
@@ -97,7 +98,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g7A-t8-Tym" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1466" y="2524"/>
+            <point key="canvasLocation" x="-1347" y="2524"/>
         </scene>
         <!--Details Music View Controller-->
         <scene sceneID="N6h-qw-vSP">
@@ -316,6 +317,7 @@
                             <constraint firstItem="Gii-ey-9ii" firstAttribute="leading" secondItem="XqL-lN-KxK" secondAttribute="trailing" constant="8" id="ThN-Ld-p1u"/>
                             <constraint firstItem="06l-eu-bjH" firstAttribute="leading" secondItem="XqL-lN-KxK" secondAttribute="leading" id="Z49-NC-zfY"/>
                             <constraint firstItem="15m-T5-NEr" firstAttribute="trailing" secondItem="Gii-ey-9ii" secondAttribute="trailing" constant="16" id="ggF-im-fRD"/>
+                            <constraint firstItem="15m-T5-NEr" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="aOz-Uc-JGQ" secondAttribute="trailing" symbolic="YES" id="jUM-9a-4nA"/>
                             <constraint firstItem="aOz-Uc-JGQ" firstAttribute="leading" secondItem="15m-T5-NEr" secondAttribute="leading" constant="16" id="pdv-Lk-1xn"/>
                             <constraint firstItem="15m-T5-NEr" firstAttribute="bottom" secondItem="wzH-Ry-WYA" secondAttribute="bottom" id="zKY-LR-8Tb"/>
                             <constraint firstItem="wzH-Ry-WYA" firstAttribute="leading" secondItem="15m-T5-NEr" secondAttribute="leading" id="zmf-0S-ZeT"/>
@@ -349,7 +351,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="js3-BE-A3t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1466" y="3355"/>
+            <point key="canvasLocation" x="-1347" y="3354"/>
         </scene>
         <!--Genre Music View Controller-->
         <scene sceneID="TM6-Jn-9G5">
@@ -432,6 +434,22 @@
             </objects>
             <point key="canvasLocation" x="-506" y="2525"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="4IJ-pI-XsI">
+            <objects>
+                <viewController id="YGP-aw-Vcb" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LhQ-HT-BZp">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="GTa-uK-PpA"/>
+                        <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="JR2-kv-1TL"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LQI-F5-i9w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="273" y="2524"/>
+        </scene>
         <!--Liked-->
         <scene sceneID="ftl-ad-LUE">
             <objects>
@@ -468,7 +486,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yOa-Ng-Kws" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="469.62616822429902" y="2523.7580993520519"/>
+            <point key="canvasLocation" x="1053" y="2524"/>
         </scene>
         <!--Home-->
         <scene sceneID="93v-jd-q18">
@@ -520,7 +538,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sFO-Nl-YOc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1466" y="1753"/>
+            <point key="canvasLocation" x="-1346" y="1753"/>
         </scene>
         <!--Liked-->
         <scene sceneID="B2K-tm-DB6">
@@ -546,7 +564,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ct3-bx-Ghp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="470" y="1753"/>
+            <point key="canvasLocation" x="1054" y="1753"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NKM-Ta-fwU">
@@ -573,6 +591,31 @@
             </objects>
             <point key="canvasLocation" x="-506" y="3354"/>
         </scene>
+        <!--Player-->
+        <scene sceneID="GSg-29-vzr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Gao-pP-oiX" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Player" image="music.note.list" catalog="system" id="4Vg-v9-o3k"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="xyH-NY-2Om">
+                        <rect key="frame" x="0.0" y="44" width="428" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="YGP-aw-Vcb" kind="relationship" relationship="rootViewController" id="cTl-rB-Zdg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jo2-ks-V1z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="272" y="1753"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="geQ-gZ-cJu"/>
@@ -583,6 +626,7 @@
         <image name="icon_signout_potrait" width="25" height="25"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="music.note.house" catalog="system" width="128" height="106"/>
+        <image name="music.note.list" catalog="system" width="128" height="115"/>
         <image name="play.circle" catalog="system" width="128" height="121"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -108,11 +108,24 @@
                             </stackView>
                         </subviews>
                     </stackView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aus-b3-esB" customClass="WCLShineButton" customModule="WCLShineButton">
+                        <rect key="frame" x="306" y="91" width="32" height="32"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="32" id="JB8-Bq-HqL"/>
+                            <constraint firstAttribute="height" constant="32" id="X8k-4Q-Y7R"/>
+                        </constraints>
+                        <connections>
+                            <action selector="likedButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="yBf-wc-DdU"/>
+                        </connections>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="gCt-ss-53M" firstAttribute="top" secondItem="PKk-Qr-7U2" secondAttribute="top" id="1aD-hq-eU2"/>
                     <constraint firstItem="PKk-Qr-7U2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="HqP-4C-gHP"/>
+                    <constraint firstAttribute="bottom" secondItem="aus-b3-esB" secondAttribute="bottom" constant="16" id="NLQ-yj-rCR"/>
+                    <constraint firstAttribute="trailing" secondItem="aus-b3-esB" secondAttribute="trailing" constant="10" id="WPC-HM-QRp"/>
                     <constraint firstItem="gCt-ss-53M" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fJZ-mE-PJ8"/>
                     <constraint firstAttribute="trailing" secondItem="gCt-ss-53M" secondAttribute="trailing" id="hzE-ry-Wd6"/>
                     <constraint firstItem="PKk-Qr-7U2" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="lTj-ck-Wli"/>
@@ -122,6 +135,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="likedButton" destination="aus-b3-esB" id="0Pw-rT-WlZ"/>
                 <outlet property="trackAlbumNameLabel" destination="SDv-Al-WMO" id="aE8-6m-4U9"/>
                 <outlet property="trackArtistNameLabel" destination="xW7-FV-q1Q" id="IH3-nX-lGa"/>
                 <outlet property="trackDurationLabel" destination="GJ2-AO-nvo" id="5ce-dc-aDa"/>

@@ -63,6 +63,7 @@ class DetailsMusicViewController: BaseViewController {
     @IBOutlet weak var previewButton: LoadyButton!
     @IBOutlet weak var likedButton: WCLShineButton!
     @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
+        guard let track = track else {return}
         
         if !Connectivity.isConnectedToInternet {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
@@ -76,36 +77,14 @@ class DetailsMusicViewController: BaseViewController {
         guard let userID = Auth.auth().currentUser?.uid else {return}
         
         if !isLiked {
-            Loaf("The track was added to your liked page", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5))
-            
-            db.collection("users").document(userID).updateData([
-                "trackIDs" : FieldValue.arrayUnion([track?.id as Any])
-            ]) {[weak self] error in
-                if let error = error {
-                    print("\(error.localizedDescription)")
-                } else {
-                    guard let track = self?.track else {return}
-                    DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: .AddTrack, object: nil, userInfo: ["track": track])
-                    }
-                }
-            }
+            addTrack(track: track, userID: userID)
+            loafMessageAdded()
+
             isLiked = true
         } else {
-            Loaf("The track was removed from your liked page", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5))
-            
-            db.collection("users").document(userID).updateData([
-                "trackIDs" : FieldValue.arrayRemove([track?.id as Any])
-            ]) {[weak self] error in
-                if let error = error {
-                    print("\(error.localizedDescription)")
-                } else {
-                    guard let track = self?.track else {return}
-                    DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: .RemoveTrack, object: nil, userInfo: ["track" : track])
-                    }
-                }
-            }
+            removeTrack(track: track, userID: userID)
+            loafMessageRemoved()
+
             isLiked = false
         }
     }
@@ -306,11 +285,6 @@ class DetailsMusicViewController: BaseViewController {
             parentVC?.present(detailsVC, animated: true)
         }
     }
-}
-
-extension Notification.Name {
-    static let AddTrack = Notification.Name("addTrack")
-    static let RemoveTrack = Notification.Name("removeTrack")
 }
 
 extension DetailsMusicViewController {

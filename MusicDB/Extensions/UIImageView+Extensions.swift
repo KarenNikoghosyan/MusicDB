@@ -7,10 +7,8 @@
 
 import UIKit
 
-extension UIImageView
-{
-    func roundCornersForAspectFit(radius: CGFloat)
-    {
+extension UIImageView {
+    func roundCornersForAspectFit(radius: CGFloat) {
         if let image = self.image {
 
             //calculate drawingRect
@@ -34,4 +32,12 @@ extension UIImageView
     }
 }
 
-
+extension UIImageView {
+    func applyBlurEffect() {
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(blurEffectView)
+    }
+}

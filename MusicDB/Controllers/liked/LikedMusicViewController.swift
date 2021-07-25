@@ -33,14 +33,39 @@ class LikedMusicViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if Connectivity.isConnectedToInternet {
-            getUserLikedTracks()
-            loadActivityIndicator()
+        NotificationCenter.default.addObserver(forName: .IndexRemove, object: nil, queue: .main) {[weak self] notification in
+            guard let self = self else {return}
+            
+            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+                let track = self.tracks[indexPath.row]
+                guard let userID = Auth.auth().currentUser?.uid else {return}
+
+                self.db.collection("users").document(userID).updateData([
+                    "trackIDs" : FieldValue.arrayRemove([track.id as Any])
+                ]) {[weak self] error in
+                    guard let self = self else {return}
+                    
+                    if let error = error {
+                        print("\(error.localizedDescription)")
+                    } else {
+                        DispatchQueue.main.async {
+                            self.tracks.remove(at: indexPath.row)
+                            self.likedTableView.deleteRows(at: [indexPath], with: .automatic)
+                            self.loafMessageRemoved()
+                        }
+                    }
+                }
+            }
         }
         
         likedTableView.delegate = self
         likedTableView.dataSource = self
         
+        if Connectivity.isConnectedToInternet {
+            getUserLikedTracks()
+            loadActivityIndicator()
+        }
+
         let nib = UINib(nibName: "LikedGenreTableViewCell", bundle: .main)
         likedTableView.register(nib, forCellReuseIdentifier: "cell")
         
@@ -60,7 +85,7 @@ class LikedMusicViewController: BaseTableViewController {
         NotificationCenter.default.addObserver(forName: .RemoveTrack, object: nil, queue: .main) {[weak self] notification in
             if let track = notification.userInfo?["track"] as? Track {
                 guard let self = self else {return}
-                print(track)
+    
                 for (index, _) in self.tracks.enumerated() {
                     if self.tracks[index].id == track.id{
                         self.tracks.remove(at: index)
@@ -199,7 +224,7 @@ class LikedMusicViewController: BaseTableViewController {
             
             guard let userID = Auth.auth().currentUser?.uid else {return}
 
-            Loaf("The track was removed from your liked page", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
+            loafMessageRemoved()
             
             let track = tracks[indexPath.row]
             db.collection("users").document(userID).updateData([
@@ -223,6 +248,7 @@ class LikedMusicViewController: BaseTableViewController {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
             return
         }
+        Loaf.dismiss(sender: self, animated: true)
         performSegue(withIdentifier: "toDetails", sender: tracks[indexPath.row])
     }
 

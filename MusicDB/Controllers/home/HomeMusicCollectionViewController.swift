@@ -99,16 +99,15 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     func greetingMessage() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
         db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
-            guard let self = self else {return}
             
             guard let name: String = snapshot?.get("name") as? String else {return}
             
-            Loaf("Welcome Back, \(name)", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(3.5))
+            self?.loafMessageWelcome(name: name)
         }
     }
     
     func registrationMessage() {
-        Loaf("Account was successfully created", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
+        loafMessageRegistration()
     }
     
     func loadRefreshControl() {
@@ -394,7 +393,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         UIView.animate(withDuration: 0.3) {
             if let cell = collectionView.cellForItem(at: indexPath) as? HomeTracksCollectionViewCell {
-                cell.imageView.transform = .init(scaleX: 0.90, y: 0.90)
+                cell.imageView.transform = .init(scaleX: 0.97, y: 0.97)
                 cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
             }
             
@@ -412,7 +411,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         UIView.animate(withDuration: 0.3) {
             if let cell = collectionView.cellForItem(at: indexPath) as? HomeTracksCollectionViewCell {
                 cell.imageView.transform = .identity
-                cell.label.transform = .identity
                 cell.contentView.backgroundColor = .clear
             }
             
@@ -500,7 +498,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/0/tracks", with: ["limit" : 35]) {[weak self] topTracks, error in
             if let topTracks = topTracks {
                 self?.topTracks = topTracks
-
                 self?.loadSectionAndAnimation(in: 0)
             } else if let error = error {
                 print(error)
@@ -509,7 +506,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/116/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.hipHop = tracks
-
                 self?.loadSectionAndAnimation(in: 1)
             } else if let error = error {
                 print(error)
@@ -518,7 +514,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/113/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.dance = tracks
-
                 self?.loadSectionAndAnimation(in: 2)
             } else if let error = error {
                 print(error)
@@ -527,7 +522,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/129/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.jazz = tracks
-
                 self?.loadSectionAndAnimation(in: 3)
             } else if let error = error {
                 print(error)
@@ -536,7 +530,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         topArtistsDS.fetchTopArtists(from: .chart, with: "/0/artists", with: ["limit" : 8]) {[weak self] artists, error in
             if let artists = artists {
                 self?.topArtists = artists
-
                 self?.loadSectionAndAnimation(in: 4)
             } else if let error = error {
                 print(error)
@@ -545,7 +538,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/132/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.pop = tracks
-
                 self?.loadSectionAndAnimation(in: 5)
             } else if let error = error {
                 print(error)
@@ -554,7 +546,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/98/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.classical = tracks
-
                 self?.loadSectionAndAnimation(in: 6)
             } else if let error = error {
                 print(error)
@@ -563,7 +554,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         topAlbumsDS.fetchTopAlbums(from: .chart, with: "/0/albums", with: ["limit" : 15]) {[weak self] albums, error in
             if let albums = albums {
                 self?.topAlbums = albums
-
                 self?.loadSectionAndAnimation(in: 7)
             } else if let error = error {
                 print(error)
@@ -572,7 +562,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         tracksDS.fetchGenres(from: .chart, with: "/152/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
             if let tracks = tracks {
                 self?.rock = tracks
-
                 self?.loadSectionAndAnimation(in: 8)
             } else if let error = error {
                 print(error)
@@ -594,10 +583,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             refreshControl.endRefreshing()
         }
     }
-}
-
-extension Notification.Name {
-    static let ToViewAll = Notification.Name("toViewAll")
 }
 
 extension HomeMusicCollectionViewController {

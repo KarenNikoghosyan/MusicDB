@@ -37,7 +37,6 @@ class HomeTracksCollectionViewCell: UICollectionViewCell {
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-
     }
 
     required init?(coder: NSCoder) {

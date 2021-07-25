@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
 
 class GenreMusicViewController: BaseTableViewController {
     
@@ -18,6 +20,24 @@ class GenreMusicViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let userID = Auth.auth().currentUser?.uid else {return}
+        
+        NotificationCenter.default.addObserver(forName: .IndexAdd, object: nil, queue: .main) {[weak self] notification in
+            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+                guard let track = self?.tracks[indexPath.row] else {return}
+                
+                self?.addTrack(track: track, userID: userID)
+                self?.loafMessageAdded()
+            }
+        }
+        NotificationCenter.default.addObserver(forName: .IndexRemove, object: nil, queue: .main) {[weak self] notification in
+            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+                guard let track = self?.tracks[indexPath.row] else {return}
+                
+                self?.removeTrack(track: track, userID: userID)
+                self?.loafMessageRemoved()
+            }
+        }
         
         if Connectivity.isConnectedToInternet {
             fetchTracks()

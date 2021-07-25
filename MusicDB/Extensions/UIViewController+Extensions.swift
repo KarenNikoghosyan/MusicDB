@@ -7,6 +7,8 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
+import Loaf
 
 extension UIViewController {
     func hideKeyboardWhenTapped() {
@@ -50,5 +52,55 @@ extension UIViewController {
         }))
         alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         present(alert, animated: true)
+    }
+}
+
+extension UIViewController {
+    func loafMessageAdded() {
+        Loaf("The track was added to your liked page", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5))
+    }
+    
+    func loafMessageRemoved() {
+        Loaf("The track was removed from your liked page", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5))
+    }
+    
+    func loafMessageWelcome(name: String) {
+        Loaf("Welcome Back, \(name)", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(3.5))
+    }
+    
+    func loafMessageRegistration() {
+        Loaf("Account was successfully created", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.short)
+    }
+}
+
+extension UIViewController {
+    static let db = Firestore.firestore()
+    
+    func removeTrack(track: Track, userID: String) {
+        UIViewController.db.collection("users").document(userID).updateData([
+            "trackIDs" : FieldValue.arrayRemove([track.id as Any])
+        ]) { error in
+            if let error = error {
+                print("\(error.localizedDescription)")
+            } else {
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: .RemoveTrack, object: nil, userInfo: ["track" : track])
+                }
+            }
+        }
+    }
+    
+    func addTrack(track: Track, userID: String) {
+        UIViewController.db.collection("users").document(userID).updateData([
+            "trackIDs" : FieldValue.arrayUnion([track.id as Any])
+        ]) { error in
+            if let error = error {
+                print("\(error.localizedDescription)")
+            } else {
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: .AddTrack, object: nil, userInfo: ["track": track])
+                }
+            }
+        }
     }
 }
