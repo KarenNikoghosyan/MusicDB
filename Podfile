@@ -22,5 +22,6 @@ target 'MusicDB' do
   pod 'Firebase/Firestore'
   pod 'Alamofire'
   pod 'paper-onboarding'
+  pod 'OAuthSwift'
   
 end
