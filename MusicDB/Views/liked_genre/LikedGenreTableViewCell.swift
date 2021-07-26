@@ -48,10 +48,9 @@ class LikedGenreTableViewCell: UITableViewCell {
         trackArtistNameLabel.text = track.artist.name
         trackAlbumNameLabel.text = track.album.title
         
-        let duration = Double(track.duration) / 60.0
-        let durationString = String(format: "%.2f", duration) + " Minutes"
-        let newDurationString = durationString.replacingOccurrences(of: ".", with: ":")
-        trackDurationLabel.text = newDurationString
+        let minutes = track.duration / 60
+        let seconds = track.duration % 60
+        trackDurationLabel.text = "\(minutes):\(seconds)"
         
         guard let url = URL(string: "\(track.album.cover ?? "No Image Found")") else {
             trackImageView.tintColor = .white
@@ -67,6 +66,10 @@ class LikedGenreTableViewCell: UITableViewCell {
         
         trackImageView.sd_imageIndicator = SDWebImageActivityIndicator.white
         trackImageView.sd_setImage(with: url)
+    }
+    
+    func updateLikedStatus(track: Track) {
+        
     }
     
     func getIndexPath() -> IndexPath? {

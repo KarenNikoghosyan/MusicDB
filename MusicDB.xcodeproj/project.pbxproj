@@ -37,6 +37,7 @@
 		78638A70268742D3001A756E /* GenreAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78638A6F268742D3001A756E /* GenreAPIDataSource.swift */; };
 		7876D20C26828D2A009D0669 /* MediaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7876D20B26828D2A009D0669 /* MediaPlayer.swift */; };
 		7884C89D268F8CBB00FE1FBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7884C89C268F8CBB00FE1FBE /* GoogleService-Info.plist */; };
+		7887761226ADD65A006A18F2 /* OAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7887761126ADD65A006A18F2 /* OAuthViewController.swift */; };
 		78892CAF26888CCF00A12F41 /* HomeTracksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78892CAE26888CCF00A12F41 /* HomeTracksCollectionViewCell.swift */; };
 		78892CBA2688D54300A12F41 /* TopChartCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78892CB92688D54300A12F41 /* TopChartCollectionReusableView.swift */; };
 		78892CBC2688ED4F00A12F41 /* HipHopCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78892CBB2688ED4F00A12F41 /* HipHopCollectionReusableView.swift */; };
@@ -102,6 +103,7 @@
 		78638A6F268742D3001A756E /* GenreAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreAPIDataSource.swift; sourceTree = "<group>"; };
 		7876D20B26828D2A009D0669 /* MediaPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayer.swift; sourceTree = "<group>"; };
 		7884C89C268F8CBB00FE1FBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7887761126ADD65A006A18F2 /* OAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthViewController.swift; sourceTree = "<group>"; };
 		78892CAE26888CCF00A12F41 /* HomeTracksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTracksCollectionViewCell.swift; sourceTree = "<group>"; };
 		78892CB92688D54300A12F41 /* TopChartCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopChartCollectionReusableView.swift; sourceTree = "<group>"; };
 		78892CBB2688ED4F00A12F41 /* HipHopCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HipHopCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -217,6 +219,14 @@
 			path = intro;
 			sourceTree = "<group>";
 		};
+		7887761026ADD634006A18F2 /* oauth */ = {
+			isa = PBXGroup;
+			children = (
+				7887761126ADD65A006A18F2 /* OAuthViewController.swift */,
+			);
+			path = oauth;
+			sourceTree = "<group>";
+		};
 		78892CAD26888C5E00A12F41 /* home */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +326,7 @@
 		788A758F267B9F2B00DFE2B0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				7887761026ADD634006A18F2 /* oauth */,
 				7834C33826A728E900AD6F23 /* intro */,
 				78C5180426A4F5C300D9378B /* genre */,
 				78C1F0ED2694548C0005384F /* liked */,
@@ -561,6 +572,7 @@
 				782E4860268A345B005C8E4F /* TopAlbumsCollectionViewCell.swift in Sources */,
 				7834C33A26A72A2C00AD6F23 /* IntroViewController.swift in Sources */,
 				7834B413268E712800D1161C /* LoadingViewController.swift in Sources */,
+				7887761226ADD65A006A18F2 /* OAuthViewController.swift in Sources */,
 				78614DF726862A60000125C2 /* BaseCollectionViewController.swift in Sources */,
 				782E4858268A1E3A005C8E4F /* ClassicalCollectionReusableView.swift in Sources */,
 				78CB8FEC268924AC00E90CE4 /* TopArtistsCollectionReusableView.swift in Sources */,

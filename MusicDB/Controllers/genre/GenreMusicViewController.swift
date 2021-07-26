@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import FirebaseFirestore
+import Loaf
 
 class GenreMusicViewController: BaseTableViewController {
     
@@ -20,24 +21,7 @@ class GenreMusicViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let userID = Auth.auth().currentUser?.uid else {return}
-        
-        NotificationCenter.default.addObserver(forName: .IndexAdd, object: nil, queue: .main) {[weak self] notification in
-            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-                guard let track = self?.tracks[indexPath.row] else {return}
-                
-                self?.addTrack(track: track, userID: userID)
-                self?.loafMessageAdded()
-            }
-        }
-        NotificationCenter.default.addObserver(forName: .IndexRemove, object: nil, queue: .main) {[weak self] notification in
-            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-                guard let track = self?.tracks[indexPath.row] else {return}
-                
-                self?.removeTrack(track: track, userID: userID)
-                self?.loafMessageRemoved()
-            }
-        }
+        addObservers()
         
         if Connectivity.isConnectedToInternet {
             fetchTracks()
@@ -112,15 +96,49 @@ class GenreMusicViewController: BaseTableViewController {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
             return
         }
-        performSegue(withIdentifier: "toDetails", sender: tracks[indexPath.row])
+        let dict: [String : Any] = [
+            "track" : tracks[indexPath.row],
+            "indexPath" : indexPath,
+            "isGenre" : true
+        ]
+        Loaf.dismiss(sender: self, animated: true)
+        performSegue(withIdentifier: "toDetails", sender: dict)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let track = sender as? Track,
-              let dest = segue.destination as? DetailsMusicViewController else {
+        guard let dest = segue.destination as? DetailsMusicViewController,
+              let data = sender as? Dictionary<String, Any> else {
             return
         }
-        dest.track = track
+        dest.track = data["track"] as? Track
+        dest.indexPath = data["indexPath"] as? IndexPath
+        dest.isGenre = data["isGenre"] as? Bool
+    }
+    
+    func addObservers() {
+        guard let userID = Auth.auth().currentUser?.uid else {return}
+        
+        NotificationCenter.default.addObserver(forName: .IndexAdd, object: nil, queue: .main) {[weak self] notification in
+            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+                guard let track = self?.tracks[indexPath.row] else {return}
+                
+                self?.addTrack(track: track, userID: userID)
+                self?.loafMessageAdded()
+            }
+        }
+        NotificationCenter.default.addObserver(forName: .IndexRemove, object: nil, queue: .main) {[weak self] notification in
+            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+                guard let track = self?.tracks[indexPath.row] else {return}
+                
+                self?.removeTrack(track: track, userID: userID)
+                self?.loafMessageRemoved()
+            }
+        }
+        NotificationCenter.default.addObserver(forName: .SendIndexPath, object: nil, queue: .main) {[weak self] notification in
+            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+                self?.genreTableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
     }
 }
 

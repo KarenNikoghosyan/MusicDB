@@ -18,6 +18,9 @@ import FirebaseAuth
 class DetailsMusicViewController: BaseViewController {
     
     var track: Track?
+    var indexPath: IndexPath?
+    var isGenre: Bool? = false
+
     let noTracksLabel = UILabel()
     var isLiked: Bool = false
     let db = Firestore.firestore()
@@ -86,6 +89,10 @@ class DetailsMusicViewController: BaseViewController {
             loafMessageRemoved()
 
             isLiked = false
+        }
+        guard let isGenre = isGenre else {return}
+        if isGenre {
+            NotificationCenter.default.post(name: .SendIndexPath, object: nil, userInfo: ["indexPath" : indexPath as Any])
         }
     }
     
@@ -173,10 +180,9 @@ class DetailsMusicViewController: BaseViewController {
         detailsArtistNameLabel.text = track.artist.name
         detailsAlbumTitleLabel.text = track.album.title
         
-        let duration = Double(track.duration) / 60.0
-        let durationString = String(format: "%.2f", duration) + " Minutes"
-        let newDurationString = durationString.replacingOccurrences(of: ".", with: ":")
-        detailsDurationLabel.text = newDurationString
+        let minutes = track.duration / 60
+        let seconds = track.duration % 60
+        detailsDurationLabel.text = "\(minutes):\(seconds)"
     }
   
     func createLikeButton() {

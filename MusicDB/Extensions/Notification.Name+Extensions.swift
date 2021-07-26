@@ -18,4 +18,7 @@ extension Notification.Name {
     //Send index to add or remove
     static let IndexAdd = Notification.Name("indexAdd")
     static let IndexRemove = Notification.Name("indexRemove")
+    
+    //Sends an index
+    static let SendIndexPath = Notification.Name("sendIndexPath")
 }
