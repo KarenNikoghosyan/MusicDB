@@ -51,7 +51,7 @@ class LikedMusicViewController: BaseTableViewController {
                         DispatchQueue.main.async {
                             self.tracks.remove(at: indexPath.row)
                             self.likedTableView.deleteRows(at: [indexPath], with: .automatic)
-                            self.loafMessageRemoved()
+                            self.loafMessageRemoved(track: track)
                         }
                     }
                 }
@@ -224,9 +224,9 @@ class LikedMusicViewController: BaseTableViewController {
             
             guard let userID = Auth.auth().currentUser?.uid else {return}
 
-            loafMessageRemoved()
-            
             let track = tracks[indexPath.row]
+            loafMessageRemoved(track: track)
+            
             db.collection("users").document(userID).updateData([
                 "trackIDs" : FieldValue.arrayRemove([track.id as Any])
             ]) {[weak self] error in

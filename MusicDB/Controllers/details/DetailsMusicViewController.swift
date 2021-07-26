@@ -81,12 +81,12 @@ class DetailsMusicViewController: BaseViewController {
         
         if !isLiked {
             addTrack(track: track, userID: userID)
-            loafMessageAdded()
+            loafMessageAdded(track: track)
 
             isLiked = true
         } else {
             removeTrack(track: track, userID: userID)
-            loafMessageRemoved()
+            loafMessageRemoved(track: track)
 
             isLiked = false
         }

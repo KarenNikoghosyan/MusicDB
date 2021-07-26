@@ -123,7 +123,7 @@ class GenreMusicViewController: BaseTableViewController {
                 guard let track = self?.tracks[indexPath.row] else {return}
                 
                 self?.addTrack(track: track, userID: userID)
-                self?.loafMessageAdded()
+                self?.loafMessageAdded(track: track)
             }
         }
         NotificationCenter.default.addObserver(forName: .IndexRemove, object: nil, queue: .main) {[weak self] notification in
@@ -131,7 +131,7 @@ class GenreMusicViewController: BaseTableViewController {
                 guard let track = self?.tracks[indexPath.row] else {return}
                 
                 self?.removeTrack(track: track, userID: userID)
-                self?.loafMessageRemoved()
+                self?.loafMessageRemoved(track: track)
             }
         }
         NotificationCenter.default.addObserver(forName: .SendIndexPath, object: nil, queue: .main) {[weak self] notification in
