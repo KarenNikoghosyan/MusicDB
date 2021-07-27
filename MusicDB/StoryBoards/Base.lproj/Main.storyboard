@@ -3,7 +3,6 @@
     <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -435,80 +434,17 @@
             </objects>
             <point key="canvasLocation" x="-506" y="2525"/>
         </scene>
-        <!--Auth View Controller-->
+        <!--Albums-->
         <scene sceneID="4IJ-pI-XsI">
             <objects>
-                <viewController id="YGP-aw-Vcb" customClass="OAuthViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="YGP-aw-Vcb" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LhQ-HT-BZp">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fpe-AP-Npb" customClass="LGButton" customModule="LGButton">
-                                <rect key="frame" x="64" y="438" width="300" height="50"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="GGU-gO-6xM"/>
-                                    <constraint firstAttribute="width" constant="300" id="fD6-L5-yiw"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
-                                        <color key="value" red="0.0" green="0.51764705879999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="titleString" value="LOG WITH SOUNDCLOUD"/>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showTouchFeedback" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="gradientStartColor">
-                                        <color key="value" systemColor="systemGreenColor"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="gradientEndColor">
-                                        <color key="value" systemColor="systemGreenColor"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="gradientHorizontal" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="6"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="fullyRoundedCorners" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="leftIconFontSize">
-                                        <real key="value" value="20"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="leftIconColor">
-                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="rightIconFontSize">
-                                        <real key="value" value="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="titleFontSize">
-                                        <real key="value" value="16"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="titleFontName" value="Futura Bold"/>
-                                    <userDefinedRuntimeAttribute type="image" keyPath="rightImageSrc">
-                                        <imageReference key="value" image="arrow.right.circle" catalog="system" symbolScale="large"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="rightImageColor">
-                                        <color key="value" systemColor="systemRedColor"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="authenticateToSoundCloud:" destination="YGP-aw-Vcb" eventType="touchUpInside" id="t1V-qP-1BZ"/>
-                                </connections>
-                            </view>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="GTa-uK-PpA"/>
                         <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="Fpe-AP-Npb" firstAttribute="centerX" secondItem="LhQ-HT-BZp" secondAttribute="centerX" id="BN3-V6-7pj"/>
-                            <constraint firstItem="Fpe-AP-Npb" firstAttribute="centerY" secondItem="LhQ-HT-BZp" secondAttribute="centerY" id="dF8-qg-Qy9"/>
-                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="JR2-kv-1TL"/>
-                    <connections>
-                        <segue destination="Nze-mV-aYG" kind="presentation" id="mel-g1-syb"/>
-                    </connections>
+                    <navigationItem key="navigationItem" title="Albums" id="JR2-kv-1TL"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LQI-F5-i9w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -522,9 +458,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="165" estimatedRowHeight="165" sectionHeaderHeight="28" sectionFooterHeight="28" id="A25-rz-eeg">
-                                <rect key="frame" x="0.0" y="140" width="428" height="786"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="165" estimatedRowHeight="165" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="A25-rz-eeg">
+                                <rect key="frame" x="0.0" y="184" width="428" height="742"/>
                                 <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -532,11 +467,37 @@
                                 <color key="sectionIndexBackgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexTrackingBackgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                             </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcf-Lq-Wgt">
+                                <rect key="frame" x="0.0" y="140" width="428" height="44"/>
+                                <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <items>
+                                    <barButtonItem style="plain" id="PLm-GX-vIG">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="IM0-yr-4nk">
+                                            <rect key="frame" x="20" y="5.6666666666666679" width="388" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="Tracks"/>
+                                                <segment title="Albums"/>
+                                            </segments>
+                                        </segmentedControl>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </toolbar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4N2-4T-b5A"/>
                         <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="tcf-Lq-Wgt" firstAttribute="trailing" secondItem="4N2-4T-b5A" secondAttribute="trailing" id="Nre-vf-WbC"/>
+                            <constraint firstItem="tcf-Lq-Wgt" firstAttribute="top" secondItem="4N2-4T-b5A" secondAttribute="top" id="Sej-ec-7Db"/>
+                            <constraint firstItem="A25-rz-eeg" firstAttribute="leading" secondItem="4N2-4T-b5A" secondAttribute="leading" id="ct8-bg-CY1"/>
+                            <constraint firstItem="A25-rz-eeg" firstAttribute="top" secondItem="tcf-Lq-Wgt" secondAttribute="bottom" id="shg-P9-Sac"/>
+                            <constraint firstItem="tcf-Lq-Wgt" firstAttribute="leading" secondItem="4N2-4T-b5A" secondAttribute="leading" id="uvv-Pv-gc4"/>
+                            <constraint firstItem="A25-rz-eeg" firstAttribute="trailing" secondItem="4N2-4T-b5A" secondAttribute="trailing" id="wDD-7f-RmX"/>
+                            <constraint firstAttribute="bottom" secondItem="A25-rz-eeg" secondAttribute="bottom" id="y1N-wI-1r0"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Liked" id="5qR-Rz-e5X">
+                    <navigationItem key="navigationItem" title="Liked" largeTitleDisplayMode="always" id="5qR-Rz-e5X">
                         <barButtonItem key="rightBarButtonItem" image="icon_signout_potrait" landscapeImage="icon_signout_landscape" id="U9c-4E-8gL">
                             <connections>
                                 <action selector="logOutTapped:" destination="1lj-aY-kZE" id="mdc-XY-WGJ"/>
@@ -545,12 +506,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="likedTableView" destination="A25-rz-eeg" id="zS8-3P-nUL"/>
+                        <outlet property="segmentedControl" destination="IM0-yr-4nk" id="zKa-Mk-4nu"/>
                         <segue destination="U7H-HD-5R9" kind="presentation" identifier="toDetails" id="geQ-gZ-cJu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yOa-Ng-Kws" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1053" y="2524"/>
+            <point key="canvasLocation" x="1052.8037383177571" y="2523.7580993520519"/>
         </scene>
         <!--Home-->
         <scene sceneID="93v-jd-q18">
@@ -655,11 +617,11 @@
             </objects>
             <point key="canvasLocation" x="-506" y="3354"/>
         </scene>
-        <!--Player-->
+        <!--Albums-->
         <scene sceneID="GSg-29-vzr">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Gao-pP-oiX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Player" image="music.note.list" catalog="system" id="4Vg-v9-o3k"/>
+                    <tabBarItem key="tabBarItem" title="Albums" image="music.note.list" catalog="system" id="4Vg-v9-o3k"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="xyH-NY-2Om">
                         <rect key="frame" x="0.0" y="44" width="428" height="96"/>
@@ -680,52 +642,11 @@
             </objects>
             <point key="canvasLocation" x="272" y="1753"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="M5q-8F-Oxu">
-            <objects>
-                <viewController id="Xqb-jM-Pb0" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="nly-gI-O2R">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="0Oq-ON-x0P"/>
-                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="TLX-e0-Ksq"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fRl-Kg-hC7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="272" y="4171"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="AJd-43-FHa">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="Nze-mV-aYG" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="dcD-e6-RQs">
-                        <rect key="frame" x="0.0" y="44" width="428" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Xqb-jM-Pb0" kind="relationship" relationship="rootViewController" id="zac-jY-TFh"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jlx-B4-Xgb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="272" y="3354"/>
-        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="geQ-gZ-cJu"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="arrow.right.circle" catalog="system" width="128" height="121"/>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="icon_signout_landscape" width="18" height="18"/>
         <image name="icon_signout_potrait" width="25" height="25"/>

@@ -21,6 +21,7 @@ class LikedMusicViewController: BaseTableViewController {
     var numOfCalls: Int = 0
     var i: Int = 0
     
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var likedTableView: UITableView!
     @IBAction func logOutTapped(_ sender: UIBarButtonItem) {
         if !Connectivity.isConnectedToInternet {
@@ -32,6 +33,8 @@ class LikedMusicViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setUpSegmentedControl()
         
         NotificationCenter.default.addObserver(forName: .IndexRemove, object: nil, queue: .main) {[weak self] notification in
             guard let self = self else {return}
@@ -115,6 +118,12 @@ class LikedMusicViewController: BaseTableViewController {
         if !Connectivity.isConnectedToInternet {
             showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
         }
+    }
+    
+    func setUpSegmentedControl() {
+        let tintColor = UIColor.white
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: tintColor], for: .normal)
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.black], for: .selected)
     }
     
     func getUserLikedTracks() {
