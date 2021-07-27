@@ -35,13 +35,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     var counter: Int = 0
     
     @IBAction func signOut(_ sender: UIBarButtonItem) {
-        
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            return
-        }
-        Loaf.dismiss(sender: self, animated: true)
-        showAlertAndSegue(title: "Sign out from MusicDB?", message: "You're about to sign out, do you want to proceed?")
+        logOutTappedAndSegue()
     }
     
     override func viewDidLoad() {

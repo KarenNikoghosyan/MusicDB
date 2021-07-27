@@ -35,7 +35,7 @@ class GenreMusicViewController: BaseTableViewController {
         genreTableView.register(nib, forCellReuseIdentifier: "cell")
         
         self.title = titleGenre
-        setupNavigationItems()
+        setupNavigationItems(tableView: genreTableView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,13 +64,6 @@ class GenreMusicViewController: BaseTableViewController {
         }
     }
     
-    func setupNavigationItems() {
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.layoutIfNeeded()
-        genreTableView.separatorColor = UIColor.darkGray
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tracks.count
     }
@@ -78,9 +71,7 @@ class GenreMusicViewController: BaseTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.accessoryView = UIImageView(image: UIImage(systemName: "chevron.right"))
-        cell.tintColor = .white
+        accessoryArrow(cell: cell)
 
         if let cell = cell as? LikedGenreTableViewCell {
             let track = tracks[indexPath.row]
@@ -107,9 +98,8 @@ class GenreMusicViewController: BaseTableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let dest = segue.destination as? DetailsMusicViewController,
-              let data = sender as? Dictionary<String, Any> else {
-            return
-        }
+              let data = sender as? Dictionary<String, Any> else {return}
+        
         dest.track = data["track"] as? Track
         dest.indexPath = data["indexPath"] as? IndexPath
         dest.isGenre = data["isGenre"] as? Bool

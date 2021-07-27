@@ -24,11 +24,7 @@ class LikedMusicViewController: BaseTableViewController {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var likedTableView: UITableView!
     @IBAction func logOutTapped(_ sender: UIBarButtonItem) {
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            return
-        }
-        showAlertAndSegue(title: "Sign out from MusicDB?", message: "You're about to sign out, do you want to proceed?")
+        logOutTappedAndSegue()
     }
     
     override func viewDidLoad() {
@@ -124,6 +120,18 @@ class LikedMusicViewController: BaseTableViewController {
         let tintColor = UIColor.white
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: tintColor], for: .normal)
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.black], for: .selected)
+        segmentedControl.addTarget(self, action: #selector(segmentTapped(_:)), for: .valueChanged)
+    }
+    
+    @IBAction func segmentTapped(_ sender: UISegmentedControl) {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            print(0)
+        case 1:
+            print(1)
+        default:
+            break
+        }
     }
     
     func getUserLikedTracks() {
@@ -192,10 +200,15 @@ class LikedMusicViewController: BaseTableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.accessoryView = UIImageView(image: UIImage(systemName: "chevron.right"))
-        cell.tintColor = .white
+//        switch segmentedControl.selectedSegmentIndex {
+//        case 0:
+//            print("0")
+//        case 1:
+//            print("1")
+//        default:
+//            break
+//        }
+        accessoryArrow(cell: cell)
 
         if let cell = cell as? LikedGenreTableViewCell {
             let track = tracks[indexPath.row]

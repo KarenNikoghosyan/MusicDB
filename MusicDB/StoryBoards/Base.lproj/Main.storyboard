@@ -437,14 +437,41 @@
         <!--Albums-->
         <scene sceneID="4IJ-pI-XsI">
             <objects>
-                <viewController id="YGP-aw-Vcb" sceneMemberID="viewController">
+                <viewController id="YGP-aw-Vcb" customClass="AlbumsViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LhQ-HT-BZp">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="165" estimatedRowHeight="165" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gcL-xz-3am">
+                                <rect key="frame" x="0.0" y="140" width="428" height="786"/>
+                                <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                                <color key="sectionIndexBackgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexTrackingBackgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="GTa-uK-PpA"/>
                         <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="GTa-uK-PpA" firstAttribute="trailing" secondItem="gcL-xz-3am" secondAttribute="trailing" id="CQx-Z3-DTX"/>
+                            <constraint firstItem="gcL-xz-3am" firstAttribute="leading" secondItem="GTa-uK-PpA" secondAttribute="leading" id="I0M-jb-uRS"/>
+                            <constraint firstAttribute="bottom" secondItem="gcL-xz-3am" secondAttribute="bottom" id="O9P-gR-pdC"/>
+                            <constraint firstItem="gcL-xz-3am" firstAttribute="top" secondItem="GTa-uK-PpA" secondAttribute="top" id="S8G-Nr-Gdt"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Albums" id="JR2-kv-1TL"/>
+                    <navigationItem key="navigationItem" title="Albums" id="JR2-kv-1TL">
+                        <barButtonItem key="rightBarButtonItem" image="icon_signout_potrait" landscapeImage="icon_signout_landscape" id="k8Q-KS-FO7">
+                            <connections>
+                                <action selector="logOutTapped:" destination="YGP-aw-Vcb" id="hGc-w0-6wR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="albumsTableView" destination="gcL-xz-3am" id="1lE-QI-S1J"/>
+                        <segue destination="7s6-oP-Ih7" kind="presentation" identifier="toAlbumDetails" id="lzi-Zl-BTK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LQI-F5-i9w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -513,6 +540,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yOa-Ng-Kws" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1052.8037383177571" y="2523.7580993520519"/>
+        </scene>
+        <!--Album Details View Controller-->
+        <scene sceneID="0Zk-hq-dz0">
+            <objects>
+                <viewController id="AJ8-nH-B41" customClass="AlbumDetailsViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uRv-QQ-KbK">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="872"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="f6E-Vg-Fbf"/>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="9dr-Fl-q6Z"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="01x-2D-8Ii" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="272" y="4171"/>
         </scene>
         <!--Home-->
         <scene sceneID="93v-jd-q18">
@@ -626,6 +669,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="xyH-NY-2Om">
                         <rect key="frame" x="0.0" y="44" width="428" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -641,6 +685,30 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jo2-ks-V1z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="272" y="1753"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wBN-qG-8WR">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7s6-oP-Ih7" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="jlF-Qv-51Z">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="108"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="AJ8-nH-B41" kind="relationship" relationship="rootViewController" id="Tav-Qt-G0X"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pvy-yn-MlR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="272" y="3354"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

@@ -46,12 +46,6 @@ class LoginViewController: UIViewController {
         setUpTextFields()
     }
     
-    func setupNavigationItems() {
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.layoutIfNeeded()
-    }
-    
     func setUpTextFields() {
         loginEmailTextField.placeholder = "Email"
         loginEmailTextField.title = "Email"

@@ -16,11 +16,7 @@ class SearchMusicViewController: BaseViewController {
     @IBOutlet weak var trackSearchBar: UISearchBar!
     @IBOutlet weak var searchTracksCollectionView: UICollectionView!
     @IBAction func signOut(_ sender: UIBarButtonItem) {
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            return
-        }
-        showAlertAndSegue(title: "Sign out from MusicDB?", message: "You're about to sign out, do you want to proceed?")
+        logOutTappedAndSegue()
     }
     
     override func viewDidLoad() {
@@ -50,12 +46,6 @@ class SearchMusicViewController: BaseViewController {
         super.viewWillTransition(to: size, with: coordinator)
 
         searchTracksCollectionView?.reloadData()
-    }
-    
-    func setupNavigationItems() {
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.layoutIfNeeded()
     }
     
     func loadSearchLabel() {

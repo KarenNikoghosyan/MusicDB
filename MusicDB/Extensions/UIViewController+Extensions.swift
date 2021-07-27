@@ -104,3 +104,25 @@ extension UIViewController {
         }
     }
 }
+
+extension UIViewController {
+    func logOutTappedAndSegue() {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
+        Loaf.dismiss(sender: self, animated: true)
+        showAlertAndSegue(title: "Sign out from MusicDB?", message: "You're about to sign out, do you want to proceed?")
+    }
+}
+
+extension UIViewController {
+    func setupNavigationItems(tableView: UITableView? = nil) {
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.layoutIfNeeded()
+        
+        guard let tableView = tableView else {return}
+        tableView.separatorColor = UIColor.darkGray
+    }
+}
