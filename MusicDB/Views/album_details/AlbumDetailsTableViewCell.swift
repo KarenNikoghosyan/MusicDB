@@ -13,6 +13,7 @@ class AlbumDetailsTableViewCell: UITableViewCell {
     @IBOutlet weak var trackTitleLabel: UILabel!
     @IBOutlet weak var trackArtistNameLabel: UILabel!
     @IBOutlet weak var trackDurationLabel: UILabel!
+    @IBOutlet weak var playButton: UIButton!
     
     func populate(album: TopAlbums, track: AlbumTrack) {
         guard let str = album.cover,

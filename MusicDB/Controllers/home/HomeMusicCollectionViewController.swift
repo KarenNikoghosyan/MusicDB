@@ -34,13 +34,15 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     let topAlbumsDS = TopAlbumsAPIDataSource()
     var counter: Int = 0
     
+    //Sign out button
     @IBAction func signOut(_ sender: UIBarButtonItem) {
         logOutTappedAndSegue()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+
+        //Checks the internet connection
         if !Connectivity.isConnectedToInternet {
             showAlertAndReload(title: "No Internet Connection", message: "Failed to connect to the internet")
             HUD.flash(.error, delay: 0.5)
@@ -52,6 +54,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         
         HUD.show(HUDContentType.progress, onView: self.view)
         
+        //Gets the button action from the corresponding cell
         NotificationCenter.default.addObserver(forName: .ToViewAll, object: nil, queue: .main) {[weak self] notification in
             
             if !Connectivity.isConnectedToInternet {
@@ -67,10 +70,12 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             }
         }
         
+        //Registers the cells
         collectionView.register(HomeTracksCollectionViewCell.self, forCellWithReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier)
         collectionView.register(TopArtistsCollectionViewCell.self, forCellWithReuseIdentifier: TopArtistsCollectionViewCell.reuseIdentifier)
         collectionView.register(TopAlbumsCollectionViewCell.self, forCellWithReuseIdentifier: TopAlbumsCollectionViewCell.reuseIdentifier)
         
+        //Register the headers
         collectionView.register(TopChartCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "topChartHeader")
         collectionView.register(HipHopCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "hipHopHeader")
         collectionView.register(DanceCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "danceHeader")
@@ -95,7 +100,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             
             guard let name: String = snapshot?.get("name") as? String else {return}
-            
             self?.loafMessageWelcome(name: name)
         }
     }
@@ -104,6 +108,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         loafMessageRegistration()
     }
     
+    //Creates pull down to refresh
     func loadRefreshControl() {
         guard let font = UIFont.init(name: "Futura-Bold", size: 13) else {return}
         
@@ -119,6 +124,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         }
     }
     
+    //Refreshes the data
     @objc func refresh(_ refreshControl: UIRefreshControl) {
         if !Connectivity.isConnectedToInternet {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
@@ -128,8 +134,8 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         fetchTracks()
     }
 
+    //Creates the compositional layout depending on the section's index
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
-
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
 
          switch sectionNumber {
@@ -141,9 +147,8 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         }
     }
 }
-    
+    //Compositional layout styles
     private func chartLayoutSection() -> NSCollectionLayoutSection {
-
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
 
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -231,6 +236,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         return section
     }
     
+    //Creates the header for eash section
     func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         
@@ -241,6 +247,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         return 9
     }
 
+    //Section number of cells
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
@@ -264,6 +271,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         }
     }
 
+    //Populates the cells
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         switch indexPath.section {
@@ -272,7 +280,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             
             if indexPath.item < topTracks.count {
                 let track = topTracks[indexPath.item]
-                cell.configure(track: track, with: "\(track.album.coverBig ?? "")")
+                cell.configure(track: track, with: "\(track.album?.coverBig ?? "")")
             }
             return cell
             
@@ -281,7 +289,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
 
             if indexPath.item < hipHop.count {
                 let track = hipHop[indexPath.item]
-                cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
+                cell.configure(track: track, with: "\(track.album?.cover ?? "No Image Found")")
             }
             return cell
             
@@ -290,7 +298,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             
             if indexPath.item < dance.count {
                 let track = dance[indexPath.item]
-                cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
+                cell.configure(track: track, with: "\(track.album?.cover ?? "No Image Found")")
             }
             return cell
             
@@ -299,7 +307,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             
             if indexPath.item < jazz.count {
                 let track = jazz[indexPath.item]
-                cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
+                cell.configure(track: track, with: "\(track.album?.cover ?? "No Image Found")")
             }
             return cell
             
@@ -317,7 +325,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             
             if indexPath.item < pop.count {
                 let track = pop[indexPath.item]
-                cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
+                cell.configure(track: track, with: "\(track.album?.cover ?? "No Image Found")")
             }
             return cell
             
@@ -326,7 +334,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             
             if indexPath.item < classical.count {
                 let track = classical[indexPath.item]
-                cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
+                cell.configure(track: track, with: "\(track.album?.cover ?? "No Image Found")")
             }
             return cell
             
@@ -344,7 +352,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             
             if indexPath.item < rock.count {
                 let track = rock[indexPath.item]
-                cell.configure(track: track, with: "\(track.album.cover ?? "No Image Found")")
+                cell.configure(track: track, with: "\(track.album?.cover ?? "No Image Found")")
             }
             return cell
         }
@@ -355,6 +363,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         return cell
     }
     
+    //Populates the headers
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         switch indexPath.section {
@@ -384,8 +393,9 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         return reusableView
     }
     
+    //Tap animation effect
     override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.2) {
             if let cell = collectionView.cellForItem(at: indexPath) as? HomeTracksCollectionViewCell {
                 cell.imageView.transform = .init(scaleX: 0.97, y: 0.97)
                 cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
@@ -402,7 +412,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.2) {
             if let cell = collectionView.cellForItem(at: indexPath) as? HomeTracksCollectionViewCell {
                 cell.imageView.transform = .identity
                 cell.contentView.backgroundColor = .clear
@@ -422,6 +432,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         }
     }
     
+    //Segue to another screen depending on the section
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         
@@ -434,7 +445,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         case 3:
             toDetailsSegue(tracks: jazz, indexPath: indexPath)
         case 4:
-            
             Loaf.dismiss(sender: self, animated: true)
             let topArtists = topArtists[indexPath.item]
             
@@ -447,14 +457,10 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         case 6:
             toDetailsSegue(tracks: classical, indexPath: indexPath)
         case 7:
-            
             Loaf.dismiss(sender: self, animated: true)
             let topAlbums = topAlbums[indexPath.item]
             
-            guard let url = URL(string: "\(topAlbums.link)") else {return}
-            let sfVC = SFSafariViewController(url: url)
-            present(sfVC, animated: true)
-            
+            performSegue(withIdentifier: "toAlbumDetails", sender: topAlbums)
         default:
             toDetailsSegue(tracks: rock, indexPath: indexPath)
         }
@@ -485,9 +491,17 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             
             targetController.titleGenre = data[0]
             targetController.path = data[1]
+            
+        } else if segue.identifier == "toAlbumDetails" {
+            guard let dest = segue.destination as? UINavigationController,
+                  let targetController = dest.topViewController as? AlbumDetailsViewController,
+                  let topAlbum = sender as? TopAlbums else {return}
+            
+            targetController.album = topAlbum
         }
     }
     
+    //Fetches all the genres
     func fetchTracks() {
         tracksDS.fetchGenres(from: .chart, with: "/0/tracks", with: ["limit" : 35]) {[weak self] topTracks, error in
             if let topTracks = topTracks {
@@ -563,6 +577,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         }
     }
     
+    //Animates the sections
     func loadSectionAndAnimation(in section: Int) {
         counter += 1
         collectionView.reloadSections([section])
@@ -579,6 +594,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     }
 }
 
+//Alert extension
 extension HomeMusicCollectionViewController {
     func showAlertAndReload(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)

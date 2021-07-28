@@ -42,7 +42,7 @@ struct Track {
     let md5Image: String
     let position: Int?
     let artist: Artist
-    let album: Album
+    let album: Album?
     let type: String
     
     enum CodingKeys: String, CodingKey {
@@ -77,7 +77,7 @@ extension Track: Decodable {
         md5Image = try values.decode(String.self, forKey: .md5Image)
         position = try values.decodeIfPresent(Int.self, forKey: .position)
         artist = try values.decode(Artist.self, forKey: .artist)
-        album = try values.decode(Album.self, forKey: .album)
+        album = try values.decodeIfPresent(Album.self, forKey: .album)
         type = try values.decode(String.self, forKey: .type)
     }
 }

@@ -9,8 +9,9 @@ import AVFoundation
 
 class MediaPlayer {
     var player: AVAudioPlayer?
-    
     public static let shared = MediaPlayer()
+    
+    private init() {}
     
     func loadAudio(url: URL) {
 
@@ -28,6 +29,7 @@ class MediaPlayer {
                 player.play()
             } else {
                 print("Couldn't load the audio")
+                self?.player = nil
             }
         }
     }

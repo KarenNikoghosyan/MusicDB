@@ -18,6 +18,8 @@ import FirebaseAuth
 class DetailsMusicViewController: BaseViewController {
     
     var track: Track?
+    var album: TopAlbums?
+    var isAlbumDetails: Bool? = false
     var indexPath: IndexPath?
     var isGenre: Bool? = false
 
@@ -117,7 +119,12 @@ class DetailsMusicViewController: BaseViewController {
         let nib = UINib(nibName: "DetailsSearchMusicCollectionViewCell", bundle: .main)
         artistCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
      
-        setUpViews()
+        guard let isAlbumDetails = isAlbumDetails else {return}
+        if !isAlbumDetails {
+            setUpViewsFromTrack()
+        } else {
+            setUpViewsFromAlbumDetails()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -130,7 +137,6 @@ class DetailsMusicViewController: BaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         if isBeingDismissed {
             stopAudio()
         }
@@ -158,13 +164,14 @@ class DetailsMusicViewController: BaseViewController {
         }
     }
     
-    func setUpViews() {
+    func setUpViewsFromTrack() {
         self.previewButton.addTarget(self, action: #selector(animateButton(_:)), for: .touchUpInside)
         
         self.previewButton.setAnimation(LoadyAnimationType.android())
         
         guard let track = track,
-              let url = URL(string: "\(track.album.coverMedium ?? "")") else {
+              let url = URL(string: "\(track.album?.coverMedium ?? "")") else {
+            
             detailsImageView.tintColor = .white
             detailsImageView.image = #imageLiteral(resourceName: "No_Photo_Available")
             detailsImageView.layer.cornerRadius = 25
@@ -178,10 +185,39 @@ class DetailsMusicViewController: BaseViewController {
         
         detailsTitleLabel.text = track.titleShort
         detailsArtistNameLabel.text = track.artist.name
-        detailsAlbumTitleLabel.text = track.album.title
+        detailsAlbumTitleLabel.text = track.album?.title
         
         let minutes = track.duration / 60
         let seconds = track.duration % 60
+        detailsDurationLabel.text = "\(minutes):\(seconds)"
+    }
+    
+    func setUpViewsFromAlbumDetails() {
+        self.previewButton.addTarget(self, action: #selector(animateButton(_:)), for: .touchUpInside)
+        
+        self.previewButton.setAnimation(LoadyAnimationType.android())
+        
+        guard let album = album,
+              let url = URL(string: "\(album.coverMedium ?? "")") else {
+            
+            detailsImageView.tintColor = .white
+            detailsImageView.image = #imageLiteral(resourceName: "No_Photo_Available")
+            detailsImageView.layer.cornerRadius = 25
+            return
+        }
+        
+        detailsImageView.tintColor = .white
+        detailsImageView.layer.cornerRadius = 25
+        detailsImageView.sd_imageIndicator = SDWebImageActivityIndicator.white
+        detailsImageView.sd_setImage(with: url)
+        
+        detailsTitleLabel.text = track?.titleShort
+        detailsArtistNameLabel.text = track?.artist.name
+        detailsAlbumTitleLabel.text = track?.album?.title
+        
+        guard let duration = track?.duration else {return}
+        let minutes = duration / 60
+        let seconds = duration % 60
         detailsDurationLabel.text = "\(minutes):\(seconds)"
     }
   

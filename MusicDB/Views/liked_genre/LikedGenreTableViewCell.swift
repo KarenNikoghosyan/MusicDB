@@ -46,13 +46,13 @@ class LikedGenreTableViewCell: UITableViewCell {
         }
         trackTitleLabel.text = track.titleShort
         trackArtistNameLabel.text = track.artist.name
-        trackAlbumNameLabel.text = track.album.title
+        trackAlbumNameLabel.text = track.album?.title
         
         let minutes = track.duration / 60
         let seconds = track.duration % 60
         trackDurationLabel.text = "\(minutes):\(seconds)"
         
-        guard let url = URL(string: "\(track.album.cover ?? "No Image Found")") else {
+        guard let url = URL(string: "\(track.album?.cover ?? "No Image Found")") else {
             trackImageView.tintColor = .white
             
             trackImageView.layer.cornerRadius = 25

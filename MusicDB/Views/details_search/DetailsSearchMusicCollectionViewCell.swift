@@ -16,7 +16,7 @@ class DetailsMusicCollectionViewCell: UICollectionViewCell {
     func populate(track: Track) {
         detailsTrackLabel.text = track.titleShort
         
-        guard let url = URL(string: "\(track.album.cover ?? "No Image Found")") else {
+        guard let url = URL(string: "\(track.album?.cover ?? "No Image Found")") else {
             detailsTrackImageView.tintColor = .white
             
             detailsTrackImageView.layer.cornerRadius = 25
