@@ -8,6 +8,7 @@
 import UIKit
 import ViewAnimator
 import Loaf
+import SafariServices
 
 class AlbumsViewController: BaseTableViewController {
     var albums: [TopAlbums] = []
@@ -20,6 +21,23 @@ class AlbumsViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(forName: .OpenLinkInSafari, object: nil, queue: .main) {[weak self] notification in
+            guard let self = self else {return}
+            
+            if let sender = notification.userInfo?["sender"] as? UIButton {
+                let btnPoint = sender.convert(CGPoint.zero, to: self.albumsTableView)
+                guard let indexPath = self.albumsTableView.indexPathForRow(at: btnPoint) else {return}
+                
+                let album = self.albums[indexPath.row]
+                
+                guard let url = URL(string: "\(album.link)") else {return}
+                let sfVC = SFSafariViewController(url: url)
+                Loaf.dismiss(sender: self, animated: true)
+                self.present(sfVC, animated: true)
+            }
+        }
+        
         albumsTableView.delegate = self
         albumsTableView.dataSource = self
         

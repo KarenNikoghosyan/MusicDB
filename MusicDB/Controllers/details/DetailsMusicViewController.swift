@@ -214,7 +214,6 @@ class DetailsMusicViewController: BaseViewController {
     }
     
     @IBAction func animateButton(_ sender: UIButton) {
-        
         if !Connectivity.isConnectedToInternet {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
             return
@@ -275,7 +274,6 @@ class DetailsMusicViewController: BaseViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-     
         Loaf.dismiss(sender: self, animated: true)
         if !Connectivity.isConnectedToInternet {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")

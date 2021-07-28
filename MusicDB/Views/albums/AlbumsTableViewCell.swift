@@ -7,7 +7,6 @@
 
 import UIKit
 import SDWebImage
-import SafariServices
 import WCLShineButton
 
 class AlbumsTableViewCell: UITableViewCell {
@@ -18,6 +17,7 @@ class AlbumsTableViewCell: UITableViewCell {
     @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
     }
     @IBAction func openWebsiteTapped(_ sender: UIButton) {
+        NotificationCenter.default.post(name: .OpenLinkInSafari, object: nil, userInfo: ["sender" : sender])
     }
     
     func populate(album: TopAlbums) {

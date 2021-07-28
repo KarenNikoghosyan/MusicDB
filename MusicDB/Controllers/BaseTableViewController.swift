@@ -54,15 +54,19 @@ extension BaseTableViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
             } else if let cell = tableView.cellForRow(at: indexPath) as? AlbumsTableViewCell {
                 cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
+            } else if let cell = tableView.cellForRow(at: indexPath) as? AlbumDetailsTableViewCell {
+                cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
             }
         }
     }
     
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.2) {
             if let cell = tableView.cellForRow(at: indexPath) as? LikedGenreTableViewCell {
                 cell.contentView.backgroundColor = .clear
             } else if let cell = tableView.cellForRow(at: indexPath) as? AlbumsTableViewCell {
+                cell.contentView.backgroundColor = .clear
+            } else if let cell = tableView.cellForRow(at: indexPath) as? AlbumDetailsTableViewCell {
                 cell.contentView.backgroundColor = .clear
             }
         }

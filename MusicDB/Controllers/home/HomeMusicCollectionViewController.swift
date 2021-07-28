@@ -437,8 +437,8 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             
             Loaf.dismiss(sender: self, animated: true)
             let topArtists = topArtists[indexPath.item]
+            
             guard let url = URL(string: "\(topArtists.link)") else {return}
-
             let sfVC = SFSafariViewController(url: url)
             present(sfVC, animated: true)
             
@@ -450,8 +450,8 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             
             Loaf.dismiss(sender: self, animated: true)
             let topAlbums = topAlbums[indexPath.item]
-            guard let url = URL(string: "\(topAlbums.link)") else {return}
             
+            guard let url = URL(string: "\(topAlbums.link)") else {return}
             let sfVC = SFSafariViewController(url: url)
             present(sfVC, animated: true)
             
