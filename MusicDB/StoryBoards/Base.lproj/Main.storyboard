@@ -114,11 +114,11 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="7KT-Wh-LPA">
                                         <variation key="heightClass=compact-widthClass=compact" constant="110"/>
-                                        <variation key="heightClass=compact-widthClass=regular" constant="140"/>
+                                        <variation key="heightClass=compact-widthClass=regular" constant="130"/>
                                     </constraint>
                                     <constraint firstAttribute="width" constant="180" id="Vzv-XZ-VjB">
                                         <variation key="heightClass=compact-widthClass=compact" constant="100"/>
-                                        <variation key="heightClass=compact-widthClass=regular" constant="140"/>
+                                        <variation key="heightClass=compact-widthClass=regular" constant="130"/>
                                     </constraint>
                                 </constraints>
                             </imageView>
@@ -135,17 +135,17 @@
                                 <rect key="frame" x="0.0" y="388.33333333333326" width="428" height="449.66666666666674"/>
                                 <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="L0b-km-tKt">
-                                    <size key="itemSize" width="140" height="140"/>
+                                    <size key="itemSize" width="120" height="120"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="yWx-CQ-dW1" customClass="cell">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="uqF-OD-bMT">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8Oo-vH-Vbv">
@@ -157,7 +157,7 @@
                                                 </label>
                                             </subviews>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="128" height="128"/>
+                                        <size key="customSize" width="120" height="120"/>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -304,7 +304,7 @@
                     <navigationItem key="navigationItem" id="zIc-Ub-adF">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="Gvc-g7-68c">
                             <view key="customView" contentMode="scaleToFill" id="Bak-XJ-kpj" customClass="WCLShineButton" customModule="WCLShineButton">
-                                <rect key="frame" x="377" y="279" width="35" height="35"/>
+                                <rect key="frame" x="373" y="10.666666666666664" width="35" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -483,7 +483,7 @@
                                 <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
                                     <barButtonItem style="plain" id="PLm-GX-vIG">
-                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="IM0-yr-4nk">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="IM0-yr-4nk">
                                             <rect key="frame" x="20" y="6" width="388" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segments>

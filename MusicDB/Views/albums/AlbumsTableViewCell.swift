@@ -16,9 +16,7 @@ class AlbumsTableViewCell: UITableViewCell {
     @IBOutlet weak var likedButton: WCLShineButton!
     @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
     }
-    @IBAction func openWebsiteTapped(_ sender: UIButton) {
-        NotificationCenter.default.post(name: .OpenLinkInSafari, object: nil, userInfo: ["sender" : sender])
-    }
+    @IBOutlet weak var openWebsiteButton: UIButton!
     
     func populate(album: TopAlbums) {
         guard let str = album.coverMedium,

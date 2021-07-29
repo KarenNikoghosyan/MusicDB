@@ -22,23 +22,6 @@ class AlbumsViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //TODO: Remove observer
-        NotificationCenter.default.addObserver(forName: .OpenLinkInSafari, object: nil, queue: .main) {[weak self] notification in
-            guard let self = self else {return}
-            
-            if let sender = notification.userInfo?["sender"] as? UIButton {
-                let btnPoint = sender.convert(CGPoint.zero, to: self.albumsTableView)
-                guard let indexPath = self.albumsTableView.indexPathForRow(at: btnPoint) else {return}
-                
-                let album = self.albums[indexPath.row]
-                
-                guard let url = URL(string: "\(album.link)") else {return}
-                let sfVC = SFSafariViewController(url: url)
-                Loaf.dismiss(sender: self, animated: true)
-                self.present(sfVC, animated: true)
-            }
-        }
-        
         albumsTableView.delegate = self
         albumsTableView.dataSource = self
         
@@ -70,10 +53,27 @@ class AlbumsViewController: BaseTableViewController {
         accessoryArrow(cell: cell)
         
         if let cell = cell as? AlbumsTableViewCell {
+            cell.openWebsiteButton.tag = indexPath.row
+            cell.openWebsiteButton.addTarget(self, action: #selector(openWebsiteTapped(_:)), for: .touchUpInside)
+            
             let album = albums[indexPath.row]
             cell.populate(album: album)
         }
         return cell
+    }
+    
+    @IBAction func openWebsiteTapped(_ sender: UIButton) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
+        let selectedIndexPath = IndexPath.init(row: sender.tag, section: 0)
+        let album = self.albums[selectedIndexPath.row]
+        
+        guard let url = URL(string: "\(album.link)") else {return}
+        let sfVC = SFSafariViewController(url: url)
+        Loaf.dismiss(sender: self, animated: true)
+        self.present(sfVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

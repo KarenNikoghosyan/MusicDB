@@ -31,8 +31,10 @@ struct SingleTrackAPIDataSource {
             return
         }
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            
+        let config = URLSessionConfiguration.ephemeral
+        config.waitsForConnectivity = true
+        
+        URLSession(configuration: config).dataTask(with: url) { data, response, error in
             if let response = response as? HTTPURLResponse {
                 if !(200...299).contains(response.statusCode) {
                     DispatchQueue.main.async {

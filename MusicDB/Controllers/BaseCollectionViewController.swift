@@ -44,7 +44,7 @@ extension BaseViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let track = arrayTracks[indexPath.item]
             cell.populate(track: track)
         }
-        
+        cell.layoutIfNeeded()
         return cell
     }
     

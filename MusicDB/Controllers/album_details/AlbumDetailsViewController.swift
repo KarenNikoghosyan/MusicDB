@@ -31,7 +31,9 @@ class AlbumDetailsViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if Connectivity.isConnectedToInternet {
+        if !Connectivity.isConnectedToInternet {
+            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+        } else {
             fetchTracks()
             loadActivityIndicator()
         }
@@ -84,6 +86,10 @@ class AlbumDetailsViewController: BaseTableViewController {
     }
     
     @IBAction func btnTapped(_ sender: UIButton) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
         let selectedIndexPath = IndexPath.init(row: sender.tag, section: 0)
         
         if arrIndexPaths.contains(selectedIndexPath) {
@@ -128,6 +134,10 @@ class AlbumDetailsViewController: BaseTableViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
         let oldTrack = tracks[indexPath.row]
         let track = Track(
             id: oldTrack.id,
@@ -216,5 +226,21 @@ class AlbumDetailsViewController: BaseTableViewController {
         ])
         
         activityIndicatorView.startAnimating()
+    }
+}
+
+extension AlbumDetailsViewController {
+    func showAlertWithActions(title: String? = nil, message: String? = nil) {
+        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
+            if !Connectivity.isConnectedToInternet {
+                self?.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+            } else {
+                self?.fetchTracks()
+                self?.loadActivityIndicator()
+            }
+        }))
+        present(vc, animated: true)
     }
 }

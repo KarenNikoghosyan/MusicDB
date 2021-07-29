@@ -21,7 +21,4 @@ extension Notification.Name {
     
     //Sends an index
     static let SendIndexPath = Notification.Name("sendIndexPath")
-    
-    //Opens a link
-    static let OpenLinkInSafari = Notification.Name("openLinkInSafari")
 }

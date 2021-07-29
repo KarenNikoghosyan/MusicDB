@@ -49,7 +49,7 @@ class DetailsMusicViewController: BaseViewController {
             return
         }
         
-        UIView.animate(withDuration: 0.4) {[weak self] in
+        UIView.animate(withDuration: 0.3) {[weak self] in
             self?.goToWebsiteButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.4), for: .normal)
             self?.goToWebsiteButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
         }
@@ -144,6 +144,15 @@ class DetailsMusicViewController: BaseViewController {
         super.viewWillTransition(to: size, with: coordinator)
         
         artistCollectionView?.reloadData()
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        if UIScreen.main.bounds.width > UIScreen.main.bounds.height{
+            return CGSize(width: 120, height: 120)
+        } else {
+            return CGSize(width: collectionView.bounds.width / 3.0, height: collectionView.bounds.width / 3.0)
+        }
     }
     
     func checkLikedStatus() {
