@@ -519,6 +519,7 @@
                         <outlet property="likedTableView" destination="A25-rz-eeg" id="zS8-3P-nUL"/>
                         <outlet property="segmentedControl" destination="IM0-yr-4nk" id="zKa-Mk-4nu"/>
                         <segue destination="UKZ-tQ-2VP" kind="presentation" identifier="toDetails" id="geQ-gZ-cJu"/>
+                        <segue destination="7s6-oP-Ih7" kind="presentation" identifier="toAlbumDetails" id="i6h-vK-J6Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yOa-Ng-Kws" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -661,6 +662,17 @@
                             <connections>
                                 <action selector="backButtonTapped:" destination="AJ8-nH-B41" id="bzB-Og-a5B"/>
                             </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="y2P-WV-fnt">
+                            <view key="customView" contentMode="scaleToFill" id="San-a2-QPd" customClass="WCLShineButton" customModule="WCLShineButton">
+                                <rect key="frame" x="376" y="6" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="DHQ-Im-A8n"/>
+                                    <constraint firstAttribute="width" constant="32" id="Dkw-k9-Z8u"/>
+                                </constraints>
+                            </view>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -855,8 +867,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="xnO-3r-6cj"/>
-        <segue reference="lzi-Zl-BTK"/>
+        <segue reference="geQ-gZ-cJu"/>
+        <segue reference="i6h-vK-J6Q"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="heart.fill" catalog="system" width="128" height="109"/>

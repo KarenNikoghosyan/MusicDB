@@ -21,9 +21,8 @@ class GenreMusicViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addObservers()
-        
         if Connectivity.isConnectedToInternet {
+            addObservers()
             fetchTracks()
             loadActivityIndicator()
         }

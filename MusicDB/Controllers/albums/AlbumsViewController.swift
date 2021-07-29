@@ -9,6 +9,8 @@ import UIKit
 import ViewAnimator
 import Loaf
 import SafariServices
+import WCLShineButton
+import FirebaseAuth
 
 class AlbumsViewController: BaseTableViewController {
     var albums: [TopAlbums] = []
@@ -21,17 +23,17 @@ class AlbumsViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if Connectivity.isConnectedToInternet {
+            addObservers()
+            fetchAlbums()
+            loadActivityIndicator()
+        }
         
         albumsTableView.delegate = self
         albumsTableView.dataSource = self
         
         let nib = UINib(nibName: "AlbumsTableViewCell", bundle: .main)
         albumsTableView.register(nib, forCellReuseIdentifier: "cell")
-        
-        if Connectivity.isConnectedToInternet {
-            fetchAlbums()
-            loadActivityIndicator()
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -95,6 +97,27 @@ class AlbumsViewController: BaseTableViewController {
               let data = sender as? Dictionary<String, Any> else {return}
         
         targetController.album = data["album"] as? TopAlbums
+    }
+    
+    func addObservers() {
+        guard let userID = Auth.auth().currentUser?.uid else {return}
+        
+        NotificationCenter.default.addObserver(forName: .AddAlbumID, object: nil, queue: .main) {[weak self] notification in
+            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+                guard let album = self?.albums[indexPath.row] else {return}
+                
+                self?.addAlbum(album: album, userID: userID)
+                self?.loafMessageAddedAlbum(album: album)
+            }
+        }
+        NotificationCenter.default.addObserver(forName: .RemoveAlbumID, object: nil, queue: .main) {[weak self] notification in
+            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+                guard let album = self?.albums[indexPath.row] else {return}
+                
+                self?.removeAlbum(album: album, userID: userID)
+                self?.loafMessageRemovedAlbum(album: album)
+            }
+        }
     }
     
     func fetchAlbums() {

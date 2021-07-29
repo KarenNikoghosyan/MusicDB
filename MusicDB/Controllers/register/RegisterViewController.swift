@@ -39,12 +39,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 let db = Firestore.firestore()
                 db.collection("users").document(userID).setData([
                     "name" : name,
-                    "trackIDs" : []
+                    "trackIDs" : [],
+                    "albumIDs" : []
                 ]) {[weak self] error in
                     if let error = error {
                         print("\(error.localizedDescription)")
                     } else {
-                        
                         let storyboard = UIStoryboard(name: "Main", bundle: .main)
                         let vc = storyboard.instantiateViewController(withIdentifier: "mainStoryboard")
                         self?.present(vc, animated: true)

@@ -68,10 +68,6 @@ class LikedGenreTableViewCell: UITableViewCell {
         trackImageView.sd_setImage(with: url)
     }
     
-    func updateLikedStatus(track: Track) {
-        
-    }
-    
     func getIndexPath() -> IndexPath? {
         guard let superView = self.superview as? UITableView else {
             print("superview is not a UITableView - getIndexPath")

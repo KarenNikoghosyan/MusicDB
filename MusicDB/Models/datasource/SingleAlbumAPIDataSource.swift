@@ -1,21 +1,21 @@
 //
-//  SingleTrackAPIDataSource.swift
+//  SingleAlbumAPIDataSource.swift
 //  MusicDB
 //
-//  Created by Karen Nikoghosyan on 09/07/2021.
+//  Created by Karen Nikoghosyan on 29/07/2021.
 //
 
 import Foundation
 
-struct SingleTrackAPIDataSource {
+struct SingleAlbumAPIDataSource {
     private static let baseURL = "https://api.deezer.com"
     
     enum EndPoint: String {
-        case track = "/track"
+        case album = "/album"
     }
     
-    func fetchTracks(from endpoint: EndPoint, id: Int?, callback: @escaping SingleTrackDSCallback) {
-        var urlComponents = URLComponents(string: SingleTrackAPIDataSource.baseURL)
+    func fetchAlbums(from endpoint: EndPoint, id: Int?, callback: @escaping SingleAlbumDSCallback) {
+        var urlComponents = URLComponents(string: SingleAlbumAPIDataSource.baseURL)
         
         urlComponents?.path = endpoint.rawValue + "/\(id ?? 0)"
         
@@ -52,7 +52,7 @@ struct SingleTrackAPIDataSource {
             }
             
             do {
-                let result = try JSONDecoder().decode(Track.self, from: data)
+                let result = try JSONDecoder().decode(TopAlbums.self, from: data)
                 DispatchQueue.main.async {
                     callback(result, nil)
                 }
@@ -66,9 +66,9 @@ struct SingleTrackAPIDataSource {
     }
 }
 
-typealias SingleTrackDSCallback = (Track?, _ error: SingleTrackAPIDataSourceError?)->Void
+typealias SingleAlbumDSCallback = (TopAlbums?, _ error: SingleAlbumAPIDataSourceError?)->Void
 
-enum SingleTrackAPIDataSourceError: Error {
+enum SingleAlbumAPIDataSourceError: Error {
     case invalidURL(url: URLComponents?)
     case connectionFailed(cause: Error?)
     case jsonDecodingFailed(cause: Error)

@@ -13,13 +13,19 @@ import Loaf
 class LikedMusicViewController: BaseTableViewController {
     
     let noLikedLabel = UILabel()
-    let ds = SingleTrackAPIDataSource()
     let db = Firestore.firestore()
+    
+    let dsTrack = SingleTrackAPIDataSource()
     var tracks: [Track] = []
     var tracksIDs: [Int]?
+    var numOfCallsTrack: Int = 0
+    var trackIndex: Int = 0
     
-    var numOfCalls: Int = 0
-    var i: Int = 0
+    let dsAlbum = SingleAlbumAPIDataSource()
+    var albums: [TopAlbums] = []
+    var albumIDs: [Int]?
+    var numOfCallsAlbum: Int = 0
+    var albumIndex: Int = 0
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var likedTableView: UITableView!
@@ -29,7 +35,6 @@ class LikedMusicViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUpSegmentedControl()
         
         NotificationCenter.default.addObserver(forName: .IndexRemove, object: nil, queue: .main) {[weak self] notification in
@@ -51,6 +56,10 @@ class LikedMusicViewController: BaseTableViewController {
                             self.tracks.remove(at: indexPath.row)
                             self.likedTableView.deleteRows(at: [indexPath], with: .automatic)
                             self.loafMessageRemoved(track: track)
+                            
+                            if self.tracks.count == 0 {
+                                self.noLikedLabel.isHidden = false
+                            }
                         }
                     }
                 }
@@ -62,11 +71,14 @@ class LikedMusicViewController: BaseTableViewController {
         
         if Connectivity.isConnectedToInternet {
             getUserLikedTracks()
+            getUserLikedAlbums()
             loadActivityIndicator()
         }
 
-        let nib = UINib(nibName: "LikedGenreTableViewCell", bundle: .main)
-        likedTableView.register(nib, forCellReuseIdentifier: "cell")
+        let tracksNib = UINib(nibName: "LikedGenreTableViewCell", bundle: .main)
+        likedTableView.register(tracksNib, forCellReuseIdentifier: "trackCell")
+        let albumsNib = UINib(nibName: "AlbumsTableViewCell", bundle: .main)
+        likedTableView.register(albumsNib, forCellReuseIdentifier: "albumCell")
         
         NotificationCenter.default.addObserver(forName: .AddTrack, object: nil, queue: .main) {[weak self] notification in
             if let track = notification.userInfo?["track"] as? Track {
@@ -126,9 +138,9 @@ class LikedMusicViewController: BaseTableViewController {
     @IBAction func segmentTapped(_ sender: UISegmentedControl) {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
-            print(0)
+            likedTableView.reloadData()
         case 1:
-            print(1)
+            likedTableView.reloadData()
         default:
             break
         }
@@ -138,9 +150,9 @@ class LikedMusicViewController: BaseTableViewController {
         guard let userID = Auth.auth().currentUser?.uid else {return}
         db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
+            
             self.tracksIDs = snapshot?.get("trackIDs") as? [Int] ?? nil
-            self.numOfCalls = self.tracksIDs?.count ?? 0
-
+            self.numOfCallsTrack = self.tracksIDs?.count ?? 0
             self.fetchTracks()
         }
     }
@@ -152,24 +164,22 @@ class LikedMusicViewController: BaseTableViewController {
             return
         }
         
-        ds.fetchTracks(from: .track, id: tracksIDs?[i], with: ["limit" : 100]) {[weak self] track, error in
+        dsTrack.fetchTracks(from: .track, id: tracksIDs?[trackIndex]) {[weak self] track, error in
             if let track = track {
                 guard let self = self else {return}
-                self.i += 1
+                
+                self.trackIndex += 1
                 self.tracks.append(track)
                 
-                self.numOfCalls -= 1
-                if self.numOfCalls > 0 {
+                self.numOfCallsTrack -= 1
+                if self.numOfCallsTrack > 0 {
                     self.fetchTracks()
                 } else {
-                    self.i = 0
-                    
-                    self.likedTableView.separatorColor = UIColor.darkGray
+                    self.trackIndex = 0
                     self.likedTableView.reloadData()
                     
-                    let cells = self.likedTableView.visibleCells
-                    UIView.animate(views: cells, animations: [self.animation])
-                    self.activityIndicatorView.stopAnimating()
+                    self.likedTableView.separatorColor = UIColor.darkGray
+                    self.reloadTableViewWithAnimation()
                 }
                 
             } else if let error = error {
@@ -177,6 +187,48 @@ class LikedMusicViewController: BaseTableViewController {
                 self?.activityIndicatorView.stopAnimating()
             }
         }
+    }
+    
+    func getUserLikedAlbums() {
+        guard let userID = Auth.auth().currentUser?.uid else {return}
+        db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
+            guard let self = self else {return}
+            
+            self.albumIDs = snapshot?.get("albumIDs") as? [Int] ?? nil
+            self.numOfCallsAlbum = self.albumIDs?.count ?? 0
+            self.fetchAlbums()
+        }
+    }
+    
+    func fetchAlbums() {
+        dsAlbum.fetchAlbums(from: .album, id: albumIDs?[albumIndex]) {[weak self] album, error in
+            if let album = album {
+                guard let self = self else {return}
+                
+                self.albumIndex += 1
+                self.albums.append(album)
+                self.numOfCallsAlbum -= 1
+                if self.numOfCallsAlbum > 0 {
+                    self.fetchAlbums()
+                } else {
+                    self.albumIndex = 0
+                    //self.likedTableView.reloadData()
+                    
+                    self.likedTableView.separatorColor = UIColor.darkGray
+                    //self.reloadTableViewWithAnimation()
+                }
+                
+            } else if let error = error {
+                print(error)
+                self?.activityIndicatorView.stopAnimating()
+            }
+        }
+    }
+    
+    func reloadTableViewWithAnimation() {
+        let cells = self.likedTableView.visibleCells
+        UIView.animate(views: cells, animations: [self.animation])
+        self.activityIndicatorView.stopAnimating()
     }
     
     func loadNoLikedLabel() {
@@ -195,28 +247,35 @@ class LikedMusicViewController: BaseTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tracks.count
+        var numberOfRows = 0
+        
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            numberOfRows = tracks.count
+        default:
+            numberOfRows = albums.count
+        }
+        return numberOfRows
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//        switch segmentedControl.selectedSegmentIndex {
-//        case 0:
-//            print("0")
-//        case 1:
-//            print("1")
-//        default:
-//            break
-//        }
-        accessoryArrow(cell: cell)
-
-        if let cell = cell as? LikedGenreTableViewCell {
-            let track = tracks[indexPath.row]
-            
-            cell.populate(track: track)
-        }
+        let tracksCell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! LikedGenreTableViewCell
+        let albumsCell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath) as! AlbumsTableViewCell
         
-        return cell
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            accessoryArrow(cell: tracksCell)
+            let track = tracks[indexPath.row]
+            tracksCell.populate(track: track)
+        case 1:
+            accessoryArrow(cell: albumsCell)
+            let album = albums[indexPath.row]
+            albumsCell.populate(album: album)
+            return albumsCell
+        default:
+            break
+        }
+        return tracksCell
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -270,15 +329,30 @@ class LikedMusicViewController: BaseTableViewController {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
             return
         }
-        Loaf.dismiss(sender: self, animated: true)
-        performSegue(withIdentifier: "toDetails", sender: tracks[indexPath.row])
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            Loaf.dismiss(sender: self, animated: true)
+            performSegue(withIdentifier: "toDetails", sender: tracks[indexPath.row])
+        case 1:
+            Loaf.dismiss(sender: self, animated: true)
+            performSegue(withIdentifier: "toAlbumDetails", sender: albums[indexPath.row])
+        default:
+            break
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let dest = segue.destination as? UINavigationController,
-              let targetController = dest.topViewController as? DetailsMusicViewController,
-              let track = sender as? Track else {return}
-        targetController.track = track
+        if segue.identifier == "toDetails" {
+            guard let dest = segue.destination as? UINavigationController,
+                  let targetController = dest.topViewController as? DetailsMusicViewController,
+                  let track = sender as? Track else {return}
+            targetController.track = track
+        } else if segue.identifier == "toAlbumDetails" {
+            guard let dest = segue.destination as? UINavigationController,
+                  let targetController = dest.topViewController as? AlbumDetailsViewController,
+                  let album = sender as? TopAlbums else {return}
+            targetController.album = album
+        }
     }
 }
 

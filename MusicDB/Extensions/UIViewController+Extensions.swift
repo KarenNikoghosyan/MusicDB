@@ -64,6 +64,14 @@ extension UIViewController {
         Loaf("\(track.titleShort) was removed from your liked page", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5))
     }
     
+    func loafMessageAddedAlbum(album: TopAlbums) {
+        Loaf("\(album.title) was added to your liked page", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5))
+    }
+    
+    func loafMessageRemovedAlbum(album: TopAlbums) {
+        Loaf("\(album.title) was removed from your liked page", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(1.5))
+    }
+    
     func loafMessageWelcome(name: String) {
         Loaf("Welcome Back, \(name)", state: .custom(.init(backgroundColor: .systemGreen, textColor: .white, tintColor: .white, icon: UIImage(systemName: "i.circle"), iconAlignment: .left)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show(.custom(3.5))
     }
@@ -99,6 +107,37 @@ extension UIViewController {
             } else {
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: .AddTrack, object: nil, userInfo: ["track": track])
+                }
+            }
+        }
+    }
+}
+
+extension UIViewController {
+    
+    func removeAlbum(album: TopAlbums, userID: String) {
+        UIViewController.db.collection("users").document(userID).updateData([
+            "albumIDs" : FieldValue.arrayRemove([album.id as Any])
+        ]) { error in
+            if let error = error {
+                print("\(error.localizedDescription)")
+            } else {
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: .RemoveAlbumID, object: nil, userInfo: ["album" : album])
+                }
+            }
+        }
+    }
+    
+    func addAlbum(album: TopAlbums, userID: String) {
+        UIViewController.db.collection("users").document(userID).updateData([
+            "albumIDs" : FieldValue.arrayUnion([album.id as Any])
+        ]) { error in
+            if let error = error {
+                print("\(error.localizedDescription)")
+            } else {
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: .AddAlbumID, object: nil, userInfo: ["album": album])
                 }
             }
         }
