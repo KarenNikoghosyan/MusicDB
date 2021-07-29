@@ -97,12 +97,13 @@ class GenreMusicViewController: BaseTableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let dest = segue.destination as? DetailsMusicViewController,
+        guard let dest = segue.destination as? UINavigationController,
+              let targetController = dest.topViewController as? DetailsMusicViewController,
               let data = sender as? Dictionary<String, Any> else {return}
         
-        dest.track = data["track"] as? Track
-        dest.indexPath = data["indexPath"] as? IndexPath
-        dest.isGenre = data["isGenre"] as? Bool
+        targetController.track = data["track"] as? Track
+        targetController.indexPath = data["indexPath"] as? IndexPath
+        targetController.isGenre = data["isGenre"] as? Bool
     }
     
     func addObservers() {

@@ -22,6 +22,7 @@ class AlbumsViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //TODO: Remove observer
         NotificationCenter.default.addObserver(forName: .OpenLinkInSafari, object: nil, queue: .main) {[weak self] notification in
             guard let self = self else {return}
             

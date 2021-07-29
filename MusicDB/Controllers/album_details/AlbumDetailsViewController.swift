@@ -163,12 +163,13 @@ class AlbumDetailsViewController: BaseTableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let dest = segue.destination as? DetailsMusicViewController,
+        guard let dest = segue.destination as? UINavigationController,
+              let targetController = dest.topViewController as? DetailsMusicViewController,
               let data = sender as? Dictionary<String, Any> else {return}
         
-        dest.track = data["track"] as? Track
-        dest.album = data["album"] as? TopAlbums
-        dest.isAlbumDetails = data["isAlbumDetails"] as? Bool
+        targetController.track = data["track"] as? Track
+        targetController.album = data["album"] as? TopAlbums
+        targetController.isAlbumDetails = data["isAlbumDetails"] as? Bool
     }
     
     func setUpImageView() {

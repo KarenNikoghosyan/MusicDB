@@ -275,11 +275,10 @@ class LikedMusicViewController: BaseTableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let track = sender as? Track,
-              let dest = segue.destination as? DetailsMusicViewController else {
-            return
-        }
-        dest.track = track
+        guard let dest = segue.destination as? UINavigationController,
+              let targetController = dest.topViewController as? DetailsMusicViewController,
+              let track = sender as? Track else {return}
+        targetController.track = track
     }
 }
 

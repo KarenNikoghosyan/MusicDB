@@ -30,10 +30,7 @@ class DetailsMusicViewController: BaseViewController {
     @IBOutlet weak var artistCollectionView: UICollectionView!
     
     @IBOutlet weak var detailsImageView: UIImageView!
-    
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var detailsTitleLabel: UILabel!
-    
+        
     @IBOutlet weak var artistNameLabel: UILabel!
     @IBOutlet weak var detailsArtistNameLabel: UILabel!
     
@@ -107,6 +104,7 @@ class DetailsMusicViewController: BaseViewController {
             loadActivityIndicator()
         }
         
+        self.title = track?.titleShort
         createLikeButton()
         loadNoTracksLabel()
   
@@ -183,7 +181,6 @@ class DetailsMusicViewController: BaseViewController {
         detailsImageView.sd_imageIndicator = SDWebImageActivityIndicator.white
         detailsImageView.sd_setImage(with: url)
         
-        detailsTitleLabel.text = track.titleShort
         detailsArtistNameLabel.text = track.artist.name
         detailsAlbumTitleLabel.text = track.album?.title
         
@@ -211,7 +208,6 @@ class DetailsMusicViewController: BaseViewController {
         detailsImageView.sd_imageIndicator = SDWebImageActivityIndicator.white
         detailsImageView.sd_setImage(with: url)
         
-        detailsTitleLabel.text = track?.titleShort
         detailsArtistNameLabel.text = track?.artist.name
         detailsAlbumTitleLabel.text = track?.album?.title
         
@@ -318,10 +314,11 @@ class DetailsMusicViewController: BaseViewController {
         let parentVC = presentingViewController
             
         dismiss(animated: true) {[weak self] in
-            let detailsVC = DetailsMusicViewController.storyboardInstance(storyboardID: "Main", restorationID: "detailsScreen") as! DetailsMusicViewController
+            guard let detailsVC = DetailsMusicViewController.storyboardInstance(storyboardID: "Main", restorationID: "detailsScreen") as? UINavigationController,
+                  let targetController = detailsVC.topViewController as? DetailsMusicViewController else {return}
             
             let track = self?.tracks[indexPath.item]
-            detailsVC.track = track
+            targetController.track = track
             parentVC?.present(detailsVC, animated: true)
         }
     }

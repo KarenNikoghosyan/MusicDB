@@ -146,9 +146,10 @@ extension SearchMusicViewController: UISearchBarDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let dest = segue.destination as? DetailsMusicViewController,
+        guard let dest = segue.destination as? UINavigationController,
+              let targetController = dest.topViewController as? DetailsMusicViewController,
               let track = sender as? Track else {return}
         
-        dest.track = track
+        targetController.track = track
     }
 }
