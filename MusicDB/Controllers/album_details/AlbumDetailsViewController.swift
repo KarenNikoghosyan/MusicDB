@@ -44,12 +44,12 @@ class AlbumDetailsViewController: BaseTableViewController {
               let album = album else {return}
         
         if !isLiked {
-            addAlbum(album: album, userID: userID)
+            FirestoreManager.shared.addAlbum(album: album, userID: userID)
             loafMessageAddedAlbum(album: album)
 
             isLiked = true
         } else {
-            removeAlbum(album: album, userID: userID)
+            FirestoreManager.shared.removeAlbum(album: album, userID: userID)
             loafMessageRemovedAlbum(album: album)
 
             isLiked = false
@@ -258,7 +258,7 @@ class AlbumDetailsViewController: BaseTableViewController {
     
     func checkLikedStatus() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
-        AlbumDetailsViewController.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
+        FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
             
             guard let arrIDs: [Int] = snapshot?.get("albumIDs") as? [Int] else {return}

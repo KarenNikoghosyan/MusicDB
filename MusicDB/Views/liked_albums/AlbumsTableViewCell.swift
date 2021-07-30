@@ -9,10 +9,8 @@ import UIKit
 import SDWebImage
 import WCLShineButton
 import FirebaseAuth
-import FirebaseFirestore
 
 class AlbumsTableViewCell: UITableViewCell {
-    let db = Firestore.firestore()
     var isLiked: Bool = false
 
     @IBOutlet weak var albumImageView: UIImageView!
@@ -31,7 +29,7 @@ class AlbumsTableViewCell: UITableViewCell {
     func populate(album: TopAlbums) {
         
         guard let userID = Auth.auth().currentUser?.uid else {return}
-        db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
+        FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
             
             guard let arrIDs: [Int] = snapshot?.get("albumIDs") as? [Int] else {return}

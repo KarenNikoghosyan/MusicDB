@@ -13,7 +13,6 @@ import Loaf
 class LikedMusicViewController: BaseTableViewController {
     
     let noLikedLabel = UILabel()
-    let db = Firestore.firestore()
     
     let dsTrack = SingleTrackAPIDataSource()
     var tracks: [Track] = []
@@ -40,6 +39,103 @@ class LikedMusicViewController: BaseTableViewController {
         
         setUpSegmentedControl()
         
+        if Connectivity.isConnectedToInternet {
+            getUserLikedTracks()
+            getUserLikedAlbums()
+            loadActivityIndicator()
+        }
+
+        let tracksNib = UINib(nibName: "LikedGenreTableViewCell", bundle: .main)
+        likedTableView.register(tracksNib, forCellReuseIdentifier: "trackCell")
+        let albumsNib = UINib(nibName: "AlbumsTableViewCell", bundle: .main)
+        likedTableView.register(albumsNib, forCellReuseIdentifier: "albumCell")
+        
+        setUpObservers()
+        loadNoLikedLabel()
+        
+        likedTableView.separatorColor = UIColor.darkGray
+
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
+        self.navigationItem.leftBarButtonItem?.tintColor = .systemGreen
+        self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Futura-Bold", size: 16) as Any], for: .normal)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setTabBarSwipe(enabled: false)
+        
+        if !Connectivity.isConnectedToInternet {
+            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+        }
+    }
+    
+    func setUpObservers() {
+        NotificationCenter.default.addObserver(forName: .AddTrack, object: nil, queue: .main) {[weak self] notification in
+            if let track = notification.userInfo?["track"] as? Track {
+                guard let self = self else {return}
+                print("Add")
+                self.tracks.append(track)
+                self.likedTableView.reloadData()
+                
+                if self.tracks.count > 0 && self.tracks.count <= 1 {
+                    if self.segmentedControl.selectedSegmentIndex == 0 {
+                        self.noLikedLabel.isHidden = true
+                    }
+                }
+            }
+        }
+        NotificationCenter.default.addObserver(forName: .RemoveTrack, object: nil, queue: .main) {[weak self] notification in
+            if let track = notification.userInfo?["track"] as? Track {
+                guard let self = self else {return}
+                print("Test1")
+                for (index, _) in self.tracks.enumerated() {
+                    if self.tracks[index].id == track.id{
+                        self.tracks.remove(at: index)
+                        self.likedTableView.reloadData()
+                        print("Test2")
+                        if self.tracks.count == 0 {
+                            if self.segmentedControl.selectedSegmentIndex == 0 {
+                                self.noLikedLabel.isHidden = false
+                            }
+                        }
+                        return
+                    }
+                }
+            }
+        }
+        NotificationCenter.default.addObserver(forName: .AddAlbumID, object: nil, queue: .main) {[weak self] notification in
+            if let album = notification.userInfo?["album"] as? TopAlbums {
+                guard let self = self else {return}
+                
+                self.albums.append(album)
+                self.likedTableView.reloadData()
+                
+                if self.albums.count > 0 && self.albums.count <= 1 {
+                    if self.segmentedControl.selectedSegmentIndex == 1 {
+                        self.noLikedLabel.isHidden = true
+                    }
+                }
+            }
+        }
+        NotificationCenter.default.addObserver(forName: .RemoveAlbumID, object: nil, queue: .main) {[weak self] notification in
+            if let album = notification.userInfo?["album"] as? TopAlbums {
+                guard let self = self else {return}
+                print("Test4")
+                for (index, _) in self.albums.enumerated() {
+                    if self.albums[index].id == album.id{
+                        self.albums.remove(at: index)
+                        self.likedTableView.reloadData()
+                        print("Test4")
+                        if self.albums.count == 0 {
+                            if self.segmentedControl.selectedSegmentIndex == 1 {
+                                self.noLikedLabel.isHidden = false
+                            }
+                        }
+                        return
+                    }
+                }
+            }
+        }
         NotificationCenter.default.addObserver(forName: .IndexRemove, object: nil, queue: .main) {[weak self] notification in
             guard let self = self else {return}
             
@@ -47,7 +143,7 @@ class LikedMusicViewController: BaseTableViewController {
                 let track = self.tracks[indexPath.row]
                 guard let userID = Auth.auth().currentUser?.uid else {return}
 
-                self.db.collection("users").document(userID).updateData([
+                FirestoreManager.shared.db.collection("users").document(userID).updateData([
                     "trackIDs" : FieldValue.arrayRemove([track.id as Any])
                 ]) {[weak self] error in
                     guard let self = self else {return}
@@ -61,70 +157,44 @@ class LikedMusicViewController: BaseTableViewController {
                             self.loafMessageRemoved(track: track)
                             
                             if self.tracks.count == 0 {
-                                self.noLikedLabel.isHidden = false
+                                if self.segmentedControl.selectedSegmentIndex == 0 {
+                                    self.noLikedLabel.isHidden = false
+                                }
                             }
                         }
                     }
                 }
             }
         }
-        
-        if Connectivity.isConnectedToInternet {
-            getUserLikedTracks()
-            getUserLikedAlbums()
-            loadActivityIndicator()
-        }
+        NotificationCenter.default.addObserver(forName: .RemoveAlbumID, object: nil, queue: .main) {[weak self] notification in
+            guard let self = self else {return}
+            
+            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+                let album = self.albums[indexPath.row]
+                guard let userID = Auth.auth().currentUser?.uid else {return}
 
-        let tracksNib = UINib(nibName: "LikedGenreTableViewCell", bundle: .main)
-        likedTableView.register(tracksNib, forCellReuseIdentifier: "trackCell")
-        let albumsNib = UINib(nibName: "AlbumsTableViewCell", bundle: .main)
-        likedTableView.register(albumsNib, forCellReuseIdentifier: "albumCell")
-        
-        NotificationCenter.default.addObserver(forName: .AddTrack, object: nil, queue: .main) {[weak self] notification in
-            if let track = notification.userInfo?["track"] as? Track {
-                guard let self = self else {return}
-                
-                self.tracks.append(track)
-                self.likedTableView.reloadData()
-                
-                if self.tracks.count > 0 && self.tracks.count <= 1 {
-                    self.noLikedLabel.isHidden = true
-                    self.likedTableView.separatorColor = UIColor.darkGray
-                }
-            }
-        }
-        NotificationCenter.default.addObserver(forName: .RemoveTrack, object: nil, queue: .main) {[weak self] notification in
-            if let track = notification.userInfo?["track"] as? Track {
-                guard let self = self else {return}
-    
-                for (index, _) in self.tracks.enumerated() {
-                    if self.tracks[index].id == track.id{
-                        self.tracks.remove(at: index)
-                        self.likedTableView.reloadData()
-                        
-                        if self.tracks.count == 0 {
-                            self.noLikedLabel.isHidden = false
+                FirestoreManager.shared.db.collection("users").document(userID).updateData([
+                    "albumIDs" : FieldValue.arrayRemove([album.id as Any])
+                ]) {[weak self] error in
+                    guard let self = self else {return}
+                    
+                    if let error = error {
+                        print("\(error.localizedDescription)")
+                    } else {
+                        DispatchQueue.main.async {
+                            self.albums.remove(at: indexPath.row)
+                            self.likedTableView.deleteRows(at: [indexPath], with: .automatic)
+                            self.loafMessageRemovedAlbum(album: album)
+                            
+                            if self.albums.count == 0 {
+                                if self.segmentedControl.selectedSegmentIndex == 1 {
+                                    self.noLikedLabel.isHidden = false
+                                }
+                            }
                         }
-                        return
                     }
                 }
             }
-        }
-        loadNoLikedLabel()
-        
-        likedTableView.separatorColor = UIColor.clear
-
-        self.navigationItem.leftBarButtonItem = self.editButtonItem
-        self.navigationItem.leftBarButtonItem?.tintColor = .systemGreen
-        self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Futura-Bold", size: 16) as Any], for: .normal)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        setTabBarSwipe(enabled: false)
-        
-        if !Connectivity.isConnectedToInternet {
-            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
         }
     }
     
@@ -160,7 +230,7 @@ class LikedMusicViewController: BaseTableViewController {
     
     func getUserLikedTracks() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
-        db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
+        FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
             
             self.tracksIDs = snapshot?.get("trackIDs") as? [Int] ?? nil
@@ -192,7 +262,6 @@ class LikedMusicViewController: BaseTableViewController {
                     self.trackIndex = 0
                     self.likedTableView.reloadData()
                     
-                    self.likedTableView.separatorColor = UIColor.darkGray
                     self.reloadTableViewWithAnimation()
                 }
                 
@@ -205,7 +274,7 @@ class LikedMusicViewController: BaseTableViewController {
     
     func getUserLikedAlbums() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
-        db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
+        FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
             
             self.albumIDs = snapshot?.get("albumIDs") as? [Int] ?? nil
@@ -236,7 +305,6 @@ class LikedMusicViewController: BaseTableViewController {
                     self.albumIndex = 0
                     //self.likedTableView.reloadData()
                     
-                    self.likedTableView.separatorColor = UIColor.darkGray
                     //self.reloadTableViewWithAnimation()
                 }
                 
@@ -274,8 +342,10 @@ class LikedMusicViewController: BaseTableViewController {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             numberOfRows = tracks.count
-        default:
+        case 1:
             numberOfRows = albums.count
+        default:
+            break
         }
         return numberOfRows
     }
@@ -337,7 +407,7 @@ class LikedMusicViewController: BaseTableViewController {
                 let track = tracks[indexPath.row]
                 loafMessageRemoved(track: track)
                 
-                db.collection("users").document(userID).updateData([
+                FirestoreManager.shared.db.collection("users").document(userID).updateData([
                     "trackIDs" : FieldValue.arrayRemove([track.id as Any])
                 ]) {[weak self] error in
                     if let error = error {
@@ -354,7 +424,7 @@ class LikedMusicViewController: BaseTableViewController {
                 let album = albums[indexPath.row]
                 loafMessageRemovedAlbum(album: album)
                 
-                db.collection("users").document(userID).updateData([
+                FirestoreManager.shared.db.collection("users").document(userID).updateData([
                     "albumIDs" : FieldValue.arrayRemove([album.id as Any])
                 ]) {[weak self] error in
                     if let error = error {

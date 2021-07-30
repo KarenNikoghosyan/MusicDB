@@ -9,7 +9,6 @@ import UIKit
 import SkyFloatingLabelTextField
 import Loady
 import FirebaseAuth
-import FirebaseFirestore
 import LGButton
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
@@ -36,8 +35,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             if error == nil {
                 guard let userID = Auth.auth().currentUser?.uid else {return}
                 
-                let db = Firestore.firestore()
-                db.collection("users").document(userID).setData([
+                FirestoreManager.shared.db.collection("users").document(userID).setData([
                     "name" : name,
                     "trackIDs" : [],
                     "albumIDs" : []

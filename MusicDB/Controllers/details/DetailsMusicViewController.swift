@@ -12,7 +12,6 @@ import Loady
 import ViewAnimator
 import WCLShineButton
 import Loaf
-import FirebaseFirestore
 import FirebaseAuth
 
 class DetailsMusicViewController: BaseViewController {
@@ -78,12 +77,12 @@ class DetailsMusicViewController: BaseViewController {
         guard let userID = Auth.auth().currentUser?.uid else {return}
         
         if !isLiked {
-            addTrack(track: track, userID: userID)
+            FirestoreManager.shared.addTrack(track: track, userID: userID)
             loafMessageAdded(track: track)
 
             isLiked = true
         } else {
-            removeTrack(track: track, userID: userID)
+            FirestoreManager.shared.removeTrack(track: track, userID: userID)
             loafMessageRemoved(track: track)
 
             isLiked = false
@@ -156,7 +155,7 @@ class DetailsMusicViewController: BaseViewController {
     
     func checkLikedStatus() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
-        DetailsMusicViewController.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
+        FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
             
             guard let arrIDs: [Int] = snapshot?.get("trackIDs") as? [Int] else {return}

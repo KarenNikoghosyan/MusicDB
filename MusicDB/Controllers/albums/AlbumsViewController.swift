@@ -96,7 +96,7 @@ class AlbumsViewController: BaseTableViewController {
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 guard let album = self?.albums[indexPath.row] else {return}
                 
-                self?.addAlbum(album: album, userID: userID)
+                FirestoreManager.shared.addAlbum(album: album, userID: userID)
                 self?.loafMessageAddedAlbum(album: album)
             }
         }
@@ -104,7 +104,7 @@ class AlbumsViewController: BaseTableViewController {
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 guard let album = self?.albums[indexPath.row] else {return}
                 
-                self?.removeAlbum(album: album, userID: userID)
+                FirestoreManager.shared.removeAlbum(album: album, userID: userID)
                 self?.loafMessageRemovedAlbum(album: album)
             }
         }

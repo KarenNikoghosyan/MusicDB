@@ -11,7 +11,6 @@ import SafariServices
 import PKHUD
 import Loaf
 import FirebaseAuth
-import FirebaseFirestore
 import CoreData
 
 class HomeMusicCollectionViewController: UICollectionViewController {
@@ -26,7 +25,6 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     var topAlbums: [TopAlbums] = []
     var rock: [Track] = []
     
-    let db = Firestore.firestore()
     let refreshControl = UIRefreshControl()
 
     let tracksDS = GenreAPIDataSource()
@@ -97,7 +95,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     
     func greetingMessage() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
-        db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
+        FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             
             guard let name: String = snapshot?.get("name") as? String else {return}
             self?.loafMessageWelcome(name: name)

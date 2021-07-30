@@ -7,7 +7,6 @@
 
 import UIKit
 import Firebase
-import FirebaseFirestore
 import Loaf
 
 class GenreMusicViewController: BaseTableViewController {
@@ -112,7 +111,7 @@ class GenreMusicViewController: BaseTableViewController {
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 guard let track = self?.tracks[indexPath.row] else {return}
                 
-                self?.addTrack(track: track, userID: userID)
+                FirestoreManager.shared.addTrack(track: track, userID: userID)
                 self?.loafMessageAdded(track: track)
             }
         }
@@ -120,7 +119,7 @@ class GenreMusicViewController: BaseTableViewController {
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 guard let track = self?.tracks[indexPath.row] else {return}
                 
-                self?.removeTrack(track: track, userID: userID)
+                FirestoreManager.shared.removeTrack(track: track, userID: userID)
                 self?.loafMessageRemoved(track: track)
             }
         }

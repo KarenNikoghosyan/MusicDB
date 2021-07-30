@@ -9,10 +9,8 @@ import UIKit
 import SDWebImage
 import WCLShineButton
 import FirebaseAuth
-import FirebaseFirestore
 
 class LikedGenreTableViewCell: UITableViewCell {
-    let db = Firestore.firestore()
     var isLiked: Bool = false
 
     @IBOutlet weak var trackImageView: UIImageView!
@@ -32,7 +30,7 @@ class LikedGenreTableViewCell: UITableViewCell {
     func populate(track: Track) {
         
         guard let userID = Auth.auth().currentUser?.uid else {return}
-        db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
+        FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
             
             guard let arrIDs: [Int] = snapshot?.get("trackIDs") as? [Int] else {return}
