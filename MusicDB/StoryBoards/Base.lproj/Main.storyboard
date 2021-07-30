@@ -39,29 +39,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BSY-Sw-PYH">
-                                <rect key="frame" x="0.0" y="139" width="428" height="787"/>
-                                <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lUT-RD-ERF">
-                                    <size key="itemSize" width="160" height="160"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="nVL-hR-auv" customClass="SearchTrackCollectionViewCell" customModule="MusicDB" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1N7-Wl-vgu">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </collectionViewCellContentView>
-                                        <size key="customSize" width="128" height="128"/>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Tracks" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bUc-oZ-3I3">
-                                <rect key="frame" x="0.0" y="88" width="428" height="51"/>
+                                <rect key="frame" x="0.0" y="140" width="428" height="51"/>
                                 <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="0.19523263243494424" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -70,17 +49,84 @@
                                     <string>Title</string>
                                 </scopeButtonTitles>
                             </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" estimatedRowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="z9e-9S-OkU">
+                                <rect key="frame" x="0.0" y="191" width="428" height="735"/>
+                                <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="75" id="IOn-MJ-4Dq" customClass="SearchMusicTableViewCell" customModule="MusicDB" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="428" height="75"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IOn-MJ-4Dq" id="qB4-2u-c5k">
+                                            <rect key="frame" x="0.0" y="0.0" width="428" height="75"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VOh-iI-xUf">
+                                                    <rect key="frame" x="16" y="5" width="65" height="65"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="65" id="HFy-JU-Yro"/>
+                                                        <constraint firstAttribute="height" constant="65" id="px2-RA-fqs"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="XMW-id-7lP">
+                                                    <rect key="frame" x="89" y="5" width="52" height="65"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oGh-d2-7hz">
+                                                            <rect key="frame" x="0.0" y="0.0" width="52" height="30.666666666666668"/>
+                                                            <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="18"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t5B-M4-Eri">
+                                                            <rect key="frame" x="0.0" y="34.666666666666664" width="52" height="30.333333333333336"/>
+                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXW-vm-Y1j">
+                                                    <rect key="frame" x="350.33333333333331" y="26.333333333333336" width="41.666666666666686" height="22.333333333333336"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="VOh-iI-xUf" firstAttribute="leading" secondItem="qB4-2u-c5k" secondAttribute="leading" constant="16" id="3Bo-6e-Dss"/>
+                                                <constraint firstItem="XMW-id-7lP" firstAttribute="leading" secondItem="VOh-iI-xUf" secondAttribute="trailing" constant="8" id="Cwo-3V-gAx"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="UXW-vm-Y1j" secondAttribute="trailing" constant="16" id="E9K-AR-AR4"/>
+                                                <constraint firstItem="UXW-vm-Y1j" firstAttribute="centerY" secondItem="qB4-2u-c5k" secondAttribute="centerY" id="ElW-gl-41z"/>
+                                                <constraint firstItem="XMW-id-7lP" firstAttribute="bottom" secondItem="VOh-iI-xUf" secondAttribute="bottom" id="VaX-gE-ngd"/>
+                                                <constraint firstItem="VOh-iI-xUf" firstAttribute="centerY" secondItem="qB4-2u-c5k" secondAttribute="centerY" id="nCX-Q3-cGs"/>
+                                                <constraint firstItem="UXW-vm-Y1j" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XMW-id-7lP" secondAttribute="trailing" constant="8" symbolic="YES" id="s2i-I7-Fpl"/>
+                                                <constraint firstItem="XMW-id-7lP" firstAttribute="top" secondItem="VOh-iI-xUf" secondAttribute="top" id="t4L-kf-PXi"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="trackArtistNameLabel" destination="t5B-M4-Eri" id="dmw-FY-c6H"/>
+                                            <outlet property="trackDurationLabel" destination="UXW-vm-Y1j" id="Wgt-Ym-KEw"/>
+                                            <outlet property="trackImageView" destination="VOh-iI-xUf" id="SB6-Bw-o2e"/>
+                                            <outlet property="trackTitleLabel" destination="oGh-d2-7hz" id="UNg-M8-8y8"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="C4p-P3-Cv8"/>
                         <color key="backgroundColor" red="0.12941176470588234" green="0.12941176470588234" blue="0.12941176470588234" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="BSY-Sw-PYH" firstAttribute="leading" secondItem="C4p-P3-Cv8" secondAttribute="leading" id="Icw-vf-hI0"/>
+                            <constraint firstAttribute="bottom" secondItem="z9e-9S-OkU" secondAttribute="bottom" id="JFm-Qx-GuS"/>
                             <constraint firstItem="bUc-oZ-3I3" firstAttribute="top" secondItem="C4p-P3-Cv8" secondAttribute="top" id="Lun-XO-9BO"/>
-                            <constraint firstItem="BSY-Sw-PYH" firstAttribute="top" secondItem="bUc-oZ-3I3" secondAttribute="bottom" id="S7P-cs-bnF"/>
-                            <constraint firstItem="BSY-Sw-PYH" firstAttribute="trailing" secondItem="C4p-P3-Cv8" secondAttribute="trailing" id="TcL-Ge-HBT"/>
                             <constraint firstItem="bUc-oZ-3I3" firstAttribute="leading" secondItem="C4p-P3-Cv8" secondAttribute="leading" id="U8O-8B-APi"/>
                             <constraint firstItem="C4p-P3-Cv8" firstAttribute="trailing" secondItem="bUc-oZ-3I3" secondAttribute="trailing" id="Xmr-mg-zBw"/>
-                            <constraint firstAttribute="bottom" secondItem="BSY-Sw-PYH" secondAttribute="bottom" id="bne-SE-7T5"/>
+                            <constraint firstItem="C4p-P3-Cv8" firstAttribute="trailing" secondItem="z9e-9S-OkU" secondAttribute="trailing" id="eaq-6L-cgy"/>
+                            <constraint firstItem="z9e-9S-OkU" firstAttribute="top" secondItem="bUc-oZ-3I3" secondAttribute="bottom" id="qnw-I8-Zz8"/>
+                            <constraint firstItem="z9e-9S-OkU" firstAttribute="leading" secondItem="C4p-P3-Cv8" secondAttribute="leading" id="yU0-8I-48V"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search" leftItemsSupplementBackButton="YES" id="UXX-Ib-6wt">
@@ -92,14 +138,14 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="searchTracksCollectionView" destination="BSY-Sw-PYH" id="xdI-gQ-Hrd"/>
+                        <outlet property="searchTracksTableView" destination="z9e-9S-OkU" id="wbc-rF-F2c"/>
                         <outlet property="trackSearchBar" destination="bUc-oZ-3I3" id="oyq-Wa-ly4"/>
                         <segue destination="UKZ-tQ-2VP" kind="presentation" identifier="toDetails" id="dBr-ud-96E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g7A-t8-Tym" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1347" y="2524"/>
+            <point key="canvasLocation" x="-1347.1962616822429" y="2523.7580993520519"/>
         </scene>
         <!--Details Music View Controller-->
         <scene sceneID="N6h-qw-vSP">
@@ -888,7 +934,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="dBr-ud-96E"/>
-        <segue reference="Plz-8f-IVs"/>
+        <segue reference="i6h-vK-J6Q"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="heart.fill" catalog="system" width="128" height="109"/>

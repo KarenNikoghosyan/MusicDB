@@ -8,13 +8,15 @@
 import UIKit
 import ViewAnimator
 
-class SearchMusicViewController: BaseCollectionViewController {
+class SearchMusicViewController: BaseTableViewController {
+    var tracks: [Track] = []
+    var ds = TrackAPIDataSource()
    
     let searchLabel = UILabel()
     let noTracksLabel = UILabel()
     
     @IBOutlet weak var trackSearchBar: UISearchBar!
-    @IBOutlet weak var searchTracksCollectionView: UICollectionView!
+    @IBOutlet weak var searchTracksTableView: UITableView!
     @IBAction func signOut(_ sender: UIBarButtonItem) {
         logOutTappedAndSegue()
     }
@@ -24,12 +26,9 @@ class SearchMusicViewController: BaseCollectionViewController {
         hideKeyboardWhenTapped()
         
         trackSearchBar.delegate = self
-        searchTracksCollectionView.delegate = self
-        searchTracksCollectionView.dataSource = self
-        
-        let nib = UINib(nibName: "DetailsSearchMusicCollectionViewCell", bundle: .main)
-        searchTracksCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
-        
+        searchTracksTableView.delegate = self
+        searchTracksTableView.dataSource = self
+                
         setupNavigationItems()
         
         loadSearchLabel()
@@ -42,10 +41,11 @@ class SearchMusicViewController: BaseCollectionViewController {
         setTabBarSwipe(enabled: true)
     }
     
+    //TODO: remove?
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
-        searchTracksCollectionView?.reloadData()
+        searchTracksTableView?.reloadData()
     }
     
     func loadSearchLabel() {
@@ -75,11 +75,42 @@ class SearchMusicViewController: BaseCollectionViewController {
         
         noTracksLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            noTracksLabel.topAnchor.constraint(equalTo: searchTracksCollectionView.topAnchor, constant: 24),
-            noTracksLabel.leadingAnchor.constraint(equalTo: searchTracksCollectionView.leadingAnchor, constant: 0),
-            noTracksLabel.trailingAnchor.constraint(equalTo: searchTracksCollectionView.trailingAnchor, constant: 0)
+            noTracksLabel.topAnchor.constraint(equalTo: searchTracksTableView.topAnchor, constant: 24),
+            noTracksLabel.leadingAnchor.constraint(equalTo: searchTracksTableView.leadingAnchor, constant: 0),
+            noTracksLabel.trailingAnchor.constraint(equalTo: searchTracksTableView.trailingAnchor, constant: 0)
         ])
         noTracksLabel.isHidden = true
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tracks.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        if let cell = cell as? SearchMusicTableViewCell {
+            let track = tracks[indexPath.row]
+            cell.populate(track: track)
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
+        performSegue(withIdentifier: "toDetails", sender: tracks[indexPath.row])
+    }
+   
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let dest = segue.destination as? UINavigationController,
+              let targetController = dest.topViewController as? DetailsMusicViewController,
+              let track = sender as? Track else {return}
+        
+        targetController.track = track
     }
 }
 
@@ -99,7 +130,7 @@ extension SearchMusicViewController: UISearchBarDelegate {
         self.searchLabel.isHidden = true
         
         tracks.removeAll()
-        searchTracksCollectionView.reloadData()
+        searchTracksTableView.reloadData()
         
         guard let text = searchBar.text else {return}
         
@@ -117,9 +148,9 @@ extension SearchMusicViewController: UISearchBarDelegate {
                     guard let self = self else {return}
                     
                     self.tracks = tracks
-                    self.searchTracksCollectionView.reloadData()
+                    self.searchTracksTableView.reloadData()
                     
-                    self.searchTracksCollectionView.animate(animations: [animation])
+                    self.searchTracksTableView.animate(animations: [animation])
                     self.activityIndicatorView.stopAnimating()
                     
                     if tracks.count <= 0 {
@@ -134,22 +165,5 @@ extension SearchMusicViewController: UISearchBarDelegate {
                     self?.activityIndicatorView.stopAnimating()
                 }
             }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            return
-        }
-        
-        performSegue(withIdentifier: "toDetails", sender: tracks[indexPath.item])
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let dest = segue.destination as? UINavigationController,
-              let targetController = dest.topViewController as? DetailsMusicViewController,
-              let track = sender as? Track else {return}
-        
-        targetController.track = track
     }
 }

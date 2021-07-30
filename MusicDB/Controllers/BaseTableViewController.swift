@@ -72,6 +72,8 @@ extension BaseTableViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
             } else if let cell = tableView.cellForRow(at: indexPath) as? AlbumDetailsTableViewCell {
                 cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
+            } else if let cell = tableView.cellForRow(at: indexPath) as? SearchMusicTableViewCell {
+                cell.contentView.backgroundColor = UIColor(red: 70.0/255, green: 70.0/255, blue: 70.0/255, alpha: 1)
             }
         }
     }
@@ -83,6 +85,8 @@ extension BaseTableViewController: UITableViewDelegate, UITableViewDataSource {
             } else if let cell = tableView.cellForRow(at: indexPath) as? AlbumsTableViewCell {
                 cell.contentView.backgroundColor = .clear
             } else if let cell = tableView.cellForRow(at: indexPath) as? AlbumDetailsTableViewCell {
+                cell.contentView.backgroundColor = .clear
+            } else if let cell = tableView.cellForRow(at: indexPath) as? SearchMusicTableViewCell {
                 cell.contentView.backgroundColor = .clear
             }
         }

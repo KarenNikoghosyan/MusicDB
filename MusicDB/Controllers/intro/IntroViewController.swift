@@ -40,23 +40,37 @@ class IntroViewController: UIViewController {
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Fonts.futuraTitle, descriptionFont: Fonts.futuraDescription),
         
         OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "preview_button"),
-                           title: "Playing a Preview",
+                           title: "Playing a Preview 1/2",
                            description: "To play a preview, tap the preview button.",
                            pageIcon: #imageLiteral(resourceName: "4"),
                            color: UIColor(red: 227.0/255.0, green: 101.0/255.0, blue: 91.0/255.0, alpha: 1.00),
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Fonts.futuraTitle, descriptionFont: Fonts.futuraDescription),
         
+        OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "play_button_album"),
+                           title: "Playing a Preview 2/2",
+                           description: "To play a preview, tap the play button.",
+                           pageIcon: #imageLiteral(resourceName: "5"),
+                           color: UIColor(red: 112.0/255.0, green: 162.0/255.0, blue: 136.0/255.0, alpha: 1.00),
+                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Fonts.futuraTitle, descriptionFont: Fonts.futuraDescription),
+        
         OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "search"),
                            title: "Searching",
                            description: "To search for any track, just type the track's name.",
-                           pageIcon: #imageLiteral(resourceName: "5"),
+                           pageIcon: #imageLiteral(resourceName: "6"),
                            color: UIColor(red: 100.0/255.0, green: 149.0/255.0, blue: 237.0/255.0, alpha: 1.00),
+                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Fonts.futuraTitle, descriptionFont: Fonts.futuraDescription),
+        
+        OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "liked_control"),
+                           title: "Switching between Liked Tracks/Albums",
+                           description: "To switch between liked tracks and liked albums, tap the control at the top as shown in the image.",
+                           pageIcon: #imageLiteral(resourceName: "7"),
+                           color: UIColor(red: 176.0/255.0, green: 142.0/255.0, blue: 162.0/255.0, alpha: 1.00),
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Fonts.futuraTitle, descriptionFont: Fonts.futuraDescription),
         
         OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "intro_end"),
                            title: "Intro's End",
                            description: "I hope this short intro will help you to get started using the app.",
-                           pageIcon: #imageLiteral(resourceName: "6"),
+                           pageIcon: #imageLiteral(resourceName: "8"),
                            color: UIColor(red: 239.0/255.0, green: 164.0/255.0, blue: 139.0/255.0, alpha: 1.00),
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Fonts.futuraTitle, descriptionFont: Fonts.futuraDescription)
         
@@ -106,7 +120,7 @@ extension IntroViewController {
 extension IntroViewController: PaperOnboardingDelegate {
 
     func onboardingWillTransitonToIndex(_ index: Int) {
-        doneButton.isHidden = index == 5 ? false : true
+        doneButton.isHidden = index == 7 ? false : true
     }
 
     func onboardingConfigurationItem(_ item: OnboardingContentViewItem, index: Int) {
@@ -126,6 +140,6 @@ extension IntroViewController: PaperOnboardingDataSource {
     }
 
     func onboardingItemsCount() -> Int {
-        return 6
+        return 8
     }
 }

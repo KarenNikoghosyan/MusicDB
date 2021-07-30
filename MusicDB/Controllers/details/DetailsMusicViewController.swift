@@ -116,7 +116,7 @@ class DetailsMusicViewController: BaseCollectionViewController {
         artistCollectionView.delegate = self
         artistCollectionView.dataSource = self
         
-        let nib = UINib(nibName: "DetailsSearchMusicCollectionViewCell", bundle: .main)
+        let nib = UINib(nibName: "DetailsMusicCollectionViewCell", bundle: .main)
         artistCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
      
         guard let isAlbumDetails = isAlbumDetails else {return}
