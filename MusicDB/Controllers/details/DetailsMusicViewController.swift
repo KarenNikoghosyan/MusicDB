@@ -25,7 +25,6 @@ class DetailsMusicViewController: BaseViewController {
 
     let noTracksLabel = UILabel()
     var isLiked: Bool = false
-    let db = Firestore.firestore()
     
     @IBOutlet weak var artistCollectionView: UICollectionView!
     
@@ -157,7 +156,7 @@ class DetailsMusicViewController: BaseViewController {
     
     func checkLikedStatus() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
-        db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
+        DetailsMusicViewController.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
             
             guard let arrIDs: [Int] = snapshot?.get("trackIDs") as? [Int] else {return}

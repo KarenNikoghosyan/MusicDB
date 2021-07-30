@@ -8,6 +8,8 @@
 import UIKit
 import NVActivityIndicatorView
 import ViewAnimator
+import SafariServices
+import Loaf
 
 class BaseTableViewController: UIViewController {
     
@@ -31,6 +33,20 @@ class BaseTableViewController: UIViewController {
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.accessoryView = UIImageView(image: UIImage(systemName: "chevron.right"))
         cell.tintColor = .white
+    }
+    
+    func openWebsite(albums: [TopAlbums], sender: UIButton) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
+        let selectedIndexPath = IndexPath.init(row: sender.tag, section: 0)
+        let album = albums[selectedIndexPath.row]
+        
+        guard let url = URL(string: "\(album.link)") else {return}
+        let sfVC = SFSafariViewController(url: url)
+        Loaf.dismiss(sender: self, animated: true)
+        self.present(sfVC, animated: true)
     }
 }
 

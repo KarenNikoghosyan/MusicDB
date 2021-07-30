@@ -65,17 +65,7 @@ class AlbumsViewController: BaseTableViewController {
     }
     
     @IBAction func openWebsiteTapped(_ sender: UIButton) {
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            return
-        }
-        let selectedIndexPath = IndexPath.init(row: sender.tag, section: 0)
-        let album = self.albums[selectedIndexPath.row]
-        
-        guard let url = URL(string: "\(album.link)") else {return}
-        let sfVC = SFSafariViewController(url: url)
-        Loaf.dismiss(sender: self, animated: true)
-        self.present(sfVC, animated: true)
+        openWebsite(albums: albums, sender: sender)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

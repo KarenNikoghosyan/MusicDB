@@ -9,7 +9,8 @@ import UIKit
 import SDWebImage
 import ViewAnimator
 import SafariServices
-import AVFoundation
+import FirebaseAuth
+import WCLShineButton
 
 class AlbumDetailsViewController: BaseTableViewController {
     var album: TopAlbums?
@@ -20,12 +21,16 @@ class AlbumDetailsViewController: BaseTableViewController {
     var prevButton: UIButton = UIButton()
     var arrIndexPaths: [IndexPath] = []
     var isPlaying: Bool = false
+    var isLiked: Bool = false
     
     @IBOutlet weak var numberOfTracks: UILabel!
     @IBOutlet weak var albumImageView: UIImageView!
     @IBOutlet weak var tracksTableView: UITableView!
     @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
+    }
+    @IBOutlet weak var likedButton: WCLShineButton!
+    @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
     }
     
     override func viewDidLoad() {
@@ -36,10 +41,14 @@ class AlbumDetailsViewController: BaseTableViewController {
         } else {
             fetchTracks()
             loadActivityIndicator()
+            checkLikedStatus()
         }
         
         tracksTableView.delegate = self
         tracksTableView.dataSource = self
+        
+        let notifactionCenter = NotificationCenter.default
+        notifactionCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         
         guard let album = album else {return}
         self.title = album.title
@@ -182,6 +191,15 @@ class AlbumDetailsViewController: BaseTableViewController {
         targetController.isAlbumDetails = data["isAlbumDetails"] as? Bool
     }
     
+    @objc func appMovedToBackground() {
+        MediaPlayer.shared.stopAudio()
+        prevButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        arrIndexPaths.removeAll()
+        if let prevIndexPath = prevIndexPath {
+            tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
+        }
+    }
+    
     func setUpImageView() {
         albumImageView.tintColor = .white
         albumImageView.layer.cornerRadius = 15
@@ -211,6 +229,22 @@ class AlbumDetailsViewController: BaseTableViewController {
             } else if let error = error {
                 print(error)
                 self.activityIndicatorView.stopAnimating()
+            }
+        }
+    }
+    
+    func checkLikedStatus() {
+        guard let userID = Auth.auth().currentUser?.uid else {return}
+        AlbumDetailsViewController.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
+            guard let self = self else {return}
+            
+            guard let arrIDs: [Int] = snapshot?.get("albumIDs") as? [Int] else {return}
+            if arrIDs.contains(self.album?.id ?? 0) {
+                self.likedButton.isSelected = true
+                self.isLiked = true
+            } else {
+                self.likedButton.isSelected = false
+                self.isLiked = false
             }
         }
     }

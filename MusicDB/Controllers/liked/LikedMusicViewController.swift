@@ -35,6 +35,9 @@ class LikedMusicViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        likedTableView.delegate = self
+        likedTableView.dataSource = self
+        
         setUpSegmentedControl()
         
         NotificationCenter.default.addObserver(forName: .IndexRemove, object: nil, queue: .main) {[weak self] notification in
@@ -65,9 +68,6 @@ class LikedMusicViewController: BaseTableViewController {
                 }
             }
         }
-        
-        likedTableView.delegate = self
-        likedTableView.dataSource = self
         
         if Connectivity.isConnectedToInternet {
             getUserLikedTracks()
@@ -139,8 +139,20 @@ class LikedMusicViewController: BaseTableViewController {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             likedTableView.reloadData()
+            reloadTableViewWithAnimation()
+            if tracks.count > 0 {
+                noLikedLabel.isHidden = true
+            } else {
+                noLikedLabel.isHidden = false
+            }
         case 1:
             likedTableView.reloadData()
+            reloadTableViewWithAnimation()
+            if albums.count > 0 {
+                noLikedLabel.isHidden = true
+            } else {
+                noLikedLabel.isHidden = false
+            }
         default:
             break
         }
@@ -159,8 +171,10 @@ class LikedMusicViewController: BaseTableViewController {
     
     func fetchTracks() {
         if tracksIDs?.count == 0 {
+            if segmentedControl.selectedSegmentIndex == 0 {
+                noLikedLabel.isHidden = false
+            }
             activityIndicatorView.stopAnimating()
-            noLikedLabel.isHidden = false
             return
         }
         
@@ -201,6 +215,14 @@ class LikedMusicViewController: BaseTableViewController {
     }
     
     func fetchAlbums() {
+        if albumIDs?.count == 0 {
+            if segmentedControl.selectedSegmentIndex == 1 {
+                noLikedLabel.isHidden = false
+            }
+            activityIndicatorView.stopAnimating()
+            return
+        }
+        
         dsAlbum.fetchAlbums(from: .album, id: albumIDs?[albumIndex]) {[weak self] album, error in
             if let album = album {
                 guard let self = self else {return}
@@ -232,7 +254,7 @@ class LikedMusicViewController: BaseTableViewController {
     }
     
     func loadNoLikedLabel() {
-        noLikedLabel.text = "No liked tracks, start adding some."
+        noLikedLabel.text = "No liked tracks/albums, start adding some."
         noLikedLabel.font = UIFont.init(name: "Futura", size: 18)
         noLikedLabel.textColor = .white
         
@@ -271,6 +293,9 @@ class LikedMusicViewController: BaseTableViewController {
             accessoryArrow(cell: albumsCell)
             let album = albums[indexPath.row]
             albumsCell.populate(album: album)
+            
+            albumsCell.openWebsiteButton.tag = indexPath.row
+            albumsCell.openWebsiteButton.addTarget(self, action: #selector(openWebsiteTapped(_:)), for: .touchUpInside)
             return albumsCell
         default:
             break
@@ -278,12 +303,15 @@ class LikedMusicViewController: BaseTableViewController {
         return tracksCell
     }
     
+    @IBAction func openWebsiteTapped(_ sender: UIButton) {
+        openWebsite(albums: albums, sender: sender)
+    }
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
-        
         let status = navigationItem.leftBarButtonItem?.title
         
         if status == "Edit" {
@@ -302,24 +330,45 @@ class LikedMusicViewController: BaseTableViewController {
                 showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
                 return
             }
-            
             guard let userID = Auth.auth().currentUser?.uid else {return}
 
-            let track = tracks[indexPath.row]
-            loafMessageRemoved(track: track)
-            
-            db.collection("users").document(userID).updateData([
-                "trackIDs" : FieldValue.arrayRemove([track.id as Any])
-            ]) {[weak self] error in
-                if let error = error {
-                    print("\(error.localizedDescription)")
-                }
-                self?.tracks.remove(at: indexPath.item)
-                tableView.deleteRows(at: [indexPath], with: .fade)
+            switch segmentedControl.selectedSegmentIndex {
+            case 0:
+                let track = tracks[indexPath.row]
+                loafMessageRemoved(track: track)
                 
-                if self?.tracks.count == 0 {
-                    self?.noLikedLabel.isHidden = false
+                db.collection("users").document(userID).updateData([
+                    "trackIDs" : FieldValue.arrayRemove([track.id as Any])
+                ]) {[weak self] error in
+                    if let error = error {
+                        print("\(error.localizedDescription)")
+                    }
+                    self?.tracks.remove(at: indexPath.item)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    if self?.tracks.count == 0 {
+                        self?.noLikedLabel.isHidden = false
+                    }
                 }
+            case 1:
+                let album = albums[indexPath.row]
+                loafMessageRemovedAlbum(album: album)
+                
+                db.collection("users").document(userID).updateData([
+                    "albumIDs" : FieldValue.arrayRemove([album.id as Any])
+                ]) {[weak self] error in
+                    if let error = error {
+                        print("\(error.localizedDescription)")
+                    }
+                    self?.albums.remove(at: indexPath.item)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    if self?.albums.count == 0 {
+                        self?.noLikedLabel.isHidden = false
+                    }
+                }
+            default:
+                break
             }
         }
     }
