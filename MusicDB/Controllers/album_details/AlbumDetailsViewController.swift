@@ -31,6 +31,29 @@ class AlbumDetailsViewController: BaseTableViewController {
     }
     @IBOutlet weak var likedButton: WCLShineButton!
     @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            if !isLiked {
+                likedButton.isSelected = false
+            } else {
+                likedButton.isSelected = true
+            }
+            return
+        }
+        guard let userID = Auth.auth().currentUser?.uid,
+              let album = album else {return}
+        
+        if !isLiked {
+            addAlbum(album: album, userID: userID)
+            loafMessageAddedAlbum(album: album)
+
+            isLiked = true
+        } else {
+            removeAlbum(album: album, userID: userID)
+            loafMessageRemovedAlbum(album: album)
+
+            isLiked = false
+        }
     }
     
     override func viewDidLoad() {

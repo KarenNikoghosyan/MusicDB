@@ -15,7 +15,7 @@ extension Notification.Name {
     static let AddTrack = Notification.Name("addTrack")
     static let RemoveTrack = Notification.Name("removeTrack")
     
-    //Removing/adding albums
+    //Removing/adding albums IDs
     static let AddAlbumID = Notification.Name("addAlbumID")
     static let RemoveAlbumID = Notification.Name("removeAlbumID")
     
