@@ -222,14 +222,14 @@
                                                     <action selector="signInTapped:" destination="JEF-aL-Pda" eventType="touchUpInside" id="roM-nr-kdA"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVW-Nd-iNk">
-                                                <rect key="frame" x="46" y="46" width="40" height="40"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVW-Nd-iNk">
+                                                <rect key="frame" x="46" y="46" width="45" height="35"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="hnM-g9-FsD"/>
-                                                    <constraint firstAttribute="width" constant="40" id="u4E-FR-6fg"/>
+                                                    <constraint firstAttribute="height" constant="35" id="hnM-g9-FsD"/>
+                                                    <constraint firstAttribute="width" constant="45" id="u4E-FR-6fg"/>
                                                 </constraints>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" image="left_arrow"/>
+                                                <color key="tintColor" systemColor="systemGreenColor"/>
+                                                <state key="normal" image="arrow.backward" catalog="system"/>
                                                 <connections>
                                                     <action selector="backButtonTapped:" destination="JEF-aL-Pda" eventType="touchUpInside" id="pSq-QI-zgc"/>
                                                 </connections>
@@ -387,8 +387,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="arrow.right.circle" catalog="system" width="128" height="121"/>
-        <image name="left_arrow" width="128" height="128"/>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

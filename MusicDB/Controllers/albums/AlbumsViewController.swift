@@ -87,6 +87,7 @@ class AlbumsViewController: BaseTableViewController {
               let data = sender as? Dictionary<String, Any> else {return}
         
         targetController.album = data["album"] as? TopAlbums
+        targetController.indexPath = data["indexPath"] as? IndexPath
     }
     
     func addObservers() {
@@ -107,6 +108,14 @@ class AlbumsViewController: BaseTableViewController {
                 FirestoreManager.shared.removeAlbum(album: album, userID: userID)
                 self?.loafMessageRemovedAlbum(album: album)
             }
+        }
+        NotificationCenter.default.addObserver(forName: .SendIndexPathAlbum, object: nil, queue: .main) {[weak self] notification in
+            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+                self?.albumsTableView.reloadRows(at: [indexPath], with: .none)
+            }
+        }
+        NotificationCenter.default.addObserver(forName: .ReloadFromHome, object: nil, queue: .main) {[weak self] _ in
+            self?.albumsTableView.reloadData()
         }
     }
     

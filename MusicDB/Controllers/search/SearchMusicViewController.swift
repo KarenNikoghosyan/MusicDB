@@ -8,7 +8,7 @@
 import UIKit
 import ViewAnimator
 
-class SearchMusicViewController: BaseViewController {
+class SearchMusicViewController: BaseCollectionViewController {
    
     let searchLabel = UILabel()
     let noTracksLabel = UILabel()

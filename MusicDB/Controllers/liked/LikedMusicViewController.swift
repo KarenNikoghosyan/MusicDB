@@ -73,7 +73,6 @@ class LikedMusicViewController: BaseTableViewController {
         NotificationCenter.default.addObserver(forName: .AddTrack, object: nil, queue: .main) {[weak self] notification in
             if let track = notification.userInfo?["track"] as? Track {
                 guard let self = self else {return}
-                print("Add")
                 self.tracks.append(track)
                 self.likedTableView.reloadData()
                 
@@ -87,12 +86,11 @@ class LikedMusicViewController: BaseTableViewController {
         NotificationCenter.default.addObserver(forName: .RemoveTrack, object: nil, queue: .main) {[weak self] notification in
             if let track = notification.userInfo?["track"] as? Track {
                 guard let self = self else {return}
-                print("Test1")
                 for (index, _) in self.tracks.enumerated() {
                     if self.tracks[index].id == track.id{
                         self.tracks.remove(at: index)
                         self.likedTableView.reloadData()
-                        print("Test2")
+
                         if self.tracks.count == 0 {
                             if self.segmentedControl.selectedSegmentIndex == 0 {
                                 self.noLikedLabel.isHidden = false
@@ -120,12 +118,12 @@ class LikedMusicViewController: BaseTableViewController {
         NotificationCenter.default.addObserver(forName: .RemoveAlbumID, object: nil, queue: .main) {[weak self] notification in
             if let album = notification.userInfo?["album"] as? TopAlbums {
                 guard let self = self else {return}
-                print("Test4")
+
                 for (index, _) in self.albums.enumerated() {
                     if self.albums[index].id == album.id{
                         self.albums.remove(at: index)
                         self.likedTableView.reloadData()
-                        print("Test4")
+                        
                         if self.albums.count == 0 {
                             if self.segmentedControl.selectedSegmentIndex == 1 {
                                 self.noLikedLabel.isHidden = false
@@ -170,6 +168,7 @@ class LikedMusicViewController: BaseTableViewController {
             guard let self = self else {return}
             
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
+                print(self.albums.count, indexPath.row)
                 let album = self.albums[indexPath.row]
                 guard let userID = Auth.auth().currentUser?.uid else {return}
 

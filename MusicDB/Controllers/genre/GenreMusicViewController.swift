@@ -17,6 +17,10 @@ class GenreMusicViewController: BaseTableViewController {
     var path: String = ""
 
     @IBOutlet weak var genreTableView: UITableView!
+    @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {
+        Loaf.dismiss(sender: self, animated: true)
+        self.dismiss(animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,7 +129,7 @@ class GenreMusicViewController: BaseTableViewController {
         }
         NotificationCenter.default.addObserver(forName: .SendIndexPath, object: nil, queue: .main) {[weak self] notification in
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-                self?.genreTableView.reloadRows(at: [indexPath], with: .automatic)
+                self?.genreTableView.reloadRows(at: [indexPath], with: .none)
             }
         }
     }

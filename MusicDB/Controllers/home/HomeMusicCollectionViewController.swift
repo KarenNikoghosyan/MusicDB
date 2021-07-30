@@ -11,7 +11,6 @@ import SafariServices
 import PKHUD
 import Loaf
 import FirebaseAuth
-import CoreData
 
 class HomeMusicCollectionViewController: UICollectionViewController {
         
@@ -456,9 +455,15 @@ class HomeMusicCollectionViewController: UICollectionViewController {
             toDetailsSegue(tracks: classical, indexPath: indexPath)
         case 7:
             Loaf.dismiss(sender: self, animated: true)
-            let topAlbums = topAlbums[indexPath.item]
             
-            performSegue(withIdentifier: "toAlbumDetails", sender: topAlbums)
+            var indexPath = indexPath
+            indexPath[0] = 0
+            let dict: [String: Any] = [
+                "album" : topAlbums[indexPath.row],
+                "indexPath" : indexPath,
+                "isHome" : true
+            ]
+            performSegue(withIdentifier: "toAlbumDetails", sender: dict)
         default:
             toDetailsSegue(tracks: rock, indexPath: indexPath)
         }
@@ -494,9 +499,11 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         } else if segue.identifier == "toAlbumDetails" {
             guard let dest = segue.destination as? UINavigationController,
                   let targetController = dest.topViewController as? AlbumDetailsViewController,
-                  let topAlbum = sender as? TopAlbums else {return}
+                  let data = sender as? Dictionary<String, Any> else {return}
             
-            targetController.album = topAlbum
+            targetController.album = data["album"] as? TopAlbums
+            targetController.indexPath = data["indexPath"] as? IndexPath
+            targetController.isHome = data["isHome"] as? Bool
         }
     }
     

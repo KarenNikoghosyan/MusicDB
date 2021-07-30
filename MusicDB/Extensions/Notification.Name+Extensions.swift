@@ -25,4 +25,6 @@ extension Notification.Name {
     
     //Sends an index
     static let SendIndexPath = Notification.Name("sendIndexPath")
+    static let SendIndexPathAlbum = Notification.Name("sendIndexPathAlbum")
+    static let ReloadFromHome = Notification.Name("ReloadFromHome")
 }

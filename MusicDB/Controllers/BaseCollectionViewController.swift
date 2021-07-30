@@ -8,7 +8,7 @@
 import UIKit
 import NVActivityIndicatorView
 
-class BaseViewController: UIViewController {
+class BaseCollectionViewController: UIViewController {
     var tracks: [Track] = []
     var ds = TrackAPIDataSource()
     
@@ -27,7 +27,7 @@ class BaseViewController: UIViewController {
     }
 }
 
-extension BaseViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension BaseCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -67,7 +67,7 @@ extension BaseViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
 }
 
-extension BaseViewController: UICollectionViewDelegateFlowLayout {
+extension BaseCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         

@@ -11,6 +11,7 @@ import ViewAnimator
 import SafariServices
 import FirebaseAuth
 import WCLShineButton
+import Loaf
 
 class AlbumDetailsViewController: BaseTableViewController {
     var album: TopAlbums?
@@ -23,10 +24,14 @@ class AlbumDetailsViewController: BaseTableViewController {
     var isPlaying: Bool = false
     var isLiked: Bool = false
     
+    var indexPath: IndexPath?
+    var isHome: Bool? = false
+    
     @IBOutlet weak var numberOfTracks: UILabel!
     @IBOutlet weak var albumImageView: UIImageView!
     @IBOutlet weak var tracksTableView: UITableView!
     @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {
+        Loaf.dismiss(sender: self, animated: true)
         self.dismiss(animated: true, completion: nil)
     }
     @IBOutlet weak var likedButton: WCLShineButton!
@@ -54,6 +59,14 @@ class AlbumDetailsViewController: BaseTableViewController {
 
             isLiked = false
         }
+        
+        guard let isHome = isHome else {return}
+        if isHome {
+            NotificationCenter.default.post(name: .ReloadFromHome, object: nil, userInfo: nil)
+        } else {
+            NotificationCenter.default.post(name: .SendIndexPathAlbum, object: nil, userInfo: ["indexPath" : indexPath as Any])
+        }
+        
     }
     
     override func viewDidLoad() {

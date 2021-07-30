@@ -14,7 +14,7 @@ import WCLShineButton
 import Loaf
 import FirebaseAuth
 
-class DetailsMusicViewController: BaseViewController {
+class DetailsMusicViewController: BaseCollectionViewController {
     
     var track: Track?
     var album: TopAlbums?
@@ -25,6 +25,10 @@ class DetailsMusicViewController: BaseViewController {
     let noTracksLabel = UILabel()
     var isLiked: Bool = false
     
+    @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {
+        Loaf.dismiss(sender: self, animated: true)
+        self.dismiss(animated: true, completion: nil)
+    }
     @IBOutlet weak var artistCollectionView: UICollectionView!
     
     @IBOutlet weak var detailsImageView: UIImageView!
