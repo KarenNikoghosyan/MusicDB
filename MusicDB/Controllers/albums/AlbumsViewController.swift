@@ -13,9 +13,9 @@ import WCLShineButton
 import FirebaseAuth
 
 class AlbumsViewController: BaseTableViewController {
-    var albums: [TopAlbums] = []
-    let ds = TopAlbumsAPIDataSource()
 
+    let topAlbumsDS = TopAlbumsAPIDataSource()
+    
     @IBOutlet weak var albumsTableView: UITableView!
     @IBAction func logOutTapped(_ sender: UIBarButtonItem) {
         logOutTappedAndSegue()
@@ -60,6 +60,7 @@ class AlbumsViewController: BaseTableViewController {
             
             let album = albums[indexPath.row]
             cell.populate(album: album)
+            cell.cellConstraints()
         }
         return cell
     }
@@ -120,7 +121,7 @@ class AlbumsViewController: BaseTableViewController {
     }
     
     func fetchAlbums() {
-        ds.fetchTopAlbums(from: .chart, with: "/0/albums", with: ["limit" : 150]) {[weak self] albums, error in
+        topAlbumsDS.fetchTopAlbums(from: .chart, with: "/0/albums", with: ["limit" : 150]) {[weak self] albums, error in
             guard let self = self else {return}
             
             if let albums = albums {

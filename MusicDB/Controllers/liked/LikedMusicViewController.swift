@@ -14,14 +14,12 @@ class LikedMusicViewController: BaseTableViewController {
     
     let noLikedLabel = UILabel()
     
-    let dsTrack = SingleTrackAPIDataSource()
-    var tracks: [Track] = []
+    let singleTrackDS = SingleTrackAPIDataSource()
     var tracksIDs: [Int]?
     var numOfCallsTrack: Int = 0
     var trackIndex: Int = 0
     
-    let dsAlbum = SingleAlbumAPIDataSource()
-    var albums: [TopAlbums] = []
+    let singleAlbumDS = SingleAlbumAPIDataSource()
     var albumIDs: [Int]?
     var numOfCallsAlbum: Int = 0
     var albumIndex: Int = 0
@@ -247,7 +245,7 @@ class LikedMusicViewController: BaseTableViewController {
             return
         }
         
-        dsTrack.fetchTracks(from: .track, id: tracksIDs?[trackIndex]) {[weak self] track, error in
+        singleTrackDS.fetchTracks(from: .track, id: tracksIDs?[trackIndex]) {[weak self] track, error in
             if let track = track {
                 guard let self = self else {return}
                 
@@ -291,7 +289,7 @@ class LikedMusicViewController: BaseTableViewController {
             return
         }
         
-        dsAlbum.fetchAlbums(from: .album, id: albumIDs?[albumIndex]) {[weak self] album, error in
+        singleAlbumDS.fetchAlbums(from: .album, id: albumIDs?[albumIndex]) {[weak self] album, error in
             if let album = album {
                 guard let self = self else {return}
                 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EKh-K7-jke">
-    <device id="retina6_7" orientation="portrait" appearance="light"/>
+    <device id="ipad12_9" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
@@ -14,57 +14,89 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="2Wn-t2-KDg" customClass="LoginViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K0Y-Iq-orB">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="838"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1316"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mWx-h5-Icx">
-                                <rect key="frame" x="64" y="752" width="192" height="36"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
-                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CXS-6e-ToL">
-                                <rect key="frame" x="260" y="752" width="73" height="36"/>
-                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="18"/>
-                                <state key="normal" title="Sign up">
-                                    <color key="titleColor" systemColor="systemGreenColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="signUpTapped:" destination="2Wn-t2-KDg" eventType="touchUpInside" id="8Gx-ai-zoL"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Nl2-ap-xqP">
+                                <rect key="frame" x="275" y="1006" width="474.5" height="54"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mWx-h5-Icx">
+                                        <rect key="frame" x="0.0" y="0.0" width="341.5" height="54"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="32"/>
+                                        </variation>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CXS-6e-ToL">
+                                        <rect key="frame" x="345.5" y="0.0" width="129" height="54"/>
+                                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="18"/>
+                                        <state key="normal" title="Sign up">
+                                            <color key="titleColor" systemColor="systemGreenColor"/>
+                                        </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="32"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="signUpTapped:" destination="2Wn-t2-KDg" eventType="touchUpInside" id="8Gx-ai-zoL"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WuR-W1-pKg">
-                                <rect key="frame" x="46" y="140" width="336" height="45.666666666666657"/>
+                                <rect key="frame" x="46" y="260" width="932" height="84.5"/>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="35"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="25"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="65"/>
+                                </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please sign in to continue." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXe-RB-fcp">
-                                <rect key="frame" x="46" y="195.66666666666669" width="336" height="26"/>
+                                <rect key="frame" x="46" y="354.5" width="932" height="45.5"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="35"/>
+                                </variation>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qrl-2J-jAI" customClass="SkyFloatingLabelTextFieldWithIcon" customModule="SkyFloatingLabelTextField">
-                                <rect key="frame" x="46" y="323.66666666666669" width="336" height="50"/>
+                                <rect key="frame" x="46" y="502" width="932" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="M4b-R4-9q3"/>
+                                    <constraint firstAttribute="height" constant="50" id="M4b-R4-9q3">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="40"/>
+                                    </constraint>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crb-Hf-kRS" customClass="SkyFloatingLabelTextFieldWithIcon" customModule="SkyFloatingLabelTextField">
-                                <rect key="frame" x="46" y="257.66666666666669" width="336" height="50"/>
+                                <rect key="frame" x="46" y="436" width="932" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="eO5-CC-1Qh"/>
+                                    <constraint firstAttribute="height" constant="50" id="eO5-CC-1Qh">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="40"/>
+                                    </constraint>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aa1-9B-UTV" customClass="LGButton" customModule="LGButton">
-                                <rect key="frame" x="242" y="409.66666666666669" width="140" height="50"/>
+                                <rect key="frame" x="738" y="588" width="240" height="75"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="140" id="4oe-bl-nfn"/>
-                                    <constraint firstAttribute="height" constant="50" id="G8W-Qi-hXU"/>
+                                    <constraint firstAttribute="width" constant="140" id="4oe-bl-nfn">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="240"/>
+                                    </constraint>
+                                    <constraint firstAttribute="height" constant="50" id="G8W-Qi-hXU">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="40"/>
+                                        <variation key="heightClass=regular-widthClass=regular" constant="75"/>
+                                    </constraint>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
@@ -118,39 +150,48 @@
                         <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="IXe-RB-fcp" firstAttribute="leading" secondItem="7LL-8Z-YNg" secondAttribute="leading" constant="46" id="6Sn-ka-fd2"/>
+                            <constraint firstItem="Nl2-ap-xqP" firstAttribute="centerX" secondItem="K0Y-Iq-orB" secondAttribute="centerX" id="EGK-GD-MHG"/>
                             <constraint firstItem="WuR-W1-pKg" firstAttribute="top" secondItem="7LL-8Z-YNg" secondAttribute="top" constant="140" id="EIg-bP-olS">
-                                <variation key="heightClass=compact-widthClass=compact" constant="16"/>
+                                <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
                                 <variation key="heightClass=compact-widthClass=regular" constant="28"/>
+                                <variation key="heightClass=regular-widthClass=regular" constant="260"/>
                             </constraint>
                             <constraint firstItem="WuR-W1-pKg" firstAttribute="leading" secondItem="7LL-8Z-YNg" secondAttribute="leading" constant="46" id="Evn-ac-AYC"/>
-                            <constraint firstItem="CXS-6e-ToL" firstAttribute="bottom" secondItem="mWx-h5-Icx" secondAttribute="bottom" id="Gud-qh-j2Z"/>
-                            <constraint firstItem="7LL-8Z-YNg" firstAttribute="bottom" secondItem="mWx-h5-Icx" secondAttribute="bottom" constant="16" id="IzB-TU-N3V"/>
-                            <constraint firstItem="IXe-RB-fcp" firstAttribute="top" secondItem="WuR-W1-pKg" secondAttribute="bottom" constant="10" id="Nsw-zT-MDP"/>
-                            <constraint firstItem="CXS-6e-ToL" firstAttribute="leading" secondItem="mWx-h5-Icx" secondAttribute="trailing" constant="4" id="OrW-Lc-XiC"/>
-                            <constraint firstItem="mWx-h5-Icx" firstAttribute="leading" secondItem="7LL-8Z-YNg" secondAttribute="leading" constant="64" id="TeH-al-c9N">
-                                <variation key="heightClass=compact-widthClass=compact" constant="250"/>
-                                <variation key="heightClass=compact-widthClass=regular" constant="250"/>
+                            <constraint firstItem="7LL-8Z-YNg" firstAttribute="bottom" secondItem="Nl2-ap-xqP" secondAttribute="bottom" constant="16" id="Nfr-7V-8mh">
+                                <variation key="heightClass=regular-widthClass=regular" constant="256"/>
+                            </constraint>
+                            <constraint firstItem="IXe-RB-fcp" firstAttribute="top" secondItem="WuR-W1-pKg" secondAttribute="bottom" constant="10" id="Nsw-zT-MDP">
+                                <variation key="heightClass=compact-widthClass=compact" constant="6"/>
                             </constraint>
                             <constraint firstItem="7LL-8Z-YNg" firstAttribute="trailing" secondItem="crb-Hf-kRS" secondAttribute="trailing" constant="46" id="Ufd-qm-bQ7"/>
-                            <constraint firstItem="aa1-9B-UTV" firstAttribute="top" secondItem="Qrl-2J-jAI" secondAttribute="bottom" constant="36" id="aMp-7F-tYt"/>
+                            <constraint firstItem="aa1-9B-UTV" firstAttribute="top" secondItem="Qrl-2J-jAI" secondAttribute="bottom" constant="36" id="aMp-7F-tYt">
+                                <variation key="heightClass=compact-widthClass=compact" constant="8"/>
+                            </constraint>
                             <constraint firstItem="7LL-8Z-YNg" firstAttribute="trailing" secondItem="aa1-9B-UTV" secondAttribute="trailing" constant="46" id="arV-O9-pcJ"/>
                             <constraint firstItem="Qrl-2J-jAI" firstAttribute="leading" secondItem="7LL-8Z-YNg" secondAttribute="leading" constant="46" id="fX9-b4-ibn"/>
                             <constraint firstItem="7LL-8Z-YNg" firstAttribute="trailing" secondItem="WuR-W1-pKg" secondAttribute="trailing" constant="46" id="g7p-is-PCU"/>
                             <constraint firstItem="7LL-8Z-YNg" firstAttribute="trailing" secondItem="IXe-RB-fcp" secondAttribute="trailing" constant="46" id="h3C-qO-8j4"/>
-                            <constraint firstItem="CXS-6e-ToL" firstAttribute="top" secondItem="mWx-h5-Icx" secondAttribute="top" id="h7r-OY-0qT"/>
                             <constraint firstItem="crb-Hf-kRS" firstAttribute="leading" secondItem="7LL-8Z-YNg" secondAttribute="leading" constant="46" id="qxv-Qy-mNn"/>
                             <constraint firstItem="crb-Hf-kRS" firstAttribute="top" secondItem="IXe-RB-fcp" secondAttribute="bottom" constant="36" id="um5-of-HHG">
-                                <variation key="heightClass=compact-widthClass=compact" constant="16"/>
+                                <variation key="heightClass=compact-widthClass=compact" constant="8"/>
                                 <variation key="heightClass=compact-widthClass=regular" constant="18"/>
                             </constraint>
-                            <constraint firstItem="Qrl-2J-jAI" firstAttribute="top" secondItem="crb-Hf-kRS" secondAttribute="bottom" constant="16" id="v11-lS-tKO"/>
+                            <constraint firstItem="Qrl-2J-jAI" firstAttribute="top" secondItem="crb-Hf-kRS" secondAttribute="bottom" constant="16" id="v11-lS-tKO">
+                                <variation key="heightClass=compact-widthClass=compact" constant="8"/>
+                            </constraint>
                             <constraint firstItem="7LL-8Z-YNg" firstAttribute="trailing" secondItem="Qrl-2J-jAI" secondAttribute="trailing" constant="46" id="yQK-gm-Ps8"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Uqx-yO-NPU"/>
                     <connections>
+                        <outlet property="bottomLabelConstraint" destination="Nfr-7V-8mh" id="EHk-O8-77X"/>
                         <outlet property="loginEmailTextField" destination="crb-Hf-kRS" id="QE1-vk-8fM"/>
+                        <outlet property="loginLabel" destination="WuR-W1-pKg" id="9gM-SC-zxL"/>
                         <outlet property="loginPasswordTextField" destination="Qrl-2J-jAI" id="bFS-wq-Jb8"/>
+                        <outlet property="signInLabel" destination="IXe-RB-fcp" id="upw-1E-g1p"/>
+                        <outlet property="signUpButton" destination="CXS-6e-ToL" id="Heo-Qh-81M"/>
+                        <outlet property="signUpLabel" destination="mWx-h5-Icx" id="bck-fx-MyX"/>
+                        <outlet property="topAnchorConstraint" destination="EIg-bP-olS" id="LOg-1J-Tsr"/>
                         <segue destination="JEF-aL-Pda" kind="presentation" identifier="toRegister" id="UjU-SX-h5C"/>
                     </connections>
                 </viewController>
@@ -173,55 +214,69 @@
                                         <rect key="frame" x="0.0" y="0.0" width="428" height="1000"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tig-Pz-DTF">
-                                                <rect key="frame" x="46" y="180" width="336" height="46"/>
+                                                <rect key="frame" x="46" y="260" width="336" height="84.5"/>
                                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="35"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="65"/>
+                                                </variation>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kba-pl-yGg" customClass="SkyFloatingLabelTextFieldWithIcon" customModule="SkyFloatingLabelTextField">
-                                                <rect key="frame" x="46" y="262" width="336" height="50"/>
+                                                <rect key="frame" x="46" y="380.5" width="336" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="OjL-ww-w29"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rzg-1L-AKG" customClass="SkyFloatingLabelTextFieldWithIcon" customModule="SkyFloatingLabelTextField">
-                                                <rect key="frame" x="46" y="328" width="336" height="50"/>
+                                                <rect key="frame" x="46" y="446.5" width="336" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="x5t-IJ-EHW"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lpK-wx-LCL" customClass="SkyFloatingLabelTextFieldWithIcon" customModule="SkyFloatingLabelTextField">
-                                                <rect key="frame" x="46" y="394" width="336" height="50"/>
+                                                <rect key="frame" x="46" y="512.5" width="336" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="qAe-3s-5gz"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BP9-Hs-z0X" customClass="SkyFloatingLabelTextFieldWithIcon" customModule="SkyFloatingLabelTextField">
-                                                <rect key="frame" x="46" y="460" width="336" height="50"/>
+                                                <rect key="frame" x="46" y="578.5" width="336" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="wXy-Vc-Va5"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEk-pv-m6Y">
-                                                <rect key="frame" x="64" y="784" width="215" height="36"/>
-                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
-                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4c1-EN-6AL">
-                                                <rect key="frame" x="283" y="784" width="129" height="36"/>
-                                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="18"/>
-                                                <state key="normal" title="Sign in">
-                                                    <color key="titleColor" systemColor="systemGreenColor"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="signInTapped:" destination="JEF-aL-Pda" eventType="touchUpInside" id="roM-nr-kdA"/>
-                                                </connections>
-                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="YkC-9e-I6R">
+                                                <rect key="frame" x="-37" y="818" width="502" height="54"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEk-pv-m6Y">
+                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="54"/>
+                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <variation key="heightClass=regular-widthClass=regular">
+                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="32"/>
+                                                        </variation>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4c1-EN-6AL">
+                                                        <rect key="frame" x="386" y="0.0" width="116" height="54"/>
+                                                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="18"/>
+                                                        <state key="normal" title="Sign in">
+                                                            <color key="titleColor" systemColor="systemGreenColor"/>
+                                                        </state>
+                                                        <variation key="heightClass=regular-widthClass=regular">
+                                                            <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="32"/>
+                                                        </variation>
+                                                        <connections>
+                                                            <action selector="signInTapped:" destination="JEF-aL-Pda" eventType="touchUpInside" id="roM-nr-kdA"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVW-Nd-iNk">
                                                 <rect key="frame" x="46" y="46" width="45" height="35"/>
                                                 <constraints>
@@ -235,11 +290,15 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G4Y-Pu-YwX" customClass="LGButton" customModule="LGButton">
-                                                <rect key="frame" x="222" y="546" width="160" height="50"/>
+                                                <rect key="frame" x="142" y="664.5" width="240" height="75"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="2oY-0z-sZi"/>
-                                                    <constraint firstAttribute="width" constant="160" id="eox-5Q-7xd"/>
+                                                    <constraint firstAttribute="height" constant="50" id="2oY-0z-sZi">
+                                                        <variation key="heightClass=regular-widthClass=regular" constant="75"/>
+                                                    </constraint>
+                                                    <constraint firstAttribute="width" constant="160" id="eox-5Q-7xd">
+                                                        <variation key="heightClass=regular-widthClass=regular" constant="240"/>
+                                                    </constraint>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="bgColor">
@@ -292,12 +351,10 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstItem="Tig-Pz-DTF" firstAttribute="top" secondItem="hNw-kH-8w7" secondAttribute="top" constant="180" id="1QL-pj-jcY"/>
-                                            <constraint firstItem="4c1-EN-6AL" firstAttribute="bottom" secondItem="JEk-pv-m6Y" secondAttribute="bottom" id="6R7-R3-7yO"/>
-                                            <constraint firstItem="Kba-pl-yGg" firstAttribute="top" secondItem="Tig-Pz-DTF" secondAttribute="bottom" constant="36" id="7B2-Ti-nN9"/>
-                                            <constraint firstAttribute="bottom" secondItem="JEk-pv-m6Y" secondAttribute="bottom" constant="180" id="7Hq-vg-M1c">
-                                                <variation key="heightClass=compact-widthClass=regular" constant="300"/>
+                                            <constraint firstItem="Tig-Pz-DTF" firstAttribute="top" secondItem="hNw-kH-8w7" secondAttribute="top" constant="180" id="1QL-pj-jcY">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="260"/>
                                             </constraint>
+                                            <constraint firstItem="Kba-pl-yGg" firstAttribute="top" secondItem="Tig-Pz-DTF" secondAttribute="bottom" constant="36" id="7B2-Ti-nN9"/>
                                             <constraint firstAttribute="trailing" secondItem="BP9-Hs-z0X" secondAttribute="trailing" constant="46" id="BfN-R5-vNO">
                                                 <variation key="heightClass=compact-widthClass=regular" constant="170"/>
                                             </constraint>
@@ -312,24 +369,24 @@
                                             </constraint>
                                             <constraint firstItem="BP9-Hs-z0X" firstAttribute="leading" secondItem="hNw-kH-8w7" secondAttribute="leading" constant="46" id="H2J-vt-30n"/>
                                             <constraint firstAttribute="trailing" secondItem="Tig-Pz-DTF" secondAttribute="trailing" constant="46" id="McO-9r-8sH"/>
-                                            <constraint firstItem="JEk-pv-m6Y" firstAttribute="leading" secondItem="hNw-kH-8w7" secondAttribute="leading" constant="64" id="ORU-lv-E0l"/>
                                             <constraint firstItem="wVW-Nd-iNk" firstAttribute="top" secondItem="hNw-kH-8w7" secondAttribute="top" constant="46" id="Oey-PN-kUI"/>
                                             <constraint firstAttribute="trailing" secondItem="Kba-pl-yGg" secondAttribute="trailing" constant="46" id="Q2e-G1-bdL">
                                                 <variation key="heightClass=compact-widthClass=regular" constant="170"/>
                                             </constraint>
                                             <constraint firstItem="G4Y-Pu-YwX" firstAttribute="top" secondItem="BP9-Hs-z0X" secondAttribute="bottom" constant="36" id="RuS-PF-mYH"/>
-                                            <constraint firstItem="4c1-EN-6AL" firstAttribute="top" secondItem="JEk-pv-m6Y" secondAttribute="top" id="bca-2y-ZDc"/>
                                             <constraint firstAttribute="height" constant="1000" id="ct6-BB-S3s"/>
                                             <constraint firstItem="BP9-Hs-z0X" firstAttribute="top" secondItem="lpK-wx-LCL" secondAttribute="bottom" constant="16" id="eAX-ms-3yW"/>
+                                            <constraint firstAttribute="bottom" secondItem="YkC-9e-I6R" secondAttribute="bottom" constant="256" id="eN4-pb-Yen">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="128"/>
+                                            </constraint>
                                             <constraint firstItem="Rzg-1L-AKG" firstAttribute="leading" secondItem="hNw-kH-8w7" secondAttribute="leading" constant="46" id="eZw-qu-eC3"/>
-                                            <constraint firstAttribute="trailing" secondItem="4c1-EN-6AL" secondAttribute="trailing" constant="16" id="f83-TB-tJ4"/>
                                             <constraint firstAttribute="trailing" secondItem="G4Y-Pu-YwX" secondAttribute="trailing" constant="46" id="fPx-HA-ORx">
                                                 <variation key="heightClass=compact-widthClass=regular" constant="170"/>
                                             </constraint>
+                                            <constraint firstItem="YkC-9e-I6R" firstAttribute="centerX" secondItem="hNw-kH-8w7" secondAttribute="centerX" id="kDG-5J-hkw"/>
                                             <constraint firstItem="lpK-wx-LCL" firstAttribute="leading" secondItem="hNw-kH-8w7" secondAttribute="leading" constant="46" id="oMY-JP-m5y"/>
                                             <constraint firstItem="lpK-wx-LCL" firstAttribute="top" secondItem="Rzg-1L-AKG" secondAttribute="bottom" constant="16" id="p4B-gB-eTB"/>
                                             <constraint firstItem="Tig-Pz-DTF" firstAttribute="leading" secondItem="hNw-kH-8w7" secondAttribute="leading" constant="46" id="pyy-M7-7pG"/>
-                                            <constraint firstItem="4c1-EN-6AL" firstAttribute="leading" secondItem="JEk-pv-m6Y" secondAttribute="trailing" constant="4" id="qc9-sy-LpL"/>
                                             <constraint firstItem="Rzg-1L-AKG" firstAttribute="top" secondItem="Kba-pl-yGg" secondAttribute="bottom" constant="16" id="qdR-Ov-gRV"/>
                                             <constraint firstItem="wVW-Nd-iNk" firstAttribute="leading" secondItem="hNw-kH-8w7" secondAttribute="leading" constant="46" id="uey-2x-82R"/>
                                         </constraints>
@@ -356,10 +413,13 @@
                     <size key="freeformSize" width="428" height="1000"/>
                     <connections>
                         <outlet property="backButton" destination="wVW-Nd-iNk" id="7OT-m1-S1y"/>
+                        <outlet property="registerAccountLabel" destination="Tig-Pz-DTF" id="7FE-T3-6RS"/>
                         <outlet property="registerConfirmedPasswordTextField" destination="BP9-Hs-z0X" id="btr-c4-kmq"/>
                         <outlet property="registerEmailTextField" destination="Rzg-1L-AKG" id="SGl-Cj-Eea"/>
                         <outlet property="registerNameTextField" destination="Kba-pl-yGg" id="wtw-ui-Ftd"/>
                         <outlet property="registerPasswordTextField" destination="lpK-wx-LCL" id="OYu-jN-y9p"/>
+                        <outlet property="signInButton" destination="4c1-EN-6AL" id="606-Ef-mLs"/>
+                        <outlet property="signInLabel" destination="JEk-pv-m6Y" id="h4z-zf-Q6l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z0P-bi-MtP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -372,7 +432,7 @@
                 <navigationController storyboardIdentifier="loginStoryboard" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="EKh-K7-jke" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="4oL-WR-pQR">
-                        <rect key="frame" x="0.0" y="44" width="428" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>

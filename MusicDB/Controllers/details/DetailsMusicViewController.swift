@@ -14,22 +14,25 @@ import WCLShineButton
 import Loaf
 import FirebaseAuth
 
-class DetailsMusicViewController: BaseCollectionViewController {
+class DetailsMusicViewController: BaseTableViewController {
     
     var track: Track?
     var album: TopAlbums?
-    var isAlbumDetails: Bool? = false
-    var indexPath: IndexPath?
-    var isGenre: Bool? = false
-
-    let noTracksLabel = UILabel()
+    
     var isLiked: Bool = false
     
+    var indexPath: IndexPath?
+    var isGenre: Bool? = false
+    var isAlbumDetails: Bool? = false
+
+    let noTracksLabel = UILabel()
+    
+    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {
         Loaf.dismiss(sender: self, animated: true)
         self.dismiss(animated: true, completion: nil)
     }
-    @IBOutlet weak var artistCollectionView: UICollectionView!
+    @IBOutlet weak var artistTableView: UITableView!
     
     @IBOutlet weak var detailsImageView: UIImageView!
         
@@ -113,11 +116,8 @@ class DetailsMusicViewController: BaseCollectionViewController {
         let notifactionCenter = NotificationCenter.default
         notifactionCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         
-        artistCollectionView.delegate = self
-        artistCollectionView.dataSource = self
-        
-        let nib = UINib(nibName: "DetailsMusicCollectionViewCell", bundle: .main)
-        artistCollectionView.register(nib, forCellWithReuseIdentifier: "cell")
+        artistTableView.delegate = self
+        artistTableView.dataSource = self
      
         guard let isAlbumDetails = isAlbumDetails else {return}
         if !isAlbumDetails {
@@ -142,18 +142,34 @@ class DetailsMusicViewController: BaseCollectionViewController {
         }
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        artistCollectionView?.reloadData()
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tracks.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTableViewCell
         
-        if UIScreen.main.bounds.width > UIScreen.main.bounds.height{
-            return CGSize(width: 120, height: 120)
-        } else {
-            return CGSize(width: collectionView.bounds.width / 3.0, height: collectionView.bounds.width / 3.0)
+        populateCell(indexPath: indexPath, cell: cell, tableView: artistTableView)
+        
+        cell.populateTrack(track: tracks[indexPath.row])
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Loaf.dismiss(sender: self, animated: true)
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
+        let parentVC = presentingViewController
+            
+        dismiss(animated: true) {[weak self] in
+            guard let detailsVC = DetailsMusicViewController.storyboardInstance(storyboardID: "Main", restorationID: "detailsScreen") as? UINavigationController,
+                  let targetController = detailsVC.topViewController as? DetailsMusicViewController else {return}
+            
+            let track = self?.tracks[indexPath.row]
+            targetController.track = track
+            parentVC?.present(detailsVC, animated: true)
         }
     }
     
@@ -249,9 +265,9 @@ class DetailsMusicViewController: BaseCollectionViewController {
         
         noTracksLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            noTracksLabel.topAnchor.constraint(equalTo: artistCollectionView.topAnchor, constant: 24),
-            noTracksLabel.leadingAnchor.constraint(equalTo: artistCollectionView.leadingAnchor, constant: 0),
-            noTracksLabel.trailingAnchor.constraint(equalTo: artistCollectionView.trailingAnchor, constant: 0)
+            noTracksLabel.topAnchor.constraint(equalTo: artistTableView.topAnchor, constant: 24),
+            noTracksLabel.leadingAnchor.constraint(equalTo: artistTableView.leadingAnchor, constant: 0),
+            noTracksLabel.trailingAnchor.constraint(equalTo: artistTableView.trailingAnchor, constant: 0)
         ])
         noTracksLabel.isHidden = true
     }
@@ -286,16 +302,15 @@ class DetailsMusicViewController: BaseCollectionViewController {
     }
     
     func fetchTracks() {
-        let animation = AnimationType.from(direction: .right, offset: 30.0)
-        
         ds.fetchTracks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":200]) {[weak self] tracks, error in
             if let tracks = tracks {
-                
                 guard let self = self else {return}
-                self.tracks = tracks
-                self.artistCollectionView.reloadData()
                 
-                self.artistCollectionView.animate(animations: [animation])
+                self.tracks = tracks
+                self.artistTableView.reloadData()
+                
+                let cells = self.artistTableView.visibleCells
+                UIView.animate(views: cells, animations: [self.animation])
                 self.activityIndicatorView.stopAnimating()
                 
                 if tracks.count <= 0 {
@@ -314,24 +329,6 @@ class DetailsMusicViewController: BaseCollectionViewController {
     
     @objc func appMovedToBackground() {
         stopAudio()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Loaf.dismiss(sender: self, animated: true)
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            return
-        }
-        let parentVC = presentingViewController
-            
-        dismiss(animated: true) {[weak self] in
-            guard let detailsVC = DetailsMusicViewController.storyboardInstance(storyboardID: "Main", restorationID: "detailsScreen") as? UINavigationController,
-                  let targetController = detailsVC.topViewController as? DetailsMusicViewController else {return}
-            
-            let track = self?.tracks[indexPath.item]
-            targetController.track = track
-            parentVC?.present(detailsVC, animated: true)
-        }
     }
 }
 

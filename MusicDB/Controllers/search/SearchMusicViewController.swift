@@ -9,8 +9,6 @@ import UIKit
 import ViewAnimator
 
 class SearchMusicViewController: BaseTableViewController {
-    var tracks: [Track] = []
-    var ds = TrackAPIDataSource()
    
     let searchLabel = UILabel()
     let noTracksLabel = UILabel()
@@ -39,13 +37,6 @@ class SearchMusicViewController: BaseTableViewController {
         super.viewDidAppear(animated)
         trackSearchBar.becomeFirstResponder()
         setTabBarSwipe(enabled: true)
-    }
-    
-    //TODO: remove?
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-
-        searchTracksTableView?.reloadData()
     }
     
     func loadSearchLabel() {

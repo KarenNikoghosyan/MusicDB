@@ -151,7 +151,20 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets.bottom = 12
 
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(350), heightDimension: .absolute(350))
+        var size: CGFloat = 350
+        switch UIDevice().type {
+        case .iPod7:
+            size = 250
+        case .iPhoneSE2:
+            size = 250
+        case .iPhone8:
+            size = 250
+        case .iPhone12ProMax:
+            size = 350
+        default:
+            size = 320
+        }
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(size), heightDimension: .absolute(size))
 
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = .init(top: 0, leading: 15, bottom: 0, trailing: 2)
@@ -174,7 +187,26 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets.bottom = 12
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(150), heightDimension: .absolute(165))
+        var sizeWidth: CGFloat = 150
+        var sizeHeight: CGFloat = 165
+        switch UIDevice().type {
+        case .iPod7:
+            sizeWidth = 100
+            sizeHeight = 115
+        case .iPhoneSE2:
+            sizeWidth = 100
+            sizeHeight = 115
+        case .iPhone8:
+            sizeWidth = 100
+            sizeHeight = 115
+        case .iPhone12ProMax:
+            sizeWidth = 150
+            sizeHeight = 165
+        default:
+            sizeWidth = 150
+            sizeHeight = 165
+        }
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(sizeWidth), heightDimension: .absolute(sizeHeight))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = .init(top: 0, leading: 15, bottom: 0, trailing: 2)

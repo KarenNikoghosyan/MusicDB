@@ -15,17 +15,15 @@ import Loaf
 
 class AlbumDetailsViewController: BaseTableViewController {
     var album: TopAlbums?
-    var tracks: [AlbumTrack] = []
-    let ds = AlbumTrackAPIDataSource()
     
-    var prevIndexPath: IndexPath?
-    var prevButton: UIButton = UIButton()
-    var arrIndexPaths: [IndexPath] = []
-    var isPlaying: Bool = false
+    let albumTracksDS = AlbumTrackAPIDataSource()
+    
     var isLiked: Bool = false
     
     var indexPath: IndexPath?
     var isHome: Bool? = false
+    
+    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var numberOfTracks: UILabel!
     @IBOutlet weak var albumImageView: UIImageView!
@@ -69,8 +67,54 @@ class AlbumDetailsViewController: BaseTableViewController {
         
     }
     
+    func portraitConstraints() {
+        switch UIDevice().type {
+        case .iPod7:
+            imageViewHeightConstraint.constant = 130
+        case .iPhoneSE2:
+            imageViewHeightConstraint.constant = 200
+        case .iPhone8:
+            imageViewHeightConstraint.constant = 200
+        case .iPhone12ProMax:
+            imageViewHeightConstraint.constant = 280
+        default:
+            imageViewHeightConstraint.constant = 240
+        }
+    }
+    
+    func landscapeConstraints() {
+        switch UIDevice().type {
+        case .iPod7:
+            imageViewHeightConstraint.constant = 130
+        case .iPhoneSE2:
+            imageViewHeightConstraint.constant = 160
+        case .iPhone8:
+            imageViewHeightConstraint.constant = 160
+        case .iPhone12ProMax:
+            imageViewHeightConstraint.constant = 180
+        default:
+            imageViewHeightConstraint.constant = 160
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if UIDevice.current.orientation.isLandscape {
+            landscapeConstraints()
+        } else {
+            portraitConstraints()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if UIDevice.current.orientation.isLandscape {
+            landscapeConstraints()
+        } else {
+            portraitConstraints()
+        }
         
         if !Connectivity.isConnectedToInternet {
             showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
@@ -107,75 +151,18 @@ class AlbumDetailsViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tracks.count
+        return albumTracks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AlbumDetailsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTableViewCell
         
-        cell.playButton.tag = indexPath.row
-        cell.playButton.addTarget(self, action: #selector(btnTapped(_:)), for: .touchUpInside)
-        
-        if arrIndexPaths.contains(indexPath) {
-            cell.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-            cell.playButton.tintColor = .white
-        } else {
-            cell.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            cell.playButton.tintColor = .darkGray
-        }
+        populateCell(indexPath: indexPath, cell: cell, tableView: tracksTableView)
         
         if let album = album {
-            cell.populate(album: album, track: tracks[indexPath.row])
+            cell.populate(album: album, track: albumTracks[indexPath.row])
         }
         return cell
-    }
-    
-    @IBAction func btnTapped(_ sender: UIButton) {
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            return
-        }
-        let selectedIndexPath = IndexPath.init(row: sender.tag, section: 0)
-        
-        if arrIndexPaths.contains(selectedIndexPath) {
-            arrIndexPaths.removeAll()
-            sender.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            sender.tintColor = .darkGray
-            
-            tracksTableView.reloadRows(at: [selectedIndexPath], with: .none)
-            MediaPlayer.shared.stopAudio()
-            return
-        }
-        
-        if arrIndexPaths.count == 1 {
-            arrIndexPaths.removeAll()
-            prevButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            
-            if let prevIndexPath = prevIndexPath {
-                tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
-            }
-            MediaPlayer.shared.stopAudio()
-        }
-        
-        prevIndexPath = selectedIndexPath
-        prevButton = sender
-        arrIndexPaths.append(selectedIndexPath)
-        tracksTableView.reloadRows(at: [selectedIndexPath], with: .none)
-        
-        let track = tracks[selectedIndexPath.row]
-        if let urlPreview = URL(string: "\(track.preview)") {
-            MediaPlayer.shared.loadAudio(url: urlPreview)
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 30) {[weak self] in
-            MediaPlayer.shared.stopAudio()
-            guard let self = self else {return}
-            
-            if let prevIndexPath = self.prevIndexPath {
-                self.arrIndexPaths.removeAll()
-                self.prevButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-                self.tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
-            }
-        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -183,7 +170,7 @@ class AlbumDetailsViewController: BaseTableViewController {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
             return
         }
-        let oldTrack = tracks[indexPath.row]
+        let oldTrack = albumTracks[indexPath.row]
         let track = Track(
             id: oldTrack.id,
             title: oldTrack.title,
@@ -247,14 +234,14 @@ class AlbumDetailsViewController: BaseTableViewController {
 
         let start = album.tracklist.index(album.tracklist.startIndex, offsetBy: 28)
         let end = album.tracklist.index(album.tracklist.endIndex, offsetBy: 0)
-        let result = album.tracklist[start..<end] // The result is of type Substring
+        let result = album.tracklist[start..<end] 
         let newTrackList = String(result)
         
-        ds.fetchTracks(from: .album, path: newTrackList, with: ["limit" : 100]) {[weak self] tracks, error in
+        albumTracksDS.fetchTracks(from: .album, path: newTrackList, with: ["limit" : 100]) {[weak self] tracks, error in
             guard let self = self else {return}
             
             if let tracks = tracks {
-                self.tracks = tracks
+                self.albumTracks = tracks
                 self.tracksTableView.reloadData()
                 self.numberOfTracks.text = String(tracks.count)
                 

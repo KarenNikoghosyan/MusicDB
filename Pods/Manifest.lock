@@ -354,7 +354,6 @@ PODS:
   - NVActivityIndicatorView (5.1.1):
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
-  - OAuthSwift (2.2.0)
   - paper-onboarding (6.1.5)
   - PKHUD (5.3.0)
   - PromisesObjC (1.2.12)
@@ -376,7 +375,6 @@ DEPENDENCIES:
   - loady
   - Loaf
   - NVActivityIndicatorView
-  - OAuthSwift
   - paper-onboarding
   - PKHUD
   - SDWebImage
@@ -410,7 +408,6 @@ SPEC REPOS:
     - Loaf
     - nanopb
     - NVActivityIndicatorView
-    - OAuthSwift
     - paper-onboarding
     - PKHUD
     - PromisesObjC
@@ -444,7 +441,6 @@ SPEC CHECKSUMS:
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
-  OAuthSwift: 75efbb5bd9a4b2b71a37bd7e986bf3f55ddd54c6
   paper-onboarding: fede1799b1da6988f3788e3b71654583c6f3bce1
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
@@ -455,6 +451,6 @@ SPEC CHECKSUMS:
   ViewAnimator: a9ceed80266e00fd435ec4fb99b2df64d580d0e4
   WCLShineButton: 315ee9b0024b1cc56dba34fb6a8878937eb8d0b1
 
-PODFILE CHECKSUM: 0cf970a4307811c79ff421fc0e6044c7821585a2
+PODFILE CHECKSUM: dc0ae68844e0c03c1f05703848d9c44e129ead9e
 
 COCOAPODS: 1.10.1

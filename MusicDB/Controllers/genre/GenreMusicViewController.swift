@@ -11,9 +11,9 @@ import Loaf
 
 class GenreMusicViewController: BaseTableViewController {
     
+    let genreDS = GenreAPIDataSource()
+    
     var titleGenre: String?
-    var tracks: [Track] = []
-    var ds = GenreAPIDataSource()
     var path: String = ""
 
     @IBOutlet weak var genreTableView: UITableView!
@@ -49,7 +49,7 @@ class GenreMusicViewController: BaseTableViewController {
     }
     
     func fetchTracks() {
-        ds.fetchGenres(from: .chart, with: path, with: ["limit" : 150]) {[weak self] tracks, error in
+        genreDS.fetchGenres(from: .chart, with: path, with: ["limit" : 150]) {[weak self] tracks, error in
             if let tracks = tracks {
                 guard let self = self else {return}
                 

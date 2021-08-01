@@ -11,13 +11,62 @@ import FirebaseAuth
 
 class LoadingViewController: UIViewController {
     @IBOutlet weak var logoImageView: UIImageView!
+    @IBOutlet weak var topAnchorConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     
     private var isUserLoggedIn: Bool {
         return Auth.auth().currentUser != nil
     }
     
+    func portraitConstraints() {
+        switch UIDevice().type {
+        case .iPod7:
+            imageViewHeightConstraint.constant = 130
+            topAnchorConstraint.constant = 48
+        case .iPhoneSE2:
+            imageViewHeightConstraint.constant = 150
+            topAnchorConstraint.constant = 48
+        case .iPhone12ProMax:
+            imageViewHeightConstraint.constant = 200
+            topAnchorConstraint.constant = 128
+        default:
+            topAnchorConstraint.constant = 95
+        }
+    }
+    
+    func landscapeConstraints() {
+        switch UIDevice().type {
+        case .iPod7:
+            imageViewHeightConstraint.constant = 100
+            topAnchorConstraint.constant = 32
+        case .iPhoneSE2:
+            imageViewHeightConstraint.constant = 100
+            topAnchorConstraint.constant = 32
+        case .iPhone12ProMax:
+            imageViewHeightConstraint.constant = 185
+            topAnchorConstraint.constant = 32
+        default:
+            topAnchorConstraint.constant = 32
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if UIDevice.current.orientation.isLandscape {
+            landscapeConstraints()
+        } else {
+            portraitConstraints()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if UIDevice.current.orientation.isLandscape {
+            landscapeConstraints()
+        } else {
+            portraitConstraints()
+        }
         
         let activityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .lineScalePulseOut, color: .white, padding: 0)
         

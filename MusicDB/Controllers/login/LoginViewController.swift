@@ -13,8 +13,15 @@ import LGButton
 import Loaf
 
 class LoginViewController: UIViewController {
+    
+    @IBOutlet weak var signInLabel: UILabel!
+    @IBOutlet weak var loginLabel: UILabel!
+    @IBOutlet weak var signUpLabel: UILabel!
+    @IBOutlet weak var bottomLabelConstraint: NSLayoutConstraint!
+    @IBOutlet weak var topAnchorConstraint: NSLayoutConstraint!
     @IBOutlet weak var loginEmailTextField: SkyFloatingLabelTextFieldWithIcon!
     @IBOutlet weak var loginPasswordTextField: SkyFloatingLabelTextFieldWithIcon!
+    @IBOutlet weak var signUpButton: UIButton!
     @IBAction func signUpTapped(_ sender: UIButton) {
         performSegue(withIdentifier: "toRegister", sender: nil)
     }
@@ -37,8 +44,55 @@ class LoginViewController: UIViewController {
         }
     }
     
+    func portraitConstraints() {
+        switch UIDevice().type {
+        case .iPod7:
+            topAnchorConstraint.constant = 32
+            loginLabel.font = UIFont.init(name: "Futura-Bold", size: 23)
+            signInLabel.font = UIFont.init(name: "Futura", size: 15)
+            signUpLabel.font = UIFont.init(name: "Futura", size: 15)
+            signUpButton.titleLabel?.font = UIFont(name: "Futura-Bold", size: 15)
+        case .iPhoneSE2:
+            topAnchorConstraint.constant = 32
+            loginLabel.font = UIFont.init(name: "Futura-Bold", size: 32)
+            signInLabel.font = UIFont.init(name: "Futura", size: 17)
+            signUpLabel.font = UIFont.init(name: "Futura", size: 16)
+            signUpButton.titleLabel?.font = UIFont(name: "Futura-Bold", size: 16)
+        case .iPhone8:
+            topAnchorConstraint.constant = 64
+            loginLabel.font = UIFont.init(name: "Futura-Bold", size: 32)
+            signInLabel.font = UIFont.init(name: "Futura", size: 17)
+            signUpLabel.font = UIFont.init(name: "Futura", size: 16)
+            signUpButton.titleLabel?.font = UIFont(name: "Futura-Bold", size: 16)
+        default:
+            break
+        }
+    }
+    
+    func landscapeConstraints() {
+        switch UIDevice().type {
+        default:
+            topAnchorConstraint.constant = 28
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if UIDevice.current.orientation.isLandscape {
+            landscapeConstraints()
+        } else {
+            portraitConstraints()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if UIDevice.current.orientation.isLandscape {
+            landscapeConstraints()
+        } else {
+            portraitConstraints()
+        }
         
         setupNavigationItems()
         loginEmailTextField.becomeFirstResponder()

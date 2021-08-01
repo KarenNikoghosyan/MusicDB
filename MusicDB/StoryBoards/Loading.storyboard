@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XSt-p0-w67">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,11 +12,11 @@
             <objects>
                 <viewController id="XSt-p0-w67" customClass="LoadingViewController" customModule="MusicDB" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yPb-zp-jhT">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MusicDB" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OH0-1A-Qea">
-                                <rect key="frame" x="8" y="172" width="398" height="58.5"/>
+                                <rect key="frame" x="8" y="172" width="412" height="58.666666666666657"/>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="45"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -28,12 +28,9 @@
                                 </variation>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="gQC-lu-za0">
-                                <rect key="frame" x="107" y="246.5" width="200" height="200"/>
+                                <rect key="frame" x="114" y="246.66666666666663" width="200" height="200"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="fEF-bF-UBp">
-                                        <variation key="heightClass=compact-widthClass=compact" constant="100"/>
-                                        <variation key="heightClass=regular-widthClass=regular" constant="400"/>
-                                    </constraint>
+                                    <constraint firstAttribute="width" secondItem="gQC-lu-za0" secondAttribute="height" multiplier="1:1" id="uBQ-fY-U1v"/>
                                     <constraint firstAttribute="height" constant="200" id="wnS-Xp-UZs">
                                         <variation key="heightClass=compact-widthClass=compact" constant="100"/>
                                         <variation key="heightClass=regular-widthClass=regular" constant="400"/>
@@ -58,7 +55,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="imageViewHeightConstraint" destination="wnS-Xp-UZs" id="JJr-om-5ij"/>
                         <outlet property="logoImageView" destination="gQC-lu-za0" id="Dxs-Rz-osi"/>
+                        <outlet property="topAnchorConstraint" destination="kAx-Fj-26C" id="XEI-3M-wBV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ivl-4E-z1F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

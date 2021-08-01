@@ -12,6 +12,10 @@ import FirebaseAuth
 import LGButton
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
+    
+    @IBOutlet weak var registerAccountLabel: UILabel!
+    @IBOutlet weak var signInLabel: UILabel!
+    @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var registerNameTextField: SkyFloatingLabelTextFieldWithIcon!
     @IBOutlet weak var registerEmailTextField: SkyFloatingLabelTextFieldWithIcon!
     @IBOutlet weak var registerPasswordTextField: SkyFloatingLabelTextFieldWithIcon!
@@ -54,8 +58,36 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func portraitConstraints() {
+        switch UIDevice().type {
+        case .iPod7:
+            registerAccountLabel.font = UIFont.init(name: "Futura-Bold", size: 23)
+            signInLabel.font = UIFont.init(name: "Futura", size: 15)
+            signInButton.titleLabel?.font = UIFont(name: "Futura-Bold", size: 15)
+        case .iPhoneSE2:
+            registerAccountLabel.font = UIFont.init(name: "Futura-Bold", size: 25)
+            signInLabel.font = UIFont.init(name: "Futura", size: 16)
+            signInButton.titleLabel?.font = UIFont(name: "Futura-Bold", size: 16)
+        case .iPhone8:
+            registerAccountLabel.font = UIFont.init(name: "Futura-Bold", size: 25)
+            signInLabel.font = UIFont.init(name: "Futura", size: 16)
+            signInButton.titleLabel?.font = UIFont(name: "Futura-Bold", size: 16)
+        default:
+            break
+        }
+    }
+    
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        portraitConstraints()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        portraitConstraints()
+        
         registerNameTextField.becomeFirstResponder()
             
         setUpTextFields()
