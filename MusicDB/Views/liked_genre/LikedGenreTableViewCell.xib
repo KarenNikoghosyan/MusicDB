@@ -135,6 +135,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="imageViewWidthConstraint" destination="tGw-Mn-Kg3" id="z43-o0-l91"/>
                 <outlet property="likedButton" destination="aus-b3-esB" id="0Pw-rT-WlZ"/>
                 <outlet property="trackAlbumNameLabel" destination="SDv-Al-WMO" id="aE8-6m-4U9"/>
                 <outlet property="trackArtistNameLabel" destination="xW7-FV-q1Q" id="IH3-nX-lGa"/>

@@ -86,8 +86,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        portraitConstraints()
-        
         registerNameTextField.becomeFirstResponder()
             
         setUpTextFields()

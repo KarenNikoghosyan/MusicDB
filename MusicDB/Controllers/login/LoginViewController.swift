@@ -78,6 +78,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         if UIDevice.current.orientation.isLandscape {
             landscapeConstraints()
         } else {
@@ -87,12 +88,6 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if UIDevice.current.orientation.isLandscape {
-            landscapeConstraints()
-        } else {
-            portraitConstraints()
-        }
         
         setupNavigationItems()
         loginEmailTextField.becomeFirstResponder()

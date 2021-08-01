@@ -110,12 +110,6 @@ class AlbumDetailsViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if UIDevice.current.orientation.isLandscape {
-            landscapeConstraints()
-        } else {
-            portraitConstraints()
-        }
-        
         if !Connectivity.isConnectedToInternet {
             showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
         } else {

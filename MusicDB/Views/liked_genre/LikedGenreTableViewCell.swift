@@ -13,6 +13,7 @@ import FirebaseAuth
 class LikedGenreTableViewCell: UITableViewCell {
     var isLiked: Bool = false
 
+    @IBOutlet weak var imageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var trackImageView: UIImageView!
     @IBOutlet weak var trackTitleLabel: UILabel!
     @IBOutlet weak var trackArtistNameLabel: UILabel!
@@ -24,6 +25,15 @@ class LikedGenreTableViewCell: UITableViewCell {
             NotificationCenter.default.post(name: .IndexRemove, object: nil, userInfo: ["indexPath" : getIndexPath() as Any])
         } else {
             NotificationCenter.default.post(name: .IndexAdd, object: nil, userInfo: ["indexPath" : getIndexPath() as Any])
+        }
+    }
+    
+    func cellConstraints() {
+        switch UIDevice().type {
+        case .iPod7:
+            imageViewWidthConstraint.constant = 95
+        default:
+            imageViewWidthConstraint.constant = 130
         }
     }
  

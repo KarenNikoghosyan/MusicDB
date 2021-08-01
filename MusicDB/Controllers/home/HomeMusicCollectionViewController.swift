@@ -151,6 +151,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets.bottom = 12
 
+        //Resizing the cells based on a device
         var size: CGFloat = 350
         switch UIDevice().type {
         case .iPod7:
@@ -187,6 +188,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets.bottom = 12
         
+        //Resizing the cells based on a device
         var sizeWidth: CGFloat = 150
         var sizeHeight: CGFloat = 165
         switch UIDevice().type {

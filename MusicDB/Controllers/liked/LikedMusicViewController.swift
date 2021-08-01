@@ -30,8 +30,22 @@ class LikedMusicViewController: BaseTableViewController {
         logOutTappedAndSegue()
     }
     
+    func portraitConstraints() {
+        switch UIDevice().type {
+        case .iPod7:
+            noLikedLabel.font = UIFont.init(name: "Futura", size: 14)
+        case .iPhoneSE2:
+            noLikedLabel.font = UIFont.init(name: "Futura", size: 16)
+        case .iPhone8:
+            noLikedLabel.font = UIFont.init(name: "Futura", size: 16)
+        default:
+            break
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         likedTableView.delegate = self
         likedTableView.dataSource = self
         
@@ -49,7 +63,9 @@ class LikedMusicViewController: BaseTableViewController {
         likedTableView.register(albumsNib, forCellReuseIdentifier: "albumCell")
         
         setUpObservers()
+        
         loadNoLikedLabel()
+        portraitConstraints()
         
         likedTableView.separatorColor = UIColor.darkGray
 
@@ -64,6 +80,146 @@ class LikedMusicViewController: BaseTableViewController {
         
         if !Connectivity.isConnectedToInternet {
             showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var numberOfRows = 0
+        
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            numberOfRows = tracks.count
+        case 1:
+            numberOfRows = albums.count
+        default:
+            break
+        }
+        return numberOfRows
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let tracksCell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! LikedGenreTableViewCell
+        let albumsCell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath) as! AlbumsTableViewCell
+        
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            accessoryArrow(cell: tracksCell)
+            let track = tracks[indexPath.row]
+            tracksCell.populate(track: track)
+            tracksCell.cellConstraints()
+        case 1:
+            accessoryArrow(cell: albumsCell)
+            let album = albums[indexPath.row]
+            albumsCell.populate(album: album)
+            albumsCell.cellConstraints()
+            
+            albumsCell.openWebsiteButton.tag = indexPath.row
+            albumsCell.openWebsiteButton.addTarget(self, action: #selector(openWebsiteTapped(_:)), for: .touchUpInside)
+            return albumsCell
+        default:
+            break
+        }
+        return tracksCell
+    }
+    
+    @IBAction func openWebsiteTapped(_ sender: UIButton) {
+        openWebsite(albums: albums, sender: sender)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        let status = navigationItem.leftBarButtonItem?.title
+        
+        if status == "Edit" {
+            likedTableView.setEditing(true, animated: true)
+            navigationItem.leftBarButtonItem?.title = "Done"
+        } else {
+            likedTableView.setEditing(false, animated: true)
+            navigationItem.leftBarButtonItem?.title = "Edit"
+        }
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            if !Connectivity.isConnectedToInternet {
+                showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+                return
+            }
+            guard let userID = Auth.auth().currentUser?.uid else {return}
+
+            switch segmentedControl.selectedSegmentIndex {
+            case 0:
+                let track = tracks[indexPath.row]
+                loafMessageRemoved(track: track)
+                
+                FirestoreManager.shared.db.collection("users").document(userID).updateData([
+                    "trackIDs" : FieldValue.arrayRemove([track.id as Any])
+                ]) {[weak self] error in
+                    if let error = error {
+                        print("\(error.localizedDescription)")
+                    }
+                    self?.tracks.remove(at: indexPath.item)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    if self?.tracks.count == 0 {
+                        self?.noLikedLabel.isHidden = false
+                    }
+                }
+            case 1:
+                let album = albums[indexPath.row]
+                loafMessageRemovedAlbum(album: album)
+                
+                FirestoreManager.shared.db.collection("users").document(userID).updateData([
+                    "albumIDs" : FieldValue.arrayRemove([album.id as Any])
+                ]) {[weak self] error in
+                    if let error = error {
+                        print("\(error.localizedDescription)")
+                    }
+                    self?.albums.remove(at: indexPath.item)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    
+                    if self?.albums.count == 0 {
+                        self?.noLikedLabel.isHidden = false
+                    }
+                }
+            default:
+                break
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            return
+        }
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            Loaf.dismiss(sender: self, animated: true)
+            performSegue(withIdentifier: "toDetails", sender: tracks[indexPath.row])
+        case 1:
+            Loaf.dismiss(sender: self, animated: true)
+            performSegue(withIdentifier: "toAlbumDetails", sender: albums[indexPath.row])
+        default:
+            break
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetails" {
+            guard let dest = segue.destination as? UINavigationController,
+                  let targetController = dest.topViewController as? DetailsMusicViewController,
+                  let track = sender as? Track else {return}
+            targetController.track = track
+        } else if segue.identifier == "toAlbumDetails" {
+            guard let dest = segue.destination as? UINavigationController,
+                  let targetController = dest.topViewController as? AlbumDetailsViewController,
+                  let album = sender as? TopAlbums else {return}
+            targetController.album = album
         }
     }
     
@@ -333,143 +489,7 @@ class LikedMusicViewController: BaseTableViewController {
         noLikedLabel.isHidden = true
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var numberOfRows = 0
-        
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            numberOfRows = tracks.count
-        case 1:
-            numberOfRows = albums.count
-        default:
-            break
-        }
-        return numberOfRows
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tracksCell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! LikedGenreTableViewCell
-        let albumsCell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath) as! AlbumsTableViewCell
-        
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            accessoryArrow(cell: tracksCell)
-            let track = tracks[indexPath.row]
-            tracksCell.populate(track: track)
-        case 1:
-            accessoryArrow(cell: albumsCell)
-            let album = albums[indexPath.row]
-            albumsCell.populate(album: album)
-            
-            albumsCell.openWebsiteButton.tag = indexPath.row
-            albumsCell.openWebsiteButton.addTarget(self, action: #selector(openWebsiteTapped(_:)), for: .touchUpInside)
-            return albumsCell
-        default:
-            break
-        }
-        return tracksCell
-    }
     
-    @IBAction func openWebsiteTapped(_ sender: UIButton) {
-        openWebsite(albums: albums, sender: sender)
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        let status = navigationItem.leftBarButtonItem?.title
-        
-        if status == "Edit" {
-            likedTableView.setEditing(true, animated: true)
-            navigationItem.leftBarButtonItem?.title = "Done"
-        } else {
-            likedTableView.setEditing(false, animated: true)
-            navigationItem.leftBarButtonItem?.title = "Edit"
-        }
-    }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            
-            if !Connectivity.isConnectedToInternet {
-                showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-                return
-            }
-            guard let userID = Auth.auth().currentUser?.uid else {return}
-
-            switch segmentedControl.selectedSegmentIndex {
-            case 0:
-                let track = tracks[indexPath.row]
-                loafMessageRemoved(track: track)
-                
-                FirestoreManager.shared.db.collection("users").document(userID).updateData([
-                    "trackIDs" : FieldValue.arrayRemove([track.id as Any])
-                ]) {[weak self] error in
-                    if let error = error {
-                        print("\(error.localizedDescription)")
-                    }
-                    self?.tracks.remove(at: indexPath.item)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                    
-                    if self?.tracks.count == 0 {
-                        self?.noLikedLabel.isHidden = false
-                    }
-                }
-            case 1:
-                let album = albums[indexPath.row]
-                loafMessageRemovedAlbum(album: album)
-                
-                FirestoreManager.shared.db.collection("users").document(userID).updateData([
-                    "albumIDs" : FieldValue.arrayRemove([album.id as Any])
-                ]) {[weak self] error in
-                    if let error = error {
-                        print("\(error.localizedDescription)")
-                    }
-                    self?.albums.remove(at: indexPath.item)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                    
-                    if self?.albums.count == 0 {
-                        self?.noLikedLabel.isHidden = false
-                    }
-                }
-            default:
-                break
-            }
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            return
-        }
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            Loaf.dismiss(sender: self, animated: true)
-            performSegue(withIdentifier: "toDetails", sender: tracks[indexPath.row])
-        case 1:
-            Loaf.dismiss(sender: self, animated: true)
-            performSegue(withIdentifier: "toAlbumDetails", sender: albums[indexPath.row])
-        default:
-            break
-        }
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toDetails" {
-            guard let dest = segue.destination as? UINavigationController,
-                  let targetController = dest.topViewController as? DetailsMusicViewController,
-                  let track = sender as? Track else {return}
-            targetController.track = track
-        } else if segue.identifier == "toAlbumDetails" {
-            guard let dest = segue.destination as? UINavigationController,
-                  let targetController = dest.topViewController as? AlbumDetailsViewController,
-                  let album = sender as? TopAlbums else {return}
-            targetController.album = album
-        }
-    }
 }
 
 extension LikedMusicViewController {

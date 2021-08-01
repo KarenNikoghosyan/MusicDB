@@ -280,6 +280,8 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <variation key="heightClass=compact-widthClass=compact" spacing="5"/>
+                                <variation key="heightClass=compact-widthClass=regular" spacing="15"/>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" estimatedRowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bvc-qO-0W5">
                                 <rect key="frame" x="0.0" y="393" width="428" height="479"/>
@@ -970,8 +972,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="xnO-3r-6cj"/>
-        <segue reference="lzi-Zl-BTK"/>
+        <segue reference="geQ-gZ-cJu"/>
+        <segue reference="i6h-vK-J6Q"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="heart.fill" catalog="system" width="128" height="109"/>

@@ -48,24 +48,6 @@ class GenreMusicViewController: BaseTableViewController {
         }
     }
     
-    func fetchTracks() {
-        genreDS.fetchGenres(from: .chart, with: path, with: ["limit" : 150]) {[weak self] tracks, error in
-            if let tracks = tracks {
-                guard let self = self else {return}
-                
-                self.tracks = tracks
-                self.genreTableView.reloadData()
-                self.activityIndicatorView.stopAnimating()
-                
-                let cells = self.genreTableView.visibleCells
-                UIView.animate(views: cells, animations: [self.animation])
-            } else if let error = error {
-                print(error)
-                self?.activityIndicatorView.stopAnimating()
-            }
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tracks.count
     }
@@ -79,6 +61,7 @@ class GenreMusicViewController: BaseTableViewController {
             let track = tracks[indexPath.row]
             
             cell.populate(track: track)
+            cell.cellConstraints()
         }
         
         return cell
@@ -106,6 +89,24 @@ class GenreMusicViewController: BaseTableViewController {
         targetController.track = data["track"] as? Track
         targetController.indexPath = data["indexPath"] as? IndexPath
         targetController.isGenre = data["isGenre"] as? Bool
+    }
+    
+    func fetchTracks() {
+        genreDS.fetchGenres(from: .chart, with: path, with: ["limit" : 150]) {[weak self] tracks, error in
+            if let tracks = tracks {
+                guard let self = self else {return}
+                
+                self.tracks = tracks
+                self.genreTableView.reloadData()
+                self.activityIndicatorView.stopAnimating()
+                
+                let cells = self.genreTableView.visibleCells
+                UIView.animate(views: cells, animations: [self.animation])
+            } else if let error = error {
+                print(error)
+                self?.activityIndicatorView.stopAnimating()
+            }
+        }
     }
     
     func addObservers() {

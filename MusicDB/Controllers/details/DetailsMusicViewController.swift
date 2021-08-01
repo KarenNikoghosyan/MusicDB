@@ -127,6 +127,42 @@ class DetailsMusicViewController: BaseTableViewController {
         }
     }
     
+    func portraitConstraints() {
+        switch UIDevice().type {
+        case .iPod7:
+            imageViewHeightConstraint.constant = 130
+        case .iPhoneSE2:
+            imageViewHeightConstraint.constant = 150
+        case .iPhone8:
+            imageViewHeightConstraint.constant = 150
+        default:
+            break
+        }
+    }
+    
+    func landscapeConstraints() {
+        switch UIDevice().type {
+        case .iPod7:
+            imageViewHeightConstraint.constant = 100
+        case .iPhoneSE2:
+            imageViewHeightConstraint.constant = 100
+        case .iPhone8:
+            imageViewHeightConstraint.constant = 100
+        default:
+            break
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if UIDevice.current.orientation.isLandscape {
+            landscapeConstraints()
+        } else {
+            portraitConstraints()
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -320,7 +356,6 @@ class DetailsMusicViewController: BaseTableViewController {
                 }
                 
             } else if let error = error {
-                //TODO: Dialog
                 print(error)
                 self?.activityIndicatorView.stopAnimating()
             }

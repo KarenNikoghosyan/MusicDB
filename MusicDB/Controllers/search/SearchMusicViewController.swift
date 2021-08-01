@@ -151,7 +151,6 @@ extension SearchMusicViewController: UISearchBarDelegate {
                     }
                     
                 } else if let error = error {
-                    //TODO: Popup message
                     print(error)
                     self?.activityIndicatorView.stopAnimating()
                 }

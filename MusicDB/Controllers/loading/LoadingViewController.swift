@@ -52,6 +52,7 @@ class LoadingViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+
         if UIDevice.current.orientation.isLandscape {
             landscapeConstraints()
         } else {
@@ -61,12 +62,6 @@ class LoadingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if UIDevice.current.orientation.isLandscape {
-            landscapeConstraints()
-        } else {
-            portraitConstraints()
-        }
         
         let activityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .lineScalePulseOut, color: .white, padding: 0)
         

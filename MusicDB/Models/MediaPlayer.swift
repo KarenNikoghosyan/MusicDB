@@ -20,7 +20,6 @@ class MediaPlayer {
                 let data = try Data(contentsOf: url)
                 self?.player = try AVAudioPlayer(data: data)
             } catch {
-                //TODO: Popup
                 print(error)
             }
             if let player = self?.player {
