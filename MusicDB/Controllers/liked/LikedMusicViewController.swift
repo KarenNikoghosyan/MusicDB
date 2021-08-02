@@ -18,11 +18,13 @@ class LikedMusicViewController: BaseTableViewController {
     var tracksIDs: [Int]?
     var numOfCallsTrack: Int = 0
     var trackIndex: Int = 0
+    var isTrackLoaded: Bool = false
     
     let singleAlbumDS = SingleAlbumAPIDataSource()
     var albumIDs: [Int]?
     var numOfCallsAlbum: Int = 0
     var albumIndex: Int = 0
+    var isAlbumLoaded: Bool = false
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var likedTableView: UITableView!
@@ -52,14 +54,20 @@ class LikedMusicViewController: BaseTableViewController {
         setUpSegmentedControl()
         
         if Connectivity.isConnectedToInternet {
-            getUserLikedTracks()
-            getUserLikedAlbums()
+            if segmentedControl.selectedSegmentIndex == 0 {
+                getUserLikedTracks()
+                isTrackLoaded = true
+            } else {
+                getUserLikedAlbums()
+                isAlbumLoaded = true
+            }
+
             loadActivityIndicator()
         }
 
-        let tracksNib = UINib(nibName: "LikedGenreTableViewCell", bundle: .main)
+        let tracksNib = UINib(nibName: "LikedTracksTableViewCell", bundle: .main)
         likedTableView.register(tracksNib, forCellReuseIdentifier: "trackCell")
-        let albumsNib = UINib(nibName: "AlbumsTableViewCell", bundle: .main)
+        let albumsNib = UINib(nibName: "LikedAlbumsTableViewCell", bundle: .main)
         likedTableView.register(albumsNib, forCellReuseIdentifier: "albumCell")
         
         setUpObservers()
@@ -98,19 +106,21 @@ class LikedMusicViewController: BaseTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tracksCell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! LikedGenreTableViewCell
-        let albumsCell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath) as! AlbumsTableViewCell
+        let tracksCell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! LikedTracksTableViewCell
+        let albumsCell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath) as! LikedAlbumsTableViewCell
         
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             accessoryArrow(cell: tracksCell)
             let track = tracks[indexPath.row]
             tracksCell.populate(track: track)
+            
             tracksCell.cellConstraints()
         case 1:
             accessoryArrow(cell: albumsCell)
             let album = albums[indexPath.row]
             albumsCell.populate(album: album)
+            
             albumsCell.cellConstraints()
             
             albumsCell.openWebsiteButton.tag = indexPath.row
@@ -159,14 +169,17 @@ class LikedMusicViewController: BaseTableViewController {
                 FirestoreManager.shared.db.collection("users").document(userID).updateData([
                     "trackIDs" : FieldValue.arrayRemove([track.id as Any])
                 ]) {[weak self] error in
+                    guard let self = self else {return
+                        
+                    }
                     if let error = error {
                         print("\(error.localizedDescription)")
                     }
-                    self?.tracks.remove(at: indexPath.item)
+                    self.tracks.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     
-                    if self?.tracks.count == 0 {
-                        self?.noLikedLabel.isHidden = false
+                    if self.tracks.count == 0 {
+                        self.noLikedLabel.isHidden = false
                     }
                 }
             case 1:
@@ -176,14 +189,18 @@ class LikedMusicViewController: BaseTableViewController {
                 FirestoreManager.shared.db.collection("users").document(userID).updateData([
                     "albumIDs" : FieldValue.arrayRemove([album.id as Any])
                 ]) {[weak self] error in
+                    guard let self = self else {return}
+                    
                     if let error = error {
                         print("\(error.localizedDescription)")
                     }
-                    self?.albums.remove(at: indexPath.item)
+                    self.albums.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     
-                    if self?.albums.count == 0 {
-                        self?.noLikedLabel.isHidden = false
+                    NotificationCenter.default.post(name: .ReloadFromLiked, object: nil, userInfo: nil)
+                    
+                    if self.albums.count == 0 {
+                        self.noLikedLabel.isHidden = false
                     }
                 }
             default:
@@ -288,67 +305,6 @@ class LikedMusicViewController: BaseTableViewController {
                 }
             }
         }
-        NotificationCenter.default.addObserver(forName: .IndexRemove, object: nil, queue: .main) {[weak self] notification in
-            guard let self = self else {return}
-            
-            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-                let track = self.tracks[indexPath.row]
-                guard let userID = Auth.auth().currentUser?.uid else {return}
-
-                FirestoreManager.shared.db.collection("users").document(userID).updateData([
-                    "trackIDs" : FieldValue.arrayRemove([track.id as Any])
-                ]) {[weak self] error in
-                    guard let self = self else {return}
-                    
-                    if let error = error {
-                        print("\(error.localizedDescription)")
-                    } else {
-                        DispatchQueue.main.async {
-                            self.tracks.remove(at: indexPath.row)
-                            self.likedTableView.deleteRows(at: [indexPath], with: .automatic)
-                            self.loafMessageRemoved(track: track)
-                            
-                            if self.tracks.count == 0 {
-                                if self.segmentedControl.selectedSegmentIndex == 0 {
-                                    self.noLikedLabel.isHidden = false
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        NotificationCenter.default.addObserver(forName: .RemoveAlbumID, object: nil, queue: .main) {[weak self] notification in
-            guard let self = self else {return}
-            
-            if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-                print(self.albums.count, indexPath.row)
-                let album = self.albums[indexPath.row]
-                guard let userID = Auth.auth().currentUser?.uid else {return}
-
-                FirestoreManager.shared.db.collection("users").document(userID).updateData([
-                    "albumIDs" : FieldValue.arrayRemove([album.id as Any])
-                ]) {[weak self] error in
-                    guard let self = self else {return}
-                    
-                    if let error = error {
-                        print("\(error.localizedDescription)")
-                    } else {
-                        DispatchQueue.main.async {
-                            self.albums.remove(at: indexPath.row)
-                            self.likedTableView.deleteRows(at: [indexPath], with: .automatic)
-                            self.loafMessageRemovedAlbum(album: album)
-                            
-                            if self.albums.count == 0 {
-                                if self.segmentedControl.selectedSegmentIndex == 1 {
-                                    self.noLikedLabel.isHidden = false
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
     
     func setUpSegmentedControl() {
@@ -361,21 +317,41 @@ class LikedMusicViewController: BaseTableViewController {
     @IBAction func segmentTapped(_ sender: UISegmentedControl) {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
-            likedTableView.reloadData()
-            reloadTableViewWithAnimation()
-            if tracks.count > 0 {
-                noLikedLabel.isHidden = true
+            if isTrackLoaded == true {
+                likedTableView.reloadData()
+                reloadTableViewWithAnimation()
+                
+                if tracks.count > 0 {
+                    noLikedLabel.isHidden = true
+                } else {
+                    noLikedLabel.isHidden = false
+                }
             } else {
-                noLikedLabel.isHidden = false
+                noLikedLabel.isHidden = true
+                loadActivityIndicator()
+
+                likedTableView.reloadData()
+                getUserLikedTracks()
+                isTrackLoaded = true
             }
         case 1:
-            likedTableView.reloadData()
-            reloadTableViewWithAnimation()
-            if albums.count > 0 {
-                noLikedLabel.isHidden = true
+            if isAlbumLoaded == true {
+                likedTableView.reloadData()
+                reloadTableViewWithAnimation()
+                if albums.count > 0 {
+                    noLikedLabel.isHidden = true
+                } else {
+                    noLikedLabel.isHidden = false
+                }
             } else {
-                noLikedLabel.isHidden = false
+                noLikedLabel.isHidden = true
+                loadActivityIndicator()
+                
+                likedTableView.reloadData()
+                getUserLikedAlbums()
+                isAlbumLoaded = true
             }
+            
         default:
             break
         }
@@ -413,8 +389,8 @@ class LikedMusicViewController: BaseTableViewController {
                     self.fetchTracks()
                 } else {
                     self.trackIndex = 0
-                    self.likedTableView.reloadData()
                     
+                    self.likedTableView.reloadData()
                     self.reloadTableViewWithAnimation()
                 }
                 
@@ -456,9 +432,9 @@ class LikedMusicViewController: BaseTableViewController {
                     self.fetchAlbums()
                 } else {
                     self.albumIndex = 0
-                    //self.likedTableView.reloadData()
                     
-                    //self.reloadTableViewWithAnimation()
+                    self.likedTableView.reloadData()
+                    self.reloadTableViewWithAnimation()
                 }
                 
             } else if let error = error {
@@ -488,8 +464,6 @@ class LikedMusicViewController: BaseTableViewController {
         ])
         noLikedLabel.isHidden = true
     }
-
-    
 }
 
 extension LikedMusicViewController {
@@ -497,11 +471,19 @@ extension LikedMusicViewController {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
+            guard let self = self else {return}
+            
             if !Connectivity.isConnectedToInternet {
-                self?.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+                self.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
             } else {
-                self?.fetchTracks()
-                self?.loadActivityIndicator()
+                if self.segmentedControl.selectedSegmentIndex == 0 {
+                    self.getUserLikedTracks()
+                    self.isTrackLoaded = true
+                } else {
+                    self.getUserLikedAlbums()
+                    self.isAlbumLoaded = true
+                }
+                self.loadActivityIndicator()
             }
         }))
         present(vc, animated: true)

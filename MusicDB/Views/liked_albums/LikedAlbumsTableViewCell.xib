@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="139" id="xTX-Ay-3jB" userLabel="Liked Albums Table View Cell" customClass="LikedAlbumsTableViewCell" customModule="MusicDB" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="348" height="139"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xTX-Ay-3jB" id="X20-eI-8bq">
+                <rect key="frame" x="0.0" y="0.0" width="348" height="139"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JVf-bk-d18">
+                        <rect key="frame" x="14" y="4.5" width="130" height="130"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="130" id="I35-rR-0wW"/>
+                            <constraint firstAttribute="width" secondItem="JVf-bk-d18" secondAttribute="height" multiplier="1:1" id="vpq-cx-D5Z"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="aMT-Ia-ye8">
+                        <rect key="frame" x="156" y="18.5" width="74.5" height="18.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nll-rE-YQB">
+                                <rect key="frame" x="0.0" y="0.0" width="36" height="18.5"/>
+                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdk-qA-G3c">
+                                <rect key="frame" x="40" y="0.0" width="34.5" height="18.5"/>
+                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="kXV-cF-ArP">
+                        <rect key="frame" x="156" y="49" width="134.5" height="18.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Artist Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f3R-M9-lJw">
+                                <rect key="frame" x="0.0" y="0.0" width="96" height="18.5"/>
+                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rtn-th-g4c">
+                                <rect key="frame" x="100" y="0.0" width="34.5" height="18.5"/>
+                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Thh-UH-5PU">
+                        <rect key="frame" x="156" y="97.5" width="134" height="31"/>
+                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
+                        <state key="normal" title="OPEN IN WEBSITE">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="JVf-bk-d18" firstAttribute="centerY" secondItem="X20-eI-8bq" secondAttribute="centerY" id="TFX-9G-34b"/>
+                    <constraint firstItem="Thh-UH-5PU" firstAttribute="bottom" secondItem="JVf-bk-d18" secondAttribute="bottom" constant="-6" id="WqD-46-c0A"/>
+                    <constraint firstItem="aMT-Ia-ye8" firstAttribute="top" secondItem="JVf-bk-d18" secondAttribute="top" constant="14" id="cya-BT-zyE"/>
+                    <constraint firstItem="JVf-bk-d18" firstAttribute="leading" secondItem="X20-eI-8bq" secondAttribute="leadingMargin" constant="-6" id="hcT-5l-snO"/>
+                    <constraint firstItem="kXV-cF-ArP" firstAttribute="leading" secondItem="JVf-bk-d18" secondAttribute="trailing" constant="12" id="iMb-ou-BQq"/>
+                    <constraint firstItem="aMT-Ia-ye8" firstAttribute="leading" secondItem="JVf-bk-d18" secondAttribute="trailing" constant="12" id="kxe-8A-iDX"/>
+                    <constraint firstItem="Thh-UH-5PU" firstAttribute="leading" secondItem="JVf-bk-d18" secondAttribute="trailing" constant="12" id="mFV-l2-bE8"/>
+                    <constraint firstItem="kXV-cF-ArP" firstAttribute="top" secondItem="aMT-Ia-ye8" secondAttribute="bottom" constant="12" id="xlF-Fs-963"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="MqF-3i-MYH"/>
+            <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="albumArtistNameLabel" destination="rtn-th-g4c" id="3BM-4i-pe6"/>
+                <outlet property="albumImageView" destination="JVf-bk-d18" id="Zup-GW-oeN"/>
+                <outlet property="albumTitleLabel" destination="fdk-qA-G3c" id="KUS-La-L8Y"/>
+                <outlet property="imageViewHeightConstraint" destination="I35-rR-0wW" id="8LB-o4-wZ6"/>
+                <outlet property="openWebsiteButton" destination="Thh-UH-5PU" id="VSI-Hl-o0D"/>
+            </connections>
+            <point key="canvasLocation" x="76.811594202898561" y="75.334821428571431"/>
+        </tableViewCell>
+    </objects>
+</document>

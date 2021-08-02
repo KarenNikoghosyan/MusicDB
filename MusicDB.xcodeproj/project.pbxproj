@@ -31,6 +31,10 @@
 		7834C33A26A72A2C00AD6F23 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7834C33926A72A2C00AD6F23 /* IntroViewController.swift */; };
 		7834C33C26A82D3300AD6F23 /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7834C33B26A82D3300AD6F23 /* UserDefaults+Extensions.swift */; };
 		7834C33E26A852F300AD6F23 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7834C33D26A852F300AD6F23 /* icon.png */; };
+		78402C2F26B8760B002828AF /* LikedAlbumsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78402C2D26B8760B002828AF /* LikedAlbumsTableViewCell.swift */; };
+		78402C3026B8760B002828AF /* LikedAlbumsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78402C2E26B8760B002828AF /* LikedAlbumsTableViewCell.xib */; };
+		78402C3426B88146002828AF /* LikedTracksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78402C3226B88146002828AF /* LikedTracksTableViewCell.swift */; };
+		78402C3526B88146002828AF /* LikedTracksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78402C3326B88146002828AF /* LikedTracksTableViewCell.xib */; };
 		78538EAD26B44100003DBDE1 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78538EAC26B44100003DBDE1 /* FirestoreManager.swift */; };
 		78538EB026B4AE74003DBDE1 /* SearchMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78538EAF26B4AE74003DBDE1 /* SearchMusicTableViewCell.swift */; };
 		7862B8672697A2D2000E3056 /* SingleTrackAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862B8662697A2D2000E3056 /* SingleTrackAPIDataSource.swift */; };
@@ -102,6 +106,10 @@
 		7834C33926A72A2C00AD6F23 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		7834C33B26A82D3300AD6F23 /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
 		7834C33D26A852F300AD6F23 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		78402C2D26B8760B002828AF /* LikedAlbumsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedAlbumsTableViewCell.swift; sourceTree = "<group>"; };
+		78402C2E26B8760B002828AF /* LikedAlbumsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LikedAlbumsTableViewCell.xib; sourceTree = "<group>"; };
+		78402C3226B88146002828AF /* LikedTracksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedTracksTableViewCell.swift; sourceTree = "<group>"; };
+		78402C3326B88146002828AF /* LikedTracksTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LikedTracksTableViewCell.xib; sourceTree = "<group>"; };
 		78538EAC26B44100003DBDE1 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		78538EAF26B4AE74003DBDE1 /* SearchMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicTableViewCell.swift; sourceTree = "<group>"; };
 		7862B8662697A2D2000E3056 /* SingleTrackAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTrackAPIDataSource.swift; sourceTree = "<group>"; };
@@ -238,6 +246,24 @@
 			path = intro;
 			sourceTree = "<group>";
 		};
+		78402C2C26B875D6002828AF /* albums */ = {
+			isa = PBXGroup;
+			children = (
+				7887761726B02250006A18F2 /* AlbumsTableViewCell.swift */,
+				7887761826B02250006A18F2 /* AlbumsTableViewCell.xib */,
+			);
+			path = albums;
+			sourceTree = "<group>";
+		};
+		78402C3126B88128002828AF /* liked_tracks */ = {
+			isa = PBXGroup;
+			children = (
+				78402C3226B88146002828AF /* LikedTracksTableViewCell.swift */,
+				78402C3326B88146002828AF /* LikedTracksTableViewCell.xib */,
+			);
+			path = liked_tracks;
+			sourceTree = "<group>";
+		};
 		78538EAE26B4AE0F003DBDE1 /* search */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,8 +283,8 @@
 		7887761626B02235006A18F2 /* liked_albums */ = {
 			isa = PBXGroup;
 			children = (
-				7887761726B02250006A18F2 /* AlbumsTableViewCell.swift */,
-				7887761826B02250006A18F2 /* AlbumsTableViewCell.xib */,
+				78402C2D26B8760B002828AF /* LikedAlbumsTableViewCell.swift */,
+				78402C2E26B8760B002828AF /* LikedAlbumsTableViewCell.xib */,
 			);
 			path = liked_albums;
 			sourceTree = "<group>";
@@ -362,7 +388,9 @@
 		788A758E267B9F2400DFE2B0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				78402C2C26B875D6002828AF /* albums */,
 				781F1C7B26B0924A00648A1D /* details */,
+				78402C3126B88128002828AF /* liked_tracks */,
 				7887761626B02235006A18F2 /* liked_albums */,
 				78F0FB9426AB6641005B0DDC /* liked_genre */,
 				78538EAE26B4AE0F003DBDE1 /* search */,
@@ -540,11 +568,13 @@
 				7834C33726A728D700AD6F23 /* Intro.storyboard in Resources */,
 				781899D726938BF3000A5864 /* Login.storyboard in Resources */,
 				7887761A26B02250006A18F2 /* AlbumsTableViewCell.xib in Resources */,
+				78402C3526B88146002828AF /* LikedTracksTableViewCell.xib in Resources */,
 				7884C89D268F8CBB00FE1FBE /* GoogleService-Info.plist in Resources */,
 				7834C33E26A852F300AD6F23 /* icon.png in Resources */,
 				781899D526938B9E000A5864 /* Loading.storyboard in Resources */,
 				788A7584267B9E9900DFE2B0 /* Assets.xcassets in Resources */,
 				788A757F267B9E9800DFE2B0 /* Main.storyboard in Resources */,
+				78402C3026B8760B002828AF /* LikedAlbumsTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +644,7 @@
 				782E4860268A345B005C8E4F /* TopAlbumsCollectionViewCell.swift in Sources */,
 				7834C33A26A72A2C00AD6F23 /* IntroViewController.swift in Sources */,
 				7834B413268E712800D1161C /* LoadingViewController.swift in Sources */,
+				78402C2F26B8760B002828AF /* LikedAlbumsTableViewCell.swift in Sources */,
 				782E4858268A1E3A005C8E4F /* ClassicalCollectionReusableView.swift in Sources */,
 				7893ECB926B3067A00268B3A /* SingleAlbumAPIDataSource.swift in Sources */,
 				7887761926B02250006A18F2 /* AlbumsTableViewCell.swift in Sources */,
@@ -625,6 +656,7 @@
 				78892CC02688EEC800A12F41 /* JazzCollectionReusableView.swift in Sources */,
 				78021D4026A453410070DEB8 /* TopAlbums.swift in Sources */,
 				781F1C7D26B0926400648A1D /* DetailsTableViewCell.swift in Sources */,
+				78402C3426B88146002828AF /* LikedTracksTableViewCell.swift in Sources */,
 				78021D4126A453410070DEB8 /* Track.swift in Sources */,
 				7828BB3826908018001CA735 /* RegisterViewController.swift in Sources */,
 				78CB8FEE2689280000E90CE4 /* TopArtistsCollectionViewCell.swift in Sources */,

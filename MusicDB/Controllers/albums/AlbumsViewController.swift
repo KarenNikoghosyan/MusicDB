@@ -118,6 +118,9 @@ class AlbumsViewController: BaseTableViewController {
         NotificationCenter.default.addObserver(forName: .ReloadFromHome, object: nil, queue: .main) {[weak self] _ in
             self?.albumsTableView.reloadData()
         }
+        NotificationCenter.default.addObserver(forName: .ReloadFromLiked, object: nil, queue: .main) {[weak self] _ in
+            self?.albumsTableView.reloadData()
+        }
     }
     
     func fetchAlbums() {
