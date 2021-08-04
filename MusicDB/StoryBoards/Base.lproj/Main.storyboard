@@ -31,6 +31,16 @@
             </objects>
             <point key="canvasLocation" x="-100" y="922"/>
         </scene>
+        <!--Hosting Controller-->
+        <scene sceneID="haH-0f-FC4">
+            <objects>
+                <hostingController id="a0g-l0-4gn" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="TDn-iH-Xc4"/>
+                </hostingController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X3h-vt-YKh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2223" y="2524"/>
+        </scene>
         <!--Search-->
         <scene sceneID="fit-Ug-e53">
             <objects>
@@ -509,6 +519,12 @@
                     </collectionView>
                     <tabBarItem key="tabBarItem" title="Item" id="HqB-3z-fh9"/>
                     <navigationItem key="navigationItem" title="Explore" id="2sl-s3-NuD">
+                        <barButtonItem key="leftBarButtonItem" image="gearshape.fill" catalog="system" id="hrA-yw-dpz">
+                            <color key="tintColor" systemColor="systemGreenColor"/>
+                            <connections>
+                                <action selector="settingsTapped:" destination="kS8-rI-kNd" id="Mgv-Ge-9ZM"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icon_signout_potrait" landscapeImage="icon_signout_landscape" id="ClD-oj-G4P">
                             <connections>
                                 <action selector="signOut:" destination="kS8-rI-kNd" id="WQC-4B-aT9"/>
@@ -520,6 +536,7 @@
                         <segue destination="UKZ-tQ-2VP" kind="presentation" identifier="toDetails" id="NqS-Qw-gks"/>
                         <segue destination="01x-c5-8NO" kind="presentation" identifier="toGenre" id="4wl-y0-BxQ"/>
                         <segue destination="7s6-oP-Ih7" kind="presentation" identifier="toAlbumDetails" id="Plz-8f-IVs"/>
+                        <segue destination="a0g-l0-4gn" kind="show" id="8yZ-cV-HnZ"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zBD-61-hwv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -972,10 +989,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="geQ-gZ-cJu"/>
-        <segue reference="i6h-vK-J6Q"/>
+        <segue reference="NqS-Qw-gks"/>
+        <segue reference="Plz-8f-IVs"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="icon_signout_landscape" width="18" height="18"/>
         <image name="icon_signout_potrait" width="25" height="25"/>

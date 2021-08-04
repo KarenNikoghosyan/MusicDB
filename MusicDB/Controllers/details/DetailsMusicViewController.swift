@@ -29,6 +29,7 @@ class DetailsMusicViewController: BaseTableViewController {
     
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {
+        stopAudio()
         Loaf.dismiss(sender: self, animated: true)
         self.dismiss(animated: true, completion: nil)
     }

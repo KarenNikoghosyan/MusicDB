@@ -109,10 +109,20 @@ class BaseTableViewController: UIViewController {
         arrIndexPaths.append(selectedIndexPath)
         tableView.reloadRows(at: [selectedIndexPath], with: .none)
         
-        let albumTrack = albumTracks[selectedIndexPath.row]
-        if let urlPreview = URL(string: "\(albumTrack.preview)") {
-            MediaPlayer.shared.loadAudio(url: urlPreview)
+        if !albumTracks.isEmpty {
+            let albumTrack = albumTracks[selectedIndexPath.row]
+            if let urlPreview = URL(string: "\(albumTrack.preview)") {
+                MediaPlayer.shared.loadAudio(url: urlPreview)
+            }
         }
+        
+        if !tracks.isEmpty {
+            let track = tracks[selectedIndexPath.row]
+            if let urlPreview = URL(string: "\(track.preview)") {
+                MediaPlayer.shared.loadAudio(url: urlPreview)
+            }
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 30) {[weak self] in
             MediaPlayer.shared.stopAudio()
             guard let self = self else {return}

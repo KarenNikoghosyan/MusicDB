@@ -11,6 +11,7 @@ import SafariServices
 import PKHUD
 import Loaf
 import FirebaseAuth
+import SwiftUI
 
 class HomeMusicCollectionViewController: UICollectionViewController {
         
@@ -31,6 +32,13 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     let topAlbumsDS = TopAlbumsAPIDataSource()
     var counter: Int = 0
     
+    @IBAction func settingsTapped(_ sender: UIBarButtonItem) {
+        let settingsView = SettingsView()
+        
+        let host = UIHostingController(rootView: settingsView)
+        navigationController?.pushViewController(host, animated: true)
+        tabBarController?.tabBar.isHidden = true
+    }
     //Sign out button
     @IBAction func signOut(_ sender: UIBarButtonItem) {
         logOutTappedAndSegue()
@@ -88,8 +96,11 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-       
         setTabBarSwipe(enabled: true)
+        
+        if tabBarController?.tabBar.isHidden == true {
+            tabBarController?.tabBar.isHidden = false
+        }
     }
     
     func greetingMessage() {
