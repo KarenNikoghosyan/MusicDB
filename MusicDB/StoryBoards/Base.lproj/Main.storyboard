@@ -31,15 +31,15 @@
             </objects>
             <point key="canvasLocation" x="-100" y="922"/>
         </scene>
-        <!--Hosting Controller-->
+        <!--Settings-->
         <scene sceneID="haH-0f-FC4">
             <objects>
                 <hostingController id="a0g-l0-4gn" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="TDn-iH-Xc4"/>
+                    <navigationItem key="navigationItem" title="Settings" id="TDn-iH-Xc4"/>
                 </hostingController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X3h-vt-YKh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2223" y="2524"/>
+            <point key="canvasLocation" x="-2250" y="3354"/>
         </scene>
         <!--Search-->
         <scene sceneID="fit-Ug-e53">
@@ -531,12 +531,11 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="UKZ-tQ-2VP" kind="presentation" identifier="toDetails" id="NqS-Qw-gks"/>
                         <segue destination="01x-c5-8NO" kind="presentation" identifier="toGenre" id="4wl-y0-BxQ"/>
                         <segue destination="7s6-oP-Ih7" kind="presentation" identifier="toAlbumDetails" id="Plz-8f-IVs"/>
-                        <segue destination="a0g-l0-4gn" kind="show" id="8yZ-cV-HnZ"/>
+                        <segue destination="a0g-l0-4gn" kind="show" identifier="toSettings" destinationCreationSelector="addSettingsView:" id="4ZS-cP-2HX"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zBD-61-hwv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -817,6 +816,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="y75-uX-MMU">
                         <rect key="frame" x="0.0" y="44" width="428" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

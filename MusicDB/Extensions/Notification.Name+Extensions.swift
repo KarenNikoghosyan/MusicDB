@@ -30,4 +30,6 @@ extension Notification.Name {
     //Reload tableviews
     static let ReloadFromHome = Notification.Name("ReloadFromHome")
     static let ReloadFromLiked = Notification.Name("reloadFromLiked")
+    
+    static let MoveToLogin = Notification.Name("moveToLogin")
 }

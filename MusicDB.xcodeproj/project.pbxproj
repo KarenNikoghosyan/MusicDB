@@ -40,6 +40,7 @@
 		78538EB026B4AE74003DBDE1 /* SearchMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78538EAF26B4AE74003DBDE1 /* SearchMusicTableViewCell.swift */; };
 		7862B8672697A2D2000E3056 /* SingleTrackAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862B8662697A2D2000E3056 /* SingleTrackAPIDataSource.swift */; };
 		78638A70268742D3001A756E /* GenreAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78638A6F268742D3001A756E /* GenreAPIDataSource.swift */; };
+		7864D8BA26BBF45800ED6E60 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7864D8B926BBF45800ED6E60 /* UIView+Extensions.swift */; };
 		7876D20C26828D2A009D0669 /* MediaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7876D20B26828D2A009D0669 /* MediaPlayer.swift */; };
 		7884C89D268F8CBB00FE1FBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7884C89C268F8CBB00FE1FBE /* GoogleService-Info.plist */; };
 		7887761526B00204006A18F2 /* AlbumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7887761426B00204006A18F2 /* AlbumsViewController.swift */; };
@@ -116,6 +117,7 @@
 		78538EAF26B4AE74003DBDE1 /* SearchMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicTableViewCell.swift; sourceTree = "<group>"; };
 		7862B8662697A2D2000E3056 /* SingleTrackAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTrackAPIDataSource.swift; sourceTree = "<group>"; };
 		78638A6F268742D3001A756E /* GenreAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreAPIDataSource.swift; sourceTree = "<group>"; };
+		7864D8B926BBF45800ED6E60 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		7876D20B26828D2A009D0669 /* MediaPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayer.swift; sourceTree = "<group>"; };
 		7884C89C268F8CBB00FE1FBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7887761426B00204006A18F2 /* AlbumsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewController.swift; sourceTree = "<group>"; };
@@ -493,6 +495,7 @@
 				7834C33B26A82D3300AD6F23 /* UserDefaults+Extensions.swift */,
 				78F0FB9726ACB436005B0DDC /* Notification.Name+Extensions.swift */,
 				78BE5F8626B5A07900992659 /* UIDevice+Extensions.swift */,
+				7864D8B926BBF45800ED6E60 /* UIView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -691,6 +694,7 @@
 				7828BB3626908007001CA735 /* LoginViewController.swift in Sources */,
 				78C5180626A4F5F200D9378B /* GenreMusicViewController.swift in Sources */,
 				782E485E268A3423005C8E4F /* TopAlbumsCollectionReusableView.swift in Sources */,
+				7864D8BA26BBF45800ED6E60 /* UIView+Extensions.swift in Sources */,
 				78BACE5B26923EF500D75B97 /* UITextField+Extensions.swift in Sources */,
 				78C5180326A4ED6E00D9378B /* UICollectionReusableView+Extensions.swift in Sources */,
 				788A7597267BB2C200DFE2B0 /* HomeMusicCollectionViewController.swift in Sources */,

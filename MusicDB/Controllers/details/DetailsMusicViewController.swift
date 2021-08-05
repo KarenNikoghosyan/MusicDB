@@ -204,6 +204,7 @@ class DetailsMusicViewController: BaseTableViewController {
             guard let detailsVC = DetailsMusicViewController.storyboardInstance(storyboardID: "Main", restorationID: "detailsScreen") as? UINavigationController,
                   let targetController = detailsVC.topViewController as? DetailsMusicViewController else {return}
             
+            self?.stopAudio()
             let track = self?.tracks[indexPath.row]
             targetController.track = track
             parentVC?.present(detailsVC, animated: true)

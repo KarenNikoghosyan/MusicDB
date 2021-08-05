@@ -32,12 +32,16 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     let topAlbumsDS = TopAlbumsAPIDataSource()
     var counter: Int = 0
     
+    @IBSegueAction func addSettingsView(_ coder: NSCoder) -> UIViewController? {
+        return UIHostingController(coder: coder, rootView: SettingsView())
+    }
     @IBAction func settingsTapped(_ sender: UIBarButtonItem) {
-        let settingsView = SettingsView()
+        Loaf.dismiss(sender: self, animated: true)
         
-        let host = UIHostingController(rootView: settingsView)
-        navigationController?.pushViewController(host, animated: true)
-        tabBarController?.tabBar.isHidden = true
+        navigationController?.navigationBar.barTintColor = .white
+        tabBarController?.tabBar.setIsHidden(true, animated: true)
+        setTabBarSwipe(enabled: false)
+        performSegue(withIdentifier: "toSettings", sender: nil)
     }
     //Sign out button
     @IBAction func signOut(_ sender: UIBarButtonItem) {
@@ -74,6 +78,9 @@ class HomeMusicCollectionViewController: UICollectionViewController {
                 self.performSegue(withIdentifier: "toGenre", sender: [viewAll, genre])
             }
         }
+        NotificationCenter.default.addObserver(forName: .MoveToLogin, object: nil, queue: .main) {[weak self] _ in
+            self?.logOutTappedAndSegue()
+        }
         
         //Registers the cells
         collectionView.register(HomeTracksCollectionViewCell.self, forCellWithReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier)
@@ -99,7 +106,10 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         setTabBarSwipe(enabled: true)
         
         if tabBarController?.tabBar.isHidden == true {
-            tabBarController?.tabBar.isHidden = false
+            tabBarController?.tabBar.setIsHidden(false, animated: true)
+        }
+        if navigationController?.navigationBar.barTintColor == .white {
+            navigationController?.navigationBar.barTintColor = UIColor(red: 33.0 / 255, green: 33.0 / 255, blue: 33.0 / 255, alpha: 1)
         }
     }
     
