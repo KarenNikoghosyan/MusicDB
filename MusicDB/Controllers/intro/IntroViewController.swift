@@ -17,6 +17,7 @@ class IntroViewController: UIViewController {
     
     @IBOutlet weak var doneButton: UIButton!
     
+    //Creates different screens of tutorials
     fileprivate let items = [
         OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "logo"),
                            title: "Welcome to MusicDB!",
@@ -87,6 +88,7 @@ class IntroViewController: UIViewController {
     }
     
     private func setupPaperOnboardingView() {
+        //Adds the created screens to subview
         let onboarding = PaperOnboarding()
         onboarding.delegate = self
         onboarding.dataSource = self
@@ -109,6 +111,7 @@ class IntroViewController: UIViewController {
 extension IntroViewController {
 
     @IBAction func doneButtonTapped(_: UIButton) {
+        //Saves the value to userdefauls, so the tutorial will appear only once.
         UserDefaults.standard.setIntro(value: true)
         
         let storyboard = UIStoryboard(name: "Login", bundle: .main)
@@ -119,12 +122,14 @@ extension IntroViewController {
 
 extension IntroViewController: PaperOnboardingDelegate {
 
+    //Shows the done button at index 7
     func onboardingWillTransitonToIndex(_ index: Int) {
         doneButton.isHidden = index == 7 ? false : true
     }
 
     func onboardingConfigurationItem(_ item: OnboardingContentViewItem, index: Int) {
         
+        //Resizing the image
         if let imageSize = item.imageView?.image?.size {
             item.informationImageWidthConstraint?.constant = imageSize.width / 2
             item.informationImageHeightConstraint?.constant = imageSize.height / 2
@@ -139,6 +144,7 @@ extension IntroViewController: PaperOnboardingDataSource {
         return items[index]
     }
 
+    //Returns the number of screens
     func onboardingItemsCount() -> Int {
         return 8
     }

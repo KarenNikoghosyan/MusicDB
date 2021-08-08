@@ -10,6 +10,7 @@ import SwipeableTabBarController
 
 class TabBarController: SwipeableTabBarController {
     
+    //Tab bar tap animation
     private var bounceAnimation: CAKeyframeAnimation = {
             let bounceAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
             bounceAnimation.values = [1.0, 1.4, 0.9, 1.02, 1.0]
@@ -23,13 +24,14 @@ class TabBarController: SwipeableTabBarController {
         if let viewControllers = viewControllers {
             selectedViewController = viewControllers[1]
         }
-        
+        //The animation type for the transition
         swipeAnimatedTransitioning?.animationType = SwipeAnimationType.push
 
         tabBar.tintColor = .yellow
         tabBar.barTintColor = UIColor(red: 80.0/255, green: 80.0/255, blue: 80.0/255, alpha: 1)
     }
     
+    //Bounce animation
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         guard let index = tabBar.items?.firstIndex(of: item),
               tabBar.subviews.count > index + 1,

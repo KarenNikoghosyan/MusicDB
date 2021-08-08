@@ -43,6 +43,7 @@ class SearchMusicViewController: BaseTableViewController {
         trackSearchBar.searchTextField.textColor = .white
         trackSearchBar.searchTextField.leftView?.tintColor = .white
         
+        //Creates a label, and will be only shows when the search bar is empty
         searchLabel.text = "Search for artists, songs and more."
         searchLabel.font = UIFont.init(name: "Futura", size: 18)
         searchLabel.textColor = .white
@@ -57,6 +58,7 @@ class SearchMusicViewController: BaseTableViewController {
     }
     
     func loadNoTracksLabel() {
+        //Creates a label, and will be only shown if no tracks were found
         noTracksLabel.text = "No Tracks Found"
         noTracksLabel.font = UIFont.init(name: "Futura", size: 20)
         noTracksLabel.textColor = .white
@@ -112,6 +114,7 @@ extension SearchMusicViewController: UISearchBarDelegate {
             return
         }
         
+        //Adds a delay, when the user stops typing the func will run after 0.5 seconds to prevent unnecessary network calls
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reload(_:)), object: searchBar)
             perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.5)
     }
@@ -125,6 +128,7 @@ extension SearchMusicViewController: UISearchBarDelegate {
         
         guard let text = searchBar.text else {return}
         
+        //Shows a label when the search bar is empty
         if text.count <= 0 {
             activityIndicatorView.stopAnimating()
             searchLabel.isHidden = false
@@ -141,7 +145,9 @@ extension SearchMusicViewController: UISearchBarDelegate {
                     self.tracks = tracks
                     self.searchTracksTableView.reloadData()
                     
-                    self.searchTracksTableView.animate(animations: [animation])
+                    //Loads the cells with animation
+                    let cells = self.searchTracksTableView.visibleCells
+                    UIView.animate(views: cells, animations: [animation])
                     self.activityIndicatorView.stopAnimating()
                     
                     if tracks.count <= 0 {

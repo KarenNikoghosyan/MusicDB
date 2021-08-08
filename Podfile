@@ -20,6 +20,7 @@ target 'MusicDB' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'GoogleSignIn'
   pod 'Alamofire'
   pod 'paper-onboarding'
   

@@ -18,6 +18,8 @@ class LoadingViewController: UIViewController {
         return Auth.auth().currentUser != nil
     }
     
+    //Checks the current running device and loads the appropriate constraints based on the device.
+    //potrait orientation
     func portraitConstraints() {
         switch UIDevice().type {
         case .iPod7:
@@ -34,6 +36,7 @@ class LoadingViewController: UIViewController {
         }
     }
     
+    //landscape orientation
     func landscapeConstraints() {
         switch UIDevice().type {
         case .iPod7:
@@ -63,6 +66,7 @@ class LoadingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Loading indicator for the loading screen
         let activityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .lineScalePulseOut, color: .white, padding: 0)
         
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -79,16 +83,19 @@ class LoadingViewController: UIViewController {
             guard let self = self else {return}
             activityIndicatorView.stopAnimating()
             
+            //if user connected will load him staright into the home screen
             if self.isUserLoggedIn {
                 let storyboard = UIStoryboard(name: "Main", bundle: .main)
                 let vc = storyboard.instantiateViewController(withIdentifier: "mainStoryboard")
                 self.present(vc, animated: true)
             } else {
+                //if user launches the app for the first time, a tutorial screen will be shown
                 if !UserDefaults.standard.isIntro() {
                     let storyboard = UIStoryboard(name: "Intro", bundle: .main)
                     let vc = storyboard.instantiateViewController(withIdentifier: "introStoryboard")
                     self.present(vc, animated: true)
                 } else {
+                    //if the user isn't connected will load him straight into the login screen
                     let storyboard = UIStoryboard(name: "Login", bundle: .main)
                     let vc = storyboard.instantiateViewController(withIdentifier: "loginStoryboard")
                     self.present(vc, animated: true)

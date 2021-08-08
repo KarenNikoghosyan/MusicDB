@@ -5,7 +5,8 @@
 //  Created by Karen Nikoghosyan on 21/07/2021.
 //
 
-import Foundation
+import UIKit
+import SwiftUI
 
 extension UserDefaults {
     func setIntro(value: Bool) {
@@ -15,8 +16,14 @@ extension UserDefaults {
     func isIntro()-> Bool {
         return bool(forKey: UserDefaultsKeys.isIntro.rawValue)
     }
+    func setProfileImage(imageData: Data) {
+        set(imageData, forKey: UserDefaultsKeys.profileImage.rawValue)
+    }
+    func getProfileImage() -> Data? {
+        return data(forKey: UserDefaultsKeys.profileImage.rawValue)
+    }
 }
 
 enum UserDefaultsKeys: String {
-    case isIntro
+    case isIntro, profileImage
 }

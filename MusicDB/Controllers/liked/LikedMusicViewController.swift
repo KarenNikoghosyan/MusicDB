@@ -53,6 +53,7 @@ class LikedMusicViewController: BaseTableViewController {
         
         setUpSegmentedControl()
         
+        //Checks the connectivity when the screen appears
         if Connectivity.isConnectedToInternet {
             if segmentedControl.selectedSegmentIndex == 0 {
                 getUserLikedTracks()
@@ -77,6 +78,7 @@ class LikedMusicViewController: BaseTableViewController {
         
         likedTableView.separatorColor = UIColor.darkGray
 
+        //Modifing the edit button look(font, color)
         self.navigationItem.leftBarButtonItem = self.editButtonItem
         self.navigationItem.leftBarButtonItem?.tintColor = .systemGreen
         self.navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Futura-Bold", size: 16) as Any], for: .normal)
@@ -94,6 +96,7 @@ class LikedMusicViewController: BaseTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var numberOfRows = 0
         
+        //Returns the number of rows based on the selected segment
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             numberOfRows = tracks.count
@@ -109,6 +112,7 @@ class LikedMusicViewController: BaseTableViewController {
         let tracksCell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as! LikedTracksTableViewCell
         let albumsCell = tableView.dequeueReusableCell(withIdentifier: "albumCell", for: indexPath) as! LikedAlbumsTableViewCell
         
+        //Loads the cells based on the selected segment
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             accessoryArrow(cell: tracksCell)
@@ -161,6 +165,7 @@ class LikedMusicViewController: BaseTableViewController {
             }
             guard let userID = Auth.auth().currentUser?.uid else {return}
 
+            //Deletes a cell based on the selected segment
             switch segmentedControl.selectedSegmentIndex {
             case 0:
                 let track = tracks[indexPath.row]
@@ -214,6 +219,7 @@ class LikedMusicViewController: BaseTableViewController {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
             return
         }
+        //Performs segue based on the selected segment
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             Loaf.dismiss(sender: self, animated: true)
@@ -227,6 +233,7 @@ class LikedMusicViewController: BaseTableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //Checks the segue's identifier and based on that will send us to the correct screen
         if segue.identifier == "toDetails" {
             guard let dest = segue.destination as? UINavigationController,
                   let targetController = dest.topViewController as? DetailsMusicViewController,
@@ -241,6 +248,7 @@ class LikedMusicViewController: BaseTableViewController {
     }
     
     func setUpObservers() {
+        //An observer to get the track from other viewcontrollers to add it to the tableview
         NotificationCenter.default.addObserver(forName: .AddTrack, object: nil, queue: .main) {[weak self] notification in
             if let track = notification.userInfo?["track"] as? Track {
                 guard let self = self else {return}
@@ -254,6 +262,7 @@ class LikedMusicViewController: BaseTableViewController {
                 }
             }
         }
+        //An observer to notify what track to remove from the tableview
         NotificationCenter.default.addObserver(forName: .RemoveTrack, object: nil, queue: .main) {[weak self] notification in
             if let track = notification.userInfo?["track"] as? Track {
                 guard let self = self else {return}
@@ -272,6 +281,7 @@ class LikedMusicViewController: BaseTableViewController {
                 }
             }
         }
+        //An observer to get the album from other viewcontrollers to add it to the tableview
         NotificationCenter.default.addObserver(forName: .AddAlbumID, object: nil, queue: .main) {[weak self] notification in
             if let album = notification.userInfo?["album"] as? TopAlbums {
                 guard let self = self else {return}
@@ -286,6 +296,7 @@ class LikedMusicViewController: BaseTableViewController {
                 }
             }
         }
+        //An observer to notify what album to remove from the tableview
         NotificationCenter.default.addObserver(forName: .RemoveAlbumID, object: nil, queue: .main) {[weak self] notification in
             if let album = notification.userInfo?["album"] as? TopAlbums {
                 guard let self = self else {return}
@@ -307,6 +318,7 @@ class LikedMusicViewController: BaseTableViewController {
         }
     }
     
+    //Sets up the segmented control
     func setUpSegmentedControl() {
         let tintColor = UIColor.white
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: tintColor], for: .normal)
@@ -314,6 +326,7 @@ class LikedMusicViewController: BaseTableViewController {
         segmentedControl.addTarget(self, action: #selector(segmentTapped(_:)), for: .valueChanged)
     }
     
+    //When the segmented control gets tapped it will load the correct data based on the selected index
     @IBAction func segmentTapped(_ sender: UISegmentedControl) {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
@@ -357,6 +370,7 @@ class LikedMusicViewController: BaseTableViewController {
         }
     }
     
+    //Gets the liked tracks ids from the firestore database
     func getUserLikedTracks() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
         FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
@@ -368,6 +382,7 @@ class LikedMusicViewController: BaseTableViewController {
         }
     }
     
+    //if the tracksIDs is empty it won't fetch the tracks
     func fetchTracks() {
         if tracksIDs?.count == 0 {
             if segmentedControl.selectedSegmentIndex == 0 {
@@ -377,6 +392,7 @@ class LikedMusicViewController: BaseTableViewController {
             return
         }
         
+        //Recursive call, will fetch tracks one by one, when ready it will load the tableview with the correct data
         singleTrackDS.fetchTracks(from: .track, id: tracksIDs?[trackIndex]) {[weak self] track, error in
             if let track = track {
                 guard let self = self else {return}
@@ -401,6 +417,7 @@ class LikedMusicViewController: BaseTableViewController {
         }
     }
     
+    //Gets the liked albums ids from the firestore database
     func getUserLikedAlbums() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
         FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
@@ -412,6 +429,7 @@ class LikedMusicViewController: BaseTableViewController {
         }
     }
     
+    //if the albumsIDs is empty it won't fetch the albums
     func fetchAlbums() {
         if albumIDs?.count == 0 {
             if segmentedControl.selectedSegmentIndex == 1 {
@@ -421,6 +439,7 @@ class LikedMusicViewController: BaseTableViewController {
             return
         }
         
+        //Recursive call, will fetch albums one by one, when ready it will load the tableview with the correct data
         singleAlbumDS.fetchAlbums(from: .album, id: albumIDs?[albumIndex]) {[weak self] album, error in
             if let album = album {
                 guard let self = self else {return}
@@ -444,6 +463,7 @@ class LikedMusicViewController: BaseTableViewController {
         }
     }
     
+    //Tableview reload animation
     func reloadTableViewWithAnimation() {
         let cells = self.likedTableView.visibleCells
         UIView.animate(views: cells, animations: [self.animation])
@@ -466,6 +486,7 @@ class LikedMusicViewController: BaseTableViewController {
     }
 }
 
+//Extension for an alert based on the viewcontroller
 extension LikedMusicViewController {
     func showAlertWithActions(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)

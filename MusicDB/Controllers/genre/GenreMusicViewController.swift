@@ -24,6 +24,7 @@ class GenreMusicViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Checks the connectivity status when the screen appears.
         if Connectivity.isConnectedToInternet {
             addObservers()
             fetchTracks()
@@ -91,6 +92,7 @@ class GenreMusicViewController: BaseTableViewController {
         targetController.isGenre = data["isGenre"] as? Bool
     }
     
+    //Fetches tracks
     func fetchTracks() {
         genreDS.fetchGenres(from: .chart, with: path, with: ["limit" : 150]) {[weak self] tracks, error in
             if let tracks = tracks {
@@ -100,6 +102,7 @@ class GenreMusicViewController: BaseTableViewController {
                 self.genreTableView.reloadData()
                 self.activityIndicatorView.stopAnimating()
                 
+                //Animates cells
                 let cells = self.genreTableView.visibleCells
                 UIView.animate(views: cells, animations: [self.animation])
             } else if let error = error {
@@ -112,6 +115,7 @@ class GenreMusicViewController: BaseTableViewController {
     func addObservers() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
         
+        //Gets the indexpath from the button, to determine what track to add to the firestore database
         NotificationCenter.default.addObserver(forName: .IndexAdd, object: nil, queue: .main) {[weak self] notification in
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 guard let track = self?.tracks[indexPath.row] else {return}
@@ -120,6 +124,7 @@ class GenreMusicViewController: BaseTableViewController {
                 self?.loafMessageAdded(track: track)
             }
         }
+        //Gets the indexpath from the button, to determine what track to remove to the firestore database
         NotificationCenter.default.addObserver(forName: .IndexRemove, object: nil, queue: .main) {[weak self] notification in
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 guard let track = self?.tracks[indexPath.row] else {return}
@@ -128,6 +133,7 @@ class GenreMusicViewController: BaseTableViewController {
                 self?.loafMessageRemoved(track: track)
             }
         }
+        //Gets the indexpath from the button, to determine what cell to reload
         NotificationCenter.default.addObserver(forName: .SendIndexPath, object: nil, queue: .main) {[weak self] notification in
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 self?.genreTableView.reloadRows(at: [indexPath], with: .none)
@@ -136,6 +142,7 @@ class GenreMusicViewController: BaseTableViewController {
     }
 }
 
+//Extension for an alert based on the viewcontroller
 extension GenreMusicViewController {
     func showAlertWithActions(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)

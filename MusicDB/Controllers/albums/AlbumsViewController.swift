@@ -23,6 +23,7 @@ class AlbumsViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Checks the connectivity when loading the screen
         if Connectivity.isConnectedToInternet {
             addObservers()
             fetchAlbums()
@@ -65,6 +66,7 @@ class AlbumsViewController: BaseTableViewController {
         return cell
     }
     
+    //Link to open a website
     @IBAction func openWebsiteTapped(_ sender: UIButton) {
         openWebsite(albums: albums, sender: sender)
     }
@@ -94,6 +96,7 @@ class AlbumsViewController: BaseTableViewController {
     func addObservers() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
         
+        //Gets the indexpath from the button, to determine what album to add to the firestore database
         NotificationCenter.default.addObserver(forName: .AddAlbumID, object: nil, queue: .main) {[weak self] notification in
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 guard let album = self?.albums[indexPath.row] else {return}
@@ -102,6 +105,7 @@ class AlbumsViewController: BaseTableViewController {
                 self?.loafMessageAddedAlbum(album: album)
             }
         }
+        //Gets the indexpath from the button, to determine what album to remove from the firestore database
         NotificationCenter.default.addObserver(forName: .RemoveAlbumID, object: nil, queue: .main) {[weak self] notification in
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 guard let album = self?.albums[indexPath.row] else {return}
@@ -110,11 +114,13 @@ class AlbumsViewController: BaseTableViewController {
                 self?.loafMessageRemovedAlbum(album: album)
             }
         }
+        //Gets the indexpath from the button, to determine what cell to reload
         NotificationCenter.default.addObserver(forName: .SendIndexPathAlbum, object: nil, queue: .main) {[weak self] notification in
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 self?.albumsTableView.reloadRows(at: [indexPath], with: .none)
             }
         }
+        //Observers to reload the tableview
         NotificationCenter.default.addObserver(forName: .ReloadFromHome, object: nil, queue: .main) {[weak self] _ in
             self?.albumsTableView.reloadData()
         }
@@ -123,6 +129,7 @@ class AlbumsViewController: BaseTableViewController {
         }
     }
     
+    //Fetches albums
     func fetchAlbums() {
         topAlbumsDS.fetchTopAlbums(from: .chart, with: "/0/albums", with: ["limit" : 150]) {[weak self] albums, error in
             guard let self = self else {return}
@@ -131,6 +138,7 @@ class AlbumsViewController: BaseTableViewController {
                 self.albums = albums
                 self.albumsTableView.reloadData()
                 
+                //Animates the cells
                 let cells = self.albumsTableView.visibleCells
                 UIView.animate(views: cells, animations: [self.animation])
                 
@@ -143,6 +151,7 @@ class AlbumsViewController: BaseTableViewController {
     }
 }
 
+//Extension for an alert based on the viewcontroller
 extension AlbumsViewController {
     func showAlertWithActions(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)

@@ -47,11 +47,13 @@ class AlbumDetailsViewController: BaseTableViewController {
               let album = album else {return}
         
         if !isLiked {
+            //Adds an ablum
             FirestoreManager.shared.addAlbum(album: album, userID: userID)
             loafMessageAddedAlbum(album: album)
 
             isLiked = true
         } else {
+            //Removes an album
             FirestoreManager.shared.removeAlbum(album: album, userID: userID)
             loafMessageRemovedAlbum(album: album)
 
@@ -59,6 +61,8 @@ class AlbumDetailsViewController: BaseTableViewController {
         }
         
         guard let isHome = isHome else {return}
+        
+        //Checks whether we came from the home screen or not
         if isHome {
             NotificationCenter.default.post(name: .ReloadFromHome, object: nil, userInfo: nil)
         } else {
@@ -110,6 +114,7 @@ class AlbumDetailsViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Checks the connectivity on launch
         if !Connectivity.isConnectedToInternet {
             showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
         } else {
@@ -121,6 +126,7 @@ class AlbumDetailsViewController: BaseTableViewController {
         tracksTableView.delegate = self
         tracksTableView.dataSource = self
         
+        //An observer to check if the app moved to background
         let notifactionCenter = NotificationCenter.default
         notifactionCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         
@@ -164,6 +170,8 @@ class AlbumDetailsViewController: BaseTableViewController {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
             return
         }
+        
+        //Converts albumTrack to Track and sends it via segue
         let oldTrack = albumTracks[indexPath.row]
         let track = Track(
             id: oldTrack.id,
@@ -191,6 +199,7 @@ class AlbumDetailsViewController: BaseTableViewController {
         
         MediaPlayer.shared.stopAudio()
         if let prevIndexPath = prevIndexPath {
+            //Resests the play button state when segue to another screen
             arrIndexPaths.removeAll()
             prevButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
             tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
@@ -208,6 +217,7 @@ class AlbumDetailsViewController: BaseTableViewController {
         targetController.isAlbumDetails = data["isAlbumDetails"] as? Bool
     }
     
+    //Handles the play button state when the app moves to background
     @objc func appMovedToBackground() {
         MediaPlayer.shared.stopAudio()
         prevButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
@@ -217,15 +227,18 @@ class AlbumDetailsViewController: BaseTableViewController {
         }
     }
     
+    //Sets up the ImageView
     func setUpImageView() {
         albumImageView.tintColor = .white
         albumImageView.layer.cornerRadius = 15
         albumImageView.layer.masksToBounds = true
     }
     
+    //Fetches the tracks
     func fetchTracks() {
         guard let album = album else {return}
 
+        //Substring the string to send it to the fetch tracks func
         let start = album.tracklist.index(album.tracklist.startIndex, offsetBy: 28)
         let end = album.tracklist.index(album.tracklist.endIndex, offsetBy: 0)
         let result = album.tracklist[start..<end] 
@@ -250,11 +263,13 @@ class AlbumDetailsViewController: BaseTableViewController {
         }
     }
     
+    //Checks the liked button status when moving to this screen
     func checkLikedStatus() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
         FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
             
+            //Gets the albumIDs from firestore
             guard let arrIDs: [Int] = snapshot?.get("albumIDs") as? [Int] else {return}
             if arrIDs.contains(self.album?.id ?? 0) {
                 self.likedButton.isSelected = true
@@ -266,6 +281,7 @@ class AlbumDetailsViewController: BaseTableViewController {
         }
     }
     
+    //Shows the activity indicator(when the tableview is loading it's data)
     override func loadActivityIndicator() {
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicatorView)
@@ -280,6 +296,7 @@ class AlbumDetailsViewController: BaseTableViewController {
     }
 }
 
+//Extension for an alert
 extension AlbumDetailsViewController {
     func showAlertWithActions(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)

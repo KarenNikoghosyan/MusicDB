@@ -15,6 +15,7 @@
 		780DE671267F8E3A00D34944 /* DetailsMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780DE670267F8E3A00D34944 /* DetailsMusicViewController.swift */; };
 		781899D526938B9E000A5864 /* Loading.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 781899D426938B9E000A5864 /* Loading.storyboard */; };
 		781899D726938BF3000A5864 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 781899D626938BF3000A5864 /* Login.storyboard */; };
+		781B0C4726C01EC100DAC68E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B0C4626C01EC100DAC68E /* ImagePicker.swift */; };
 		781F1C7D26B0926400648A1D /* DetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781F1C7C26B0926400648A1D /* DetailsTableViewCell.swift */; };
 		781F1C7F26B09E7100648A1D /* AlbumTrackAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781F1C7E26B09E7100648A1D /* AlbumTrackAPIDataSource.swift */; };
 		781F1C8126B0A36100648A1D /* AlbumTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781F1C8026B0A36100648A1D /* AlbumTracks.swift */; };
@@ -92,6 +93,7 @@
 		780DE670267F8E3A00D34944 /* DetailsMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsMusicViewController.swift; sourceTree = "<group>"; };
 		781899D426938B9E000A5864 /* Loading.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Loading.storyboard; sourceTree = "<group>"; };
 		781899D626938BF3000A5864 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		781B0C4626C01EC100DAC68E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		781F1C7C26B0926400648A1D /* DetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTableViewCell.swift; sourceTree = "<group>"; };
 		781F1C7E26B09E7100648A1D /* AlbumTrackAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTrackAPIDataSource.swift; sourceTree = "<group>"; };
 		781F1C8026B0A36100648A1D /* AlbumTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumTracks.swift; sourceTree = "<group>"; };
@@ -216,6 +218,22 @@
 				788A757D267B9E9800DFE2B0 /* Main.storyboard */,
 			);
 			path = StoryBoards;
+			sourceTree = "<group>";
+		};
+		781B0C4226C017F800DAC68E /* SwiftUI_Views */ = {
+			isa = PBXGroup;
+			children = (
+				78481CD626BAC2AD006F9036 /* settings */,
+			);
+			path = SwiftUI_Views;
+			sourceTree = "<group>";
+		};
+		781B0C4326C01C6300DAC68E /* swiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				781B0C4626C01EC100DAC68E /* ImagePicker.swift */,
+			);
+			path = swiftUI;
 			sourceTree = "<group>";
 		};
 		781F1C7B26B0924A00648A1D /* details */ = {
@@ -383,6 +401,7 @@
 				781899CE2693884F000A5864 /* StoryBoards */,
 				78EA417E267F504B009828DD /* Extensions */,
 				788A7590267B9F3400DFE2B0 /* Models */,
+				781B0C4226C017F800DAC68E /* SwiftUI_Views */,
 				788A758F267B9F2B00DFE2B0 /* Controllers */,
 				788A758E267B9F2400DFE2B0 /* Views */,
 				788A7577267B9E9800DFE2B0 /* AppDelegate.swift */,
@@ -414,7 +433,6 @@
 		788A758F267B9F2B00DFE2B0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				78481CD626BAC2AD006F9036 /* settings */,
 				7887761B26B039E3006A18F2 /* album_details */,
 				7887761326AF8A64006A18F2 /* albums */,
 				7834C33826A728E900AD6F23 /* intro */,
@@ -435,6 +453,7 @@
 		788A7590267B9F3400DFE2B0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				781B0C4326C01C6300DAC68E /* swiftUI */,
 				78021D4326A453510070DEB8 /* structs */,
 				78892CB42688C2E100A12F41 /* datasource */,
 				7876D20B26828D2A009D0669 /* MediaPlayer.swift */,
@@ -698,6 +717,7 @@
 				78BACE5B26923EF500D75B97 /* UITextField+Extensions.swift in Sources */,
 				78C5180326A4ED6E00D9378B /* UICollectionReusableView+Extensions.swift in Sources */,
 				788A7597267BB2C200DFE2B0 /* HomeMusicCollectionViewController.swift in Sources */,
+				781B0C4726C01EC100DAC68E /* ImagePicker.swift in Sources */,
 				780C69DD269DD43D0097DDC4 /* Database.swift in Sources */,
 				781F1C7F26B09E7100648A1D /* AlbumTrackAPIDataSource.swift in Sources */,
 			);

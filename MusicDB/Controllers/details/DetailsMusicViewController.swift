@@ -73,6 +73,7 @@ class DetailsMusicViewController: BaseTableViewController {
     @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
         guard let track = track else {return}
         
+        //Checks the connectivity status
         if !Connectivity.isConnectedToInternet {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
             if !isLiked {
@@ -84,6 +85,7 @@ class DetailsMusicViewController: BaseTableViewController {
         }
         guard let userID = Auth.auth().currentUser?.uid else {return}
         
+        //Will add/remove tracks based on their liked status
         if !isLiked {
             FirestoreManager.shared.addTrack(track: track, userID: userID)
             loafMessageAdded(track: track)
@@ -95,6 +97,7 @@ class DetailsMusicViewController: BaseTableViewController {
 
             isLiked = false
         }
+        //Checks if we came from the genre screen and will send an indexpath to change the cell's liked status.
         guard let isGenre = isGenre else {return}
         if isGenre {
             NotificationCenter.default.post(name: .SendIndexPath, object: nil, userInfo: ["indexPath" : indexPath as Any])
@@ -104,6 +107,7 @@ class DetailsMusicViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Checks the connectivity status
         if Connectivity.isConnectedToInternet {
             fetchTracks()
             checkLikedStatus()
@@ -114,6 +118,7 @@ class DetailsMusicViewController: BaseTableViewController {
         createLikeButton()
         loadNoTracksLabel()
   
+        //Adds an observer to observe if the app moved to the backgroud
         let notifactionCenter = NotificationCenter.default
         notifactionCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         
@@ -128,6 +133,8 @@ class DetailsMusicViewController: BaseTableViewController {
         }
     }
     
+    //Checks the current running device and loads the appropriate constraints based on the device.
+    //potrait orientation
     func portraitConstraints() {
         switch UIDevice().type {
         case .iPod7:
@@ -141,6 +148,7 @@ class DetailsMusicViewController: BaseTableViewController {
         }
     }
     
+    //landscape orientation
     func landscapeConstraints() {
         switch UIDevice().type {
         case .iPod7:
@@ -172,6 +180,7 @@ class DetailsMusicViewController: BaseTableViewController {
         }
     }
     
+    //Stops the audio from playing when the app moves to the background
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if isBeingDismissed {
@@ -211,11 +220,13 @@ class DetailsMusicViewController: BaseTableViewController {
         }
     }
     
+    //Checks the liked status of a track(liked/unliked)
     func checkLikedStatus() {
         guard let userID = Auth.auth().currentUser?.uid else {return}
         FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
             guard let self = self else {return}
             
+            //Gets the tracksIDs from the firestore database
             guard let arrIDs: [Int] = snapshot?.get("trackIDs") as? [Int] else {return}
             if arrIDs.contains(self.track?.id ?? 0) {
                 self.likedButton.isSelected = true
@@ -227,6 +238,7 @@ class DetailsMusicViewController: BaseTableViewController {
         }
     }
     
+    //Sets up the views
     func setUpViewsFromTrack() {
         self.previewButton.addTarget(self, action: #selector(animateButton(_:)), for: .touchUpInside)
         
@@ -254,6 +266,7 @@ class DetailsMusicViewController: BaseTableViewController {
         detailsDurationLabel.text = "\(minutes):\(seconds)"
     }
     
+    //Sets up the views if we came from the albums screen/viewcontroller
     func setUpViewsFromAlbumDetails() {
         self.previewButton.addTarget(self, action: #selector(animateButton(_:)), for: .touchUpInside)
         
@@ -282,6 +295,7 @@ class DetailsMusicViewController: BaseTableViewController {
         detailsDurationLabel.text = "\(minutes):\(seconds)"
     }
   
+    //Creates the liked button
     func createLikeButton() {
         var param = WCLShineParams()
         param.bigShineColor = UIColor(rgb: (153,152,38))
@@ -316,11 +330,13 @@ class DetailsMusicViewController: BaseTableViewController {
             return
         }
         
+        //If a track is already playing, tapping for the second time will make the button to stop animating
         if let button = sender as? LoadyButton {
             if button.loadingIsShowing() {
                 stopAudio()
                 return
             }
+            //Starts the button animation
             button.startLoading()
             button.setImage(UIImage(systemName: "pause.circle"), for: .normal)
             guard let str = track?.preview,
@@ -339,6 +355,7 @@ class DetailsMusicViewController: BaseTableViewController {
         previewButton.setImage(UIImage(systemName: "play.circle"), for: .normal)
     }
     
+    //Fetches the tracks
     func fetchTracks() {
         ds.fetchTracks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":200]) {[weak self] tracks, error in
             if let tracks = tracks {
@@ -347,6 +364,7 @@ class DetailsMusicViewController: BaseTableViewController {
                 self.tracks = tracks
                 self.artistTableView.reloadData()
                 
+                //Animates the cells
                 let cells = self.artistTableView.visibleCells
                 UIView.animate(views: cells, animations: [self.animation])
                 self.activityIndicatorView.stopAnimating()
@@ -364,11 +382,13 @@ class DetailsMusicViewController: BaseTableViewController {
         }
     }
     
+    //Stops the audio if the app moved to background
     @objc func appMovedToBackground() {
         stopAudio()
     }
 }
 
+//Extension for an alert based on the viewcontroller
 extension DetailsMusicViewController {
     func showAlertAndReload(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)

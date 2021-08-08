@@ -58,6 +58,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    //Checks the current running device and loads the appropriate constraints based on the device.
     func portraitConstraints() {
         switch UIDevice().type {
         case .iPod7:

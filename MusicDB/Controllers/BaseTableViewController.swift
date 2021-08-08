@@ -41,6 +41,7 @@ class BaseTableViewController: UIViewController {
         activityIndicatorView.startAnimating()
     }
     
+    //Changes the style of the accesssory arrow
     func accessoryArrow(cell: UITableViewCell) {
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.accessoryView = UIImageView(image: UIImage(systemName: "chevron.right"))
@@ -61,6 +62,7 @@ class BaseTableViewController: UIViewController {
         self.present(sfVC, animated: true)
     }
     
+    //Populates the cell based on the current active ViewController
     func populateCell(indexPath: IndexPath, cell: DetailsTableViewCell, tableView: UITableView) {
         
         self.tableView = tableView
@@ -84,6 +86,7 @@ class BaseTableViewController: UIViewController {
         }
         let selectedIndexPath = IndexPath.init(row: sender.tag, section: 0)
         
+        //Resets the play button state
         if arrIndexPaths.contains(selectedIndexPath) {
             arrIndexPaths.removeAll()
             sender.setImage(UIImage(systemName: "play.fill"), for: .normal)
@@ -94,6 +97,7 @@ class BaseTableViewController: UIViewController {
             return
         }
         
+        //If we tapping on a second button it will reset the state of the previous button
         if arrIndexPaths.count == 1 {
             arrIndexPaths.removeAll()
             prevButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
@@ -104,11 +108,13 @@ class BaseTableViewController: UIViewController {
             MediaPlayer.shared.stopAudio()
         }
         
+        //Saves the previous index and the button
         prevIndexPath = selectedIndexPath
         prevButton = sender
         arrIndexPaths.append(selectedIndexPath)
         tableView.reloadRows(at: [selectedIndexPath], with: .none)
         
+        //Plays the albums tracks if we came from the albums screen
         if !albumTracks.isEmpty {
             let albumTrack = albumTracks[selectedIndexPath.row]
             if let urlPreview = URL(string: "\(albumTrack.preview)") {
@@ -116,6 +122,7 @@ class BaseTableViewController: UIViewController {
             }
         }
         
+        //Plays the tracks if we came from other screens
         if !tracks.isEmpty {
             let track = tracks[selectedIndexPath.row]
             if let urlPreview = URL(string: "\(track.preview)") {
@@ -123,6 +130,7 @@ class BaseTableViewController: UIViewController {
             }
         }
         
+        //Changes the button state after 30 seconds
         DispatchQueue.main.asyncAfter(deadline: .now() + 30) {[weak self] in
             MediaPlayer.shared.stopAudio()
             guard let self = self else {return}
@@ -150,6 +158,7 @@ extension BaseTableViewController: UITableViewDelegate, UITableViewDataSource {
         return 1
     }
     
+    //Adds and highlighted effect when tapping on a cell
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         UIView.animate(withDuration: 0.2) {
             if let cell = tableView.cellForRow(at: indexPath) as? LikedGenreTableViewCell {
@@ -164,6 +173,7 @@ extension BaseTableViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    //Adds and unhighlighted effect when releasing a cell
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         UIView.animate(withDuration: 0.2) {
             if let cell = tableView.cellForRow(at: indexPath) as? LikedGenreTableViewCell {

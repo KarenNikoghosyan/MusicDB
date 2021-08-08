@@ -11,7 +11,10 @@ import FirebaseAuth
 
 struct SettingsView: View {
     
+    @State private var image: Image? = Image("icon_user")
     @Environment(\.presentationMode) var presentationMode
+    @State private var showingImagePicker = false
+    @State private var inputImage: UIImage?
     
     var body: some View {
         ScrollView {
@@ -19,15 +22,17 @@ struct SettingsView: View {
                 Text("Settings")
                     .font(.largeTitle)
                     .padding(.leading, 25.0)
-                    .padding(.top, 5.0)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Button(action: {
-                    //TODO:
+                    showingImagePicker.toggle()
                 }, label: {
                     ZStack {
-                        Image("icon_user")
-                            .resizable()
-                            .frame(width: 160, height: 160)
+                        if image != nil {
+                            image?
+                                .resizable()
+                                .frame(width: 160, height: 160)
+                                .clipShape(Circle())
+                        }
                     }
                     .padding(.bottom, 25.0)
                 })
@@ -102,9 +107,25 @@ struct SettingsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color.init(UIColor.init(red: 233.0 / 255, green: 233.0 / 255, blue: 233.0 / 255, alpha: 1)))
                 .cornerRadius(15.0)
+                .sheet(isPresented: $showingImagePicker, onDismiss: loadImage, content: {
+                    ImagePicker(image: self.$inputImage)
+                })
+                .onAppear(perform: {
+                    guard let data = UserDefaults.standard.getProfileImage(),
+                          let imageTemp = UIImage(data: data) else {return}
+                    image = Image(uiImage: imageTemp)
+                })
                 
             }
         }
+    }
+    
+    func loadImage() {
+        guard let inputImage = inputImage else {return}
+        image = Image(uiImage: inputImage)
+        
+        guard let data = inputImage.jpegData(compressionQuality: 1) else {return}
+        UserDefaults.standard.setProfileImage(imageData: data)
     }
 }
 
