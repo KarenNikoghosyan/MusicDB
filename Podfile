@@ -8,7 +8,6 @@ target 'MusicDB' do
   # Pods for MusicDB
   pod 'SDWebImage'
   pod 'PKHUD'
-  pod 'UIScrollView-InfiniteScroll'
   pod 'SwipeableTabBarController'
   pod "ViewAnimator"
   pod 'NVActivityIndicatorView'
@@ -20,7 +19,6 @@ target 'MusicDB' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
-  pod 'GoogleSignIn'
   pod 'Alamofire'
   pod 'paper-onboarding'
   
