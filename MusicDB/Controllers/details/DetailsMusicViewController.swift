@@ -386,6 +386,19 @@ class DetailsMusicViewController: BaseTableViewController {
     @objc func appMovedToBackground() {
         stopAudio()
     }
+    
+    override func loadActivityIndicator() {
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicatorView)
+        NSLayoutConstraint.activate([
+            activityIndicatorView.widthAnchor.constraint(equalToConstant: 40),
+            activityIndicatorView.heightAnchor.constraint(equalToConstant: 40),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: artistTableView.centerYAnchor),
+            activityIndicatorView.centerXAnchor.constraint(equalTo: artistTableView.centerXAnchor)
+        ])
+        
+        activityIndicatorView.startAnimating()
+    }
 }
 
 //Extension for an alert based on the viewcontroller
