@@ -122,6 +122,11 @@ class DetailsMusicViewController: BaseTableViewController {
         let notifactionCenter = NotificationCenter.default
         notifactionCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         
+        //Stops button animation
+        NotificationCenter.default.addObserver(forName: .StopButtonAnimation, object: nil, queue: .main) {[weak self] _ in
+            self?.previewButton.stopLoading()
+        }
+        
         artistTableView.delegate = self
         artistTableView.dataSource = self
      
@@ -341,6 +346,7 @@ class DetailsMusicViewController: BaseTableViewController {
             button.setImage(UIImage(systemName: "pause.circle"), for: .normal)
             guard let str = track?.preview,
                   let url = URL(string: str) else {return}
+            NotificationCenter.default.post(name: .ResetPlayButton, object: nil)
             MediaPlayer.shared.loadAudio(url: url)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 30) {[weak self] in

@@ -27,6 +27,13 @@ class BaseTableViewController: UIViewController {
     
     let activityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .ballPulse, color: .systemGreen, padding: 0)
     let animation = AnimationType.from(direction: .right, offset: 30.0)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(forName: .ResetPlayButton, object: nil, queue: .main) {[weak self] _ in
+            self?.resetPlayButton()
+        }
+    }
 
     func loadActivityIndicator() {
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -99,13 +106,7 @@ class BaseTableViewController: UIViewController {
         
         //If we tapping on a second button it will reset the state of the previous button
         if arrIndexPaths.count == 1 {
-            arrIndexPaths.removeAll()
-            prevButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            
-            if let prevIndexPath = prevIndexPath {
-                tableView.reloadRows(at: [prevIndexPath], with: .none)
-            }
-            MediaPlayer.shared.stopAudio()
+            resetPlayButton()
         }
         
         //Saves the previous index and the button
@@ -124,6 +125,8 @@ class BaseTableViewController: UIViewController {
         
         //Plays the tracks if we came from other screens
         if !tracks.isEmpty {
+            //Stops button animation
+            NotificationCenter.default.post(name: .StopButtonAnimation, object: nil)
             let track = tracks[selectedIndexPath.row]
             if let urlPreview = URL(string: "\(track.preview)") {
                 MediaPlayer.shared.loadAudio(url: urlPreview)
@@ -141,6 +144,16 @@ class BaseTableViewController: UIViewController {
                 self.tableView.reloadRows(at: [prevIndexPath], with: .none)
             }
         }
+    }
+    
+    func resetPlayButton() {
+        arrIndexPaths.removeAll()
+        prevButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        
+        if let prevIndexPath = prevIndexPath {
+            tableView.reloadRows(at: [prevIndexPath], with: .none)
+        }
+        MediaPlayer.shared.stopAudio()
     }
 }
 

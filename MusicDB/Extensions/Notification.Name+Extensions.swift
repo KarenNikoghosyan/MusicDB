@@ -32,4 +32,10 @@ extension Notification.Name {
     static let ReloadFromLiked = Notification.Name("reloadFromLiked")
     
     static let MoveToLogin = Notification.Name("moveToLogin")
+    
+    //Stop button animation
+    static let StopButtonAnimation = Notification.Name("stopButtonAnimation")
+    
+    //Resets the play button
+    static let ResetPlayButton = Notification.Name("resetPlayButton")
 }
