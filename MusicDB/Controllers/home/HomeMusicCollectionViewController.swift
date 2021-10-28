@@ -154,14 +154,14 @@ class HomeMusicCollectionViewController: UICollectionViewController {
 
     //Creates the compositional layout depending on the section's index
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
+        return UICollectionViewCompositionalLayout {[weak self] (sectionNumber, env) -> NSCollectionLayoutSection? in
 
          switch sectionNumber {
 
-         case 0: return self.chartLayoutSection()
-         case 4: return self.topArtistsSection()
-         case 7: return self.topAlbumsSection()
-         default: return self.tracksLayoutSection()
+         case 0: return self?.chartLayoutSection()
+         case 4: return self?.topArtistsSection()
+         case 7: return self?.topAlbumsSection()
+         default: return self?.tracksLayoutSection()
         }
     }
 }
