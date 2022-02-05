@@ -15,12 +15,14 @@ struct Fonts {
 
 class IntroViewController: UIViewController {
     
+    private let viewModel = IntroViewModel()
+    
     @IBOutlet weak var doneButton: UIButton!
     
     //Creates different screens of tutorials
     fileprivate let items = [
         OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "logo"),
-                           title: "Welcome to MusicDB!",
+                           title: viewModel.firstScreenTitle,
                            description: "Here's a short intro on how to use the app.",
                            pageIcon: #imageLiteral(resourceName: "1"),
                            color: UIColor(red: 0.40, green: 0.56, blue: 0.71, alpha: 1.00),
@@ -86,6 +88,10 @@ class IntroViewController: UIViewController {
         view.bringSubviewToFront(doneButton)
         doneButton.addTarget(self, action: #selector(doneButtonTapped(_:)), for: .touchUpInside)
     }
+}
+
+//MARK: - Functions
+extension IntroViewController {
     
     private func setupPaperOnboardingView() {
         //Adds the created screens to subview
@@ -106,9 +112,6 @@ class IntroViewController: UIViewController {
             view.addConstraint(constraint)
         }
     }
-}
-
-extension IntroViewController {
 
     @IBAction func doneButtonTapped(_: UIButton) {
         //Saves the value to userdefauls, so the tutorial will appear only once.
@@ -120,6 +123,7 @@ extension IntroViewController {
     }
 }
 
+//MARK: - Delegates
 extension IntroViewController: PaperOnboardingDelegate {
 
     //Shows the done button at index 7
