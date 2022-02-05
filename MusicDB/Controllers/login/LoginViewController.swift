@@ -91,9 +91,11 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         setupNavigationItems()
-        loginEmailTextField.becomeFirstResponder()
         
         setUpTextFields()
+        
+        let tap = UITapGestureRecognizer(target: view, action: #selector(view.endEditing(_:)))
+        view.addGestureRecognizer(tap)
     }
     
     func setUpTextFields() {

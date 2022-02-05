@@ -86,10 +86,11 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        registerNameTextField.becomeFirstResponder()
-            
+                    
         setUpTextFields()
+        
+        let tap = UITapGestureRecognizer(target: view, action: #selector(view.endEditing(_:)))
+        view.addGestureRecognizer(tap)
     }
     
     func setUpTextFields() {
