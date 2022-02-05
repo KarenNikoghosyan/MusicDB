@@ -7,20 +7,43 @@
 
 import UIKit
 import NVActivityIndicatorView
-import FirebaseAuth
 
 class LoadingViewController: UIViewController {
+    
+    private let viewModel = LoadingViewModel()
+    
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var topAnchorConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     
-    private var isUserLoggedIn: Bool {
-        return Auth.auth().currentUser != nil
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //Loading indicator for the loading screen
+        setupActivityIndicator()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        isDeviceOrientation()
+    }
+}
+
+//MARK: - Functions
+extension LoadingViewController {
+    
+    private func isDeviceOrientation() {
+        if UIDevice.current.orientation.isLandscape {
+            landscapeConstraints()
+        } else {
+            portraitConstraints()
+        }
     }
     
     //Checks the current running device and loads the appropriate constraints based on the device.
     //potrait orientation
-    func portraitConstraints() {
+    private func portraitConstraints() {
         switch UIDevice().type {
         case .iPod7:
             imageViewHeightConstraint.constant = 130
@@ -37,7 +60,7 @@ class LoadingViewController: UIViewController {
     }
     
     //landscape orientation
-    func landscapeConstraints() {
+    private func landscapeConstraints() {
         switch UIDevice().type {
         case .iPod7:
             imageViewHeightConstraint.constant = 100
@@ -53,20 +76,7 @@ class LoadingViewController: UIViewController {
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        if UIDevice.current.orientation.isLandscape {
-            landscapeConstraints()
-        } else {
-            portraitConstraints()
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        //Loading indicator for the loading screen
+    private func setupActivityIndicator() {
         let activityIndicatorView = NVActivityIndicatorView(frame: .zero, type: .lineScalePulseOut, color: .white, padding: 0)
         
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -79,27 +89,30 @@ class LoadingViewController: UIViewController {
         ])
         activityIndicatorView.startAnimating()
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {[weak self] in
-            
             guard let self = self else {return}
             activityIndicatorView.stopAnimating()
             
             //if user connected will load him staright into the home screen
-            if self.isUserLoggedIn {
-                let storyboard = UIStoryboard(name: "Main", bundle: .main)
-                let vc = storyboard.instantiateViewController(withIdentifier: "mainStoryboard")
+            self.checkIfUserConnected()
+        }
+    }
+    
+    private func checkIfUserConnected() {
+        if self.viewModel.isUserLoggedIn {
+            let storyboard = UIStoryboard(name: "Main", bundle: .main)
+            let vc = storyboard.instantiateViewController(withIdentifier: "mainStoryboard")
+            self.present(vc, animated: true)
+        } else {
+            //if user launches the app for the first time, a tutorial screen will be shown
+            if !UserDefaults.standard.isIntro() {
+                let storyboard = UIStoryboard(name: "Intro", bundle: .main)
+                let vc = storyboard.instantiateViewController(withIdentifier: "introStoryboard")
                 self.present(vc, animated: true)
             } else {
-                //if user launches the app for the first time, a tutorial screen will be shown
-                if !UserDefaults.standard.isIntro() {
-                    let storyboard = UIStoryboard(name: "Intro", bundle: .main)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "introStoryboard")
-                    self.present(vc, animated: true)
-                } else {
-                    //if the user isn't connected will load him straight into the login screen
-                    let storyboard = UIStoryboard(name: "Login", bundle: .main)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "loginStoryboard")
-                    self.present(vc, animated: true)
-                }
+                //if the user isn't connected will load him straight into the login screen
+                let storyboard = UIStoryboard(name: "Login", bundle: .main)
+                let vc = storyboard.instantiateViewController(withIdentifier: "loginStoryboard")
+                self.present(vc, animated: true)
             }
         }
     }

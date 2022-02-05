@@ -13,6 +13,7 @@
 		7809D1572682142C006F0ADD /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7809D1562682142C006F0ADD /* UIViewController+Extensions.swift */; };
 		780C69DD269DD43D0097DDC4 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780C69DC269DD43D0097DDC4 /* Database.swift */; };
 		780DE671267F8E3A00D34944 /* DetailsMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780DE670267F8E3A00D34944 /* DetailsMusicViewController.swift */; };
+		780FE64527AEEA1400DEE275 /* LoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780FE64427AEEA1400DEE275 /* LoadingViewModel.swift */; };
 		781899D526938B9E000A5864 /* Loading.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 781899D426938B9E000A5864 /* Loading.storyboard */; };
 		781899D726938BF3000A5864 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 781899D626938BF3000A5864 /* Login.storyboard */; };
 		781B0C4726C01EC100DAC68E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781B0C4626C01EC100DAC68E /* ImagePicker.swift */; };
@@ -32,6 +33,7 @@
 		7834C33A26A72A2C00AD6F23 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7834C33926A72A2C00AD6F23 /* IntroViewController.swift */; };
 		7834C33C26A82D3300AD6F23 /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7834C33B26A82D3300AD6F23 /* UserDefaults+Extensions.swift */; };
 		7834C33E26A852F300AD6F23 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7834C33D26A852F300AD6F23 /* icon.png */; };
+		783A35BF27AEF056009CBBAB /* IntroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783A35BE27AEF056009CBBAB /* IntroViewModel.swift */; };
 		78402C2F26B8760B002828AF /* LikedAlbumsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78402C2D26B8760B002828AF /* LikedAlbumsTableViewCell.swift */; };
 		78402C3026B8760B002828AF /* LikedAlbumsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78402C2E26B8760B002828AF /* LikedAlbumsTableViewCell.xib */; };
 		78402C3426B88146002828AF /* LikedTracksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78402C3226B88146002828AF /* LikedTracksTableViewCell.swift */; };
@@ -91,6 +93,7 @@
 		7809D1562682142C006F0ADD /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		780C69DC269DD43D0097DDC4 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		780DE670267F8E3A00D34944 /* DetailsMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsMusicViewController.swift; sourceTree = "<group>"; };
+		780FE64427AEEA1400DEE275 /* LoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewModel.swift; sourceTree = "<group>"; };
 		781899D426938B9E000A5864 /* Loading.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Loading.storyboard; sourceTree = "<group>"; };
 		781899D626938BF3000A5864 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		781B0C4626C01EC100DAC68E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -110,6 +113,7 @@
 		7834C33926A72A2C00AD6F23 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		7834C33B26A82D3300AD6F23 /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
 		7834C33D26A852F300AD6F23 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		783A35BE27AEF056009CBBAB /* IntroViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewModel.swift; sourceTree = "<group>"; };
 		78402C2D26B8760B002828AF /* LikedAlbumsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedAlbumsTableViewCell.swift; sourceTree = "<group>"; };
 		78402C2E26B8760B002828AF /* LikedAlbumsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LikedAlbumsTableViewCell.xib; sourceTree = "<group>"; };
 		78402C3226B88146002828AF /* LikedTracksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedTracksTableViewCell.swift; sourceTree = "<group>"; };
@@ -209,6 +213,23 @@
 			path = details;
 			sourceTree = "<group>";
 		};
+		780FE64227AEE94B00DEE275 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				780FE64327AEE9F500DEE275 /* loading */,
+				783A35BD27AEEF79009CBBAB /* intro */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		780FE64327AEE9F500DEE275 /* loading */ = {
+			isa = PBXGroup;
+			children = (
+				780FE64427AEEA1400DEE275 /* LoadingViewModel.swift */,
+			);
+			path = loading;
+			sourceTree = "<group>";
+		};
 		781899CE2693884F000A5864 /* StoryBoards */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,6 +285,14 @@
 			isa = PBXGroup;
 			children = (
 				7834C33926A72A2C00AD6F23 /* IntroViewController.swift */,
+			);
+			path = intro;
+			sourceTree = "<group>";
+		};
+		783A35BD27AEEF79009CBBAB /* intro */ = {
+			isa = PBXGroup;
+			children = (
+				783A35BE27AEF056009CBBAB /* IntroViewModel.swift */,
 			);
 			path = intro;
 			sourceTree = "<group>";
@@ -401,9 +430,10 @@
 				781899CE2693884F000A5864 /* StoryBoards */,
 				78EA417E267F504B009828DD /* Extensions */,
 				788A7590267B9F3400DFE2B0 /* Models */,
-				781B0C4226C017F800DAC68E /* SwiftUI_Views */,
+				780FE64227AEE94B00DEE275 /* ViewModels */,
 				788A758F267B9F2B00DFE2B0 /* Controllers */,
 				788A758E267B9F2400DFE2B0 /* Views */,
+				781B0C4226C017F800DAC68E /* SwiftUI_Views */,
 				788A7577267B9E9800DFE2B0 /* AppDelegate.swift */,
 				788A7579267B9E9800DFE2B0 /* SceneDelegate.swift */,
 				788A7583267B9E9900DFE2B0 /* Assets.xcassets */,
@@ -433,17 +463,17 @@
 		788A758F267B9F2B00DFE2B0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				78B0047A268E6E5100963AAD /* loading */,
+				7834C33826A728E900AD6F23 /* intro */,
+				7828BB3326907FF1001CA735 /* login */,
+				7828BB3426907FF7001CA735 /* register */,
+				788A7594267BADDC00DFE2B0 /* home */,
+				788A7595267BADE100DFE2B0 /* search */,
+				78C1F0ED2694548C0005384F /* liked */,
 				7887761B26B039E3006A18F2 /* album_details */,
 				7887761326AF8A64006A18F2 /* albums */,
-				7834C33826A728E900AD6F23 /* intro */,
 				78C5180426A4F5C300D9378B /* genre */,
-				78C1F0ED2694548C0005384F /* liked */,
-				7828BB3426907FF7001CA735 /* register */,
-				7828BB3326907FF1001CA735 /* login */,
-				78B0047A268E6E5100963AAD /* loading */,
 				780DE66F267F8E1600D34944 /* details */,
-				788A7595267BADE100DFE2B0 /* search */,
-				788A7594267BADDC00DFE2B0 /* home */,
 				788A7592267BAD6B00DFE2B0 /* TabBarController.swift */,
 				78C5180726A57BF400D9378B /* BaseTableViewController.swift */,
 			);
@@ -710,12 +740,14 @@
 				78481CD826BAC3B9006F9036 /* SettingsView.swift in Sources */,
 				782E485C268A2A41005C8E4F /* TopAlbumsAPIDataSource.swift in Sources */,
 				781F1C8126B0A36100648A1D /* AlbumTracks.swift in Sources */,
+				780FE64527AEEA1400DEE275 /* LoadingViewModel.swift in Sources */,
 				7828BB3626908007001CA735 /* LoginViewController.swift in Sources */,
 				78C5180626A4F5F200D9378B /* GenreMusicViewController.swift in Sources */,
 				782E485E268A3423005C8E4F /* TopAlbumsCollectionReusableView.swift in Sources */,
 				7864D8BA26BBF45800ED6E60 /* UIView+Extensions.swift in Sources */,
 				78BACE5B26923EF500D75B97 /* UITextField+Extensions.swift in Sources */,
 				78C5180326A4ED6E00D9378B /* UICollectionReusableView+Extensions.swift in Sources */,
+				783A35BF27AEF056009CBBAB /* IntroViewModel.swift in Sources */,
 				788A7597267BB2C200DFE2B0 /* HomeMusicCollectionViewController.swift in Sources */,
 				781B0C4726C01EC100DAC68E /* ImagePicker.swift in Sources */,
 				780C69DD269DD43D0097DDC4 /* Database.swift in Sources */,
