@@ -12,9 +12,9 @@ class LoadingViewController: UIViewController {
     
     private let viewModel = LoadingViewModel()
     
-    @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var topAnchorConstraint: NSLayoutConstraint!
-    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var logoImageView: UIImageView!
+    @IBOutlet private weak var topAnchorConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var imageViewHeightConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,8 +88,10 @@ extension LoadingViewController {
             activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         activityIndicatorView.startAnimating()
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {[weak self] in
             guard let self = self else {return}
+            
             activityIndicatorView.stopAnimating()
             
             //if user connected will load him staright into the home screen
@@ -99,19 +101,19 @@ extension LoadingViewController {
     
     private func checkIfUserConnected() {
         if self.viewModel.isUserLoggedIn {
-            let storyboard = UIStoryboard(name: "Main", bundle: .main)
-            let vc = storyboard.instantiateViewController(withIdentifier: "mainStoryboard")
+            let storyboard = UIStoryboard(name: Constants.mainStoryboard, bundle: .main)
+            let vc = storyboard.instantiateViewController(withIdentifier: Constants.mainStoryboardIdentifier)
             self.present(vc, animated: true)
         } else {
             //if user launches the app for the first time, a tutorial screen will be shown
             if !UserDefaults.standard.isIntro() {
-                let storyboard = UIStoryboard(name: "Intro", bundle: .main)
-                let vc = storyboard.instantiateViewController(withIdentifier: "introStoryboard")
+                let storyboard = UIStoryboard(name: Constants.introStoryboard, bundle: .main)
+                let vc = storyboard.instantiateViewController(withIdentifier: Constants.introStoryboardIdentifier)
                 self.present(vc, animated: true)
             } else {
                 //if the user isn't connected will load him straight into the login screen
-                let storyboard = UIStoryboard(name: "Login", bundle: .main)
-                let vc = storyboard.instantiateViewController(withIdentifier: "loginStoryboard")
+                let storyboard = UIStoryboard(name: Constants.loginStoryboard, bundle: .main)
+                let vc = storyboard.instantiateViewController(withIdentifier: Constants.loginStoryboardIdentifier)
                 self.present(vc, animated: true)
             }
         }

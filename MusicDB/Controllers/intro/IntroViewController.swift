@@ -12,7 +12,7 @@ class IntroViewController: UIViewController {
     
     private let viewModel = IntroViewModel()
     
-    @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet private weak var doneButton: UIButton!
     
     //Creates different screens of tutorials
     fileprivate lazy var items = [
@@ -21,56 +21,56 @@ class IntroViewController: UIViewController {
                            description: viewModel.firstScreenDescription,
                            pageIcon: #imageLiteral(resourceName: "1"),
                            color: UIColor(red: 0.40, green: 0.56, blue: 0.71, alpha: 1.00),
-                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Constants.Fonts.futuraTitle, descriptionFont: Constants.Fonts.futuraDescription),
+                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: UIFont(name: Constants.futuraBold, size: 21.0)!, descriptionFont: UIFont(name: Constants.futura, size: 17.0)!),
         
         OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "nav_bar"),
                            title: viewModel.secondScreenTitle,
                            description: viewModel.secondScreenDescription,
                            pageIcon: #imageLiteral(resourceName: "2"),
                            color: UIColor(red: 123.0/255.0, green: 175.0/255.0, blue: 183.0/255.0, alpha: 1.00),
-                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Constants.Fonts.futuraTitle, descriptionFont: Constants.Fonts.futuraDescription),
+                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: UIFont(name: Constants.futuraBold, size: 21.0)!, descriptionFont: UIFont(name: Constants.futura, size: 17.0)!),
         
         OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "liked_button"),
                            title: viewModel.thirdScreenTitle,
                            description: viewModel.secondScreenDescription,
                            pageIcon: #imageLiteral(resourceName: "3"),
                            color: UIColor(red: 23.0/255.0, green: 42.0/255.0, blue: 58.0/255.0, alpha: 1.00),
-                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Constants.Fonts.futuraTitle, descriptionFont: Constants.Fonts.futuraDescription),
+                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: UIFont(name: Constants.futuraBold, size: 21.0)!, descriptionFont: UIFont(name: Constants.futura, size: 17.0)!),
         
         OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "preview_button"),
                            title: viewModel.fourthScreenTitle,
                            description: viewModel.fourthScreenDescription,
                            pageIcon: #imageLiteral(resourceName: "4"),
                            color: UIColor(red: 227.0/255.0, green: 101.0/255.0, blue: 91.0/255.0, alpha: 1.00),
-                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Constants.Fonts.futuraTitle, descriptionFont: Constants.Fonts.futuraDescription),
+                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: UIFont(name: Constants.futuraBold, size: 21.0)!, descriptionFont: UIFont(name: Constants.futura, size: 17.0)!),
         
         OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "play_button_album"),
                            title: viewModel.fifthScreenTitle,
                            description: viewModel.fifthScreenDescription,
                            pageIcon: #imageLiteral(resourceName: "5"),
                            color: UIColor(red: 112.0/255.0, green: 162.0/255.0, blue: 136.0/255.0, alpha: 1.00),
-                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Constants.Fonts.futuraTitle, descriptionFont: Constants.Fonts.futuraDescription),
+                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: UIFont(name: Constants.futuraBold, size: 21.0)!, descriptionFont: UIFont(name: Constants.futura, size: 17.0)!),
         
         OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "search"),
                            title: viewModel.sixthScreenTitle,
                            description: viewModel.sixthScreenDescription,
                            pageIcon: #imageLiteral(resourceName: "6"),
                            color: UIColor(red: 100.0/255.0, green: 149.0/255.0, blue: 237.0/255.0, alpha: 1.00),
-                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Constants.Fonts.futuraTitle, descriptionFont: Constants.Fonts.futuraDescription),
+                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: UIFont(name: Constants.futuraBold, size: 21.0)!, descriptionFont: UIFont(name: Constants.futura, size: 17.0)!),
         
         OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "liked_control"),
                            title: viewModel.seventhScreenTitle,
                            description: viewModel.secondScreenDescription,
                            pageIcon: #imageLiteral(resourceName: "7"),
                            color: UIColor(red: 176.0/255.0, green: 142.0/255.0, blue: 162.0/255.0, alpha: 1.00),
-                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Constants.Fonts.futuraTitle, descriptionFont: Constants.Fonts.futuraDescription),
+                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: UIFont(name: Constants.futuraBold, size: 21.0)!, descriptionFont: UIFont(name: Constants.futura, size: 17.0)!),
         
         OnboardingItemInfo(informationImage: #imageLiteral(resourceName: "intro_end"),
                            title: viewModel.eighthScreenTitle,
                            description: viewModel.eighthScreenDescription,
                            pageIcon: #imageLiteral(resourceName: "8"),
                            color: UIColor(red: 239.0/255.0, green: 164.0/255.0, blue: 139.0/255.0, alpha: 1.00),
-                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: Constants.Fonts.futuraTitle, descriptionFont: Constants.Fonts.futuraDescription)
+                           titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: UIFont(name: Constants.futuraBold, size: 21.0)!, descriptionFont: UIFont(name: Constants.futura, size: 17.0)!)
         
         ]
     
@@ -108,7 +108,7 @@ extension IntroViewController {
         }
     }
 
-    @IBAction func doneButtonTapped(_: UIButton) {
+    @IBAction private func doneButtonTapped(_: UIButton) {
         //Saves the value to userdefauls, so the tutorial will appear only once.
         UserDefaults.standard.setIntro(value: true)
         
@@ -122,11 +122,11 @@ extension IntroViewController {
 extension IntroViewController: PaperOnboardingDelegate {
 
     //Shows the done button at index 7
-    func onboardingWillTransitonToIndex(_ index: Int) {
+    internal func onboardingWillTransitonToIndex(_ index: Int) {
         doneButton.isHidden = index == 7 ? false : true
     }
 
-    func onboardingConfigurationItem(_ item: OnboardingContentViewItem, index: Int) {
+    internal func onboardingConfigurationItem(_ item: OnboardingContentViewItem, index: Int) {
         
         //Resizing the image
         if let imageSize = item.imageView?.image?.size {
@@ -139,12 +139,12 @@ extension IntroViewController: PaperOnboardingDelegate {
 
 extension IntroViewController: PaperOnboardingDataSource {
 
-    func onboardingItem(at index: Int) -> OnboardingItemInfo {
+    internal func onboardingItem(at index: Int) -> OnboardingItemInfo {
         return items[index]
     }
 
     //Returns the number of screens
-    func onboardingItemsCount() -> Int {
+    internal func onboardingItemsCount() -> Int {
         return 8
     }
 }

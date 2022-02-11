@@ -9,8 +9,15 @@ import UIKit
 
 struct Constants {
     
-    struct Fonts {
-        static let futuraTitle = UIFont(name: "Futura-Bold", size: 21.0)!
-        static let futuraDescription = UIFont(name: "Futura", size: 17.0)!
-    }
+    static let futuraBold = "Futura-Bold"
+    static let futura = "Futura"
+    
+    static let mainStoryboard = "Main"
+    static let mainStoryboardIdentifier = "mainStoryboard"
+    
+    static let introStoryboard = "Intro"
+    static let introStoryboardIdentifier = "introStoryboard"
+    
+    static let loginStoryboard = "Login"
+    static let loginStoryboardIdentifier = "loginStoryboard"
 }
