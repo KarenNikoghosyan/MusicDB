@@ -42,6 +42,7 @@
 		78402C3526B88146002828AF /* LikedTracksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78402C3326B88146002828AF /* LikedTracksTableViewCell.xib */; };
 		78481CD826BAC3B9006F9036 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78481CD726BAC3B9006F9036 /* SettingsView.swift */; };
 		7853357B27B6616700A90C63 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7853357A27B6616700A90C63 /* RegisterViewModel.swift */; };
+		7853357E27B7113200A90C63 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7853357D27B7113200A90C63 /* HomeViewModel.swift */; };
 		78538EAD26B44100003DBDE1 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78538EAC26B44100003DBDE1 /* FirestoreManager.swift */; };
 		78538EB026B4AE74003DBDE1 /* SearchMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78538EAF26B4AE74003DBDE1 /* SearchMusicTableViewCell.swift */; };
 		7862B8672697A2D2000E3056 /* SingleTrackAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862B8662697A2D2000E3056 /* SingleTrackAPIDataSource.swift */; };
@@ -125,6 +126,7 @@
 		78402C3326B88146002828AF /* LikedTracksTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LikedTracksTableViewCell.xib; sourceTree = "<group>"; };
 		78481CD726BAC3B9006F9036 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7853357A27B6616700A90C63 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		7853357D27B7113200A90C63 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		78538EAC26B44100003DBDE1 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		78538EAF26B4AE74003DBDE1 /* SearchMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicTableViewCell.swift; sourceTree = "<group>"; };
 		7862B8662697A2D2000E3056 /* SingleTrackAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTrackAPIDataSource.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				783A35BD27AEEF79009CBBAB /* intro */,
 				7801BAF327AF24F800DB837C /* login */,
 				7853357927B6613B00A90C63 /* register */,
+				7853357C27B7111300A90C63 /* home */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -345,6 +348,14 @@
 				7853357A27B6616700A90C63 /* RegisterViewModel.swift */,
 			);
 			path = register;
+			sourceTree = "<group>";
+		};
+		7853357C27B7111300A90C63 /* home */ = {
+			isa = PBXGroup;
+			children = (
+				7853357D27B7113200A90C63 /* HomeViewModel.swift */,
+			);
+			path = home;
 			sourceTree = "<group>";
 		};
 		78538EAE26B4AE0F003DBDE1 /* search */ = {
@@ -716,6 +727,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				780DE671267F8E3A00D34944 /* DetailsMusicViewController.swift in Sources */,
+				7853357E27B7113200A90C63 /* HomeViewModel.swift in Sources */,
 				788A7578267B9E9800DFE2B0 /* AppDelegate.swift in Sources */,
 				78BED23A2699F9B000058859 /* LikedMusicViewController.swift in Sources */,
 				788A757A267B9E9800DFE2B0 /* SceneDelegate.swift in Sources */,
