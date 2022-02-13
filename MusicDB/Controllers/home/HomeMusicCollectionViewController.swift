@@ -14,89 +14,19 @@ import FirebaseAuth
 import SwiftUI
 
 class HomeMusicCollectionViewController: UICollectionViewController {
-        
-    var topTracks: [Track] = []
-    var hipHop: [Track] = []
-    var dance: [Track] = []
-    var jazz: [Track] = []
-    var topArtists: [TopArtists] = []
-    var pop: [Track] = []
-    var classical: [Track] = []
-    var topAlbums: [TopAlbums] = []
-    var rock: [Track] = []
     
-    let refreshControl = UIRefreshControl()
-
-    let tracksDS = GenreAPIDataSource()
-    let topArtistsDS = TopArtistsAPIDataSource()
-    let topAlbumsDS = TopAlbumsAPIDataSource()
-    var counter: Int = 0
+    private let viewModel = HomeViewModel()
     
-    @IBSegueAction func addSettingsView(_ coder: NSCoder) -> UIViewController? {
-        return UIHostingController(coder: coder, rootView: SettingsView())
-    }
-    @IBAction func settingsTapped(_ sender: UIBarButtonItem) {
-        Loaf.dismiss(sender: self, animated: true)
-        
-        navigationController?.navigationBar.barTintColor = .white
-        tabBarController?.tabBar.setIsHidden(true, animated: true)
-        setTabBarSwipe(enabled: false)
-        performSegue(withIdentifier: "toSettings", sender: nil)
-    }
-    //Sign out button
-    @IBAction func signOut(_ sender: UIBarButtonItem) {
-        logOutTappedAndSegue()
-    }
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.delegate = self
 
-        //Checks the internet connection
-        if !Connectivity.isConnectedToInternet {
-            showAlertAndReload(title: "No Internet Connection", message: "Failed to connect to the internet")
-            HUD.flash(.error, delay: 0.5)
-        } else {
-            fetchTracks()
-            loadRefreshControl()
-            greetingMessage()
-        }
-        
-        HUD.show(HUDContentType.progress, onView: self.view)
-        
-        //Gets the button action from the corresponding cell
-        NotificationCenter.default.addObserver(forName: .ToViewAll, object: nil, queue: .main) {[weak self] notification in
-            
-            if !Connectivity.isConnectedToInternet {
-                self?.showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-                return
-            }
-            guard let self = self else {return}
-            
-            if let viewAll = notification.userInfo?["viewAll"] as? String,
-               let genre = notification.userInfo?["genre"] as? String {
-                Loaf.dismiss(sender: self, animated: true)
-                self.performSegue(withIdentifier: "toGenre", sender: [viewAll, genre])
-            }
-        }
-        NotificationCenter.default.addObserver(forName: .MoveToLogin, object: nil, queue: .main) {[weak self] _ in
-            self?.logOutTappedAndSegue()
-        }
-        
-        //Registers the cells
-        collectionView.register(HomeTracksCollectionViewCell.self, forCellWithReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier)
-        collectionView.register(TopArtistsCollectionViewCell.self, forCellWithReuseIdentifier: TopArtistsCollectionViewCell.reuseIdentifier)
-        collectionView.register(TopAlbumsCollectionViewCell.self, forCellWithReuseIdentifier: TopAlbumsCollectionViewCell.reuseIdentifier)
-        
-        //Register the headers
-        collectionView.register(TopChartCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "topChartHeader")
-        collectionView.register(HipHopCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "hipHopHeader")
-        collectionView.register(DanceCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "danceHeader")
-        collectionView.register(JazzCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "jazzHeader")
-        collectionView.register(TopArtistsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "topArtistsHeader")
-        collectionView.register(PopCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "popHeader")
-        collectionView.register(ClassicalCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "classicalHeader")
-        collectionView.register(TopAlbumsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "topAlbumsHeader")
-        collectionView.register(RockCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "rockHeader")
+        checkConnection()
+        setupObservers()
+        setupCells()
+        setupHeaders()
         
         collectionView.collectionViewLayout = createCompositionalLayout()
     }
@@ -113,58 +43,43 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         }
     }
     
-    func greetingMessage() {
-        guard let userID = Auth.auth().currentUser?.uid else {return}
-        FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
-            
-            guard let name: String = snapshot?.get("name") as? String else {return}
-            self?.loafMessageWelcome(name: name)
-        }
-    }
-    
-    func registrationMessage() {
-        loafMessageRegistration()
-    }
-    
-    //Creates pull down to refresh
-    func loadRefreshControl() {
-        guard let font = UIFont.init(name: "Futura-Bold", size: 13) else {return}
+    @IBAction func settingsTapped(_ sender: UIBarButtonItem) {
+        Loaf.dismiss(sender: self, animated: true)
         
-        let attributes: [NSAttributedString.Key: AnyObject] = [.foregroundColor : UIColor.systemGreen, .font : font]
-        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Tracks...", attributes: attributes)
-        refreshControl.tintColor = .systemGreen
-        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
-        
-        if #available(iOS 10.0, *) {
-            collectionView.refreshControl = refreshControl
-        } else {
-            collectionView.backgroundView = refreshControl
-        }
+        navigationController?.navigationBar.barTintColor = .white
+        tabBarController?.tabBar.setIsHidden(true, animated: true)
+        setTabBarSwipe(enabled: false)
+        performSegue(withIdentifier: viewModel.toSettingsText, sender: nil)
     }
     
-    //Refreshes the data
-    @objc func refresh(_ refreshControl: UIRefreshControl) {
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            collectionView.refreshControl?.endRefreshing()
-            return
-        }
-        fetchTracks()
+    //Sign out button
+    @IBAction func signOut(_ sender: UIBarButtonItem) {
+        logOutTappedAndSegue()
     }
+    
+    @IBSegueAction func addSettingsView(_ coder: NSCoder) -> UIViewController? {
+        return UIHostingController(coder: coder, rootView: SettingsView())
+    }
+}
 
+//MARK: - Compositional Layout(CollectionView) Functions
+extension HomeMusicCollectionViewController {
+    
     //Creates the compositional layout depending on the section's index
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout {[weak self] (sectionNumber, env) -> NSCollectionLayoutSection? in
 
-         switch sectionNumber {
-
-         case 0: return self?.chartLayoutSection()
-         case 4: return self?.topArtistsSection()
-         case 7: return self?.topAlbumsSection()
-         default: return self?.tracksLayoutSection()
+            switch sectionNumber {
+                
+                case 0: return self?.chartLayoutSection()
+                case 4: return self?.topArtistsSection()
+                case 7: return self?.topAlbumsSection()
+                default: return self?.tracksLayoutSection()
+                
+            }
         }
     }
-}
+    
     //Compositional layout styles
     private func chartLayoutSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
@@ -303,23 +218,23 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return topTracks.count
+            return viewModel.topTracks.count
         case 1:
-            return hipHop.count
+            return viewModel.hipHop.count
         case 2:
-            return dance.count
+            return viewModel.dance.count
         case 3:
-            return jazz.count
+            return viewModel.jazz.count
         case 4:
-            return topArtists.count
+            return viewModel.topArtists.count
         case 5:
-            return pop.count
+            return viewModel.pop.count
         case 6:
-            return classical.count
+            return viewModel.classical.count
         case 7:
-            return topAlbums.count
+            return viewModel.topAlbums.count
         default:
-            return rock.count
+            return viewModel.rock.count
         }
     }
 
@@ -330,8 +245,8 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         case 0:
             let cell = populateHomeTracksCell(indexPath: indexPath)
             
-            if indexPath.item < topTracks.count {
-                let track = topTracks[indexPath.item]
+            if indexPath.item < viewModel.topTracks.count {
+                let track = viewModel.topTracks[indexPath.item]
                 cell.configure(track: track, with: "\(track.album?.coverBig ?? "")")
             }
             return cell
@@ -339,35 +254,35 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         case 1:
             let cell = populateHomeTracksCell(indexPath: indexPath)
 
-            if indexPath.item < hipHop.count {
-                let track = hipHop[indexPath.item]
-                cell.configure(track: track, with: "\(track.album?.cover ?? "No Image Found")")
+            if indexPath.item < viewModel.hipHop.count {
+                let track = viewModel.hipHop[indexPath.item]
+                cell.configure(track: track, with: "\(track.album?.cover ?? viewModel.noImageFoundText)")
             }
             return cell
             
         case 2:
             let cell = populateHomeTracksCell(indexPath: indexPath)
             
-            if indexPath.item < dance.count {
-                let track = dance[indexPath.item]
-                cell.configure(track: track, with: "\(track.album?.cover ?? "No Image Found")")
+            if indexPath.item < viewModel.dance.count {
+                let track = viewModel.dance[indexPath.item]
+                cell.configure(track: track, with: "\(track.album?.cover ?? viewModel.noImageFoundText)")
             }
             return cell
             
         case 3:
             let cell = populateHomeTracksCell(indexPath: indexPath)
             
-            if indexPath.item < jazz.count {
-                let track = jazz[indexPath.item]
-                cell.configure(track: track, with: "\(track.album?.cover ?? "No Image Found")")
+            if indexPath.item < viewModel.jazz.count {
+                let track = viewModel.jazz[indexPath.item]
+                cell.configure(track: track, with: "\(track.album?.cover ?? viewModel.noImageFoundText)")
             }
             return cell
             
         case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopArtistsCollectionViewCell.reuseIdentifier, for: indexPath) as! TopArtistsCollectionViewCell
             
-            if indexPath.item < topArtists.count {
-                let artist = topArtists[indexPath.item]
+            if indexPath.item < viewModel.topArtists.count {
+                let artist = viewModel.topArtists[indexPath.item]
                 cell.configure(artist: artist)
             }
             return cell
@@ -375,26 +290,26 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         case 5:
             let cell = populateHomeTracksCell(indexPath: indexPath)
             
-            if indexPath.item < pop.count {
-                let track = pop[indexPath.item]
-                cell.configure(track: track, with: "\(track.album?.cover ?? "No Image Found")")
+            if indexPath.item < viewModel.pop.count {
+                let track = viewModel.pop[indexPath.item]
+                cell.configure(track: track, with: "\(track.album?.cover ?? viewModel.noImageFoundText)")
             }
             return cell
             
         case 6:
             let cell = populateHomeTracksCell(indexPath: indexPath)
             
-            if indexPath.item < classical.count {
-                let track = classical[indexPath.item]
-                cell.configure(track: track, with: "\(track.album?.cover ?? "No Image Found")")
+            if indexPath.item < viewModel.classical.count {
+                let track = viewModel.classical[indexPath.item]
+                cell.configure(track: track, with: "\(track.album?.cover ?? viewModel.noImageFoundText)")
             }
             return cell
             
         case 7:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopAlbumsCollectionViewCell.reuseIdentifier, for: indexPath) as! TopAlbumsCollectionViewCell
             
-            if indexPath.item < topAlbums.count {
-                let album = topAlbums[indexPath.item]
+            if indexPath.item < viewModel.topAlbums.count {
+                let album = viewModel.topAlbums[indexPath.item]
                 cell.configure(album: album)
             }
             return cell
@@ -402,9 +317,9 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         default:
             let cell = populateHomeTracksCell(indexPath: indexPath)
             
-            if indexPath.item < rock.count {
-                let track = rock[indexPath.item]
-                cell.configure(track: track, with: "\(track.album?.cover ?? "No Image Found")")
+            if indexPath.item < viewModel.rock.count {
+                let track = viewModel.rock[indexPath.item]
+                cell.configure(track: track, with: "\(track.album?.cover ?? viewModel.noImageFoundText)")
             }
             return cell
         }
@@ -420,23 +335,23 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         
         switch indexPath.section {
         case 0:
-            return populateHeaders(headerID: "topChartHeader", kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: viewModel.topChartHeader, kind: kind, indexPath: indexPath)
         case 1:
-            return populateHeaders(headerID: "hipHopHeader", kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: viewModel.hipHopHeader, kind: kind, indexPath: indexPath)
         case 2:
-            return populateHeaders(headerID: "danceHeader", kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: viewModel.danceHeader, kind: kind, indexPath: indexPath)
         case 3:
-            return populateHeaders(headerID: "jazzHeader", kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: viewModel.jazzHeader, kind: kind, indexPath: indexPath)
         case 4:
-            return populateHeaders(headerID: "topArtistsHeader", kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: viewModel.topArtistsHeader, kind: kind, indexPath: indexPath)
         case 5:
-            return populateHeaders(headerID: "popHeader", kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: viewModel.popHeader, kind: kind, indexPath: indexPath)
         case 6:
-            return populateHeaders(headerID: "classicalHeader", kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: viewModel.classicalHeader, kind: kind, indexPath: indexPath)
         case 7:
-            return populateHeaders(headerID: "topAlbumsHeader", kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: viewModel.topAlbumsHeader, kind: kind, indexPath: indexPath)
         default:
-            return populateHeaders(headerID: "rockHeader", kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: viewModel.rockHeader, kind: kind, indexPath: indexPath)
         }
     }
     
@@ -489,186 +404,212 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         switch indexPath.section {
         
         case 0:
-            toDetailsSegue(tracks: topTracks, indexPath: indexPath)
+            toDetailsSegue(tracks: viewModel.topTracks, indexPath: indexPath)
         case 1:
-            toDetailsSegue(tracks: hipHop, indexPath: indexPath)
+            toDetailsSegue(tracks: viewModel.hipHop, indexPath: indexPath)
         case 2:
-            toDetailsSegue(tracks: dance, indexPath: indexPath)
+            toDetailsSegue(tracks: viewModel.dance, indexPath: indexPath)
         case 3:
-            toDetailsSegue(tracks: jazz, indexPath: indexPath)
+            toDetailsSegue(tracks: viewModel.jazz, indexPath: indexPath)
         case 4:
             Loaf.dismiss(sender: self, animated: true)
-            let topArtists = topArtists[indexPath.item]
+            let topArtists = viewModel.topArtists[indexPath.item]
             
             guard let url = URL(string: "\(topArtists.link)") else {return}
             let sfVC = SFSafariViewController(url: url)
             present(sfVC, animated: true)
             
         case 5:
-            toDetailsSegue(tracks: pop, indexPath: indexPath)
+            toDetailsSegue(tracks: viewModel.pop, indexPath: indexPath)
         case 6:
-            toDetailsSegue(tracks: classical, indexPath: indexPath)
+            toDetailsSegue(tracks: viewModel.classical, indexPath: indexPath)
         case 7:
             Loaf.dismiss(sender: self, animated: true)
             
             var indexPath = indexPath
             indexPath[0] = 0
             let dict: [String: Any] = [
-                "album" : topAlbums[indexPath.row],
-                "indexPath" : indexPath,
-                "isHome" : true
+                viewModel.albumText : viewModel.topAlbums[indexPath.row],
+                viewModel.indexPathText : indexPath,
+                viewModel.isHomeText : true
             ]
-            performSegue(withIdentifier: "toAlbumDetails", sender: dict)
+            performSegue(withIdentifier: viewModel.toAlbumDetailsText, sender: dict)
         default:
-            toDetailsSegue(tracks: rock, indexPath: indexPath)
+            toDetailsSegue(tracks: viewModel.rock, indexPath: indexPath)
+        }
+    }
+}
+
+//MARK: - Functions
+extension HomeMusicCollectionViewController {
+    
+    private func checkConnection() {
+        //Checks the internet connection
+        if !Connectivity.isConnectedToInternet {
+            showAlertAndReload(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+            HUD.flash(.error, delay: 0.5)
+        } else {
+            viewModel.fetchTracks()
+            loadRefreshControl()
+            greetingMessage()
+        }
+        
+        HUD.show(HUDContentType.progress, onView: self.view)
+    }
+    
+    //Creates pull down to refresh
+    func loadRefreshControl() {
+        guard let font = UIFont.init(name: Constants.futuraBold, size: 13) else {return}
+        
+        let attributes: [NSAttributedString.Key: AnyObject] = [.foregroundColor : UIColor.systemGreen, .font : font]
+        refreshControl.attributedTitle = NSAttributedString(string: viewModel.fetchingTracksText, attributes: attributes)
+        refreshControl.tintColor = .systemGreen
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        
+        if #available(iOS 10.0, *) {
+            collectionView.refreshControl = refreshControl
+        } else {
+            collectionView.backgroundView = refreshControl
         }
     }
     
+    //Refreshes the data
+    @objc func refresh(_ refreshControl: UIRefreshControl) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+            collectionView.refreshControl?.endRefreshing()
+            return
+        }
+        viewModel.fetchTracks()
+    }
+    
+    func greetingMessage() {
+        guard let userID = Auth.auth().currentUser?.uid else {return}
+        FirestoreManager.shared.db.collection(viewModel.users).document(userID).getDocument {[weak self] snapshot, error in
+            guard let self = self,
+                  let name: String = snapshot?.get(self.viewModel.name) as? String else {return}
+            
+            self.loafMessageWelcome(name: name)
+        }
+    }
+    
+    private func setupObservers() {
+        //Gets the button action from the corresponding cell
+        NotificationCenter.default.addObserver(forName: .ToViewAll, object: nil, queue: .main) {[weak self] notification in
+            guard let self = self else {return}
+            
+            if !Connectivity.isConnectedToInternet {
+                self.showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+                return
+            }
+            
+            if let viewAll = notification.userInfo?[self.viewModel.viewAll] as? String,
+               let genre = notification.userInfo?[self.viewModel.genre] as? String {
+                
+                Loaf.dismiss(sender: self, animated: true)
+                self.performSegue(withIdentifier: self.viewModel.toGenreText, sender: [viewAll, genre])
+            }
+        }
+        NotificationCenter.default.addObserver(forName: .MoveToLogin, object: nil, queue: .main) {[weak self] _ in
+            self?.logOutTappedAndSegue()
+        }
+    }
+    
+    private func setupCells() {
+        //Registers the cells
+        collectionView.register(HomeTracksCollectionViewCell.self, forCellWithReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier)
+        collectionView.register(TopArtistsCollectionViewCell.self, forCellWithReuseIdentifier: TopArtistsCollectionViewCell.reuseIdentifier)
+        collectionView.register(TopAlbumsCollectionViewCell.self, forCellWithReuseIdentifier: TopAlbumsCollectionViewCell.reuseIdentifier)
+    }
+    
+    private func setupHeaders() {
+        //Register the headers
+        collectionView.register(TopChartCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.topChartHeader)
+        collectionView.register(HipHopCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.hipHopHeader)
+        collectionView.register(DanceCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.danceHeader)
+        collectionView.register(JazzCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.jazzHeader)
+        collectionView.register(TopArtistsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.topArtistsHeader)
+        collectionView.register(PopCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.popHeader)
+        collectionView.register(ClassicalCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.classicalHeader)
+        collectionView.register(TopAlbumsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.topAlbumsHeader)
+        collectionView.register(RockCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.rockHeader)
+    }
+        
     func toDetailsSegue(tracks: [Track], indexPath: IndexPath) {
         Loaf.dismiss(sender: self, animated: true)
-        
+ 
         if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             return
         }
         let track = tracks[indexPath.item]
-        performSegue(withIdentifier: "toDetails", sender: track)
+        performSegue(withIdentifier: viewModel.toDetailsText, sender: track)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toDetails" {
+        if segue.identifier == viewModel.toDetailsText {
             guard let dest = segue.destination as? UINavigationController,
                   let targetController = dest.topViewController as? DetailsMusicViewController,
                   let track = sender as? Track else {return}
 
             targetController.track = track
-            
-        } else if segue.identifier == "toGenre" {
+     
+        } else if segue.identifier == viewModel.toGenreText {
             guard let dest = segue.destination as? UINavigationController,
                   let targetController = dest.topViewController as? GenreMusicViewController,
                   let data = sender as? [String] else {return}
-            
+     
             targetController.titleGenre = data[0]
             targetController.path = data[1]
-            
-        } else if segue.identifier == "toAlbumDetails" {
+     
+        } else if segue.identifier == viewModel.toAlbumDetailsText {
             guard let dest = segue.destination as? UINavigationController,
                   let targetController = dest.topViewController as? AlbumDetailsViewController,
                   let data = sender as? Dictionary<String, Any> else {return}
-            
-            targetController.album = data["album"] as? TopAlbums
-            targetController.indexPath = data["indexPath"] as? IndexPath
-            targetController.isHome = data["isHome"] as? Bool
+     
+            targetController.album = data[viewModel.albumText] as? TopAlbums
+            targetController.indexPath = data[viewModel.indexPathText] as? IndexPath
+            targetController.isHome = data[viewModel.isHomeText] as? Bool
         }
     }
+}
+
+//MARK: - Alert
+extension HomeMusicCollectionViewController {
     
-    //Fetches all the genres
-    func fetchTracks() {
-        tracksDS.fetchGenres(from: .chart, with: "/0/tracks", with: ["limit" : 35]) {[weak self] topTracks, error in
-            if let topTracks = topTracks {
-                self?.topTracks = topTracks
-                self?.loadSectionAndAnimation(in: 0)
-            } else if let error = error {
-                print(error)
+    func showAlertAndReload(title: String? = nil, message: String? = nil) {
+        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        vc.addAction(.init(title: viewModel.retryText, style: .cancel, handler: {[weak self] action in
+            guard let self = self else {return}
+            
+            if !Connectivity.isConnectedToInternet {
+                self.showAlertAndReload(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+            } else {
+                self.viewModel.fetchTracks()
+                self.greetingMessage()
+                self.loadRefreshControl()
             }
-        }
-        tracksDS.fetchGenres(from: .chart, with: "/116/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
-            if let tracks = tracks {
-                self?.hipHop = tracks
-                self?.loadSectionAndAnimation(in: 1)
-            } else if let error = error {
-                print(error)
-            }
-        }
-        tracksDS.fetchGenres(from: .chart, with: "/113/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
-            if let tracks = tracks {
-                self?.dance = tracks
-                self?.loadSectionAndAnimation(in: 2)
-            } else if let error = error {
-                print(error)
-            }
-        }
-        tracksDS.fetchGenres(from: .chart, with: "/129/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
-            if let tracks = tracks {
-                self?.jazz = tracks
-                self?.loadSectionAndAnimation(in: 3)
-            } else if let error = error {
-                print(error)
-            }
-        }
-        topArtistsDS.fetchTopArtists(from: .chart, with: "/0/artists", with: ["limit" : 8]) {[weak self] artists, error in
-            if let artists = artists {
-                self?.topArtists = artists
-                self?.loadSectionAndAnimation(in: 4)
-            } else if let error = error {
-                print(error)
-            }
-        }
-        tracksDS.fetchGenres(from: .chart, with: "/132/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
-            if let tracks = tracks {
-                self?.pop = tracks
-                self?.loadSectionAndAnimation(in: 5)
-            } else if let error = error {
-                print(error)
-            }
-        }
-        tracksDS.fetchGenres(from: .chart, with: "/98/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
-            if let tracks = tracks {
-                self?.classical = tracks
-                self?.loadSectionAndAnimation(in: 6)
-            } else if let error = error {
-                print(error)
-            }
-        }
-        topAlbumsDS.fetchTopAlbums(from: .chart, with: "/0/albums", with: ["limit" : 15]) {[weak self] albums, error in
-            if let albums = albums {
-                self?.topAlbums = albums
-                self?.loadSectionAndAnimation(in: 7)
-            } else if let error = error {
-                print(error)
-            }
-        }
-        tracksDS.fetchGenres(from: .chart, with: "/152/tracks", with: ["limit" : 35]) {[weak self] tracks, error in
-            if let tracks = tracks {
-                self?.rock = tracks
-                self?.loadSectionAndAnimation(in: 8)
-            } else if let error = error {
-                print(error)
-            }
-        }
+        }))
+        present(vc, animated: true)
     }
+}
+
+extension HomeMusicCollectionViewController: HomeViewModelDelegate {
     
     //Animates the sections
     func loadSectionAndAnimation(in section: Int) {
-        counter += 1
+        viewModel.counter += 1
         collectionView.reloadSections([section])
         
         let animation = AnimationType.from(direction: .right, offset: 30.0)
         let cells = collectionView.visibleCells(in: section)
         UIView.animate(views: cells, animations: [animation])
         
-        if counter == collectionView.numberOfSections {
-            counter = 0
+        if viewModel.counter == collectionView.numberOfSections {
+            viewModel.counter = 0
             HUD.flash(.success, delay: 0.5)
             refreshControl.endRefreshing()
         }
-    }
-}
-
-//Alert extension
-extension HomeMusicCollectionViewController {
-    func showAlertAndReload(title: String? = nil, message: String? = nil) {
-        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
-            if !Connectivity.isConnectedToInternet {
-                self?.showAlertAndReload(title: "No Internet Connection", message: "Failed to connect to the internet")
-            } else {
-                self?.fetchTracks()
-                self?.greetingMessage()
-                self?.loadRefreshControl()
-            }
-        }))
-        present(vc, animated: true)
     }
 }

@@ -99,9 +99,9 @@ class LikedMusicViewController: BaseTableViewController {
         //Returns the number of rows based on the selected segment
         switch segmentedControl.selectedSegmentIndex {
         case 0:
-            numberOfRows = tracks.count
+            numberOfRows = viewModel.tracks.count
         case 1:
-            numberOfRows = albums.count
+            numberOfRows = viewModel.albums.count
         default:
             break
         }
@@ -116,13 +116,13 @@ class LikedMusicViewController: BaseTableViewController {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             accessoryArrow(cell: tracksCell)
-            let track = tracks[indexPath.row]
+            let track = viewModel.tracks[indexPath.row]
             tracksCell.populate(track: track)
             
             tracksCell.cellConstraints()
         case 1:
             accessoryArrow(cell: albumsCell)
-            let album = albums[indexPath.row]
+            let album = viewModel.albums[indexPath.row]
             albumsCell.populate(album: album)
             
             albumsCell.cellConstraints()
@@ -137,7 +137,7 @@ class LikedMusicViewController: BaseTableViewController {
     }
     
     @IBAction func openWebsiteTapped(_ sender: UIButton) {
-        openWebsite(albums: albums, sender: sender)
+        openWebsite(albums: viewModel.albums, sender: sender)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -168,7 +168,7 @@ class LikedMusicViewController: BaseTableViewController {
             //Deletes a cell based on the selected segment
             switch segmentedControl.selectedSegmentIndex {
             case 0:
-                let track = tracks[indexPath.row]
+                let track = viewModel.tracks[indexPath.row]
                 loafMessageRemoved(track: track)
                 
                 FirestoreManager.shared.db.collection("users").document(userID).updateData([
@@ -180,15 +180,15 @@ class LikedMusicViewController: BaseTableViewController {
                     if let error = error {
                         print("\(error.localizedDescription)")
                     }
-                    self.tracks.remove(at: indexPath.row)
+                    self.viewModel.tracks.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     
-                    if self.tracks.count == 0 {
+                    if self.viewModel.tracks.count == 0 {
                         self.noLikedLabel.isHidden = false
                     }
                 }
             case 1:
-                let album = albums[indexPath.row]
+                let album = viewModel.albums[indexPath.row]
                 loafMessageRemovedAlbum(album: album)
                 
                 FirestoreManager.shared.db.collection("users").document(userID).updateData([
@@ -199,12 +199,12 @@ class LikedMusicViewController: BaseTableViewController {
                     if let error = error {
                         print("\(error.localizedDescription)")
                     }
-                    self.albums.remove(at: indexPath.row)
+                    self.viewModel.albums.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     
                     NotificationCenter.default.post(name: .ReloadFromLiked, object: nil, userInfo: nil)
                     
-                    if self.albums.count == 0 {
+                    if self.viewModel.albums.count == 0 {
                         self.noLikedLabel.isHidden = false
                     }
                 }
@@ -223,10 +223,10 @@ class LikedMusicViewController: BaseTableViewController {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             Loaf.dismiss(sender: self, animated: true)
-            performSegue(withIdentifier: "toDetails", sender: tracks[indexPath.row])
+            performSegue(withIdentifier: "toDetails", sender: viewModel.tracks[indexPath.row])
         case 1:
             Loaf.dismiss(sender: self, animated: true)
-            performSegue(withIdentifier: "toAlbumDetails", sender: albums[indexPath.row])
+            performSegue(withIdentifier: "toAlbumDetails", sender: viewModel.albums[indexPath.row])
         default:
             break
         }
@@ -238,11 +238,13 @@ class LikedMusicViewController: BaseTableViewController {
             guard let dest = segue.destination as? UINavigationController,
                   let targetController = dest.topViewController as? DetailsMusicViewController,
                   let track = sender as? Track else {return}
+            
             targetController.track = track
         } else if segue.identifier == "toAlbumDetails" {
             guard let dest = segue.destination as? UINavigationController,
                   let targetController = dest.topViewController as? AlbumDetailsViewController,
                   let album = sender as? TopAlbums else {return}
+            
             targetController.album = album
         }
     }
@@ -252,10 +254,11 @@ class LikedMusicViewController: BaseTableViewController {
         NotificationCenter.default.addObserver(forName: .AddTrack, object: nil, queue: .main) {[weak self] notification in
             if let track = notification.userInfo?["track"] as? Track {
                 guard let self = self else {return}
-                self.tracks.append(track)
+                
+                self.viewModel.tracks.append(track)
                 self.likedTableView.reloadData()
                 
-                if self.tracks.count > 0 && self.tracks.count <= 1 {
+                if self.viewModel.tracks.count > 0 && self.viewModel.tracks.count <= 1 {
                     if self.segmentedControl.selectedSegmentIndex == 0 {
                         self.noLikedLabel.isHidden = true
                     }
@@ -266,12 +269,13 @@ class LikedMusicViewController: BaseTableViewController {
         NotificationCenter.default.addObserver(forName: .RemoveTrack, object: nil, queue: .main) {[weak self] notification in
             if let track = notification.userInfo?["track"] as? Track {
                 guard let self = self else {return}
-                for (index, _) in self.tracks.enumerated() {
-                    if self.tracks[index].id == track.id{
-                        self.tracks.remove(at: index)
+                
+                for (index, _) in self.viewModel.tracks.enumerated() {
+                    if self.viewModel.tracks[index].id == track.id{
+                        self.viewModel.tracks.remove(at: index)
                         self.likedTableView.reloadData()
 
-                        if self.tracks.count == 0 {
+                        if self.viewModel.tracks.count == 0 {
                             if self.segmentedControl.selectedSegmentIndex == 0 {
                                 self.noLikedLabel.isHidden = false
                             }
@@ -286,10 +290,10 @@ class LikedMusicViewController: BaseTableViewController {
             if let album = notification.userInfo?["album"] as? TopAlbums {
                 guard let self = self else {return}
                 
-                self.albums.append(album)
+                self.viewModel.albums.append(album)
                 self.likedTableView.reloadData()
                 
-                if self.albums.count > 0 && self.albums.count <= 1 {
+                if self.viewModel.albums.count > 0 && self.viewModel.albums.count <= 1 {
                     if self.segmentedControl.selectedSegmentIndex == 1 {
                         self.noLikedLabel.isHidden = true
                     }
@@ -301,12 +305,12 @@ class LikedMusicViewController: BaseTableViewController {
             if let album = notification.userInfo?["album"] as? TopAlbums {
                 guard let self = self else {return}
 
-                for (index, _) in self.albums.enumerated() {
-                    if self.albums[index].id == album.id{
-                        self.albums.remove(at: index)
+                for (index, _) in self.viewModel.albums.enumerated() {
+                    if self.viewModel.albums[index].id == album.id{
+                        self.viewModel.albums.remove(at: index)
                         self.likedTableView.reloadData()
                         
-                        if self.albums.count == 0 {
+                        if self.viewModel.albums.count == 0 {
                             if self.segmentedControl.selectedSegmentIndex == 1 {
                                 self.noLikedLabel.isHidden = false
                             }
@@ -334,7 +338,7 @@ class LikedMusicViewController: BaseTableViewController {
                 likedTableView.reloadData()
                 reloadTableViewWithAnimation()
                 
-                if tracks.count > 0 {
+                if viewModel.tracks.count > 0 {
                     noLikedLabel.isHidden = true
                 } else {
                     noLikedLabel.isHidden = false
@@ -351,7 +355,7 @@ class LikedMusicViewController: BaseTableViewController {
             if isAlbumLoaded == true {
                 likedTableView.reloadData()
                 reloadTableViewWithAnimation()
-                if albums.count > 0 {
+                if viewModel.albums.count > 0 {
                     noLikedLabel.isHidden = true
                 } else {
                     noLikedLabel.isHidden = false
@@ -398,7 +402,7 @@ class LikedMusicViewController: BaseTableViewController {
                 guard let self = self else {return}
                 
                 self.trackIndex += 1
-                self.tracks.append(track)
+                self.viewModel.tracks.append(track)
                 
                 self.numOfCallsTrack -= 1
                 if self.numOfCallsTrack > 0 {
@@ -445,7 +449,7 @@ class LikedMusicViewController: BaseTableViewController {
                 guard let self = self else {return}
                 
                 self.albumIndex += 1
-                self.albums.append(album)
+                self.viewModel.albums.append(album)
                 self.numOfCallsAlbum -= 1
                 if self.numOfCallsAlbum > 0 {
                     self.fetchAlbums()

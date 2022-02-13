@@ -7,28 +7,36 @@
 
 import AVFoundation
 
-class MediaPlayer {
-    var player: AVAudioPlayer?
+protocol MediaPlayerDelegate: AnyObject {
+    func changeButtonStateAfterAudioStopsPlaying()
+}
+
+class MediaPlayer: NSObject {
     public static let shared = MediaPlayer()
+    var player: AVAudioPlayer?
+    weak var delegate: MediaPlayerDelegate?
     
-    private init() {}
+    override private init() {}
     
     func loadAudio(url: URL) {
 
         DispatchQueue.main.async {[weak self] in
+            guard let self = self else {return}
+            
             do {
                 let data = try Data(contentsOf: url)
-                self?.player = try AVAudioPlayer(data: data)
+                self.player = try AVAudioPlayer(data: data)
             } catch {
-                print(error)
+                print(error.localizedDescription)
             }
-            if let player = self?.player {
+            if let player = self.player {
                 player.prepareToPlay()
                 player.volume = 1.0
+                player.delegate = self
                 player.play()
             } else {
                 print("Couldn't load the audio")
-                self?.player = nil
+                self.player = nil
             }
         }
     }
@@ -36,6 +44,14 @@ class MediaPlayer {
     func stopAudio() {
         if let player = player {
             player.stop()
+        }
+    }
+}
+
+extension MediaPlayer: AVAudioPlayerDelegate {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if flag {
+            delegate?.changeButtonStateAfterAudioStopsPlaying()
         }
     }
 }

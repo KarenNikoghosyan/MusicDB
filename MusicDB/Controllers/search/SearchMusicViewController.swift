@@ -45,7 +45,7 @@ class SearchMusicViewController: BaseTableViewController {
         
         //Creates a label, and will be only shows when the search bar is empty
         searchLabel.text = "Search for artists, songs and more."
-        searchLabel.font = UIFont.init(name: "Futura", size: 18)
+        searchLabel.font = UIFont.init(name: Constants.futura, size: 18)
         searchLabel.textColor = .white
         
         view.addSubview(searchLabel)
@@ -60,7 +60,7 @@ class SearchMusicViewController: BaseTableViewController {
     func loadNoTracksLabel() {
         //Creates a label, and will be only shown if no tracks were found
         noTracksLabel.text = "No Tracks Found"
-        noTracksLabel.font = UIFont.init(name: "Futura", size: 20)
+        noTracksLabel.font = UIFont.init(name: Constants.futura, size: 20)
         noTracksLabel.textColor = .white
         noTracksLabel.textAlignment = .center
         
@@ -76,14 +76,14 @@ class SearchMusicViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tracks.count
+        return viewModel.tracks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         if let cell = cell as? SearchMusicTableViewCell {
-            let track = tracks[indexPath.row]
+            let track = viewModel.tracks[indexPath.row]
             cell.populate(track: track)
         }
         
@@ -95,7 +95,7 @@ class SearchMusicViewController: BaseTableViewController {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
             return
         }
-        performSegue(withIdentifier: "toDetails", sender: tracks[indexPath.row])
+        performSegue(withIdentifier: "toDetails", sender: viewModel.tracks[indexPath.row])
     }
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -123,7 +123,7 @@ extension SearchMusicViewController: UISearchBarDelegate {
         loadActivityIndicator()
         self.searchLabel.isHidden = true
         
-        tracks.removeAll()
+        viewModel.tracks.removeAll()
         searchTracksTableView.reloadData()
         
         guard let text = searchBar.text else {return}
@@ -138,11 +138,11 @@ extension SearchMusicViewController: UISearchBarDelegate {
         
         let animation = AnimationType.from(direction: .top, offset: 30.0)
         
-        ds.fetchTracks(from: .search, id: nil, path: nil, with: ["q":text]) {[weak self] tracks, error in
+        viewModel.ds.fetchTracks(from: .search, id: nil, path: nil, with: ["q":text]) {[weak self] tracks, error in
                 if let tracks = tracks {
                     guard let self = self else {return}
                     
-                    self.tracks = tracks
+                    self.viewModel.tracks = tracks
                     self.searchTracksTableView.reloadData()
                     
                     //Loads the cells with animation
