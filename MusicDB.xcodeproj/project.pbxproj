@@ -43,6 +43,7 @@
 		78481CD826BAC3B9006F9036 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78481CD726BAC3B9006F9036 /* SettingsView.swift */; };
 		7853357B27B6616700A90C63 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7853357A27B6616700A90C63 /* RegisterViewModel.swift */; };
 		7853357E27B7113200A90C63 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7853357D27B7113200A90C63 /* HomeViewModel.swift */; };
+		7853358027B7D19E00A90C63 /* BaseTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7853357F27B7D19E00A90C63 /* BaseTableViewModel.swift */; };
 		78538EAD26B44100003DBDE1 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78538EAC26B44100003DBDE1 /* FirestoreManager.swift */; };
 		78538EB026B4AE74003DBDE1 /* SearchMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78538EAF26B4AE74003DBDE1 /* SearchMusicTableViewCell.swift */; };
 		7862B8672697A2D2000E3056 /* SingleTrackAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862B8662697A2D2000E3056 /* SingleTrackAPIDataSource.swift */; };
@@ -127,6 +128,7 @@
 		78481CD726BAC3B9006F9036 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7853357A27B6616700A90C63 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		7853357D27B7113200A90C63 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		7853357F27B7D19E00A90C63 /* BaseTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewModel.swift; sourceTree = "<group>"; };
 		78538EAC26B44100003DBDE1 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		78538EAF26B4AE74003DBDE1 /* SearchMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicTableViewCell.swift; sourceTree = "<group>"; };
 		7862B8662697A2D2000E3056 /* SingleTrackAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTrackAPIDataSource.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 				7801BAF327AF24F800DB837C /* login */,
 				7853357927B6613B00A90C63 /* register */,
 				7853357C27B7111300A90C63 /* home */,
+				7853357F27B7D19E00A90C63 /* BaseTableViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -774,6 +777,7 @@
 				782E4862268A4092005C8E4F /* RockCollectionReusableView.swift in Sources */,
 				78C5180E26A5993300D9378B /* UIImageView+Extensions.swift in Sources */,
 				788A75A1267CBCD100DFE2B0 /* TrackAPIDataSource.swift in Sources */,
+				7853358027B7D19E00A90C63 /* BaseTableViewModel.swift in Sources */,
 				78538EAD26B44100003DBDE1 /* FirestoreManager.swift in Sources */,
 				78481CD826BAC3B9006F9036 /* SettingsView.swift in Sources */,
 				782E485C268A2A41005C8E4F /* TopAlbumsAPIDataSource.swift in Sources */,

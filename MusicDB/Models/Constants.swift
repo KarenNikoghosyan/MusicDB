@@ -20,4 +20,7 @@ struct Constants {
     
     static let loginStoryboard = "Login"
     static let loginStoryboardIdentifier = "loginStoryboard"
+    
+    static let noInternetConnectionText = "No Internet Connection"
+    static let failedToConnectText = "Failed to connect to the internet"
 }

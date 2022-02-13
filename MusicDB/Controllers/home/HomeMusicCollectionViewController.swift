@@ -446,7 +446,7 @@ extension HomeMusicCollectionViewController {
     private func checkConnection() {
         //Checks the internet connection
         if !Connectivity.isConnectedToInternet {
-            showAlertAndReload(title: viewModel.noInternetConnectionText, message: viewModel.failedToConnectText)
+            showAlertAndReload(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             HUD.flash(.error, delay: 0.5)
         } else {
             viewModel.fetchTracks()
@@ -476,7 +476,7 @@ extension HomeMusicCollectionViewController {
     //Refreshes the data
     @objc func refresh(_ refreshControl: UIRefreshControl) {
         if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: viewModel.noInternetConnectionText, message: viewModel.failedToConnectText)
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             collectionView.refreshControl?.endRefreshing()
             return
         }
@@ -499,7 +499,7 @@ extension HomeMusicCollectionViewController {
             guard let self = self else {return}
             
             if !Connectivity.isConnectedToInternet {
-                self.showViewControllerAlert(title: self.viewModel.noInternetConnectionText, message: self.viewModel.failedToConnectText)
+                self.showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
                 return
             }
             
@@ -539,7 +539,7 @@ extension HomeMusicCollectionViewController {
         Loaf.dismiss(sender: self, animated: true)
  
         if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: viewModel.noInternetConnectionText, message: viewModel.failedToConnectText)
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             return
         }
         let track = tracks[indexPath.item]
@@ -584,7 +584,7 @@ extension HomeMusicCollectionViewController {
             guard let self = self else {return}
             
             if !Connectivity.isConnectedToInternet {
-                self.showAlertAndReload(title: self.viewModel.noInternetConnectionText, message: self.viewModel.failedToConnectText)
+                self.showAlertAndReload(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             } else {
                 self.viewModel.fetchTracks()
                 self.greetingMessage()

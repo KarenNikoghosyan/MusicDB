@@ -47,7 +47,7 @@ class AlbumsViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return albums.count
+        return viewModel.albums.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,7 +59,7 @@ class AlbumsViewController: BaseTableViewController {
             cell.openWebsiteButton.tag = indexPath.row
             cell.openWebsiteButton.addTarget(self, action: #selector(openWebsiteTapped(_:)), for: .touchUpInside)
             
-            let album = albums[indexPath.row]
+            let album = viewModel.albums[indexPath.row]
             cell.populate(album: album)
             cell.cellConstraints()
         }
@@ -68,7 +68,7 @@ class AlbumsViewController: BaseTableViewController {
     
     //Link to open a website
     @IBAction func openWebsiteTapped(_ sender: UIButton) {
-        openWebsite(albums: albums, sender: sender)
+        openWebsite(albums: viewModel.albums, sender: sender)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -77,7 +77,7 @@ class AlbumsViewController: BaseTableViewController {
             return
         }
         let dict: [String : Any] = [
-            "album" : albums[indexPath.row],
+            "album" : viewModel.albums[indexPath.row],
             "indexPath" : indexPath
         ]
         Loaf.dismiss(sender: self, animated: true)
@@ -98,20 +98,24 @@ class AlbumsViewController: BaseTableViewController {
         
         //Gets the indexpath from the button, to determine what album to add to the firestore database
         NotificationCenter.default.addObserver(forName: .AddAlbumID, object: nil, queue: .main) {[weak self] notification in
+            guard let self = self else {return}
+            
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-                guard let album = self?.albums[indexPath.row] else {return}
                 
+                let album = self.viewModel.albums[indexPath.row]
                 FirestoreManager.shared.addAlbum(album: album, userID: userID)
-                self?.loafMessageAddedAlbum(album: album)
+                self.loafMessageAddedAlbum(album: album)
             }
         }
         //Gets the indexpath from the button, to determine what album to remove from the firestore database
         NotificationCenter.default.addObserver(forName: .RemoveAlbumID, object: nil, queue: .main) {[weak self] notification in
+            guard let self = self else {return}
+            
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-                guard let album = self?.albums[indexPath.row] else {return}
                 
+                let album = self.viewModel.albums[indexPath.row]
                 FirestoreManager.shared.removeAlbum(album: album, userID: userID)
-                self?.loafMessageRemovedAlbum(album: album)
+                self.loafMessageRemovedAlbum(album: album)
             }
         }
         //Gets the indexpath from the button, to determine what cell to reload
@@ -135,7 +139,7 @@ class AlbumsViewController: BaseTableViewController {
             guard let self = self else {return}
             
             if let albums = albums {
-                self.albums = albums
+                self.viewModel.albums = albums
                 self.albumsTableView.reloadData()
                 
                 //Animates the cells

@@ -50,7 +50,7 @@ class GenreMusicViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tracks.count
+        return viewModel.tracks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,7 +59,7 @@ class GenreMusicViewController: BaseTableViewController {
         accessoryArrow(cell: cell)
 
         if let cell = cell as? LikedGenreTableViewCell {
-            let track = tracks[indexPath.row]
+            let track = viewModel.tracks[indexPath.row]
             
             cell.populate(track: track)
             cell.cellConstraints()
@@ -74,7 +74,7 @@ class GenreMusicViewController: BaseTableViewController {
             return
         }
         let dict: [String : Any] = [
-            "track" : tracks[indexPath.row],
+            "track" : viewModel.tracks[indexPath.row],
             "indexPath" : indexPath,
             "isGenre" : true
         ]
@@ -98,7 +98,7 @@ class GenreMusicViewController: BaseTableViewController {
             if let tracks = tracks {
                 guard let self = self else {return}
                 
-                self.tracks = tracks
+                self.viewModel.tracks = tracks
                 self.genreTableView.reloadData()
                 self.activityIndicatorView.stopAnimating()
                 
@@ -117,20 +117,24 @@ class GenreMusicViewController: BaseTableViewController {
         
         //Gets the indexpath from the button, to determine what track to add to the firestore database
         NotificationCenter.default.addObserver(forName: .IndexAdd, object: nil, queue: .main) {[weak self] notification in
+            guard let self = self else {return}
+            
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-                guard let track = self?.tracks[indexPath.row] else {return}
                 
+                let track = self.viewModel.tracks[indexPath.row]
                 FirestoreManager.shared.addTrack(track: track, userID: userID)
-                self?.loafMessageAdded(track: track)
+                self.loafMessageAdded(track: track)
             }
         }
         //Gets the indexpath from the button, to determine what track to remove to the firestore database
         NotificationCenter.default.addObserver(forName: .IndexRemove, object: nil, queue: .main) {[weak self] notification in
+            guard let self = self else {return}
+            
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-                guard let track = self?.tracks[indexPath.row] else {return}
                 
+                let track = self.viewModel.tracks[indexPath.row]
                 FirestoreManager.shared.removeTrack(track: track, userID: userID)
-                self?.loafMessageRemoved(track: track)
+                self.loafMessageRemoved(track: track)
             }
         }
         //Gets the indexpath from the button, to determine what cell to reload

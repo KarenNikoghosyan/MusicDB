@@ -58,8 +58,6 @@ class HomeViewModel {
     let viewAll = "viewAll"
     let genre = "genre"
     
-    let noInternetConnectionText = "No Internet Connection"
-    let failedToConnectText = "Failed to connect to the internet"
     let noImageFoundText = "No Image Found"
     let fetchingTracksText = "Fetching Tracks..."
     let retryText = "Retry"

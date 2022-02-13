@@ -188,13 +188,15 @@ class DetailsMusicViewController: BaseTableViewController {
     //Stops the audio from playing when the app moves to the background
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if isBeingDismissed {
+        
+        if navigationController?.isBeingDismissed ?? false {
             stopAudio()
+            NotificationCenter.default.post(name: .ResetPlayButton, object: nil)
         }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tracks.count
+        return viewModel.tracks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -202,7 +204,7 @@ class DetailsMusicViewController: BaseTableViewController {
         
         populateCell(indexPath: indexPath, cell: cell, tableView: artistTableView)
         
-        cell.populateTrack(track: tracks[indexPath.row])
+        cell.populateTrack(track: viewModel.tracks[indexPath.row])
         return cell
     }
     
@@ -215,11 +217,12 @@ class DetailsMusicViewController: BaseTableViewController {
         let parentVC = presentingViewController
             
         dismiss(animated: true) {[weak self] in
-            guard let detailsVC = DetailsMusicViewController.storyboardInstance(storyboardID: "Main", restorationID: "detailsScreen") as? UINavigationController,
+            guard let self = self,
+                  let detailsVC = DetailsMusicViewController.storyboardInstance(storyboardID: "Main", restorationID: "detailsScreen") as? UINavigationController,
                   let targetController = detailsVC.topViewController as? DetailsMusicViewController else {return}
             
-            self?.stopAudio()
-            let track = self?.tracks[indexPath.row]
+            self.stopAudio()
+            let track = self.viewModel.tracks[indexPath.row]
             targetController.track = track
             parentVC?.present(detailsVC, animated: true)
         }
@@ -363,11 +366,11 @@ class DetailsMusicViewController: BaseTableViewController {
     
     //Fetches the tracks
     func fetchTracks() {
-        ds.fetchTracks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":200]) {[weak self] tracks, error in
+        viewModel.ds.fetchTracks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":200]) {[weak self] tracks, error in
             if let tracks = tracks {
                 guard let self = self else {return}
                 
-                self.tracks = tracks
+                self.viewModel.tracks = tracks
                 self.artistTableView.reloadData()
                 
                 //Animates the cells
