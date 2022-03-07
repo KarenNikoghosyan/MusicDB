@@ -195,19 +195,6 @@ class DetailsMusicViewController: BaseTableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.tracks.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTableViewCell
-        
-        populateCell(indexPath: indexPath, cell: cell, tableView: artistTableView)
-        
-        cell.populateTrack(track: viewModel.tracks[indexPath.row])
-        return cell
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         Loaf.dismiss(sender: self, animated: true)
         if !Connectivity.isConnectedToInternet {
@@ -222,7 +209,7 @@ class DetailsMusicViewController: BaseTableViewController {
                   let targetController = detailsVC.topViewController as? DetailsMusicViewController else {return}
             
             self.stopAudio()
-            let track = self.viewModel.tracks[indexPath.row]
+            let track = self.baseViewModel.tracks[indexPath.row]
             targetController.track = track
             parentVC?.present(detailsVC, animated: true)
         }
@@ -366,11 +353,11 @@ class DetailsMusicViewController: BaseTableViewController {
     
     //Fetches the tracks
     func fetchTracks() {
-        viewModel.ds.fetchTracks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":200]) {[weak self] tracks, error in
+        baseViewModel.ds.fetchTracks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":200]) {[weak self] tracks, error in
             if let tracks = tracks {
                 guard let self = self else {return}
                 
-                self.viewModel.tracks = tracks
+                self.baseViewModel.tracks = tracks
                 self.artistTableView.reloadData()
                 
                 //Animates the cells
@@ -425,5 +412,25 @@ extension DetailsMusicViewController {
             }
         }))
         present(vc, animated: true)
+    }
+}
+
+extension DetailsMusicViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return baseViewModel.tracks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTableViewCell
+        
+        populateCell(indexPath: indexPath, cell: cell, tableView: artistTableView)
+        
+        cell.populateTrack(track: baseViewModel.tracks[indexPath.row])
+        return cell
     }
 }

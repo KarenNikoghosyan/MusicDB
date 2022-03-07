@@ -49,32 +49,13 @@ class GenreMusicViewController: BaseTableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.tracks.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        accessoryArrow(cell: cell)
-
-        if let cell = cell as? LikedGenreTableViewCell {
-            let track = viewModel.tracks[indexPath.row]
-            
-            cell.populate(track: track)
-            cell.cellConstraints()
-        }
-        
-        return cell
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !Connectivity.isConnectedToInternet {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
             return
         }
         let dict: [String : Any] = [
-            "track" : viewModel.tracks[indexPath.row],
+            "track" : baseViewModel.tracks[indexPath.row],
             "indexPath" : indexPath,
             "isGenre" : true
         ]
@@ -98,7 +79,7 @@ class GenreMusicViewController: BaseTableViewController {
             if let tracks = tracks {
                 guard let self = self else {return}
                 
-                self.viewModel.tracks = tracks
+                self.baseViewModel.tracks = tracks
                 self.genreTableView.reloadData()
                 self.activityIndicatorView.stopAnimating()
                 
@@ -121,7 +102,7 @@ class GenreMusicViewController: BaseTableViewController {
             
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 
-                let track = self.viewModel.tracks[indexPath.row]
+                let track = self.baseViewModel.tracks[indexPath.row]
                 FirestoreManager.shared.addTrack(track: track, userID: userID)
                 self.loafMessageAdded(track: track)
             }
@@ -132,7 +113,7 @@ class GenreMusicViewController: BaseTableViewController {
             
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 
-                let track = self.viewModel.tracks[indexPath.row]
+                let track = self.baseViewModel.tracks[indexPath.row]
                 FirestoreManager.shared.removeTrack(track: track, userID: userID)
                 self.loafMessageRemoved(track: track)
             }
@@ -160,5 +141,31 @@ extension GenreMusicViewController {
             }
         }))
         present(vc, animated: true)
+    }
+}
+
+extension GenreMusicViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return baseViewModel.tracks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        accessoryArrow(cell: cell)
+
+        if let cell = cell as? LikedGenreTableViewCell {
+            let track = baseViewModel.tracks[indexPath.row]
+            
+            cell.populate(track: track)
+            cell.cellConstraints()
+        }
+        
+        return cell
     }
 }

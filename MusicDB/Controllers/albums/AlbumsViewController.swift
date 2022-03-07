@@ -46,29 +46,9 @@ class AlbumsViewController: BaseTableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.albums.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        accessoryArrow(cell: cell)
-        
-        if let cell = cell as? AlbumsTableViewCell {
-            cell.openWebsiteButton.tag = indexPath.row
-            cell.openWebsiteButton.addTarget(self, action: #selector(openWebsiteTapped(_:)), for: .touchUpInside)
-            
-            let album = viewModel.albums[indexPath.row]
-            cell.populate(album: album)
-            cell.cellConstraints()
-        }
-        return cell
-    }
-    
     //Link to open a website
     @IBAction func openWebsiteTapped(_ sender: UIButton) {
-        openWebsite(albums: viewModel.albums, sender: sender)
+        openWebsite(albums: baseViewModel.albums, sender: sender)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -77,7 +57,7 @@ class AlbumsViewController: BaseTableViewController {
             return
         }
         let dict: [String : Any] = [
-            "album" : viewModel.albums[indexPath.row],
+            "album" : baseViewModel.albums[indexPath.row],
             "indexPath" : indexPath
         ]
         Loaf.dismiss(sender: self, animated: true)
@@ -102,7 +82,7 @@ class AlbumsViewController: BaseTableViewController {
             
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 
-                let album = self.viewModel.albums[indexPath.row]
+                let album = self.baseViewModel.albums[indexPath.row]
                 FirestoreManager.shared.addAlbum(album: album, userID: userID)
                 self.loafMessageAddedAlbum(album: album)
             }
@@ -113,7 +93,7 @@ class AlbumsViewController: BaseTableViewController {
             
             if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
                 
-                let album = self.viewModel.albums[indexPath.row]
+                let album = self.baseViewModel.albums[indexPath.row]
                 FirestoreManager.shared.removeAlbum(album: album, userID: userID)
                 self.loafMessageRemovedAlbum(album: album)
             }
@@ -139,7 +119,7 @@ class AlbumsViewController: BaseTableViewController {
             guard let self = self else {return}
             
             if let albums = albums {
-                self.viewModel.albums = albums
+                self.baseViewModel.albums = albums
                 self.albumsTableView.reloadData()
                 
                 //Animates the cells
@@ -169,5 +149,32 @@ extension AlbumsViewController {
             }
         }))
         present(vc, animated: true)
+    }
+}
+
+extension AlbumsViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return baseViewModel.albums.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        accessoryArrow(cell: cell)
+        
+        if let cell = cell as? AlbumsTableViewCell {
+            cell.openWebsiteButton.tag = indexPath.row
+            cell.openWebsiteButton.addTarget(self, action: #selector(openWebsiteTapped(_:)), for: .touchUpInside)
+            
+            let album = baseViewModel.albums[indexPath.row]
+            cell.populate(album: album)
+            cell.cellConstraints()
+        }
+        return cell
     }
 }

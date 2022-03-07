@@ -13,7 +13,7 @@ import Loaf
 
 class BaseTableViewController: UIViewController {
     
-    let viewModel = BaseTableViewModel()
+    let baseViewModel = BaseTableViewModel()
     
     var tableView = UITableView()
     var prevButton: UIButton = UIButton()
@@ -23,7 +23,7 @@ class BaseTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.delegate = self
+        baseViewModel.delegate = self
         MediaPlayer.shared.delegate = self
         
         setupObservers()
@@ -45,7 +45,7 @@ extension BaseTableViewController {
         NotificationCenter.default.addObserver(forName: .ResetPlayButton, object: nil, queue: .main) {[weak self] _ in
             guard let self = self else {return}
             
-            self.viewModel.resetPlayButton()
+            self.baseViewModel.resetPlayButton()
         }
     }
     
@@ -53,9 +53,9 @@ extension BaseTableViewController {
         let selectedIndexPath = IndexPath.init(row: sender.tag, section: 0)
         
         //Resets the play button state
-        if viewModel.arrIndexPaths.contains(selectedIndexPath) {
-            viewModel.clearArrIndexPath()
-            sender.setImage(UIImage(systemName: viewModel.playFillImage), for: .normal)
+        if baseViewModel.arrIndexPaths.contains(selectedIndexPath) {
+            baseViewModel.clearArrIndexPath()
+            sender.setImage(UIImage(systemName: baseViewModel.playFillImage), for: .normal)
             sender.tintColor = .darkGray
             
             tableView.reloadRows(at: [selectedIndexPath], with: .none)
@@ -64,21 +64,21 @@ extension BaseTableViewController {
         }
         
         //If we tapping on a second button it will reset the state of the previous button
-        if viewModel.arrIndexPaths.count == 1 {
-            viewModel.resetPlayButton()
+        if baseViewModel.arrIndexPaths.count == 1 {
+            baseViewModel.resetPlayButton()
         }
         
         //Saves the previous index and the button
-        viewModel.prevIndexPath = selectedIndexPath
+        baseViewModel.prevIndexPath = selectedIndexPath
         prevButton = sender
-        viewModel.arrIndexPaths.append(selectedIndexPath)
+        baseViewModel.arrIndexPaths.append(selectedIndexPath)
         tableView.reloadRows(at: [selectedIndexPath], with: .none)
         
         //Plays the albums tracks if we came from the albums screen
-        viewModel.playTrackIfFromAlbumsScreen(selectedIndexPath: selectedIndexPath)
+        baseViewModel.playTrackIfFromAlbumsScreen(selectedIndexPath: selectedIndexPath)
         
         //Plays the tracks if we came from other screens
-        viewModel.playTrackIfOtherScreen(selectedIndexPath: selectedIndexPath)
+        baseViewModel.playTrackIfOtherScreen(selectedIndexPath: selectedIndexPath)
     }
     
     @objc func loadActivityIndicator() {
@@ -98,7 +98,7 @@ extension BaseTableViewController {
     //Changes the style of the accesssory arrow
     func accessoryArrow(cell: UITableViewCell) {
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.accessoryView = UIImageView(image: UIImage(systemName: viewModel.chevronRightImage))
+        cell.accessoryView = UIImageView(image: UIImage(systemName: baseViewModel.chevronRightImage))
         cell.tintColor = .white
     }
     
@@ -124,34 +124,18 @@ extension BaseTableViewController {
         cell.playButton.tag = indexPath.row
         cell.playButton.addTarget(self, action: #selector(btnTapped(_:)), for: .touchUpInside)
         
-        if viewModel.arrIndexPaths.contains(indexPath) {
-            cell.playButton.setImage(UIImage(systemName: viewModel.pauseFillImage), for: .normal)
+        if baseViewModel.arrIndexPaths.contains(indexPath) {
+            cell.playButton.setImage(UIImage(systemName: baseViewModel.pauseFillImage), for: .normal)
             cell.playButton.tintColor = .white
         } else {
-            cell.playButton.setImage(UIImage(systemName: viewModel.playFillImage), for: .normal)
+            cell.playButton.setImage(UIImage(systemName: baseViewModel.playFillImage), for: .normal)
             cell.playButton.tintColor = .darkGray
         }
     }
 }
 
-//MARK: - DataSources
-extension BaseTableViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: viewModel.cellIdentifier, for: indexPath)
-        return cell
-    }
-}
-
 //MARK: - Delegates
 extension BaseTableViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
     
     //Adds and highlighted effect when tapping on a cell
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
@@ -187,13 +171,13 @@ extension BaseTableViewController: UITableViewDelegate {
 extension BaseTableViewController: BaseTableViewModelDelegate {
     func changeButtonImageAndReloadRows(prevIndexPath: IndexPath) {
         
-        self.prevButton.setImage(UIImage(systemName: self.viewModel.playFillImage), for: .normal)
+        self.prevButton.setImage(UIImage(systemName: self.baseViewModel.playFillImage), for: .normal)
         self.tableView.reloadRows(at: [prevIndexPath], with: .none)
     } 
 }
 
 extension BaseTableViewController: MediaPlayerDelegate {
     func changeButtonStateAfterAudioStopsPlaying() {
-        viewModel.changeButtonStateAfterAudioStopsPlaying()
+        baseViewModel.changeButtonStateAfterAudioStopsPlaying()
     }
 }

@@ -154,21 +154,6 @@ class AlbumDetailsViewController: BaseTableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.albumTracks.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTableViewCell
-        
-        populateCell(indexPath: indexPath, cell: cell, tableView: tracksTableView)
-        
-        if let album = album {
-            cell.populate(album: album, track: viewModel.albumTracks[indexPath.row])
-        }
-        return cell
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !Connectivity.isConnectedToInternet {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
@@ -176,7 +161,7 @@ class AlbumDetailsViewController: BaseTableViewController {
         }
         
         //Converts albumTrack to Track and sends it via segue
-        let oldTrack = viewModel.albumTracks[indexPath.row]
+        let oldTrack = baseViewModel.albumTracks[indexPath.row]
         let track = Track(
             id: oldTrack.id,
             title: oldTrack.title,
@@ -202,9 +187,9 @@ class AlbumDetailsViewController: BaseTableViewController {
         ]
         
         MediaPlayer.shared.stopAudio()
-        if let prevIndexPath = viewModel.prevIndexPath {
+        if let prevIndexPath = baseViewModel.prevIndexPath {
             //Resests the play button state when segue to another screen
-            viewModel.arrIndexPaths.removeAll()
+            baseViewModel.arrIndexPaths.removeAll()
             prevButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
             tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
         }
@@ -225,8 +210,8 @@ class AlbumDetailsViewController: BaseTableViewController {
     @objc func appMovedToBackground() {
         MediaPlayer.shared.stopAudio()
         prevButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-        viewModel.arrIndexPaths.removeAll()
-        if let prevIndexPath = viewModel.prevIndexPath {
+        baseViewModel.arrIndexPaths.removeAll()
+        if let prevIndexPath = baseViewModel.prevIndexPath {
             tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
         }
     }
@@ -252,7 +237,7 @@ class AlbumDetailsViewController: BaseTableViewController {
             guard let self = self else {return}
             
             if let tracks = tracks {
-                self.viewModel.albumTracks = tracks
+                self.baseViewModel.albumTracks = tracks
                 self.tracksTableView.reloadData()
                 self.numberOfTracks.text = String(tracks.count)
                 
@@ -314,5 +299,27 @@ extension AlbumDetailsViewController {
             }
         }))
         present(vc, animated: true)
+    }
+}
+
+extension AlbumDetailsViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return baseViewModel.albumTracks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTableViewCell
+        
+        populateCell(indexPath: indexPath, cell: cell, tableView: tracksTableView)
+        
+        if let album = album {
+            cell.populate(album: album, track: baseViewModel.albumTracks[indexPath.row])
+        }
+        return cell
     }
 }
