@@ -23,7 +23,7 @@ protocol LikedMusicViewModelDelegate: AnyObject {
     func stopActivityIndicatorAnimation()
 }
 
-class LikedMusicViewModel: BaseTableViewModel {
+class LikedMusicViewModel {
     
     let singleTrackDS = SingleTrackAPIDataSource()
     var tracksIDs: [Int]?

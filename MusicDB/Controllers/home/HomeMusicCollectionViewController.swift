@@ -29,6 +29,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         setupHeaders()
         
         collectionView.collectionViewLayout = createCompositionalLayout()
+        print(navigationController, "navigationController")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -567,9 +568,9 @@ extension HomeMusicCollectionViewController {
                   let targetController = dest.topViewController as? AlbumDetailsViewController,
                   let data = sender as? Dictionary<String, Any> else {return}
      
-            targetController.album = data[viewModel.albumText] as? TopAlbums
-            targetController.indexPath = data[viewModel.indexPathText] as? IndexPath
-            targetController.isHome = data[viewModel.isHomeText] as? Bool
+            targetController.albumDetailsViewModel.album = data[viewModel.albumText] as? TopAlbums
+            targetController.albumDetailsViewModel.indexPath = data[viewModel.indexPathText] as? IndexPath
+            targetController.albumDetailsViewModel.isHome = data[viewModel.isHomeText] as? Bool
         }
     }
 }

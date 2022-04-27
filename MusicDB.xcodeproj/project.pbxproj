@@ -49,6 +49,7 @@
 		7862B8672697A2D2000E3056 /* SingleTrackAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862B8662697A2D2000E3056 /* SingleTrackAPIDataSource.swift */; };
 		78638A70268742D3001A756E /* GenreAPIDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78638A6F268742D3001A756E /* GenreAPIDataSource.swift */; };
 		7864D8BA26BBF45800ED6E60 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7864D8B926BBF45800ED6E60 /* UIView+Extensions.swift */; };
+		786F66AE27D61ED700B91E85 /* AlbumDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786F66AD27D61ED700B91E85 /* AlbumDetailsViewModel.swift */; };
 		7876D20C26828D2A009D0669 /* MediaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7876D20B26828D2A009D0669 /* MediaPlayer.swift */; };
 		7884C89D268F8CBB00FE1FBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7884C89C268F8CBB00FE1FBE /* GoogleService-Info.plist */; };
 		7887761526B00204006A18F2 /* AlbumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7887761426B00204006A18F2 /* AlbumsViewController.swift */; };
@@ -136,6 +137,7 @@
 		7862B8662697A2D2000E3056 /* SingleTrackAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTrackAPIDataSource.swift; sourceTree = "<group>"; };
 		78638A6F268742D3001A756E /* GenreAPIDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreAPIDataSource.swift; sourceTree = "<group>"; };
 		7864D8B926BBF45800ED6E60 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		786F66AD27D61ED700B91E85 /* AlbumDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailsViewModel.swift; sourceTree = "<group>"; };
 		7876D20B26828D2A009D0669 /* MediaPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayer.swift; sourceTree = "<group>"; };
 		7884C89C268F8CBB00FE1FBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7887761426B00204006A18F2 /* AlbumsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewController.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				7853357C27B7111300A90C63 /* home */,
 				78DEF60C27B93A88003A31CD /* search */,
 				78ADF45A27D0A976008BD372 /* liked */,
+				786F66AC27D61EB300B91E85 /* album_details */,
 				7853357F27B7D19E00A90C63 /* BaseTableViewModel.swift */,
 			);
 			path = ViewModels;
@@ -373,6 +376,14 @@
 				78538EAF26B4AE74003DBDE1 /* SearchMusicTableViewCell.swift */,
 			);
 			path = search;
+			sourceTree = "<group>";
+		};
+		786F66AC27D61EB300B91E85 /* album_details */ = {
+			isa = PBXGroup;
+			children = (
+				786F66AD27D61ED700B91E85 /* AlbumDetailsViewModel.swift */,
+			);
+			path = album_details;
 			sourceTree = "<group>";
 		};
 		7887761326AF8A64006A18F2 /* albums */ = {
@@ -798,6 +809,7 @@
 				788A7582267B9E9800DFE2B0 /* MusicDB.xcdatamodeld in Sources */,
 				782E4856268A1E00005C8E4F /* PopCollectionReusableView.swift in Sources */,
 				782E4862268A4092005C8E4F /* RockCollectionReusableView.swift in Sources */,
+				786F66AE27D61ED700B91E85 /* AlbumDetailsViewModel.swift in Sources */,
 				78C5180E26A5993300D9378B /* UIImageView+Extensions.swift in Sources */,
 				788A75A1267CBCD100DFE2B0 /* TrackAPIDataSource.swift in Sources */,
 				7853358027B7D19E00A90C63 /* BaseTableViewModel.swift in Sources */,

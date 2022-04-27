@@ -14,14 +14,8 @@ import WCLShineButton
 import Loaf
 
 class AlbumDetailsViewController: BaseTableViewController {
-    var album: TopAlbums?
     
-    let albumTracksDS = AlbumTrackAPIDataSource()
-    
-    var isLiked: Bool = false
-    
-    var indexPath: IndexPath?
-    var isHome: Bool? = false
+    let albumDetailsViewModel = AlbumDetailsViewModel()
     
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     
@@ -36,7 +30,7 @@ class AlbumDetailsViewController: BaseTableViewController {
     @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
         if !Connectivity.isConnectedToInternet {
             showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            if !isLiked {
+            if !albumDetailsViewModel.isLiked {
                 likedButton.isSelected = false
             } else {
                 likedButton.isSelected = true
@@ -44,29 +38,29 @@ class AlbumDetailsViewController: BaseTableViewController {
             return
         }
         guard let userID = Auth.auth().currentUser?.uid,
-              let album = album else {return}
+              let album = albumDetailsViewModel.album else {return}
         
-        if !isLiked {
+        if !albumDetailsViewModel.isLiked {
             //Adds an ablum
             FirestoreManager.shared.addAlbum(album: album, userID: userID)
             loafMessageAddedAlbum(album: album)
 
-            isLiked = true
+            albumDetailsViewModel.isLiked = true
         } else {
             //Removes an album
             FirestoreManager.shared.removeAlbum(album: album, userID: userID)
             loafMessageRemovedAlbum(album: album)
 
-            isLiked = false
+            albumDetailsViewModel.isLiked = false
         }
         
-        guard let isHome = isHome else {return}
+        guard let isHome = albumDetailsViewModel.isHome else {return}
         
         //Checks whether we came from the home screen or not
         if isHome {
             NotificationCenter.default.post(name: .ReloadFromHome, object: nil, userInfo: nil)
         } else {
-            NotificationCenter.default.post(name: .SendIndexPathAlbum, object: nil, userInfo: ["indexPath" : indexPath as Any])
+            NotificationCenter.default.post(name: .SendIndexPathAlbum, object: nil, userInfo: ["indexPath" : albumDetailsViewModel.indexPath as Any])
         }
         
     }
@@ -130,9 +124,9 @@ class AlbumDetailsViewController: BaseTableViewController {
         let notifactionCenter = NotificationCenter.default
         notifactionCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         
-        guard let album = album else {return}
+        guard let album = albumDetailsViewModel.album else {return}
         self.title = album.title
-        guard let str = album.coverBig,
+        guard let str = albumDetailsViewModel.album?.coverBig,
               let url = URL(string: str) else {
             
             setUpImageView()
@@ -182,7 +176,7 @@ class AlbumDetailsViewController: BaseTableViewController {
         
         let dict: [String : Any] = [
             "track" : track,
-            "album" : album as Any,
+            "album" : albumDetailsViewModel.album as Any,
             "isAlbumDetails" : true
         ]
         
@@ -225,7 +219,7 @@ class AlbumDetailsViewController: BaseTableViewController {
     
     //Fetches the tracks
     func fetchTracks() {
-        guard let album = album else {return}
+        guard let album = albumDetailsViewModel.album else {return}
 
         //Substring the string to send it to the fetch tracks func
         let start = album.tracklist.index(album.tracklist.startIndex, offsetBy: 28)
@@ -233,7 +227,7 @@ class AlbumDetailsViewController: BaseTableViewController {
         let result = album.tracklist[start..<end] 
         let newTrackList = String(result)
         
-        albumTracksDS.fetchTracks(from: .album, path: newTrackList, with: ["limit" : 100]) {[weak self] tracks, error in
+        albumDetailsViewModel.albumTracksDS.fetchTracks(from: .album, path: newTrackList, with: ["limit" : 100]) {[weak self] tracks, error in
             guard let self = self else {return}
             
             if let tracks = tracks {
@@ -260,12 +254,12 @@ class AlbumDetailsViewController: BaseTableViewController {
             
             //Gets the albumIDs from firestore
             guard let arrIDs: [Int] = snapshot?.get("albumIDs") as? [Int] else {return}
-            if arrIDs.contains(self.album?.id ?? 0) {
+            if arrIDs.contains(self.albumDetailsViewModel.album?.id ?? 0) {
                 self.likedButton.isSelected = true
-                self.isLiked = true
+                self.albumDetailsViewModel.isLiked = true
             } else {
                 self.likedButton.isSelected = false
-                self.isLiked = false
+                self.albumDetailsViewModel.isLiked = false
             }
         }
     }
@@ -317,7 +311,7 @@ extension AlbumDetailsViewController: UITableViewDataSource {
         
         populateCell(indexPath: indexPath, cell: cell, tableView: tracksTableView)
         
-        if let album = album {
+        if let album = albumDetailsViewModel.album {
             cell.populate(album: album, track: baseViewModel.albumTracks[indexPath.row])
         }
         return cell

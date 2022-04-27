@@ -69,8 +69,8 @@ class AlbumsViewController: BaseTableViewController {
               let targetController = dest.topViewController as? AlbumDetailsViewController,
               let data = sender as? Dictionary<String, Any> else {return}
         
-        targetController.album = data["album"] as? TopAlbums
-        targetController.indexPath = data["indexPath"] as? IndexPath
+        targetController.albumDetailsViewModel.album = data["album"] as? TopAlbums
+        targetController.albumDetailsViewModel.indexPath = data["indexPath"] as? IndexPath
     }
     
     func addObservers() {

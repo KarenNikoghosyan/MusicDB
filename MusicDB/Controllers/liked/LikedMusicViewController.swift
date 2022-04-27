@@ -269,7 +269,7 @@ extension LikedMusicViewController {
                   let targetController = dest.topViewController as? AlbumDetailsViewController,
                   let album = sender as? TopAlbums else {return}
             
-            targetController.album = album
+            targetController.albumDetailsViewModel.album = album
         }
     }
 }
