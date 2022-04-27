@@ -10,18 +10,17 @@ import ViewAnimator
 import SafariServices
 import PKHUD
 import Loaf
-import FirebaseAuth
 import SwiftUI
 
 class HomeMusicCollectionViewController: UICollectionViewController {
     
-    private let viewModel = HomeViewModel()
+    private let homeViewModel = HomeViewModel()
     
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.delegate = self
+        homeViewModel.delegate = self
 
         checkConnection()
         setupObservers()
@@ -49,7 +48,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         navigationController?.navigationBar.barTintColor = .white
         tabBarController?.tabBar.setIsHidden(true, animated: true)
         setTabBarSwipe(enabled: false)
-        performSegue(withIdentifier: viewModel.toSettingsText, sender: nil)
+        performSegue(withIdentifier: homeViewModel.toSettingsText, sender: nil)
     }
     
     //Sign out button
@@ -218,23 +217,23 @@ extension HomeMusicCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return viewModel.topTracks.count
+            return homeViewModel.topTracks.count
         case 1:
-            return viewModel.hipHop.count
+            return homeViewModel.hipHop.count
         case 2:
-            return viewModel.dance.count
+            return homeViewModel.dance.count
         case 3:
-            return viewModel.jazz.count
+            return homeViewModel.jazz.count
         case 4:
-            return viewModel.topArtists.count
+            return homeViewModel.topArtists.count
         case 5:
-            return viewModel.pop.count
+            return homeViewModel.pop.count
         case 6:
-            return viewModel.classical.count
+            return homeViewModel.classical.count
         case 7:
-            return viewModel.topAlbums.count
+            return homeViewModel.topAlbums.count
         default:
-            return viewModel.rock.count
+            return homeViewModel.rock.count
         }
     }
 
@@ -245,8 +244,8 @@ extension HomeMusicCollectionViewController {
         case 0:
             let cell = populateHomeTracksCell(indexPath: indexPath)
             
-            if indexPath.item < viewModel.topTracks.count {
-                let track = viewModel.topTracks[indexPath.item]
+            if indexPath.item < homeViewModel.topTracks.count {
+                let track = homeViewModel.topTracks[indexPath.item]
                 cell.configure(track: track, with: "\(track.album?.coverBig ?? "")")
             }
             return cell
@@ -254,35 +253,35 @@ extension HomeMusicCollectionViewController {
         case 1:
             let cell = populateHomeTracksCell(indexPath: indexPath)
 
-            if indexPath.item < viewModel.hipHop.count {
-                let track = viewModel.hipHop[indexPath.item]
-                cell.configure(track: track, with: "\(track.album?.cover ?? viewModel.noImageFoundText)")
+            if indexPath.item < homeViewModel.hipHop.count {
+                let track = homeViewModel.hipHop[indexPath.item]
+                cell.configure(track: track, with: "\(track.album?.cover ?? homeViewModel.noImageFoundText)")
             }
             return cell
             
         case 2:
             let cell = populateHomeTracksCell(indexPath: indexPath)
             
-            if indexPath.item < viewModel.dance.count {
-                let track = viewModel.dance[indexPath.item]
-                cell.configure(track: track, with: "\(track.album?.cover ?? viewModel.noImageFoundText)")
+            if indexPath.item < homeViewModel.dance.count {
+                let track = homeViewModel.dance[indexPath.item]
+                cell.configure(track: track, with: "\(track.album?.cover ?? homeViewModel.noImageFoundText)")
             }
             return cell
             
         case 3:
             let cell = populateHomeTracksCell(indexPath: indexPath)
             
-            if indexPath.item < viewModel.jazz.count {
-                let track = viewModel.jazz[indexPath.item]
-                cell.configure(track: track, with: "\(track.album?.cover ?? viewModel.noImageFoundText)")
+            if indexPath.item < homeViewModel.jazz.count {
+                let track = homeViewModel.jazz[indexPath.item]
+                cell.configure(track: track, with: "\(track.album?.cover ?? homeViewModel.noImageFoundText)")
             }
             return cell
             
         case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopArtistsCollectionViewCell.reuseIdentifier, for: indexPath) as! TopArtistsCollectionViewCell
             
-            if indexPath.item < viewModel.topArtists.count {
-                let artist = viewModel.topArtists[indexPath.item]
+            if indexPath.item < homeViewModel.topArtists.count {
+                let artist = homeViewModel.topArtists[indexPath.item]
                 cell.configure(artist: artist)
             }
             return cell
@@ -290,26 +289,26 @@ extension HomeMusicCollectionViewController {
         case 5:
             let cell = populateHomeTracksCell(indexPath: indexPath)
             
-            if indexPath.item < viewModel.pop.count {
-                let track = viewModel.pop[indexPath.item]
-                cell.configure(track: track, with: "\(track.album?.cover ?? viewModel.noImageFoundText)")
+            if indexPath.item < homeViewModel.pop.count {
+                let track = homeViewModel.pop[indexPath.item]
+                cell.configure(track: track, with: "\(track.album?.cover ?? homeViewModel.noImageFoundText)")
             }
             return cell
             
         case 6:
             let cell = populateHomeTracksCell(indexPath: indexPath)
             
-            if indexPath.item < viewModel.classical.count {
-                let track = viewModel.classical[indexPath.item]
-                cell.configure(track: track, with: "\(track.album?.cover ?? viewModel.noImageFoundText)")
+            if indexPath.item < homeViewModel.classical.count {
+                let track = homeViewModel.classical[indexPath.item]
+                cell.configure(track: track, with: "\(track.album?.cover ?? homeViewModel.noImageFoundText)")
             }
             return cell
             
         case 7:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopAlbumsCollectionViewCell.reuseIdentifier, for: indexPath) as! TopAlbumsCollectionViewCell
             
-            if indexPath.item < viewModel.topAlbums.count {
-                let album = viewModel.topAlbums[indexPath.item]
+            if indexPath.item < homeViewModel.topAlbums.count {
+                let album = homeViewModel.topAlbums[indexPath.item]
                 cell.configure(album: album)
             }
             return cell
@@ -317,9 +316,9 @@ extension HomeMusicCollectionViewController {
         default:
             let cell = populateHomeTracksCell(indexPath: indexPath)
             
-            if indexPath.item < viewModel.rock.count {
-                let track = viewModel.rock[indexPath.item]
-                cell.configure(track: track, with: "\(track.album?.cover ?? viewModel.noImageFoundText)")
+            if indexPath.item < homeViewModel.rock.count {
+                let track = homeViewModel.rock[indexPath.item]
+                cell.configure(track: track, with: "\(track.album?.cover ?? homeViewModel.noImageFoundText)")
             }
             return cell
         }
@@ -335,23 +334,23 @@ extension HomeMusicCollectionViewController {
         
         switch indexPath.section {
         case 0:
-            return populateHeaders(headerID: viewModel.topChartHeader, kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: homeViewModel.topChartHeader, kind: kind, indexPath: indexPath)
         case 1:
-            return populateHeaders(headerID: viewModel.hipHopHeader, kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: homeViewModel.hipHopHeader, kind: kind, indexPath: indexPath)
         case 2:
-            return populateHeaders(headerID: viewModel.danceHeader, kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: homeViewModel.danceHeader, kind: kind, indexPath: indexPath)
         case 3:
-            return populateHeaders(headerID: viewModel.jazzHeader, kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: homeViewModel.jazzHeader, kind: kind, indexPath: indexPath)
         case 4:
-            return populateHeaders(headerID: viewModel.topArtistsHeader, kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: homeViewModel.topArtistsHeader, kind: kind, indexPath: indexPath)
         case 5:
-            return populateHeaders(headerID: viewModel.popHeader, kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: homeViewModel.popHeader, kind: kind, indexPath: indexPath)
         case 6:
-            return populateHeaders(headerID: viewModel.classicalHeader, kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: homeViewModel.classicalHeader, kind: kind, indexPath: indexPath)
         case 7:
-            return populateHeaders(headerID: viewModel.topAlbumsHeader, kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: homeViewModel.topAlbumsHeader, kind: kind, indexPath: indexPath)
         default:
-            return populateHeaders(headerID: viewModel.rockHeader, kind: kind, indexPath: indexPath)
+            return populateHeaders(headerID: homeViewModel.rockHeader, kind: kind, indexPath: indexPath)
         }
     }
     
@@ -404,38 +403,38 @@ extension HomeMusicCollectionViewController {
         switch indexPath.section {
         
         case 0:
-            toDetailsSegue(tracks: viewModel.topTracks, indexPath: indexPath)
+            toDetailsSegue(tracks: homeViewModel.topTracks, indexPath: indexPath)
         case 1:
-            toDetailsSegue(tracks: viewModel.hipHop, indexPath: indexPath)
+            toDetailsSegue(tracks: homeViewModel.hipHop, indexPath: indexPath)
         case 2:
-            toDetailsSegue(tracks: viewModel.dance, indexPath: indexPath)
+            toDetailsSegue(tracks: homeViewModel.dance, indexPath: indexPath)
         case 3:
-            toDetailsSegue(tracks: viewModel.jazz, indexPath: indexPath)
+            toDetailsSegue(tracks: homeViewModel.jazz, indexPath: indexPath)
         case 4:
             Loaf.dismiss(sender: self, animated: true)
-            let topArtists = viewModel.topArtists[indexPath.item]
+            let topArtists = homeViewModel.topArtists[indexPath.item]
             
             guard let url = URL(string: "\(topArtists.link)") else {return}
             let sfVC = SFSafariViewController(url: url)
             present(sfVC, animated: true)
             
         case 5:
-            toDetailsSegue(tracks: viewModel.pop, indexPath: indexPath)
+            toDetailsSegue(tracks: homeViewModel.pop, indexPath: indexPath)
         case 6:
-            toDetailsSegue(tracks: viewModel.classical, indexPath: indexPath)
+            toDetailsSegue(tracks: homeViewModel.classical, indexPath: indexPath)
         case 7:
             Loaf.dismiss(sender: self, animated: true)
             
             var indexPath = indexPath
             indexPath[0] = 0
             let dict: [String: Any] = [
-                viewModel.albumText : viewModel.topAlbums[indexPath.row],
-                viewModel.indexPathText : indexPath,
-                viewModel.isHomeText : true
+                homeViewModel.albumText : homeViewModel.topAlbums[indexPath.row],
+                homeViewModel.indexPathText : indexPath,
+                homeViewModel.isHomeText : true
             ]
-            performSegue(withIdentifier: viewModel.toAlbumDetailsText, sender: dict)
+            performSegue(withIdentifier: homeViewModel.toAlbumDetailsText, sender: dict)
         default:
-            toDetailsSegue(tracks: viewModel.rock, indexPath: indexPath)
+            toDetailsSegue(tracks: homeViewModel.rock, indexPath: indexPath)
         }
     }
 }
@@ -449,9 +448,9 @@ extension HomeMusicCollectionViewController {
             showAlertAndReload(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             HUD.flash(.error, delay: 0.5)
         } else {
-            viewModel.fetchTracks()
+            homeViewModel.fetchTracks()
             loadRefreshControl()
-            greetingMessage()
+            homeViewModel.showGreetingMessage()
         }
         
         HUD.show(HUDContentType.progress, onView: self.view)
@@ -462,7 +461,7 @@ extension HomeMusicCollectionViewController {
         guard let font = UIFont.init(name: Constants.futuraBold, size: 13) else {return}
         
         let attributes: [NSAttributedString.Key: AnyObject] = [.foregroundColor : UIColor.systemGreen, .font : font]
-        refreshControl.attributedTitle = NSAttributedString(string: viewModel.fetchingTracksText, attributes: attributes)
+        refreshControl.attributedTitle = NSAttributedString(string: homeViewModel.fetchingTracksText, attributes: attributes)
         refreshControl.tintColor = .systemGreen
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         
@@ -480,17 +479,7 @@ extension HomeMusicCollectionViewController {
             collectionView.refreshControl?.endRefreshing()
             return
         }
-        viewModel.fetchTracks()
-    }
-    
-    func greetingMessage() {
-        guard let userID = Auth.auth().currentUser?.uid else {return}
-        FirestoreManager.shared.db.collection(viewModel.users).document(userID).getDocument {[weak self] snapshot, error in
-            guard let self = self,
-                  let name: String = snapshot?.get(self.viewModel.name) as? String else {return}
-            
-            self.loafMessageWelcome(name: name)
-        }
+        homeViewModel.fetchTracks()
     }
     
     private func setupObservers() {
@@ -503,11 +492,11 @@ extension HomeMusicCollectionViewController {
                 return
             }
             
-            if let viewAll = notification.userInfo?[self.viewModel.viewAll] as? String,
-               let genre = notification.userInfo?[self.viewModel.genre] as? String {
+            if let viewAll = notification.userInfo?[self.homeViewModel.viewAll] as? String,
+               let genre = notification.userInfo?[self.homeViewModel.genre] as? String {
                 
                 Loaf.dismiss(sender: self, animated: true)
-                self.performSegue(withIdentifier: self.viewModel.toGenreText, sender: [viewAll, genre])
+                self.performSegue(withIdentifier: self.homeViewModel.toGenreText, sender: [viewAll, genre])
             }
         }
         NotificationCenter.default.addObserver(forName: .MoveToLogin, object: nil, queue: .main) {[weak self] _ in
@@ -524,15 +513,15 @@ extension HomeMusicCollectionViewController {
     
     private func setupHeaders() {
         //Register the headers
-        collectionView.register(TopChartCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.topChartHeader)
-        collectionView.register(HipHopCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.hipHopHeader)
-        collectionView.register(DanceCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.danceHeader)
-        collectionView.register(JazzCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.jazzHeader)
-        collectionView.register(TopArtistsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.topArtistsHeader)
-        collectionView.register(PopCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.popHeader)
-        collectionView.register(ClassicalCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.classicalHeader)
-        collectionView.register(TopAlbumsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.topAlbumsHeader)
-        collectionView.register(RockCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: viewModel.rockHeader)
+        collectionView.register(TopChartCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: homeViewModel.topChartHeader)
+        collectionView.register(HipHopCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: homeViewModel.hipHopHeader)
+        collectionView.register(DanceCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: homeViewModel.danceHeader)
+        collectionView.register(JazzCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: homeViewModel.jazzHeader)
+        collectionView.register(TopArtistsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: homeViewModel.topArtistsHeader)
+        collectionView.register(PopCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: homeViewModel.popHeader)
+        collectionView.register(ClassicalCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: homeViewModel.classicalHeader)
+        collectionView.register(TopAlbumsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: homeViewModel.topAlbumsHeader)
+        collectionView.register(RockCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: homeViewModel.rockHeader)
     }
         
     func toDetailsSegue(tracks: [Track], indexPath: IndexPath) {
@@ -543,18 +532,18 @@ extension HomeMusicCollectionViewController {
             return
         }
         let track = tracks[indexPath.item]
-        performSegue(withIdentifier: viewModel.toDetailsText, sender: track)
+        performSegue(withIdentifier: homeViewModel.toDetailsText, sender: track)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == viewModel.toDetailsText {
+        if segue.identifier == homeViewModel.toDetailsText {
             guard let dest = segue.destination as? UINavigationController,
                   let targetController = dest.topViewController as? DetailsMusicViewController,
                   let track = sender as? Track else {return}
 
             targetController.track = track
      
-        } else if segue.identifier == viewModel.toGenreText {
+        } else if segue.identifier == homeViewModel.toGenreText {
             guard let dest = segue.destination as? UINavigationController,
                   let targetController = dest.topViewController as? GenreMusicViewController,
                   let data = sender as? [String] else {return}
@@ -562,14 +551,14 @@ extension HomeMusicCollectionViewController {
             targetController.titleGenre = data[0]
             targetController.path = data[1]
      
-        } else if segue.identifier == viewModel.toAlbumDetailsText {
+        } else if segue.identifier == homeViewModel.toAlbumDetailsText {
             guard let dest = segue.destination as? UINavigationController,
                   let targetController = dest.topViewController as? AlbumDetailsViewController,
                   let data = sender as? Dictionary<String, Any> else {return}
      
-            targetController.album = data[viewModel.albumText] as? TopAlbums
-            targetController.indexPath = data[viewModel.indexPathText] as? IndexPath
-            targetController.isHome = data[viewModel.isHomeText] as? Bool
+            targetController.albumDetailsViewModel.album = data[homeViewModel.albumText] as? TopAlbums
+            targetController.albumDetailsViewModel.indexPath = data[homeViewModel.indexPathText] as? IndexPath
+            targetController.albumDetailsViewModel.isHome = data[homeViewModel.isHomeText] as? Bool
         }
     }
 }
@@ -580,14 +569,14 @@ extension HomeMusicCollectionViewController {
     func showAlertAndReload(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        vc.addAction(.init(title: viewModel.retryText, style: .cancel, handler: {[weak self] action in
+        vc.addAction(.init(title: homeViewModel.retryText, style: .cancel, handler: {[weak self] action in
             guard let self = self else {return}
             
             if !Connectivity.isConnectedToInternet {
                 self.showAlertAndReload(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             } else {
-                self.viewModel.fetchTracks()
-                self.greetingMessage()
+                self.homeViewModel.fetchTracks()
+                self.homeViewModel.showGreetingMessage()
                 self.loadRefreshControl()
             }
         }))
@@ -599,17 +588,21 @@ extension HomeMusicCollectionViewController: HomeViewModelDelegate {
     
     //Animates the sections
     func loadSectionAndAnimation(in section: Int) {
-        viewModel.counter += 1
+        homeViewModel.counter += 1
         collectionView.reloadSections([section])
         
         let animation = AnimationType.from(direction: .right, offset: 30.0)
         let cells = collectionView.visibleCells(in: section)
         UIView.animate(views: cells, animations: [animation])
         
-        if viewModel.counter == collectionView.numberOfSections {
-            viewModel.counter = 0
+        if homeViewModel.counter == collectionView.numberOfSections {
+            homeViewModel.counter = 0
             HUD.flash(.success, delay: 0.5)
             refreshControl.endRefreshing()
         }
+    }
+    
+    func loadLoafMessage(name: String) {
+        loafMessageWelcome(name: name)
     }
 }

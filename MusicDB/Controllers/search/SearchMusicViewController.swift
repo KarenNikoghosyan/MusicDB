@@ -9,24 +9,21 @@ import UIKit
 import ViewAnimator
 
 class SearchMusicViewController: BaseTableViewController {
-   
-    let searchLabel = UILabel()
-    let noTracksLabel = UILabel()
     
-    @IBOutlet weak var trackSearchBar: UISearchBar!
-    @IBOutlet weak var searchTracksTableView: UITableView!
-    @IBAction func signOut(_ sender: UIBarButtonItem) {
-        logOutTappedAndSegue()
-    }
+    private let searchViewModel = SearchMusicViewModel()
+    
+    @IBOutlet private weak var trackSearchBar: UISearchBar!
+    @IBOutlet private weak var searchTracksTableView: UITableView!
+    
+    private let searchLabel = UILabel()
+    private let noTracksLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTapped()
         
-        trackSearchBar.delegate = self
-        searchTracksTableView.delegate = self
-        searchTracksTableView.dataSource = self
-                
+        setupDelegates()
+        
         setupNavigationItems()
         
         loadSearchLabel()
@@ -35,16 +32,32 @@ class SearchMusicViewController: BaseTableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         trackSearchBar.becomeFirstResponder()
         setTabBarSwipe(enabled: true)
     }
     
-    func loadSearchLabel() {
+    @IBAction private func signOut(_ sender: UIBarButtonItem) {
+        logOutTappedAndSegue()
+    }
+}
+
+//MARK: - Functions
+extension SearchMusicViewController {
+    
+    private func setupDelegates() {
+        searchTracksTableView.dataSource = self
+        searchTracksTableView.delegate = self
+        trackSearchBar.delegate = self
+        searchViewModel.searchDelegate = self
+    }
+    
+    private func loadSearchLabel() {
         trackSearchBar.searchTextField.textColor = .white
         trackSearchBar.searchTextField.leftView?.tintColor = .white
         
         //Creates a label, and will be only shows when the search bar is empty
-        searchLabel.text = "Search for artists, songs and more."
+        searchLabel.text = searchViewModel.searchForArtistsText
         searchLabel.font = UIFont.init(name: Constants.futura, size: 18)
         searchLabel.textColor = .white
         
@@ -57,9 +70,9 @@ class SearchMusicViewController: BaseTableViewController {
         ])
     }
     
-    func loadNoTracksLabel() {
+    private func loadNoTracksLabel() {
         //Creates a label, and will be only shown if no tracks were found
-        noTracksLabel.text = "No Tracks Found"
+        noTracksLabel.text = searchViewModel.noTracksFoundText
         noTracksLabel.font = UIFont.init(name: Constants.futura, size: 20)
         noTracksLabel.textColor = .white
         noTracksLabel.textAlignment = .center
@@ -75,29 +88,14 @@ class SearchMusicViewController: BaseTableViewController {
         noTracksLabel.isHidden = true
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.tracks.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        if let cell = cell as? SearchMusicTableViewCell {
-            let track = viewModel.tracks[indexPath.row]
-            cell.populate(track: track)
-        }
-        
-        return cell
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             return
         }
-        performSegue(withIdentifier: "toDetails", sender: viewModel.tracks[indexPath.row])
+        performSegue(withIdentifier: searchViewModel.toDetailsIdentifier, sender: searchViewModel.searchTracks[indexPath.row])
     }
-   
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let dest = segue.destination as? UINavigationController,
               let targetController = dest.topViewController as? DetailsMusicViewController,
@@ -107,23 +105,47 @@ class SearchMusicViewController: BaseTableViewController {
     }
 }
 
+//MARK: - DataSource
+extension SearchMusicViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return searchViewModel.searchTracks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: searchViewModel.searchCellIdentifier, for: indexPath)
+        
+        if let cell = cell as? SearchMusicTableViewCell {
+            let track = searchViewModel.searchTracks[indexPath.row]
+            cell.populate(track: track)
+        }
+        
+        return cell
+    }
+}
+
+//MARK: - Delegates
 extension SearchMusicViewController: UISearchBarDelegate {
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             return
         }
         
         //Adds a delay, when the user stops typing the func will run after 0.5 seconds to prevent unnecessary network calls
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reload(_:)), object: searchBar)
-            perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.5)
+        perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.5)
     }
     
-    @objc func reload(_ searchBar: UISearchBar) {
+    @objc private func reload(_ searchBar: UISearchBar) {
         loadActivityIndicator()
         self.searchLabel.isHidden = true
         
-        viewModel.tracks.removeAll()
+        searchViewModel.searchTracks.removeAll()
         searchTracksTableView.reloadData()
         
         guard let text = searchBar.text else {return}
@@ -136,30 +158,30 @@ extension SearchMusicViewController: UISearchBarDelegate {
             return
         }
         
-        let animation = AnimationType.from(direction: .top, offset: 30.0)
+        searchViewModel.fetchTracks(text: text)
+    }
+}
+
+extension SearchMusicViewController: SearchMusicViewModelDelegate {
+    func searchInitiated(tracks: [Track]) {
         
-        viewModel.ds.fetchTracks(from: .search, id: nil, path: nil, with: ["q":text]) {[weak self] tracks, error in
-                if let tracks = tracks {
-                    guard let self = self else {return}
-                    
-                    self.viewModel.tracks = tracks
-                    self.searchTracksTableView.reloadData()
-                    
-                    //Loads the cells with animation
-                    let cells = self.searchTracksTableView.visibleCells
-                    UIView.animate(views: cells, animations: [animation])
-                    self.activityIndicatorView.stopAnimating()
-                    
-                    if tracks.count <= 0 {
-                        self.noTracksLabel.isHidden = false
-                    } else {
-                        self.noTracksLabel.isHidden = true
-                    }
-                    
-                } else if let error = error {
-                    print(error)
-                    self?.activityIndicatorView.stopAnimating()
-                }
-            }
+        self.searchTracksTableView.reloadData()
+        
+        let animation = AnimationType.from(direction: .top, offset: 30.0)
+                
+        //Loads the cells with animation
+        let cells = self.searchTracksTableView.visibleCells
+        UIView.animate(views: cells, animations: [animation])
+        self.activityIndicatorView.stopAnimating()
+        
+        if tracks.count <= 0 {
+            self.noTracksLabel.isHidden = false
+        } else {
+            self.noTracksLabel.isHidden = true
+        }
+    }
+    
+    func stopAnimation() {
+        self.activityIndicatorView.stopAnimating()
     }
 }

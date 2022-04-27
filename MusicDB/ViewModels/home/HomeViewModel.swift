@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 protocol HomeViewModelDelegate: AnyObject {
     func loadSectionAndAnimation(in section: Int)
+    func loadLoafMessage(name: String)
 }
 
 class HomeViewModel {
@@ -159,6 +161,16 @@ extension HomeViewModel {
             } else if let error = error {
                 print(error)
             }
+        }
+    }
+    
+    func showGreetingMessage() {
+        guard let userID = Auth.auth().currentUser?.uid else {return}
+        FirestoreManager.shared.db.collection(users).document(userID).getDocument {[weak self] snapshot, error in
+            guard let self = self,
+                  let name: String = snapshot?.get(self.name) as? String else {return}
+            
+            self.delegate?.loadLoafMessage(name: name)
         }
     }
 }

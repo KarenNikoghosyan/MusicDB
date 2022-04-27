@@ -9,69 +9,99 @@ import UIKit
 import SDWebImage
 import ViewAnimator
 import SafariServices
-import FirebaseAuth
 import WCLShineButton
 import Loaf
 
 class AlbumDetailsViewController: BaseTableViewController {
-    var album: TopAlbums?
     
-    let albumTracksDS = AlbumTrackAPIDataSource()
+    let albumDetailsViewModel = AlbumDetailsViewModel()
     
-    var isLiked: Bool = false
+    @IBOutlet private weak var imageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var numberOfTracks: UILabel!
+    @IBOutlet private weak var albumImageView: UIImageView!
+    @IBOutlet private weak var tracksTableView: UITableView!
+    @IBOutlet private weak var likedButton: WCLShineButton!
     
-    var indexPath: IndexPath?
-    var isHome: Bool? = false
-    
-    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
-    
-    @IBOutlet weak var numberOfTracks: UILabel!
-    @IBOutlet weak var albumImageView: UIImageView!
-    @IBOutlet weak var tracksTableView: UITableView!
-    @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {
-        Loaf.dismiss(sender: self, animated: true)
-        self.dismiss(animated: true, completion: nil)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //Checks the connectivity on launch
+        if !Connectivity.isConnectedToInternet {
+            showAlertWithActions(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+        } else {
+            albumDetailsViewModel.fetchTracks()
+            loadActivityIndicator()
+            albumDetailsViewModel.checkLikedStatus()
+        }
+        
+        setupDelegates()
+        loadImage()
+        setupObservers()
     }
-    @IBOutlet weak var likedButton: WCLShineButton!
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if navigationController?.isBeingDismissed ?? false {
+            MediaPlayer.shared.stopAudio()
+            NotificationCenter.default.post(name: .ResetPlayButton, object: nil)
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if UIDevice.current.orientation.isLandscape {
+            setupLandscapeConstraints()
+        } else {
+            setupPortraitConstraints()
+        }
+    }
+    
     @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
         if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            if !isLiked {
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+            
+            if !albumDetailsViewModel.isLiked {
                 likedButton.isSelected = false
             } else {
                 likedButton.isSelected = true
             }
             return
         }
-        guard let userID = Auth.auth().currentUser?.uid,
-              let album = album else {return}
         
-        if !isLiked {
-            //Adds an ablum
-            FirestoreManager.shared.addAlbum(album: album, userID: userID)
-            loafMessageAddedAlbum(album: album)
-
-            isLiked = true
-        } else {
-            //Removes an album
-            FirestoreManager.shared.removeAlbum(album: album, userID: userID)
-            loafMessageRemovedAlbum(album: album)
-
-            isLiked = false
-        }
-        
-        guard let isHome = isHome else {return}
+        albumDetailsViewModel.removeAddAlbumToFromFirebase()
         
         //Checks whether we came from the home screen or not
-        if isHome {
-            NotificationCenter.default.post(name: .ReloadFromHome, object: nil, userInfo: nil)
-        } else {
-            NotificationCenter.default.post(name: .SendIndexPathAlbum, object: nil, userInfo: ["indexPath" : indexPath as Any])
-        }
-        
+        albumDetailsViewModel.isHomeScreen()
     }
     
-    func portraitConstraints() {
+    @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {
+        Loaf.dismiss(sender: self, animated: true)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let dest = segue.destination as? UINavigationController,
+              let targetController = dest.topViewController as? DetailsMusicViewController,
+              let data = sender as? Dictionary<String, Any> else {return}
+        
+        targetController.track = data[albumDetailsViewModel.trackText] as? Track
+        targetController.album = data[albumDetailsViewModel.albumText] as? TopAlbums
+        targetController.isAlbumDetails = data[albumDetailsViewModel.isAlbumDetailsText] as? Bool
+    }
+}
+
+//MARK: Functions
+extension AlbumDetailsViewController {
+    
+    private func setupDelegates() {
+        albumDetailsViewModel.delegate = self
+        tracksTableView.delegate = self
+        tracksTableView.dataSource = self
+    }
+    
+    private func setupPortraitConstraints() {
         switch UIDevice().type {
         case .iPod7:
             imageViewHeightConstraint.constant = 130
@@ -86,7 +116,7 @@ class AlbumDetailsViewController: BaseTableViewController {
         }
     }
     
-    func landscapeConstraints() {
+    private func setupLandscapeConstraints() {
         switch UIDevice().type {
         case .iPod7:
             imageViewHeightConstraint.constant = 130
@@ -101,38 +131,10 @@ class AlbumDetailsViewController: BaseTableViewController {
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        if UIDevice.current.orientation.isLandscape {
-            landscapeConstraints()
-        } else {
-            portraitConstraints()
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        //Checks the connectivity on launch
-        if !Connectivity.isConnectedToInternet {
-            showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
-        } else {
-            fetchTracks()
-            loadActivityIndicator()
-            checkLikedStatus()
-        }
-        
-        tracksTableView.delegate = self
-        tracksTableView.dataSource = self
-        
-        //An observer to check if the app moved to background
-        let notifactionCenter = NotificationCenter.default
-        notifactionCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
-        
-        guard let album = album else {return}
+    private func loadImage() {
+        guard let album = albumDetailsViewModel.album else {return}
         self.title = album.title
-        guard let str = album.coverBig,
+        guard let str = albumDetailsViewModel.album?.coverBig,
               let url = URL(string: str) else {
             
             setUpImageView()
@@ -145,144 +147,16 @@ class AlbumDetailsViewController: BaseTableViewController {
         albumImageView.sd_setImage(with: url)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if navigationController?.isBeingDismissed ?? false {
-            MediaPlayer.shared.stopAudio()
-            NotificationCenter.default.post(name: .ResetPlayButton, object: nil)
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.albumTracks.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTableViewCell
-        
-        populateCell(indexPath: indexPath, cell: cell, tableView: tracksTableView)
-        
-        if let album = album {
-            cell.populate(album: album, track: viewModel.albumTracks[indexPath.row])
-        }
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            return
-        }
-        
-        //Converts albumTrack to Track and sends it via segue
-        let oldTrack = viewModel.albumTracks[indexPath.row]
-        let track = Track(
-            id: oldTrack.id,
-            title: oldTrack.title,
-            titleShort: oldTrack.titleShort,
-            titleVersion: oldTrack.titleVersion,
-            link: oldTrack.link,
-            duration: oldTrack.duration,
-            rank: oldTrack.rank,
-            explicitLyrics: oldTrack.explicitLyrics,
-            explicitContentLyrics: oldTrack.explicitContentLyrics,
-            explicitContentCover: oldTrack.explicitContentCover,
-            preview: oldTrack.preview,
-            md5Image: oldTrack.md5Image,
-            position: nil,
-            artist: oldTrack.artist,
-            album: nil,
-            type: oldTrack.type)
-        
-        let dict: [String : Any] = [
-            "track" : track,
-            "album" : album as Any,
-            "isAlbumDetails" : true
-        ]
-        
-        MediaPlayer.shared.stopAudio()
-        if let prevIndexPath = viewModel.prevIndexPath {
-            //Resests the play button state when segue to another screen
-            viewModel.arrIndexPaths.removeAll()
-            prevButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
-        }
-        performSegue(withIdentifier: "toDetails", sender: dict)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let dest = segue.destination as? UINavigationController,
-              let targetController = dest.topViewController as? DetailsMusicViewController,
-              let data = sender as? Dictionary<String, Any> else {return}
-        
-        targetController.track = data["track"] as? Track
-        targetController.album = data["album"] as? TopAlbums
-        targetController.isAlbumDetails = data["isAlbumDetails"] as? Bool
-    }
-    
-    //Handles the play button state when the app moves to background
-    @objc func appMovedToBackground() {
-        MediaPlayer.shared.stopAudio()
-        prevButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
-        viewModel.arrIndexPaths.removeAll()
-        if let prevIndexPath = viewModel.prevIndexPath {
-            tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
-        }
-    }
-    
     //Sets up the ImageView
-    func setUpImageView() {
+    private func setUpImageView() {
         albumImageView.tintColor = .white
         albumImageView.layer.cornerRadius = 15
         albumImageView.layer.masksToBounds = true
     }
     
-    //Fetches the tracks
-    func fetchTracks() {
-        guard let album = album else {return}
-
-        //Substring the string to send it to the fetch tracks func
-        let start = album.tracklist.index(album.tracklist.startIndex, offsetBy: 28)
-        let end = album.tracklist.index(album.tracklist.endIndex, offsetBy: 0)
-        let result = album.tracklist[start..<end] 
-        let newTrackList = String(result)
-        
-        albumTracksDS.fetchTracks(from: .album, path: newTrackList, with: ["limit" : 100]) {[weak self] tracks, error in
-            guard let self = self else {return}
-            
-            if let tracks = tracks {
-                self.viewModel.albumTracks = tracks
-                self.tracksTableView.reloadData()
-                self.numberOfTracks.text = String(tracks.count)
-                
-                let cells = self.tracksTableView.visibleCells
-                UIView.animate(views: cells, animations: [self.animation])
-                self.activityIndicatorView.stopAnimating()
-                
-            } else if let error = error {
-                print(error)
-                self.activityIndicatorView.stopAnimating()
-            }
-        }
-    }
-    
-    //Checks the liked button status when moving to this screen
-    func checkLikedStatus() {
-        guard let userID = Auth.auth().currentUser?.uid else {return}
-        FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
-            guard let self = self else {return}
-            
-            //Gets the albumIDs from firestore
-            guard let arrIDs: [Int] = snapshot?.get("albumIDs") as? [Int] else {return}
-            if arrIDs.contains(self.album?.id ?? 0) {
-                self.likedButton.isSelected = true
-                self.isLiked = true
-            } else {
-                self.likedButton.isSelected = false
-                self.isLiked = false
-            }
-        }
+    private func setupObservers() {
+        //An observer to check if the app moved to background
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
     }
     
     //Shows the activity indicator(when the tableview is loading it's data)
@@ -298,21 +172,98 @@ class AlbumDetailsViewController: BaseTableViewController {
         
         activityIndicatorView.startAnimating()
     }
-}
-
-//Extension for an alert
-extension AlbumDetailsViewController {
-    func showAlertWithActions(title: String? = nil, message: String? = nil) {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+            return
+        }
+        
+        //Converts albumTrack to Track and sends it via segue
+        let dict = albumDetailsViewModel.convertAlbumTrackToTrack(indexPathRow: indexPath.row)
+        
+        MediaPlayer.shared.stopAudio()
+        if let prevIndexPath = baseViewModel.prevIndexPath {
+            //Resests the play button state when segue to another screen
+            baseViewModel.arrIndexPaths.removeAll()
+            prevButton.setImage(UIImage(systemName: Constants.playFillText), for: .normal)
+            tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
+        }
+        performSegue(withIdentifier: albumDetailsViewModel.toDetailsText, sender: dict)
+    }
+    
+    //Handles the play button state when the app moves to background
+    @objc private func appMovedToBackground() {
+        MediaPlayer.shared.stopAudio()
+        prevButton.setImage(UIImage(systemName: Constants.playFillText), for: .normal)
+        baseViewModel.arrIndexPaths.removeAll()
+        if let prevIndexPath = baseViewModel.prevIndexPath {
+            tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
+        }
+    }
+    
+    private func showAlertWithActions(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
+        vc.addAction(.init(title: albumDetailsViewModel.retryText, style: .cancel, handler: {[weak self] action in
             if !Connectivity.isConnectedToInternet {
-                self?.showAlertWithActions(title: "No Internet Connection", message: "Failed to connect to the internet")
+                self?.showAlertWithActions(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             } else {
-                self?.fetchTracks()
+                self?.albumDetailsViewModel.fetchTracks()
                 self?.loadActivityIndicator()
             }
         }))
         present(vc, animated: true)
+    }
+}
+
+//MARK: DataSource
+extension AlbumDetailsViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return albumDetailsViewModel.albumTracks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! DetailsTableViewCell
+        
+        populateCell(indexPath: indexPath, cell: cell, tableView: tracksTableView)
+        
+        if let album = albumDetailsViewModel.album {
+            cell.populate(album: album, track: albumDetailsViewModel.albumTracks[indexPath.row])
+        }
+        return cell
+    }
+}
+
+//MARK: Delegates
+extension AlbumDetailsViewController: AlbumDetailsViewModelDelegate {
+    
+    func reloadTableView(albumTracks: [AlbumTrack]) {
+        self.tracksTableView.reloadData()
+        self.numberOfTracks.text = String(albumTracks.count)
+        
+        let cells = self.tracksTableView.visibleCells
+        UIView.animate(views: cells, animations: [self.animation])
+    }
+    
+    func stopAnimation() {
+        self.activityIndicatorView.stopAnimating()
+    }
+    
+    func isLikedButtonSelected(isSelected: Bool) {
+        self.likedButton.isSelected = isSelected
+    }
+    
+    func loafMessageAdded(album: TopAlbums) {
+        loafMessageAddedAlbum(album: album)
+    }
+    
+    func loafMessageRemoved(album: TopAlbums) {
+        loafMessageRemovedAlbum(album: album)
     }
 }
