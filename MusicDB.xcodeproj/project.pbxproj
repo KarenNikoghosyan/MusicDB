@@ -386,6 +386,18 @@
 			path = album_details;
 			sourceTree = "<group>";
 		};
+		78715FA92819897B002868C1 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				781B0C4326C01C6300DAC68E /* swiftUI */,
+				78538EAC26B44100003DBDE1 /* FirestoreManager.swift */,
+				78AD8C22268D0A74004BF30C /* ConnectionManager.swift */,
+				7876D20B26828D2A009D0669 /* MediaPlayer.swift */,
+				783A35C027AEF84A009CBBAB /* Constants.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		7887761326AF8A64006A18F2 /* albums */ = {
 			isa = PBXGroup;
 			children = (
@@ -481,6 +493,7 @@
 		788A7576267B9E9800DFE2B0 /* MusicDB */ = {
 			isa = PBXGroup;
 			children = (
+				78715FA92819897B002868C1 /* Utils */,
 				780C69DB269DD4250097DDC4 /* Database */,
 				781899CE2693884F000A5864 /* StoryBoards */,
 				78EA417E267F504B009828DD /* Extensions */,
@@ -538,13 +551,8 @@
 		788A7590267B9F3400DFE2B0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				781B0C4326C01C6300DAC68E /* swiftUI */,
 				78021D4326A453510070DEB8 /* structs */,
 				78892CB42688C2E100A12F41 /* datasource */,
-				7876D20B26828D2A009D0669 /* MediaPlayer.swift */,
-				78AD8C22268D0A74004BF30C /* ConnectionManager.swift */,
-				78538EAC26B44100003DBDE1 /* FirestoreManager.swift */,
-				783A35C027AEF84A009CBBAB /* Constants.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

@@ -9,6 +9,8 @@ import UIKit
 
 struct Constants {
     
+    static let cellIdentifier = "cell"
+    
     static let futuraBold = "Futura-Bold"
     static let futura = "Futura"
     
@@ -23,4 +25,6 @@ struct Constants {
     
     static let noInternetConnectionText = "No Internet Connection"
     static let failedToConnectText = "Failed to connect to the internet"
+    
+    static let playFillText = "play.fill"
 }

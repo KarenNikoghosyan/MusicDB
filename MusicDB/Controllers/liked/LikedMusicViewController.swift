@@ -26,14 +26,11 @@ class LikedMusicViewController: BaseTableViewController {
         checkConnectivity()
         
         setupNibs()
-        
         likedMusicViewModel.setUpObservers()
-        
-        loadNoLikedLabel()
-        portraitConstraints()
+        setupNoLikedLabel()
+        setupPortraitConstraints()
         
         likedTableView.separatorColor = UIColor.darkGray
-        
         setupNavigationItem()
     }
     
@@ -42,7 +39,7 @@ class LikedMusicViewController: BaseTableViewController {
         setTabBarSwipe(enabled: false)
         
         if !Connectivity.isConnectedToInternet {
-            showAlertWithActions(title: likedMusicViewModel.noInternetConnectionText, message: likedMusicViewModel.failedToConnectText)
+            showAlertWithActions(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
         }
     }
     
@@ -152,7 +149,7 @@ extension LikedMusicViewController {
             guard let self = self else {return}
             
             if !Connectivity.isConnectedToInternet {
-                self.showAlertWithActions(title: self.likedMusicViewModel.noInternetConnectionText, message: self.likedMusicViewModel.failedToConnectText)
+                self.showAlertWithActions(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             } else {
                 if self.segmentedControl.selectedSegmentIndex == 0 {
                     self.likedMusicViewModel.getUserLikedTracks()
@@ -167,7 +164,7 @@ extension LikedMusicViewController {
         present(vc, animated: true)
     }
     
-    private func loadNoLikedLabel() {
+    private func setupNoLikedLabel() {
         noLikedLabel.text = likedMusicViewModel.noLikedTracksAndAlbumsText
         noLikedLabel.font = UIFont.init(name: Constants.futura, size: 18)
         noLikedLabel.textColor = .white
@@ -182,7 +179,7 @@ extension LikedMusicViewController {
         noLikedLabel.isHidden = true
     }
     
-    private func portraitConstraints() {
+    private func setupPortraitConstraints() {
         switch UIDevice().type {
         case .iPod7:
             noLikedLabel.font = UIFont.init(name: Constants.futura, size: 14)
@@ -219,7 +216,7 @@ extension LikedMusicViewController {
         if editingStyle == .delete {
             
             if !Connectivity.isConnectedToInternet {
-                showViewControllerAlert(title: likedMusicViewModel.noInternetConnectionText, message: likedMusicViewModel.failedToConnectText)
+                showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
                 return
             }
             //Deletes a cell based on the selected segment
@@ -240,7 +237,7 @@ extension LikedMusicViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: likedMusicViewModel.noInternetConnectionText, message: likedMusicViewModel.failedToConnectText)
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             return
         }
         //Performs segue based on the selected segment

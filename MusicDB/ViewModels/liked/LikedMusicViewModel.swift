@@ -49,9 +49,6 @@ class LikedMusicViewModel {
     let tracksNibName = "LikedTracksTableViewCell"
     let albumsNibName = "LikedAlbumsTableViewCell"
     
-    let noInternetConnectionText = "No Internet Connection"
-    let failedToConnectText = "Failed to connect to the internet"
-    
     let editText = "Edit"
     let doneText = "Done"
     
