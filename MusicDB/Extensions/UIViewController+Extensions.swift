@@ -83,7 +83,7 @@ extension UIViewController {
 extension UIViewController {
     func logOutTappedAndSegue() {
         if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             return
         }
         Loaf.dismiss(sender: self, animated: true)
