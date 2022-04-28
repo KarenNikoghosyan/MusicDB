@@ -49,7 +49,6 @@ class HomeViewModel {
     
     //Dictionary
     let albumText = "album"
-    let indexPathText = "indexPath"
     let isHomeText = "isHome"
     
     //Firebase
@@ -62,7 +61,6 @@ class HomeViewModel {
     
     let noImageFoundText = "No Image Found"
     let fetchingTracksText = "Fetching Tracks..."
-    let retryText = "Retry"
     
     var counter: Int = 0
 }

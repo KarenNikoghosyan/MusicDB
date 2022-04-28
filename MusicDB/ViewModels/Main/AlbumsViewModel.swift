@@ -25,9 +25,7 @@ class AlbumsViewModel {
     let cellNib = "AlbumsTableViewCell"
     let albumDetailsIdentifier = "toAlbumDetails"
     let albumText = "album"
-    let indexPathText = "indexPath"
-    let retryText = "Retry"
-    
+
     weak var delegate: AlbumsViewModelDelegate?
 }
 
@@ -80,7 +78,6 @@ extension AlbumsViewModel {
         }
     }
 
-    
     func fetchAlbums() {
         topAlbumsDS.fetchTopAlbums(from: .chart, with: "/0/albums", with: ["limit" : 150]) {[weak self] albums, error in
             guard let self = self else {return}

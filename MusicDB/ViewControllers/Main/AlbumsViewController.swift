@@ -13,7 +13,7 @@ import WCLShineButton
 
 class AlbumsViewController: BaseTableViewController {
     
-    let albumsViewModel = AlbumsViewModel()
+    private let albumsViewModel = AlbumsViewModel()
     
     @IBOutlet private weak var albumsTableView: UITableView!
     
@@ -66,7 +66,7 @@ extension AlbumsViewController {
     private func showAlertWithActions(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        vc.addAction(.init(title: albumsViewModel.retryText, style: .cancel, handler: {[weak self] action in
+        vc.addAction(.init(title: Constants.retryText, style: .cancel, handler: {[weak self] action in
             guard let self = self else {return}
             
             if !Connectivity.isConnectedToInternet {
@@ -86,7 +86,7 @@ extension AlbumsViewController {
         }
         let dict: [String : Any] = [
             albumsViewModel.albumText : albumsViewModel.albums[indexPath.row],
-            albumsViewModel.indexPathText : indexPath
+            Constants.indexPathText : indexPath
         ]
         Loaf.dismiss(sender: self, animated: true)
         performSegue(withIdentifier: albumsViewModel.albumDetailsIdentifier, sender: dict)
@@ -98,7 +98,7 @@ extension AlbumsViewController {
               let data = sender as? Dictionary<String, Any> else {return}
         
         targetController.albumDetailsViewModel.album = data[albumsViewModel.albumText] as? TopAlbums
-        targetController.albumDetailsViewModel.indexPath = data[albumsViewModel.indexPathText] as? IndexPath
+        targetController.albumDetailsViewModel.indexPath = data[Constants.indexPathText] as? IndexPath
     }
 }
 

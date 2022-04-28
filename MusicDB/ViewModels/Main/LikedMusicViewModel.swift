@@ -42,7 +42,6 @@ class LikedMusicViewModel {
     
     weak var likedMusicDelegate: LikedMusicViewModelDelegate?
     
-    
     let trackCellReuseIdentifier = "trackCell"
     let albumCellReuseIdentifier = "albumCell"
     

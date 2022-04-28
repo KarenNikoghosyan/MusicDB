@@ -29,9 +29,7 @@ class AlbumDetailsViewModel {
     var indexPath: IndexPath?
     var isHome: Bool? = false
     
-    let retryText = "Retry"
     let toDetailsText = "toDetails"
-    let indexPathText = "indexPath"
     let trackText = "track"
     let albumText = "album"
     let isAlbumDetailsText = "isAlbumDetails"
@@ -139,7 +137,7 @@ extension AlbumDetailsViewModel {
         if isHome {
             NotificationCenter.default.post(name: .ReloadFromHome, object: nil, userInfo: nil)
         } else {
-            NotificationCenter.default.post(name: .SendIndexPathAlbum, object: nil, userInfo: [indexPathText : indexPath as Any])
+            NotificationCenter.default.post(name: .SendIndexPathAlbum, object: nil, userInfo: [Constants.indexPathText : indexPath as Any])
         }
     }
 }

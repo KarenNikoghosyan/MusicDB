@@ -41,7 +41,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         }
     }
     
-    @IBAction func settingsTapped(_ sender: UIBarButtonItem) {
+    @IBAction private func settingsTapped(_ sender: UIBarButtonItem) {
         Loaf.dismiss(sender: self, animated: true)
         
         navigationController?.navigationBar.barTintColor = .white
@@ -51,11 +51,11 @@ class HomeMusicCollectionViewController: UICollectionViewController {
     }
     
     //Sign out button
-    @IBAction func signOut(_ sender: UIBarButtonItem) {
+    @IBAction private func signOut(_ sender: UIBarButtonItem) {
         logOutTappedAndSegue()
     }
     
-    @IBSegueAction func addSettingsView(_ coder: NSCoder) -> UIViewController? {
+    @IBSegueAction private func addSettingsView(_ coder: NSCoder) -> UIViewController? {
         return UIHostingController(coder: coder, rootView: SettingsView())
     }
 }
@@ -323,7 +323,7 @@ extension HomeMusicCollectionViewController {
         }
     }
     
-    func populateHomeTracksCell(indexPath: IndexPath) -> HomeTracksCollectionViewCell {
+    private func populateHomeTracksCell(indexPath: IndexPath) -> HomeTracksCollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier, for: indexPath) as! HomeTracksCollectionViewCell
         return cell
     }
@@ -353,7 +353,7 @@ extension HomeMusicCollectionViewController {
         }
     }
     
-    func populateHeaders(headerID: String, kind: String, indexPath: IndexPath) -> UICollectionReusableView {
+    private func populateHeaders(headerID: String, kind: String, indexPath: IndexPath) -> UICollectionReusableView {
         let reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerID, for: indexPath)
         return reusableView
     }
@@ -428,7 +428,7 @@ extension HomeMusicCollectionViewController {
             indexPath[0] = 0
             let dict: [String: Any] = [
                 homeViewModel.albumText : homeViewModel.topAlbums[indexPath.row],
-                homeViewModel.indexPathText : indexPath,
+                Constants.indexPathText : indexPath,
                 homeViewModel.isHomeText : true
             ]
             performSegue(withIdentifier: homeViewModel.toAlbumDetailsText, sender: dict)
@@ -456,7 +456,7 @@ extension HomeMusicCollectionViewController {
     }
     
     //Creates pull down to refresh
-    func loadRefreshControl() {
+    private func loadRefreshControl() {
         guard let font = UIFont.init(name: Constants.futuraBold, size: 13) else {return}
         
         let attributes: [NSAttributedString.Key: AnyObject] = [.foregroundColor : UIColor.systemGreen, .font : font]
@@ -472,7 +472,7 @@ extension HomeMusicCollectionViewController {
     }
     
     //Refreshes the data
-    @objc func refresh(_ refreshControl: UIRefreshControl) {
+    @objc private func refresh(_ refreshControl: UIRefreshControl) {
         if !Connectivity.isConnectedToInternet {
             showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             collectionView.refreshControl?.endRefreshing()
@@ -523,7 +523,7 @@ extension HomeMusicCollectionViewController {
         collectionView.register(RockCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: homeViewModel.rockHeader)
     }
         
-    func toDetailsSegue(tracks: [Track], indexPath: IndexPath) {
+    private func toDetailsSegue(tracks: [Track], indexPath: IndexPath) {
         Loaf.dismiss(sender: self, animated: true)
  
         if !Connectivity.isConnectedToInternet {
@@ -547,8 +547,8 @@ extension HomeMusicCollectionViewController {
                   let targetController = dest.topViewController as? GenreMusicViewController,
                   let data = sender as? [String] else {return}
      
-            targetController.titleGenre = data[0]
-            targetController.path = data[1]
+            targetController.genreViewModel.titleGenre = data[0]
+            targetController.genreViewModel.path = data[1]
      
         } else if segue.identifier == homeViewModel.toAlbumDetailsText {
             guard let dest = segue.destination as? UINavigationController,
@@ -556,7 +556,7 @@ extension HomeMusicCollectionViewController {
                   let data = sender as? Dictionary<String, Any> else {return}
      
             targetController.albumDetailsViewModel.album = data[homeViewModel.albumText] as? TopAlbums
-            targetController.albumDetailsViewModel.indexPath = data[homeViewModel.indexPathText] as? IndexPath
+            targetController.albumDetailsViewModel.indexPath = data[Constants.indexPathText] as? IndexPath
             targetController.albumDetailsViewModel.isHome = data[homeViewModel.isHomeText] as? Bool
         }
     }
@@ -565,10 +565,10 @@ extension HomeMusicCollectionViewController {
 //MARK: - Alert
 extension HomeMusicCollectionViewController {
     
-    func showAlertAndReload(title: String? = nil, message: String? = nil) {
+    private func showAlertAndReload(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        vc.addAction(.init(title: homeViewModel.retryText, style: .cancel, handler: {[weak self] action in
+        vc.addAction(.init(title: Constants.retryText, style: .cancel, handler: {[weak self] action in
             guard let self = self else {return}
             
             if !Connectivity.isConnectedToInternet {

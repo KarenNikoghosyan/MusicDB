@@ -58,7 +58,7 @@ class AlbumDetailsViewController: BaseTableViewController {
         }
     }
     
-    @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
+    @IBAction private func likedButtonTapped(_ sender: WCLShineButton) {
         if !Connectivity.isConnectedToInternet {
             showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             
@@ -76,7 +76,7 @@ class AlbumDetailsViewController: BaseTableViewController {
         albumDetailsViewModel.isHomeScreen()
     }
     
-    @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {
+    @IBAction private func backButtonTapped(_ sender: UIBarButtonItem) {
         Loaf.dismiss(sender: self, animated: true)
         self.dismiss(animated: true, completion: nil)
     }
@@ -205,7 +205,7 @@ extension AlbumDetailsViewController {
     private func showAlertWithActions(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        vc.addAction(.init(title: albumDetailsViewModel.retryText, style: .cancel, handler: {[weak self] action in
+        vc.addAction(.init(title: Constants.retryText, style: .cancel, handler: {[weak self] action in
             if !Connectivity.isConnectedToInternet {
                 self?.showAlertWithActions(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             } else {
