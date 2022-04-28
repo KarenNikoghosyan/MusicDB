@@ -15,7 +15,6 @@ import SwiftUI
 class HomeMusicCollectionViewController: UICollectionViewController {
     
     private let homeViewModel = HomeViewModel()
-    
     private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {

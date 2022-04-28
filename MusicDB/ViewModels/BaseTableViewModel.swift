@@ -21,7 +21,6 @@ class BaseTableViewModel {
     var isPlaying: Bool = false
     
     var tracks: [Track] = []
-    var albums: [TopAlbums] = []
     var albumTracks: [AlbumTrack] = []
     
     let ds = TrackAPIDataSource()
