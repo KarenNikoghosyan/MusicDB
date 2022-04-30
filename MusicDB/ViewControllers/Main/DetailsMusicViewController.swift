@@ -14,7 +14,9 @@ import WCLShineButton
 import Loaf
 import FirebaseAuth
 
-class DetailsMusicViewController: BaseTableViewController {
+class DetailsMusicViewController: BaseViewController {
+    
+    let detailsMusicViewModel = DetailsMusicViewModel()
     
     var track: Track?
     var album: TopAlbums?
@@ -25,6 +27,7 @@ class DetailsMusicViewController: BaseTableViewController {
     var isGenre: Bool? = false
     var isAlbumDetails: Bool? = false
 
+    private var prevButton: UIButton = UIButton()
     let noTracksLabel = UILabel()
     
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
@@ -112,6 +115,7 @@ class DetailsMusicViewController: BaseTableViewController {
             fetchTracks()
             checkLikedStatus()
             loadActivityIndicator()
+            detailsMusicViewModel.setupBaseObservers()
         }
         
         self.title = track?.titleShort
@@ -127,6 +131,8 @@ class DetailsMusicViewController: BaseTableViewController {
             self?.previewButton.stopLoading()
         }
         
+        MediaPlayer.shared.delegate = self
+        detailsMusicViewModel.delegate = self
         artistTableView.delegate = self
         artistTableView.dataSource = self
      
@@ -209,7 +215,7 @@ class DetailsMusicViewController: BaseTableViewController {
                   let targetController = detailsVC.topViewController as? DetailsMusicViewController else {return}
             
             self.stopAudio()
-            let track = self.baseViewModel.tracks[indexPath.row]
+            let track = self.detailsMusicViewModel.tracks[indexPath.row]
             targetController.track = track
             parentVC?.present(detailsVC, animated: true)
         }
@@ -347,17 +353,24 @@ class DetailsMusicViewController: BaseTableViewController {
     
     func stopAudio() {
         MediaPlayer.shared.stopAudio()
+        
         previewButton.stopLoading()
         previewButton.setImage(UIImage(systemName: "play.circle"), for: .normal)
+        
+        prevButton.setImage(UIImage(systemName: Constants.playFillText), for: .normal)
+        detailsMusicViewModel.arrIndexPaths.removeAll()
+        if let prevIndexPath = detailsMusicViewModel.prevIndexPath {
+            artistTableView.reloadRows(at: [prevIndexPath], with: .none)
+        }
     }
     
     //Fetches the tracks
     func fetchTracks() {
-        baseViewModel.ds.fetchTracks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":200]) {[weak self] tracks, error in
+        detailsMusicViewModel.ds.fetchTracks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":200]) {[weak self] tracks, error in
             if let tracks = tracks {
                 guard let self = self else {return}
                 
-                self.baseViewModel.tracks = tracks
+                self.detailsMusicViewModel.tracks = tracks
                 self.artistTableView.reloadData()
                 
                 //Animates the cells
@@ -395,6 +408,14 @@ class DetailsMusicViewController: BaseTableViewController {
         
         activityIndicatorView.startAnimating()
     }
+    
+    @IBAction func playButtonTapped(_ sender: UIButton) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+            return
+        }
+        detailsMusicViewModel.playButtonLogic(sender)
+    }
 }
 
 //Extension for an alert based on the viewcontroller
@@ -422,15 +443,45 @@ extension DetailsMusicViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return baseViewModel.tracks.count
+        return detailsMusicViewModel.tracks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTableViewCell
+        cell.playButton.addTarget(self, action: #selector(playButtonTapped(_:)), for: .touchUpInside)
+
+        cell.playButton.tag = indexPath.row
         
-        populateCell(indexPath: indexPath, cell: cell, tableView: artistTableView)
+        if detailsMusicViewModel.arrIndexPaths.contains(indexPath) {
+            cell.playButton.setImage(UIImage(systemName: Constants.pauseFillImage), for: .normal)
+            cell.playButton.tintColor = .white
+        } else {
+            cell.playButton.setImage(UIImage(systemName: Constants.playFillImage), for: .normal)
+            cell.playButton.tintColor = .darkGray
+        }
         
-        cell.populateTrack(track: baseViewModel.tracks[indexPath.row])
+        cell.populateTrack(track: detailsMusicViewModel.tracks[indexPath.row])
         return cell
+    }
+}
+
+extension DetailsMusicViewController: DetailsMusicViewModelDelegate {
+    func reloadTableViewRows(selectedIndexPath: IndexPath) {
+        artistTableView.reloadRows(at: [selectedIndexPath], with: .none)
+    }
+    
+    func assignPrevButton(_ sender: UIButton) {
+        prevButton = sender
+    }
+    
+    func changeButtonImageAndReloadRows(prevIndexPath: IndexPath) {
+        prevButton.setImage(UIImage(systemName: Constants.playFillImage), for: .normal)
+        artistTableView.reloadRows(at: [prevIndexPath], with: .none)
+    }
+}
+
+extension DetailsMusicViewController: MediaPlayerDelegate {
+    func changeButtonStateAfterAudioStopsPlaying() {
+        detailsMusicViewModel.changeButtonStateAfterAudioStopsPlaying()
     }
 }

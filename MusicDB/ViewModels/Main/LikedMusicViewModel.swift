@@ -54,7 +54,7 @@ class LikedMusicViewModel {
     let toDetailsText = "toDetails"
     let toAlbumDetailsText = "toAlbumDetails"
     
-    let noLikedTracksAndAlbumsText = "No liked tracks/albums, start adding some."
+    let noLikedTracksAndAlbumsText = "No liked tracks/albums,\n start by adding some."
 }
 
 //MARK: - Functions

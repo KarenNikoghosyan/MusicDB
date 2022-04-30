@@ -8,7 +8,7 @@
 import UIKit
 import Loaf
 
-class GenreMusicViewController: BaseTableViewController {
+class GenreMusicViewController: BaseViewController {
     
     let genreViewModel = GenreViewModel()
 

@@ -11,7 +11,7 @@ import Loaf
 import SafariServices
 import WCLShineButton
 
-class AlbumsViewController: BaseTableViewController {
+class AlbumsViewController: BaseViewController {
     
     private let albumsViewModel = AlbumsViewModel()
     

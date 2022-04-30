@@ -12,7 +12,7 @@ import SafariServices
 import WCLShineButton
 import Loaf
 
-class AlbumDetailsViewController: BaseTableViewController {
+class AlbumDetailsViewController: BaseViewController {
     
     let albumDetailsViewModel = AlbumDetailsViewModel()
     
@@ -21,6 +21,7 @@ class AlbumDetailsViewController: BaseTableViewController {
     @IBOutlet private weak var albumImageView: UIImageView!
     @IBOutlet private weak var tracksTableView: UITableView!
     @IBOutlet private weak var likedButton: WCLShineButton!
+    private var prevButton: UIButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,6 +97,7 @@ class AlbumDetailsViewController: BaseTableViewController {
 extension AlbumDetailsViewController {
     
     private func setupDelegates() {
+        MediaPlayer.shared.delegate = self
         albumDetailsViewModel.delegate = self
         tracksTableView.delegate = self
         tracksTableView.dataSource = self
@@ -183,9 +185,9 @@ extension AlbumDetailsViewController {
         let dict = albumDetailsViewModel.convertAlbumTrackToTrack(indexPathRow: indexPath.row)
         
         MediaPlayer.shared.stopAudio()
-        if let prevIndexPath = baseViewModel.prevIndexPath {
+        if let prevIndexPath = albumDetailsViewModel.prevIndexPath {
             //Resests the play button state when segue to another screen
-            baseViewModel.arrIndexPaths.removeAll()
+            albumDetailsViewModel.arrIndexPaths.removeAll()
             prevButton.setImage(UIImage(systemName: Constants.playFillText), for: .normal)
             tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
         }
@@ -196,8 +198,8 @@ extension AlbumDetailsViewController {
     @objc private func appMovedToBackground() {
         MediaPlayer.shared.stopAudio()
         prevButton.setImage(UIImage(systemName: Constants.playFillText), for: .normal)
-        baseViewModel.arrIndexPaths.removeAll()
-        if let prevIndexPath = baseViewModel.prevIndexPath {
+        albumDetailsViewModel.arrIndexPaths.removeAll()
+        if let prevIndexPath = albumDetailsViewModel.prevIndexPath {
             tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
         }
     }
@@ -215,6 +217,14 @@ extension AlbumDetailsViewController {
         }))
         present(vc, animated: true)
     }
+    
+    @IBAction func playButtonTapped(_ sender: UIButton) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+            return
+        }
+        albumDetailsViewModel.playButtonLogic(sender)
+    }
 }
 
 //MARK: DataSource
@@ -230,8 +240,17 @@ extension AlbumDetailsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! DetailsTableViewCell
+        cell.playButton.addTarget(self, action: #selector(playButtonTapped(_:)), for: .touchUpInside)
+
+        cell.playButton.tag = indexPath.row
         
-        populateCell(indexPath: indexPath, cell: cell, tableView: tracksTableView)
+        if albumDetailsViewModel.arrIndexPaths.contains(indexPath) {
+            cell.playButton.setImage(UIImage(systemName: Constants.pauseFillImage), for: .normal)
+            cell.playButton.tintColor = .white
+        } else {
+            cell.playButton.setImage(UIImage(systemName: Constants.playFillImage), for: .normal)
+            cell.playButton.tintColor = .darkGray
+        }
         
         if let album = albumDetailsViewModel.album {
             cell.populate(album: album, track: albumDetailsViewModel.albumTracks[indexPath.row])
@@ -251,6 +270,14 @@ extension AlbumDetailsViewController: AlbumDetailsViewModelDelegate {
         UIView.animate(views: cells, animations: [self.animation])
     }
     
+    func reloadTableViewRows(selectedIndexPath: IndexPath) {
+        tracksTableView.reloadRows(at: [selectedIndexPath], with: .none)
+    }
+    
+    func assignPrevButton(_ sender: UIButton) {
+        prevButton = sender
+    }
+    
     func stopAnimation() {
         self.activityIndicatorView.stopAnimating()
     }
@@ -265,5 +292,16 @@ extension AlbumDetailsViewController: AlbumDetailsViewModelDelegate {
     
     func loafMessageRemoved(album: TopAlbums) {
         loafMessageRemovedAlbum(album: album)
+    }
+    
+    func changeButtonImageAndReloadRows(prevIndexPath: IndexPath) {
+        prevButton.setImage(UIImage(systemName: Constants.playFillImage), for: .normal)
+        tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
+    }
+}
+
+extension AlbumDetailsViewController: MediaPlayerDelegate {
+    func changeButtonStateAfterAudioStopsPlaying() {
+        albumDetailsViewModel.changeButtonStateAfterAudioStopsPlaying()
     }
 }

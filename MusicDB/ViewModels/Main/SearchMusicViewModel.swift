@@ -12,8 +12,9 @@ protocol SearchMusicViewModelDelegate: AnyObject {
     func stopAnimation()
 }
 
-class SearchMusicViewModel: BaseTableViewModel {
+class SearchMusicViewModel {
     
+    let ds = TrackAPIDataSource()
     var searchTracks: [Track] = []
     
     let searchCellIdentifier = "cell"
