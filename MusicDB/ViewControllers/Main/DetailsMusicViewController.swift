@@ -128,7 +128,10 @@ class DetailsMusicViewController: BaseViewController {
         
         //Stops button animation
         NotificationCenter.default.addObserver(forName: .StopButtonAnimation, object: nil, queue: .main) {[weak self] _ in
-            self?.previewButton.stopLoading()
+            guard let self = self else {return}
+            
+            self.previewButton.stopLoading()
+            self.previewButton.setImage(UIImage(systemName: "play.circle"), for: .normal)
         }
         
         MediaPlayer.shared.delegate = self
