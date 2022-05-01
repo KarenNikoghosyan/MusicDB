@@ -8,7 +8,7 @@
 import UIKit
 import Loaf
 
-class LikedMusicViewController: BaseTableViewController {
+class LikedMusicViewController: BaseViewController {
     
     private let likedMusicViewModel = LikedMusicViewModel()
     
@@ -165,6 +165,8 @@ extension LikedMusicViewController {
     }
     
     private func setupNoLikedLabel() {
+        noLikedLabel.numberOfLines = 0
+        noLikedLabel.textAlignment = .center
         noLikedLabel.text = likedMusicViewModel.noLikedTracksAndAlbumsText
         noLikedLabel.font = UIFont.init(name: Constants.futura, size: 18)
         noLikedLabel.textColor = .white
@@ -174,7 +176,7 @@ extension LikedMusicViewController {
         NSLayoutConstraint.activate([
             noLikedLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             noLikedLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            noLikedLabel.heightAnchor.constraint(equalToConstant: 40)
+            noLikedLabel.heightAnchor.constraint(equalToConstant: 80)
         ])
         noLikedLabel.isHidden = true
     }

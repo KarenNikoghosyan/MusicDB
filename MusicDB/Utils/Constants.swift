@@ -28,4 +28,8 @@ struct Constants {
     
     static let noInternetConnectionText = "No Internet Connection"
     static let failedToConnectText = "Failed to connect to the internet"
+    
+    static let chevronRightImage = "chevron.right"
+    static let playFillImage = "play.fill"
+    static let pauseFillImage = "pause.fill"
 }

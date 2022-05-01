@@ -11,6 +11,10 @@ import FirebaseAuth
 protocol HomeViewModelDelegate: AnyObject {
     func loadSectionAndAnimation(in section: Int)
     func loadLoafMessage(name: String)
+    func showAlert()
+    func dismissLoaf()
+    func perfSegue(viewAll: String, genre: String)
+    func logOutTapped()
 }
 
 class HomeViewModel {
@@ -67,6 +71,31 @@ class HomeViewModel {
 
 //MARK: - Functions
 extension HomeViewModel {
+    
+    func setupObservers() {
+        //Gets the button action from the corresponding cell
+        NotificationCenter.default.addObserver(forName: .ToViewAll, object: nil, queue: .main) {[weak self] notification in
+            guard let self = self else {return}
+            
+            if !Connectivity.isConnectedToInternet {
+                self.delegate?.showAlert()
+                return
+            }
+            
+            if let viewAll = notification.userInfo?[self.viewAll] as? String,
+               let genre = notification.userInfo?[self.genre] as? String {
+                
+                self.delegate?.dismissLoaf()
+                self.delegate?.perfSegue(viewAll: viewAll, genre: genre)
+            }
+        }
+        
+        NotificationCenter.default.addObserver(forName: .MoveToLogin, object: nil, queue: .main) {[weak self] _ in
+            guard let self = self else {return}
+            
+            self.delegate?.logOutTapped()
+        }
+    }
     
     //Fetches all the genres
     func fetchTracks() {

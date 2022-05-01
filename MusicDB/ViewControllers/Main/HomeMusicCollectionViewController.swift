@@ -22,7 +22,7 @@ class HomeMusicCollectionViewController: UICollectionViewController {
         homeViewModel.delegate = self
 
         checkConnection()
-        setupObservers()
+        homeViewModel.setupObservers()
         setupCells()
         setupHeaders()
         
@@ -73,7 +73,6 @@ extension HomeMusicCollectionViewController {
                 case 4: return self?.topArtistsSection()
                 case 7: return self?.topAlbumsSection()
                 default: return self?.tracksLayoutSection()
-                
             }
         }
     }
@@ -481,28 +480,6 @@ extension HomeMusicCollectionViewController {
         homeViewModel.fetchTracks()
     }
     
-    private func setupObservers() {
-        //Gets the button action from the corresponding cell
-        NotificationCenter.default.addObserver(forName: .ToViewAll, object: nil, queue: .main) {[weak self] notification in
-            guard let self = self else {return}
-            
-            if !Connectivity.isConnectedToInternet {
-                self.showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
-                return
-            }
-            
-            if let viewAll = notification.userInfo?[self.homeViewModel.viewAll] as? String,
-               let genre = notification.userInfo?[self.homeViewModel.genre] as? String {
-                
-                Loaf.dismiss(sender: self, animated: true)
-                self.performSegue(withIdentifier: self.homeViewModel.toGenreText, sender: [viewAll, genre])
-            }
-        }
-        NotificationCenter.default.addObserver(forName: .MoveToLogin, object: nil, queue: .main) {[weak self] _ in
-            self?.logOutTappedAndSegue()
-        }
-    }
-    
     private func setupCells() {
         //Registers the cells
         collectionView.register(HomeTracksCollectionViewCell.self, forCellWithReuseIdentifier: HomeTracksCollectionViewCell.reuseIdentifier)
@@ -603,5 +580,21 @@ extension HomeMusicCollectionViewController: HomeViewModelDelegate {
     
     func loadLoafMessage(name: String) {
         loafMessageWelcome(name: name)
+    }
+    
+    func showAlert() {
+        showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+    }
+    
+    func dismissLoaf() {
+        Loaf.dismiss(sender: self, animated: true)
+    }
+    
+    func perfSegue(viewAll: String, genre: String) {
+        performSegue(withIdentifier: homeViewModel.toGenreText, sender: [viewAll, genre])
+    }
+    
+    func logOutTapped() {
+        logOutTappedAndSegue()
     }
 }

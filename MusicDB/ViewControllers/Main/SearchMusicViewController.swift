@@ -8,7 +8,7 @@
 import UIKit
 import ViewAnimator
 
-class SearchMusicViewController: BaseTableViewController {
+class SearchMusicViewController: BaseViewController {
     
     private let searchViewModel = SearchMusicViewModel()
     
