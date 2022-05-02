@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 
 class TopAlbumsCollectionViewCell: UICollectionViewCell {
+    
     static let reuseIdentifier: String = "topAlbumsCell"
 
     let subtitle = UILabel()
@@ -39,6 +40,14 @@ class TopAlbumsCollectionViewCell: UICollectionViewCell {
         ])
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+//MARK: - Functions
+extension TopAlbumsCollectionViewCell {
+    
     func configure(album: TopAlbums) {
         subtitle.text = album.title
         
@@ -51,9 +60,5 @@ class TopAlbumsCollectionViewCell: UICollectionViewCell {
         
         imageView.sd_imageIndicator = SDWebImageActivityIndicator.white
         imageView.sd_setImage(with: url)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

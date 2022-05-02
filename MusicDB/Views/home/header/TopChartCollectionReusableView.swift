@@ -10,6 +10,7 @@ import UIKit
 class TopChartCollectionReusableView: UICollectionReusableView {
      
     let label = UILabel()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -21,16 +22,15 @@ class TopChartCollectionReusableView: UICollectionReusableView {
         
         let button = createViewAllButton(label: label)
         button.addTarget(self, action: #selector(topTracksViewAllTapped(_:)), for: .touchUpInside)
-        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         label.frame = bounds
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     @IBAction func topTracksViewAllTapped(_ sender: UIButton) {

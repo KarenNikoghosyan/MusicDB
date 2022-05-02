@@ -9,11 +9,15 @@ import UIKit
 import SDWebImage
 
 class DetailsTableViewCell: UITableViewCell {
-    @IBOutlet weak var trackImageView: UIImageView!
-    @IBOutlet weak var trackTitleLabel: UILabel!
-    @IBOutlet weak var trackArtistNameLabel: UILabel!
-    @IBOutlet weak var trackDurationLabel: UILabel!
+    @IBOutlet private weak var trackImageView: UIImageView!
+    @IBOutlet private weak var trackTitleLabel: UILabel!
+    @IBOutlet private weak var trackArtistNameLabel: UILabel!
+    @IBOutlet private weak var trackDurationLabel: UILabel!
     @IBOutlet weak var playButton: UIButton!
+}
+
+//MARK: - Functions
+extension DetailsTableViewCell {
     
     func populate(album: TopAlbums, track: AlbumTrack) {
         guard let str = album.cover,

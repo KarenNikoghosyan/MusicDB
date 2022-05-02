@@ -9,13 +9,16 @@ import UIKit
 import SDWebImage
 
 class SearchMusicTableViewCell: UITableViewCell {
-    @IBOutlet weak var trackImageView: UIImageView!
-    @IBOutlet weak var trackTitleLabel: UILabel!
-    @IBOutlet weak var trackArtistNameLabel: UILabel!
-    @IBOutlet weak var trackDurationLabel: UILabel!
+    @IBOutlet private weak var trackImageView: UIImageView!
+    @IBOutlet private weak var trackTitleLabel: UILabel!
+    @IBOutlet private weak var trackArtistNameLabel: UILabel!
+    @IBOutlet private weak var trackDurationLabel: UILabel!
+}
+
+//MARK: - Functions
+extension SearchMusicTableViewCell {
     
     func populate(track: Track) {
-        
         guard let str = track.album?.cover,
               let url = URL(string: str) else {
             

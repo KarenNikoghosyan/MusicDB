@@ -309,12 +309,12 @@ extension LikedMusicViewController: UITableViewDataSource {
             accessoryArrow(cell: tracksCell)
             tracksCell.populate(track: likedMusicViewModel.likedTracks[indexPath.row])
             
-            tracksCell.cellConstraints()
+            tracksCell.setupCellConstraints()
         case 1:
             accessoryArrow(cell: albumsCell)
             albumsCell.populate(album: likedMusicViewModel.likedAlbums[indexPath.row])
             
-            albumsCell.cellConstraints()
+            albumsCell.setupCellConstraints()
             
             albumsCell.openWebsiteButton.tag = indexPath.row
             albumsCell.openWebsiteButton.addTarget(self, action: #selector(openWebsiteTapped(_:)), for: .touchUpInside)

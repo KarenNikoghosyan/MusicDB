@@ -13,11 +13,13 @@ import FirebaseAuth
 class AlbumsTableViewCell: UITableViewCell {
     var isLiked: Bool = false
 
-    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var albumImageView: UIImageView!
-    @IBOutlet weak var albumTitleLabel: UILabel!
-    @IBOutlet weak var albumArtistNameLabel: UILabel!
-    @IBOutlet weak var likedButton: WCLShineButton!
+    @IBOutlet private weak var imageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var albumImageView: UIImageView!
+    @IBOutlet private weak var albumTitleLabel: UILabel!
+    @IBOutlet private weak var albumArtistNameLabel: UILabel!
+    @IBOutlet private weak var likedButton: WCLShineButton!
+    @IBOutlet weak var openWebsiteButton: UIButton!
+    
     @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
         if likedButton.isSelected {
             NotificationCenter.default.post(name: .RemoveAlbumID, object: nil, userInfo: ["indexPath" : getIndexPath() as Any])
@@ -25,9 +27,12 @@ class AlbumsTableViewCell: UITableViewCell {
             NotificationCenter.default.post(name: .AddAlbumID, object: nil, userInfo: ["indexPath" : getIndexPath() as Any])
         }
     }
-    @IBOutlet weak var openWebsiteButton: UIButton!
+}
+
+//MARK: - Functions
+extension AlbumsTableViewCell {
     
-    func cellConstraints() {
+    func setupCellConstraints() {
         switch UIDevice().type {
         case .iPod7:
             imageViewHeightConstraint.constant = 110
@@ -74,7 +79,7 @@ class AlbumsTableViewCell: UITableViewCell {
         albumArtistNameLabel.text = album.artist.name
     }
     
-    func getIndexPath() -> IndexPath? {
+    private func getIndexPath() -> IndexPath? {
         guard let superView = self.superview as? UITableView else {
             print("superview is not a UITableView - getIndexPath")
             return nil

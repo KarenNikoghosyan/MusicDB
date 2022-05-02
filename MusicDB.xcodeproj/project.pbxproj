@@ -267,7 +267,7 @@
 		781B0C4226C017F800DAC68E /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				78481CD626BAC2AD006F9036 /* settings */,
+				78481CD626BAC2AD006F9036 /* Settings */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -331,12 +331,12 @@
 			path = liked_tracks;
 			sourceTree = "<group>";
 		};
-		78481CD626BAC2AD006F9036 /* settings */ = {
+		78481CD626BAC2AD006F9036 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				78481CD726BAC3B9006F9036 /* SettingsView.swift */,
 			);
-			path = settings;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		78538EAE26B4AE0F003DBDE1 /* search */ = {

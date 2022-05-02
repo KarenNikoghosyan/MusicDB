@@ -128,7 +128,7 @@ extension AlbumsViewController: UITableViewDataSource {
             
             let album = albumsViewModel.albums[indexPath.row]
             cell.populate(album: album)
-            cell.cellConstraints()
+            cell.setupCellConstraints()
         }
         return cell
     }

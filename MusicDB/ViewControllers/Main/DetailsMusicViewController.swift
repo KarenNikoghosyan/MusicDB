@@ -12,7 +12,6 @@ import Loady
 import ViewAnimator
 import WCLShineButton
 import Loaf
-import FirebaseAuth
 
 class DetailsMusicViewController: BaseViewController {
     

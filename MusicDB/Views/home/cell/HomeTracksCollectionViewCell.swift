@@ -12,7 +12,7 @@ class HomeTracksCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "topChartsCell"
     
-    let label = UILabel()
+    private let label = UILabel()
     let imageView = UIImageView()
 
     override init(frame: CGRect) {
@@ -42,6 +42,10 @@ class HomeTracksCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+//MARK: - Functions
+extension HomeTracksCollectionViewCell {
     
     func configure(track: Track, with imageQuality: String) {
         label.text = "  " + track.titleShort

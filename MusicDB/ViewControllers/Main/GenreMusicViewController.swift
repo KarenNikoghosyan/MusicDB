@@ -126,7 +126,7 @@ extension GenreMusicViewController: UITableViewDataSource {
             let track = genreViewModel.tracks[indexPath.row]
             
             cell.populate(track: track)
-            cell.cellConstraints()
+            cell.setupCellConstraints()
         }
         
         return cell

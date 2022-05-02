@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 
 class TopArtistsCollectionViewCell: UICollectionViewCell {
+    
     static let reuseIdentifier: String = "topArtistsCell"
 
     let name = UILabel()
@@ -40,6 +41,10 @@ class TopArtistsCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+//MARK: - Functions
+extension TopArtistsCollectionViewCell {
     
     func configure(artist: TopArtists) {
         name.text = artist.name

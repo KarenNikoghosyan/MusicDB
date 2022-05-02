@@ -10,14 +10,18 @@ import SDWebImage
 
 class LikedTracksTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var imageViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var trackImageView: UIImageView!
-    @IBOutlet weak var trackTitleLabel: UILabel!
-    @IBOutlet weak var trackArtistNameLabel: UILabel!
-    @IBOutlet weak var trackAlbumNameLabel: UILabel!
-    @IBOutlet weak var trackDurationLabel: UILabel!
+    @IBOutlet private weak var imageViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var trackImageView: UIImageView!
+    @IBOutlet private weak var trackTitleLabel: UILabel!
+    @IBOutlet private weak var trackArtistNameLabel: UILabel!
+    @IBOutlet private weak var trackAlbumNameLabel: UILabel!
+    @IBOutlet private weak var trackDurationLabel: UILabel!
+}
+
+//MARK: - Functions
+extension LikedTracksTableViewCell {
     
-    func cellConstraints() {
+    func setupCellConstraints() {
         switch UIDevice().type {
         case .iPod7:
             imageViewWidthConstraint.constant = 95
@@ -51,7 +55,7 @@ class LikedTracksTableViewCell: UITableViewCell {
         trackImageView.sd_setImage(with: url)
     }
     
-    func getIndexPath() -> IndexPath? {
+    private func getIndexPath() -> IndexPath? {
         guard let superView = self.superview as? UITableView else {
             print("superview is not a UITableView - getIndexPath")
             return nil
