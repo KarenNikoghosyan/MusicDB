@@ -10,14 +10,17 @@ import SDWebImage
 
 class LikedAlbumsTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var albumImageView: UIImageView!
-    @IBOutlet weak var albumTitleLabel: UILabel!
-    @IBOutlet weak var albumArtistNameLabel: UILabel!
-    
+    @IBOutlet private weak var imageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var albumImageView: UIImageView!
+    @IBOutlet private weak var albumTitleLabel: UILabel!
+    @IBOutlet private weak var albumArtistNameLabel: UILabel!
     @IBOutlet weak var openWebsiteButton: UIButton!
+}
+
+//MARK: - Functions
+extension LikedAlbumsTableViewCell {
     
-    func cellConstraints() {
+    func setupCellConstraints() {
         switch UIDevice().type {
         case .iPod7:
             imageViewHeightConstraint.constant = 110
@@ -51,7 +54,7 @@ class LikedAlbumsTableViewCell: UITableViewCell {
         albumArtistNameLabel.text = album.artist.name
     }
     
-    func getIndexPath() -> IndexPath? {
+    private func getIndexPath() -> IndexPath? {
         guard let superView = self.superview as? UITableView else {
             print("superview is not a UITableView - getIndexPath")
             return nil

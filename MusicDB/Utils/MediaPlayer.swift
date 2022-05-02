@@ -17,6 +17,10 @@ class MediaPlayer: NSObject {
     weak var delegate: MediaPlayerDelegate?
     
     override private init() {}
+}
+
+//MARK: - Functions
+extension MediaPlayer {
     
     func loadAudio(url: URL) {
 
@@ -48,6 +52,7 @@ class MediaPlayer: NSObject {
     }
 }
 
+//MARK: - Delegates
 extension MediaPlayer: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if flag {

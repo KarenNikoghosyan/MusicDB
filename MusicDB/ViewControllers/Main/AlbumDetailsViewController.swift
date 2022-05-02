@@ -31,13 +31,13 @@ class AlbumDetailsViewController: BaseViewController {
             showAlertWithActions(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
         } else {
             albumDetailsViewModel.fetchTracks()
-            loadActivityIndicator()
+            setupActivityIndicator()
             albumDetailsViewModel.checkLikedStatus()
         }
         
         setupDelegates()
         loadImage()
-        setupObservers()
+        albumDetailsViewModel.setupObservers()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -87,13 +87,13 @@ class AlbumDetailsViewController: BaseViewController {
               let targetController = dest.topViewController as? DetailsMusicViewController,
               let data = sender as? Dictionary<String, Any> else {return}
         
-        targetController.track = data[albumDetailsViewModel.trackText] as? Track
-        targetController.album = data[albumDetailsViewModel.albumText] as? TopAlbums
-        targetController.isAlbumDetails = data[albumDetailsViewModel.isAlbumDetailsText] as? Bool
+        targetController.detailsMusicViewModel.track = data[albumDetailsViewModel.trackText] as? Track
+        targetController.detailsMusicViewModel.album = data[albumDetailsViewModel.albumText] as? TopAlbums
+        targetController.detailsMusicViewModel.isAlbumDetails = data[albumDetailsViewModel.isAlbumDetailsText] as? Bool
     }
 }
 
-//MARK: Functions
+//MARK: - Functions
 extension AlbumDetailsViewController {
     
     private func setupDelegates() {
@@ -155,14 +155,9 @@ extension AlbumDetailsViewController {
         albumImageView.layer.cornerRadius = 15
         albumImageView.layer.masksToBounds = true
     }
-    
-    private func setupObservers() {
-        //An observer to check if the app moved to background
-        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
-    }
-    
+
     //Shows the activity indicator(when the tableview is loading it's data)
-    override func loadActivityIndicator() {
+    override func setupActivityIndicator() {
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicatorView)
         NSLayoutConstraint.activate([
@@ -174,6 +169,34 @@ extension AlbumDetailsViewController {
         
         activityIndicatorView.startAnimating()
     }
+    
+    private func showAlertWithActions(title: String? = nil, message: String? = nil) {
+        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        vc.addAction(.init(title: Constants.retryText, style: .cancel, handler: {[weak self] action in
+            guard let self = self else {return}
+            
+            if !Connectivity.isConnectedToInternet {
+                self.showAlertWithActions(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+            } else {
+                self.albumDetailsViewModel.fetchTracks()
+                self.setupActivityIndicator()
+            }
+        }))
+        present(vc, animated: true)
+    }
+    
+    @IBAction func playButtonTapped(_ sender: UIButton) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+            return
+        }
+        albumDetailsViewModel.playButtonLogic(sender)
+    }
+}
+
+//MARK: - UITableView Functions
+extension AlbumDetailsViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !Connectivity.isConnectedToInternet {
@@ -193,41 +216,9 @@ extension AlbumDetailsViewController {
         }
         performSegue(withIdentifier: albumDetailsViewModel.toDetailsText, sender: dict)
     }
-    
-    //Handles the play button state when the app moves to background
-    @objc private func appMovedToBackground() {
-        MediaPlayer.shared.stopAudio()
-        prevButton.setImage(UIImage(systemName: Constants.playFillText), for: .normal)
-        albumDetailsViewModel.arrIndexPaths.removeAll()
-        if let prevIndexPath = albumDetailsViewModel.prevIndexPath {
-            tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
-        }
-    }
-    
-    private func showAlertWithActions(title: String? = nil, message: String? = nil) {
-        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        vc.addAction(.init(title: Constants.retryText, style: .cancel, handler: {[weak self] action in
-            if !Connectivity.isConnectedToInternet {
-                self?.showAlertWithActions(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
-            } else {
-                self?.albumDetailsViewModel.fetchTracks()
-                self?.loadActivityIndicator()
-            }
-        }))
-        present(vc, animated: true)
-    }
-    
-    @IBAction func playButtonTapped(_ sender: UIButton) {
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
-            return
-        }
-        albumDetailsViewModel.playButtonLogic(sender)
-    }
 }
 
-//MARK: DataSource
+//MARK: - DataSources
 extension AlbumDetailsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -259,7 +250,7 @@ extension AlbumDetailsViewController: UITableViewDataSource {
     }
 }
 
-//MARK: Delegates
+//MARK: - Delegates
 extension AlbumDetailsViewController: AlbumDetailsViewModelDelegate {
     
     func reloadTableView(albumTracks: [AlbumTrack]) {

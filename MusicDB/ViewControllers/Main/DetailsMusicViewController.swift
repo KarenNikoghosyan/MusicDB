@@ -12,134 +12,44 @@ import Loady
 import ViewAnimator
 import WCLShineButton
 import Loaf
-import FirebaseAuth
 
 class DetailsMusicViewController: BaseViewController {
     
     let detailsMusicViewModel = DetailsMusicViewModel()
-    
-    var track: Track?
-    var album: TopAlbums?
-    
-    var isLiked: Bool = false
-    
-    var indexPath: IndexPath?
-    var isGenre: Bool? = false
-    var isAlbumDetails: Bool? = false
 
     private var prevButton: UIButton = UIButton()
-    let noTracksLabel = UILabel()
+    private let noTracksLabel = UILabel()
     
-    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
-    @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {
-        stopAudio()
-        Loaf.dismiss(sender: self, animated: true)
-        self.dismiss(animated: true, completion: nil)
-    }
-    @IBOutlet weak var artistTableView: UITableView!
-    
-    @IBOutlet weak var detailsImageView: UIImageView!
-        
-    @IBOutlet weak var artistNameLabel: UILabel!
-    @IBOutlet weak var detailsArtistNameLabel: UILabel!
-    
-    @IBOutlet weak var albumTitleLabel: UILabel!
-    @IBOutlet weak var detailsAlbumTitleLabel: UILabel!
-    
-    @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var detailsDurationLabel: UILabel!
-    
-    @IBOutlet weak var goToWebsiteButton: UIButton!
-    @IBAction func goToWebsiteTapped(_ sender: UIButton) {
-        Loaf.dismiss(sender: self, animated: true)
-        
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            return
-        }
-        
-        UIView.animate(withDuration: 0.3) {[weak self] in
-            self?.goToWebsiteButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.4), for: .normal)
-            self?.goToWebsiteButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
-        }
-        
-        guard let track = track,
-              let url = URL(string: "\(track.link ?? "Can't load the link")") else {return}
-        
-        let sfVC = SFSafariViewController(url: url)
-        present(sfVC, animated: true)
-        stopAudio()
-    }
-    
-    @IBOutlet weak var previewButton: LoadyButton!
-    @IBOutlet weak var likedButton: WCLShineButton!
-    @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
-        guard let track = track else {return}
-        
-        //Checks the connectivity status
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            if !isLiked {
-                likedButton.isSelected = false
-            } else {
-                likedButton.isSelected = true
-            }
-            return
-        }
-        guard let userID = Auth.auth().currentUser?.uid else {return}
-        
-        //Will add/remove tracks based on their liked status
-        if !isLiked {
-            FirestoreManager.shared.addTrack(track: track, userID: userID)
-            loafMessageAdded(track: track)
+    @IBOutlet private weak var imageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var artistTableView: UITableView!
+    @IBOutlet private weak var detailsImageView: UIImageView!
+    @IBOutlet private weak var artistNameLabel: UILabel!
+    @IBOutlet private weak var detailsArtistNameLabel: UILabel!
+    @IBOutlet private weak var albumTitleLabel: UILabel!
+    @IBOutlet private weak var detailsAlbumTitleLabel: UILabel!
+    @IBOutlet private weak var durationLabel: UILabel!
+    @IBOutlet private weak var detailsDurationLabel: UILabel!
+    @IBOutlet private weak var goToWebsiteButton: UIButton!
+    @IBOutlet private weak var previewButton: LoadyButton!
+    @IBOutlet private weak var likedButton: WCLShineButton!
 
-            isLiked = true
-        } else {
-            FirestoreManager.shared.removeTrack(track: track, userID: userID)
-            loafMessageRemoved(track: track)
-
-            isLiked = false
-        }
-        //Checks if we came from the genre screen and will send an indexpath to change the cell's liked status.
-        guard let isGenre = isGenre else {return}
-        if isGenre {
-            NotificationCenter.default.post(name: .SendIndexPath, object: nil, userInfo: ["indexPath" : indexPath as Any])
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //Checks the connectivity status
         if Connectivity.isConnectedToInternet {
-            fetchTracks()
-            checkLikedStatus()
-            loadActivityIndicator()
+            detailsMusicViewModel.fetchTracks()
+            detailsMusicViewModel.checkLikedStatus()
+            setupActivityIndicator()
             detailsMusicViewModel.setupBaseObservers()
         }
         
-        self.title = track?.titleShort
-        createLikeButton()
-        loadNoTracksLabel()
-  
-        //Adds an observer to observe if the app moved to the backgroud
-        let notifactionCenter = NotificationCenter.default
-        notifactionCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
-        
-        //Stops button animation
-        NotificationCenter.default.addObserver(forName: .StopButtonAnimation, object: nil, queue: .main) {[weak self] _ in
-            guard let self = self else {return}
-            
-            self.previewButton.stopLoading()
-            self.previewButton.setImage(UIImage(systemName: "play.circle"), for: .normal)
-        }
-        
-        MediaPlayer.shared.delegate = self
-        detailsMusicViewModel.delegate = self
-        artistTableView.delegate = self
-        artistTableView.dataSource = self
+        self.title = detailsMusicViewModel.track?.titleShort
+        setupLikeButton()
+        setupNoTracksLabel()
+        setupDelegates()
      
-        guard let isAlbumDetails = isAlbumDetails else {return}
+        guard let isAlbumDetails = detailsMusicViewModel.isAlbumDetails else {return}
         if !isAlbumDetails {
             setUpViewsFromTrack()
         } else {
@@ -147,50 +57,11 @@ class DetailsMusicViewController: BaseViewController {
         }
     }
     
-    //Checks the current running device and loads the appropriate constraints based on the device.
-    //potrait orientation
-    func portraitConstraints() {
-        switch UIDevice().type {
-        case .iPod7:
-            imageViewHeightConstraint.constant = 130
-        case .iPhoneSE2:
-            imageViewHeightConstraint.constant = 150
-        case .iPhone8:
-            imageViewHeightConstraint.constant = 150
-        default:
-            break
-        }
-    }
-    
-    //landscape orientation
-    func landscapeConstraints() {
-        switch UIDevice().type {
-        case .iPod7:
-            imageViewHeightConstraint.constant = 100
-        case .iPhoneSE2:
-            imageViewHeightConstraint.constant = 100
-        case .iPhone8:
-            imageViewHeightConstraint.constant = 100
-        default:
-            break
-        }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        if UIDevice.current.orientation.isLandscape {
-            landscapeConstraints()
-        } else {
-            portraitConstraints()
-        }
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         if !Connectivity.isConnectedToInternet {
-            showAlertAndReload(title: "No Internet Connection", message: "Failed to connect to the internet")
+            showAlertAndReload(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
         }
     }
     
@@ -204,51 +75,124 @@ class DetailsMusicViewController: BaseViewController {
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Loaf.dismiss(sender: self, animated: true)
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            return
-        }
-        let parentVC = presentingViewController
-            
-        dismiss(animated: true) {[weak self] in
-            guard let self = self,
-                  let detailsVC = DetailsMusicViewController.storyboardInstance(storyboardID: "Main", restorationID: "detailsScreen") as? UINavigationController,
-                  let targetController = detailsVC.topViewController as? DetailsMusicViewController else {return}
-            
-            self.stopAudio()
-            let track = self.detailsMusicViewModel.tracks[indexPath.row]
-            targetController.track = track
-            parentVC?.present(detailsVC, animated: true)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if UIDevice.current.orientation.isLandscape {
+            setupLandscapeConstraints()
+        } else {
+            setupPortraitConstraints()
         }
     }
     
-    //Checks the liked status of a track(liked/unliked)
-    func checkLikedStatus() {
-        guard let userID = Auth.auth().currentUser?.uid else {return}
-        FirestoreManager.shared.db.collection("users").document(userID).getDocument {[weak self] snapshot, error in
-            guard let self = self else {return}
-            
-            //Gets the tracksIDs from the firestore database
-            guard let arrIDs: [Int] = snapshot?.get("trackIDs") as? [Int] else {return}
-            if arrIDs.contains(self.track?.id ?? 0) {
-                self.likedButton.isSelected = true
-                self.isLiked = true
-            } else {
-                self.likedButton.isSelected = false
-                self.isLiked = false
+    @IBAction private func backButtonTapped(_ sender: UIBarButtonItem) {
+        stopAudio()
+        Loaf.dismiss(sender: self, animated: true)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction private func goToWebsiteTapped(_ sender: UIButton) {
+        Loaf.dismiss(sender: self, animated: true)
+        
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+            return
+        }
+        
+        UIView.animate(withDuration: 0.3) {[weak self] in
+            self?.goToWebsiteButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 0.4), for: .normal)
+            self?.goToWebsiteButton.setTitleColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
+        }
+        
+        guard let track = detailsMusicViewModel.track,
+              let url = URL(string: "\(track.link ?? detailsMusicViewModel.cantLoadLinkText)") else {return}
+        
+        let sfVC = SFSafariViewController(url: url)
+        present(sfVC, animated: true)
+        stopAudio()
+    }
+    
+    @IBAction private func likedButtonTapped(_ sender: WCLShineButton) {
+        detailsMusicViewModel.toggleLikedButton()
+    }
+    
+    @IBAction private func animateButton(_ sender: UIButton) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+            return
+        }
+        
+        //If a track is already playing, tapping for the second time will make the button to stop animating
+        if let button = sender as? LoadyButton {
+            if button.loadingIsShowing() {
+                stopAudio()
+                return
             }
+            //Starts the button animation
+            button.startLoading()
+            button.setImage(UIImage(systemName: detailsMusicViewModel.pauseCircleImage), for: .normal)
+            guard let str = detailsMusicViewModel.track?.preview,
+                  let url = URL(string: str) else {return}
+            NotificationCenter.default.post(name: .ResetPlayButton, object: nil)
+            MediaPlayer.shared.loadAudio(url: url)
+        }
+    }
+
+    @IBAction private func playButtonTapped(_ sender: UIButton) {
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+            return
+        }
+        detailsMusicViewModel.playButtonLogic(sender)
+    }
+}
+
+//MARK: - Functions
+extension DetailsMusicViewController {
+    
+    private func setupDelegates() {
+        MediaPlayer.shared.delegate = self
+        detailsMusicViewModel.delegate = self
+        artistTableView.delegate = self
+        artistTableView.dataSource = self
+    }
+    
+    //Checks the current running device and loads the appropriate constraints based on the device.
+    //potrait orientation
+    private func setupPortraitConstraints() {
+        switch UIDevice().type {
+        case .iPod7:
+            imageViewHeightConstraint.constant = 130
+        case .iPhoneSE2:
+            imageViewHeightConstraint.constant = 150
+        case .iPhone8:
+            imageViewHeightConstraint.constant = 150
+        default:
+            break
+        }
+    }
+    
+    //landscape orientation
+    private func setupLandscapeConstraints() {
+        switch UIDevice().type {
+        case .iPod7:
+            imageViewHeightConstraint.constant = 100
+        case .iPhoneSE2:
+            imageViewHeightConstraint.constant = 100
+        case .iPhone8:
+            imageViewHeightConstraint.constant = 100
+        default:
+            break
         }
     }
     
     //Sets up the views
-    func setUpViewsFromTrack() {
+    private func setUpViewsFromTrack() {
         self.previewButton.addTarget(self, action: #selector(animateButton(_:)), for: .touchUpInside)
         
         self.previewButton.setAnimation(LoadyAnimationType.android())
         
-        guard let track = track,
+        guard let track = detailsMusicViewModel.track,
               let url = URL(string: "\(track.album?.coverMedium ?? "")") else {
             
             detailsImageView.tintColor = .white
@@ -265,18 +209,16 @@ class DetailsMusicViewController: BaseViewController {
         detailsArtistNameLabel.text = track.artist.name
         detailsAlbumTitleLabel.text = track.album?.title
         
-        let minutes = track.duration / 60
-        let seconds = track.duration % 60
-        detailsDurationLabel.text = "\(minutes):\(seconds)"
+        detailsDurationLabel.text = "\(detailsMusicViewModel.getMinutesAndSeconds().0):\(detailsMusicViewModel.getMinutesAndSeconds().1)"
     }
     
     //Sets up the views if we came from the albums screen/viewcontroller
-    func setUpViewsFromAlbumDetails() {
+    private func setUpViewsFromAlbumDetails() {
         self.previewButton.addTarget(self, action: #selector(animateButton(_:)), for: .touchUpInside)
         
         self.previewButton.setAnimation(LoadyAnimationType.android())
         
-        guard let album = album,
+        guard let album = detailsMusicViewModel.album,
               let url = URL(string: "\(album.coverMedium ?? "")") else {
             
             detailsImageView.tintColor = .white
@@ -290,17 +232,14 @@ class DetailsMusicViewController: BaseViewController {
         detailsImageView.sd_imageIndicator = SDWebImageActivityIndicator.white
         detailsImageView.sd_setImage(with: url)
         
-        detailsArtistNameLabel.text = track?.artist.name
-        detailsAlbumTitleLabel.text = track?.album?.title
+        detailsArtistNameLabel.text = detailsMusicViewModel.track?.artist.name
+        detailsAlbumTitleLabel.text = detailsMusicViewModel.track?.album?.title
         
-        guard let duration = track?.duration else {return}
-        let minutes = duration / 60
-        let seconds = duration % 60
-        detailsDurationLabel.text = "\(minutes):\(seconds)"
+        detailsDurationLabel.text = "\(detailsMusicViewModel.getMinutesAndSeconds().0):\(detailsMusicViewModel.getMinutesAndSeconds().1)"
     }
-  
+    
     //Creates the liked button
-    func createLikeButton() {
+    private func setupLikeButton() {
         var param = WCLShineParams()
         param.bigShineColor = UIColor(rgb: (153,152,38))
         param.smallShineColor = UIColor(rgb: (102,102,102))
@@ -311,9 +250,9 @@ class DetailsMusicViewController: BaseViewController {
         likedButton.color = UIColor(rgb: (100,100,100))
     }
     
-    func loadNoTracksLabel() {
-        noTracksLabel.text = "No Tracks Found"
-        noTracksLabel.font = UIFont.init(name: "Futura", size: 20)
+    private func setupNoTracksLabel() {
+        noTracksLabel.text = detailsMusicViewModel.noTracksFoundText
+        noTracksLabel.font = UIFont.init(name: Constants.futura, size: 20)
         noTracksLabel.textColor = .white
         noTracksLabel.textAlignment = .center
         
@@ -328,78 +267,7 @@ class DetailsMusicViewController: BaseViewController {
         noTracksLabel.isHidden = true
     }
     
-    @IBAction func animateButton(_ sender: UIButton) {
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: "No Internet Connection", message: "Failed to connect to the internet")
-            return
-        }
-        
-        //If a track is already playing, tapping for the second time will make the button to stop animating
-        if let button = sender as? LoadyButton {
-            if button.loadingIsShowing() {
-                stopAudio()
-                return
-            }
-            //Starts the button animation
-            button.startLoading()
-            button.setImage(UIImage(systemName: "pause.circle"), for: .normal)
-            guard let str = track?.preview,
-                  let url = URL(string: str) else {return}
-            NotificationCenter.default.post(name: .ResetPlayButton, object: nil)
-            MediaPlayer.shared.loadAudio(url: url)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 30) {[weak self] in
-                self?.stopAudio()
-            }
-        }
-    }
-    
-    func stopAudio() {
-        MediaPlayer.shared.stopAudio()
-        
-        previewButton.stopLoading()
-        previewButton.setImage(UIImage(systemName: "play.circle"), for: .normal)
-        
-        prevButton.setImage(UIImage(systemName: Constants.playFillText), for: .normal)
-        detailsMusicViewModel.arrIndexPaths.removeAll()
-        if let prevIndexPath = detailsMusicViewModel.prevIndexPath {
-            artistTableView.reloadRows(at: [prevIndexPath], with: .none)
-        }
-    }
-    
-    //Fetches the tracks
-    func fetchTracks() {
-        detailsMusicViewModel.ds.fetchTracks(from: .artist, id: track?.artist.id, path: "/top", with: ["limit":200]) {[weak self] tracks, error in
-            if let tracks = tracks {
-                guard let self = self else {return}
-                
-                self.detailsMusicViewModel.tracks = tracks
-                self.artistTableView.reloadData()
-                
-                //Animates the cells
-                let cells = self.artistTableView.visibleCells
-                UIView.animate(views: cells, animations: [self.animation])
-                self.activityIndicatorView.stopAnimating()
-                
-                if tracks.count <= 0 {
-                    self.noTracksLabel.isHidden = false
-                } else {
-                    self.noTracksLabel.isHidden = true
-                }
-                
-            } else if let error = error {
-                print(error)
-                self?.activityIndicatorView.stopAnimating()
-            }
-        }
-    }
-    
-    //Stops the audio if the app moved to background
-    @objc func appMovedToBackground() {
-        stopAudio()
-    }
-    
-    override func loadActivityIndicator() {
+    override func setupActivityIndicator() {
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicatorView)
         NSLayoutConstraint.activate([
@@ -412,33 +280,62 @@ class DetailsMusicViewController: BaseViewController {
         activityIndicatorView.startAnimating()
     }
     
-    @IBAction func playButtonTapped(_ sender: UIButton) {
-        if !Connectivity.isConnectedToInternet {
-            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
-            return
+    private func stopAudio() {
+        MediaPlayer.shared.stopAudio()
+        
+        previewButton.stopLoading()
+        previewButton.setImage(UIImage(systemName: detailsMusicViewModel.playCircleImage), for: .normal)
+        
+        prevButton.setImage(UIImage(systemName: Constants.playFillText), for: .normal)
+        detailsMusicViewModel.arrIndexPaths.removeAll()
+        if let prevIndexPath = detailsMusicViewModel.prevIndexPath {
+            artistTableView.reloadRows(at: [prevIndexPath], with: .none)
         }
-        detailsMusicViewModel.playButtonLogic(sender)
     }
-}
-
-//Extension for an alert based on the viewcontroller
-extension DetailsMusicViewController {
-    func showAlertAndReload(title: String? = nil, message: String? = nil) {
+    
+    private func showAlertAndReload(title: String? = nil, message: String? = nil) {
         let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        vc.addAction(.init(title: "Retry", style: .cancel, handler: {[weak self] action in
+        vc.addAction(.init(title: Constants.retryText, style: .cancel, handler: {[weak self] action in
+            guard let self = self else {return}
+            
             if !Connectivity.isConnectedToInternet {
-                self?.showAlertAndReload(title: "No Internet Connection", message: "Failed to connect to the internet")
+                self.showAlertAndReload(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             } else {
-                self?.fetchTracks()
-                self?.checkLikedStatus()
-                self?.loadActivityIndicator()
+                self.detailsMusicViewModel.fetchTracks()
+                self.detailsMusicViewModel.checkLikedStatus()
+                self.setupActivityIndicator()
             }
         }))
         present(vc, animated: true)
     }
 }
 
+//MARK: - UITableView Functions
+extension DetailsMusicViewController {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Loaf.dismiss(sender: self, animated: true)
+        if !Connectivity.isConnectedToInternet {
+            showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+            return
+        }
+        let parentVC = presentingViewController
+            
+        dismiss(animated: true) {[weak self] in
+            guard let self = self,
+                  let detailsVC = DetailsMusicViewController.storyboardInstance(storyboardID: self.detailsMusicViewModel.storyboardID, restorationID: self.detailsMusicViewModel.storyboardRestorationID) as? UINavigationController,
+                  let targetController = detailsVC.topViewController as? DetailsMusicViewController else {return}
+            
+            self.stopAudio()
+            let track = self.detailsMusicViewModel.tracks[indexPath.row]
+            targetController.detailsMusicViewModel.track = track
+            parentVC?.present(detailsVC, animated: true)
+        }
+    }
+}
+
+//MARK: - DataSources
 extension DetailsMusicViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -450,7 +347,7 @@ extension DetailsMusicViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! DetailsTableViewCell
         cell.playButton.addTarget(self, action: #selector(playButtonTapped(_:)), for: .touchUpInside)
 
         cell.playButton.tag = indexPath.row
@@ -468,9 +365,27 @@ extension DetailsMusicViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - Delegates
 extension DetailsMusicViewController: DetailsMusicViewModelDelegate {
     func reloadTableViewRows(selectedIndexPath: IndexPath) {
         artistTableView.reloadRows(at: [selectedIndexPath], with: .none)
+    }
+    
+    func reloadTableView() {
+        self.artistTableView.reloadData()
+    }
+    
+    func animateTableViewCells() {
+        let cells = self.artistTableView.visibleCells
+        UIView.animate(views: cells, animations: [self.animation])
+    }
+    
+    func stopAnimating() {
+        self.activityIndicatorView.stopAnimating()
+    }
+    
+    func isNoTracksLabelHidden(isHidden: Bool) {
+        self.noTracksLabel.isHidden = isHidden
     }
     
     func assignPrevButton(_ sender: UIButton) {
@@ -481,10 +396,40 @@ extension DetailsMusicViewController: DetailsMusicViewModelDelegate {
         prevButton.setImage(UIImage(systemName: Constants.playFillImage), for: .normal)
         artistTableView.reloadRows(at: [prevIndexPath], with: .none)
     }
+    
+    func changePreviewButtonState() {
+        self.previewButton.stopLoading()
+        self.previewButton.setImage(UIImage(systemName: detailsMusicViewModel.playCircleImage), for: .normal)
+    }
+    
+    func isLikedButtonSelected(isSelected: Bool) {
+        likedButton.isSelected = isSelected
+    }
+    
+    func stopAudioPlaying() {
+        stopAudio()
+    }
+    
+    func showAlertPopup() {
+        showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+    }
+    
+    func loafMessageWasAdded(track: Track) {
+        loafMessageAdded(track: track)
+    }
+    
+    func loafMessageWasRemoved(track: Track) {
+        loafMessageRemoved(track: track)
+    }
 }
 
 extension DetailsMusicViewController: MediaPlayerDelegate {
     func changeButtonStateAfterAudioStopsPlaying() {
         detailsMusicViewModel.changeButtonStateAfterAudioStopsPlaying()
+        
+        if previewButton.loadingIsShowing() {
+            previewButton.stopLoading()
+            previewButton.setImage(UIImage(systemName: detailsMusicViewModel.playCircleImage), for: .normal)
+        }
     }
 }

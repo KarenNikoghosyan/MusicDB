@@ -13,6 +13,10 @@ class FirestoreManager {
     static let shared = FirestoreManager()
     
     private init(){}
+}
+
+//MARK: - Functions
+extension FirestoreManager {
     
     func removeTrack(track: Track, userID: String) {
         db.collection("users").document(userID).updateData([

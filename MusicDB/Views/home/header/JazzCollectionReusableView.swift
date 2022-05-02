@@ -10,6 +10,7 @@ import UIKit
 class JazzCollectionReusableView: UICollectionReusableView {
     
     let label = UILabel()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -23,13 +24,13 @@ class JazzCollectionReusableView: UICollectionReusableView {
         button.addTarget(self, action: #selector(jazzViewAllTapped(_:)), for: .touchUpInside)
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         label.frame = bounds
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     @IBAction func jazzViewAllTapped(_ sender: UIButton) {

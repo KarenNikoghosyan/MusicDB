@@ -11,24 +11,30 @@ import WCLShineButton
 import FirebaseAuth
 
 class LikedGenreTableViewCell: UITableViewCell {
-    var isLiked: Bool = false
-
-    @IBOutlet weak var imageViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var trackImageView: UIImageView!
-    @IBOutlet weak var trackTitleLabel: UILabel!
-    @IBOutlet weak var trackArtistNameLabel: UILabel!
-    @IBOutlet weak var trackAlbumNameLabel: UILabel!
-    @IBOutlet weak var trackDurationLabel: UILabel!
-    @IBOutlet weak var likedButton: WCLShineButton!
-    @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
+    
+    @IBOutlet private weak var imageViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var trackImageView: UIImageView!
+    @IBOutlet private weak var trackTitleLabel: UILabel!
+    @IBOutlet private weak var trackArtistNameLabel: UILabel!
+    @IBOutlet private weak var trackAlbumNameLabel: UILabel!
+    @IBOutlet private weak var trackDurationLabel: UILabel!
+    @IBOutlet private weak var likedButton: WCLShineButton!
+    
+    private var isLiked: Bool = false
+    
+    @IBAction private func likedButtonTapped(_ sender: WCLShineButton) {
         if likedButton.isSelected {
             NotificationCenter.default.post(name: .IndexRemove, object: nil, userInfo: ["indexPath" : getIndexPath() as Any])
         } else {
             NotificationCenter.default.post(name: .IndexAdd, object: nil, userInfo: ["indexPath" : getIndexPath() as Any])
         }
     }
+}
+
+//MARK: - Functions
+extension LikedGenreTableViewCell {
     
-    func cellConstraints() {
+    func setupCellConstraints() {
         switch UIDevice().type {
         case .iPod7:
             imageViewWidthConstraint.constant = 95
@@ -76,7 +82,7 @@ class LikedGenreTableViewCell: UITableViewCell {
         trackImageView.sd_setImage(with: url)
     }
     
-    func getIndexPath() -> IndexPath? {
+    private func getIndexPath() -> IndexPath? {
         guard let superView = self.superview as? UITableView else {
             print("superview is not a UITableView - getIndexPath")
             return nil

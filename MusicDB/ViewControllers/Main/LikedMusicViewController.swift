@@ -84,7 +84,7 @@ extension LikedMusicViewController {
                 }
             } else {
                 noLikedLabel.isHidden = true
-                loadActivityIndicator()
+                setupActivityIndicator()
                 
                 likedTableView.reloadData()
                 likedMusicViewModel.getUserLikedTracks()
@@ -101,7 +101,7 @@ extension LikedMusicViewController {
                 }
             } else {
                 noLikedLabel.isHidden = true
-                loadActivityIndicator()
+                setupActivityIndicator()
                 
                 likedTableView.reloadData()
                 likedMusicViewModel.getUserLikedAlbums()
@@ -123,7 +123,7 @@ extension LikedMusicViewController {
                 likedMusicViewModel.isAlbumLoaded = true
             }
             
-            loadActivityIndicator()
+            setupActivityIndicator()
         }
     }
     
@@ -158,7 +158,7 @@ extension LikedMusicViewController {
                     self.likedMusicViewModel.getUserLikedAlbums()
                     self.likedMusicViewModel.isAlbumLoaded = true
                 }
-                self.loadActivityIndicator()
+                self.setupActivityIndicator()
             }
         }))
         present(vc, animated: true)
@@ -198,10 +198,6 @@ extension LikedMusicViewController {
 //MARK: - Functions
 extension LikedMusicViewController {
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
     override func setEditing(_ editing: Bool, animated: Bool) {
         let status = navigationItem.leftBarButtonItem?.title
         
@@ -212,6 +208,31 @@ extension LikedMusicViewController {
             likedTableView.setEditing(false, animated: true)
             navigationItem.leftBarButtonItem?.title = likedMusicViewModel.editText
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //Checks the segue's identifier and based on that will send us to the correct screen
+        if segue.identifier == likedMusicViewModel.toDetailsText {
+            guard let dest = segue.destination as? UINavigationController,
+                  let targetController = dest.topViewController as? DetailsMusicViewController,
+                  let track = sender as? Track else {return}
+            
+            targetController.detailsMusicViewModel.track = track
+        } else if segue.identifier == likedMusicViewModel.toAlbumDetailsText {
+            guard let dest = segue.destination as? UINavigationController,
+                  let targetController = dest.topViewController as? AlbumDetailsViewController,
+                  let album = sender as? TopAlbums else {return}
+            
+            targetController.albumDetailsViewModel.album = album
+        }
+    }
+}
+
+//MARK: - UITableView Functions
+extension LikedMusicViewController {
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -254,23 +275,6 @@ extension LikedMusicViewController {
             break
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //Checks the segue's identifier and based on that will send us to the correct screen
-        if segue.identifier == likedMusicViewModel.toDetailsText {
-            guard let dest = segue.destination as? UINavigationController,
-                  let targetController = dest.topViewController as? DetailsMusicViewController,
-                  let track = sender as? Track else {return}
-            
-            targetController.track = track
-        } else if segue.identifier == likedMusicViewModel.toAlbumDetailsText {
-            guard let dest = segue.destination as? UINavigationController,
-                  let targetController = dest.topViewController as? AlbumDetailsViewController,
-                  let album = sender as? TopAlbums else {return}
-            
-            targetController.albumDetailsViewModel.album = album
-        }
-    }
 }
 
 //MARK: - DataSources
@@ -305,12 +309,12 @@ extension LikedMusicViewController: UITableViewDataSource {
             accessoryArrow(cell: tracksCell)
             tracksCell.populate(track: likedMusicViewModel.likedTracks[indexPath.row])
             
-            tracksCell.cellConstraints()
+            tracksCell.setupCellConstraints()
         case 1:
             accessoryArrow(cell: albumsCell)
             albumsCell.populate(album: likedMusicViewModel.likedAlbums[indexPath.row])
             
-            albumsCell.cellConstraints()
+            albumsCell.setupCellConstraints()
             
             albumsCell.openWebsiteButton.tag = indexPath.row
             albumsCell.openWebsiteButton.addTarget(self, action: #selector(openWebsiteTapped(_:)), for: .touchUpInside)

@@ -29,7 +29,7 @@ class AlbumsViewModel {
     weak var delegate: AlbumsViewModelDelegate?
 }
 
-//MARK: Functions
+//MARK: - Functions
 extension AlbumsViewModel {
     
     func addObservers() {

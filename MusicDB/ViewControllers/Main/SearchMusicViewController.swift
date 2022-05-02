@@ -21,13 +21,11 @@ class SearchMusicViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTapped()
-        
+
         setupDelegates()
-        
         setupNavigationItems()
-        
-        loadSearchLabel()
-        loadNoTracksLabel()
+        setupSearchLabel()
+        setupNoTracksLabel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,7 +50,7 @@ extension SearchMusicViewController {
         searchViewModel.searchDelegate = self
     }
     
-    private func loadSearchLabel() {
+    private func setupSearchLabel() {
         trackSearchBar.searchTextField.textColor = .white
         trackSearchBar.searchTextField.leftView?.tintColor = .white
         
@@ -70,7 +68,7 @@ extension SearchMusicViewController {
         ])
     }
     
-    private func loadNoTracksLabel() {
+    private func setupNoTracksLabel() {
         //Creates a label, and will be only shown if no tracks were found
         noTracksLabel.text = searchViewModel.noTracksFoundText
         noTracksLabel.font = UIFont.init(name: Constants.futura, size: 20)
@@ -88,6 +86,18 @@ extension SearchMusicViewController {
         noTracksLabel.isHidden = true
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let dest = segue.destination as? UINavigationController,
+              let targetController = dest.topViewController as? DetailsMusicViewController,
+              let track = sender as? Track else {return}
+        
+        targetController.detailsMusicViewModel.track = track
+    }
+}
+
+//MARK: - UITableView Functions
+extension SearchMusicViewController {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !Connectivity.isConnectedToInternet {
             showViewControllerAlert(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
@@ -95,17 +105,9 @@ extension SearchMusicViewController {
         }
         performSegue(withIdentifier: searchViewModel.toDetailsIdentifier, sender: searchViewModel.searchTracks[indexPath.row])
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let dest = segue.destination as? UINavigationController,
-              let targetController = dest.topViewController as? DetailsMusicViewController,
-              let track = sender as? Track else {return}
-        
-        targetController.track = track
-    }
 }
 
-//MARK: - DataSource
+//MARK: - DataSources
 extension SearchMusicViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -142,7 +144,7 @@ extension SearchMusicViewController: UISearchBarDelegate {
     }
     
     @objc private func reload(_ searchBar: UISearchBar) {
-        loadActivityIndicator()
+        setupActivityIndicator()
         self.searchLabel.isHidden = true
         
         searchViewModel.searchTracks.removeAll()
