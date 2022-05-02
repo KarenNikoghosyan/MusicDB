@@ -33,7 +33,7 @@ class GenreViewModel {
     weak var delegate: GenreViewModelDelegate?
 }
 
-//MARK: Functions
+//MARK: - Functions
 extension GenreViewModel {
     
     func addObservers() {

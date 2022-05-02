@@ -20,7 +20,7 @@ class GenreMusicViewController: BaseViewController {
         if Connectivity.isConnectedToInternet {
             genreViewModel.addObservers()
             genreViewModel.fetchTracks()
-            loadActivityIndicator()
+            setupActivityIndicator()
         }
         
         setupDelegates()
@@ -43,7 +43,7 @@ class GenreMusicViewController: BaseViewController {
     }
 }
 
-//MARK: Functions
+//MARK: - Functions
 extension GenreMusicViewController {
     
     private func setupDelegates() {
@@ -60,6 +60,36 @@ extension GenreMusicViewController {
     private func setupNavigationControllerTitle() {
         self.title = genreViewModel.titleGenre
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let dest = segue.destination as? UINavigationController,
+              let targetController = dest.topViewController as? DetailsMusicViewController,
+              let data = sender as? Dictionary<String, Any> else {return}
+        
+        targetController.detailsMusicViewModel.track = data[genreViewModel.trackText] as? Track
+        targetController.detailsMusicViewModel.indexPath = data[Constants.indexPathText] as? IndexPath
+        targetController.detailsMusicViewModel.isGenre = data[genreViewModel.isGenreText] as? Bool
+    }
+    
+    private func showAlertWithActions(title: String? = nil, message: String? = nil) {
+        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        vc.addAction(.init(title: Constants.retryText, style: .cancel, handler: {[weak self] action in
+            guard let self = self else {return}
+            
+            if !Connectivity.isConnectedToInternet {
+                self.showAlertWithActions(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
+             } else {
+                self.genreViewModel.fetchTracks()
+                self.setupActivityIndicator()
+            }
+        }))
+        present(vc, animated: true)
+    }
+}
+
+//MARK: - UITableView Functions
+extension GenreMusicViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !Connectivity.isConnectedToInternet {
@@ -74,34 +104,9 @@ extension GenreMusicViewController {
         Loaf.dismiss(sender: self, animated: true)
         performSegue(withIdentifier: genreViewModel.toDetailsText, sender: dict)
     }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let dest = segue.destination as? UINavigationController,
-              let targetController = dest.topViewController as? DetailsMusicViewController,
-              let data = sender as? Dictionary<String, Any> else {return}
-        
-        targetController.track = data[genreViewModel.trackText] as? Track
-        targetController.indexPath = data[Constants.indexPathText] as? IndexPath
-        targetController.isGenre = data[genreViewModel.isGenreText] as? Bool
-    }
-    
-    private func showAlertWithActions(title: String? = nil, message: String? = nil) {
-        let vc = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        vc.addAction(.init(title: Constants.retryText, style: .cancel, handler: {[weak self] action in
-            guard let self = self else {return}
-            
-            if !Connectivity.isConnectedToInternet {
-                self.showAlertWithActions(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
-             } else {
-                self.genreViewModel.fetchTracks()
-                self.loadActivityIndicator()
-            }
-        }))
-        present(vc, animated: true)
-    }
 }
 
+//MARK: - DataSources
 extension GenreMusicViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -128,6 +133,7 @@ extension GenreMusicViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - Delegates
 extension GenreMusicViewController: GenreViewModelDelegate {
     func reloadTableViewData() {
         self.genreTableView.reloadData()

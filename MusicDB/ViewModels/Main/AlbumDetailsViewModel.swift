@@ -40,7 +40,7 @@ class AlbumDetailsViewModel {
     let isAlbumDetailsText = "isAlbumDetails"
 }
 
-//MARK: Functions
+//MARK: - Functions
 extension AlbumDetailsViewModel {
     
     func setupObservers() {

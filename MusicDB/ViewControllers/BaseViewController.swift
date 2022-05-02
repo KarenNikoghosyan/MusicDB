@@ -24,7 +24,7 @@ class BaseViewController: UIViewController {
 //MARK: - Functions
 extension BaseViewController {
 
-    @objc func loadActivityIndicator() {
+    @objc func setupActivityIndicator() {
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicatorView)
         NSLayoutConstraint.activate([

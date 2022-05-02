@@ -23,7 +23,7 @@ class AlbumsViewController: BaseViewController {
         if Connectivity.isConnectedToInternet {
             albumsViewModel.addObservers()
             albumsViewModel.fetchAlbums()
-            loadActivityIndicator()
+            setupActivityIndicator()
         }
         
         setupDelegates()
@@ -49,7 +49,7 @@ class AlbumsViewController: BaseViewController {
     }
 }
 
-//MARK: Functions
+//MARK: - Functions
 extension AlbumsViewController {
     
     private func setupDelegates() {
@@ -73,11 +73,24 @@ extension AlbumsViewController {
                 self.showAlertWithActions(title: Constants.noInternetConnectionText, message: Constants.failedToConnectText)
             } else {
                 self.albumsViewModel.fetchAlbums()
-                self.loadActivityIndicator()
+                self.setupActivityIndicator()
             }
         }))
         present(vc, animated: true)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let dest = segue.destination as? UINavigationController,
+              let targetController = dest.topViewController as? AlbumDetailsViewController,
+              let data = sender as? Dictionary<String, Any> else {return}
+        
+        targetController.albumDetailsViewModel.album = data[albumsViewModel.albumText] as? TopAlbums
+        targetController.albumDetailsViewModel.indexPath = data[Constants.indexPathText] as? IndexPath
+    }
+}
+
+//MARK: - UITableView Functions
+extension AlbumsViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !Connectivity.isConnectedToInternet {
@@ -91,17 +104,9 @@ extension AlbumsViewController {
         Loaf.dismiss(sender: self, animated: true)
         performSegue(withIdentifier: albumsViewModel.albumDetailsIdentifier, sender: dict)
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let dest = segue.destination as? UINavigationController,
-              let targetController = dest.topViewController as? AlbumDetailsViewController,
-              let data = sender as? Dictionary<String, Any> else {return}
-        
-        targetController.albumDetailsViewModel.album = data[albumsViewModel.albumText] as? TopAlbums
-        targetController.albumDetailsViewModel.indexPath = data[Constants.indexPathText] as? IndexPath
-    }
 }
 
+//MARK: - DataSources
 extension AlbumsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -129,6 +134,7 @@ extension AlbumsViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - Delegates
 extension AlbumsViewController: AlbumsViewModelDelegate {
     func reloadTableView() {
         self.albumsTableView.reloadData()
