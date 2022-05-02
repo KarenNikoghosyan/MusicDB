@@ -43,6 +43,26 @@ class AlbumDetailsViewModel {
 //MARK: Functions
 extension AlbumDetailsViewModel {
     
+    func setupObservers() {
+        //An observer to check if the app moved to background
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(forName: .ResetPlayButton, object: nil, queue: .main) {[weak self] _ in
+            guard let self = self else {return}
+            
+            self.resetPlayButton()
+        }
+    }
+    
+    //Handles the play button state when the app moves to background
+    @objc private func appMovedToBackground() {
+        MediaPlayer.shared.stopAudio()
+        arrIndexPaths.removeAll()
+        if let prevIndexPath = prevIndexPath {
+            delegate?.changeButtonImageAndReloadRows(prevIndexPath: prevIndexPath)
+        }
+    }
+    
     //Fetches the tracks
     func fetchTracks() {
         guard let album = album else {return}

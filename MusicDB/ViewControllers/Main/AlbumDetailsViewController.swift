@@ -37,7 +37,7 @@ class AlbumDetailsViewController: BaseViewController {
         
         setupDelegates()
         loadImage()
-        setupObservers()
+        albumDetailsViewModel.setupObservers()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -155,12 +155,7 @@ extension AlbumDetailsViewController {
         albumImageView.layer.cornerRadius = 15
         albumImageView.layer.masksToBounds = true
     }
-    
-    private func setupObservers() {
-        //An observer to check if the app moved to background
-        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
-    }
-    
+
     //Shows the activity indicator(when the tableview is loading it's data)
     override func loadActivityIndicator() {
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -192,16 +187,6 @@ extension AlbumDetailsViewController {
             tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
         }
         performSegue(withIdentifier: albumDetailsViewModel.toDetailsText, sender: dict)
-    }
-    
-    //Handles the play button state when the app moves to background
-    @objc private func appMovedToBackground() {
-        MediaPlayer.shared.stopAudio()
-        prevButton.setImage(UIImage(systemName: Constants.playFillText), for: .normal)
-        albumDetailsViewModel.arrIndexPaths.removeAll()
-        if let prevIndexPath = albumDetailsViewModel.prevIndexPath {
-            tracksTableView.reloadRows(at: [prevIndexPath], with: .none)
-        }
     }
     
     private func showAlertWithActions(title: String? = nil, message: String? = nil) {

@@ -149,7 +149,7 @@ class DetailsMusicViewController: BaseViewController {
     
     //Checks the current running device and loads the appropriate constraints based on the device.
     //potrait orientation
-    func portraitConstraints() {
+    func setupPortraitConstraints() {
         switch UIDevice().type {
         case .iPod7:
             imageViewHeightConstraint.constant = 130
@@ -163,7 +163,7 @@ class DetailsMusicViewController: BaseViewController {
     }
     
     //landscape orientation
-    func landscapeConstraints() {
+    func setupLandscapeConstraints() {
         switch UIDevice().type {
         case .iPod7:
             imageViewHeightConstraint.constant = 100
@@ -180,9 +180,9 @@ class DetailsMusicViewController: BaseViewController {
         super.viewDidLayoutSubviews()
         
         if UIDevice.current.orientation.isLandscape {
-            landscapeConstraints()
+            setupLandscapeConstraints()
         } else {
-            portraitConstraints()
+            setupPortraitConstraints()
         }
     }
     
