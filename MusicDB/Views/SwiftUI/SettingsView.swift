@@ -6,25 +6,24 @@
 //
 
 import SwiftUI
-import UIKit
-import FirebaseAuth
 
 struct SettingsView: View {
     
-    @State private var image: Image? = Image("icon_user")
+    @StateObject var settingsViewModel = SettingsViewModel()
+    
     @Environment(\.presentationMode) var presentationMode
-    @State private var showingImagePicker = false
+    @State private var image: Image? = Image("icon_user")
     @State private var inputImage: UIImage?
     
     var body: some View {
         ScrollView {
             VStack() {
-                Text("Settings")
+                Text(settingsViewModel.settingsTitle)
                     .font(.largeTitle)
                     .padding(.leading, 25.0)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Button(action: {
-                    showingImagePicker.toggle()
+                    settingsViewModel.showingImagePicker.toggle()
                 }, label: {
                     ZStack {
                         if image != nil {
@@ -36,12 +35,12 @@ struct SettingsView: View {
                     }
                     .padding(.bottom, 25.0)
                 })
-                Link(destination: URL(string: "https://www.facebook.com/karen.nikoghosyan.1/")!, label: {
+                Link(destination: URL(string: settingsViewModel.facebookURL)!, label: {
                     HStack {
-                        Image("facebook")
+                        Image(settingsViewModel.facebookImage)
                             .resizable()
                             .frame(width: 30, height: 30)
-                        Text("Follow us")
+                        Text(settingsViewModel.followUsString)
                             .font(.title3)
                             .foregroundColor(.black)
                     }
@@ -52,12 +51,12 @@ struct SettingsView: View {
                 .background(Color.init(UIColor.init(red: 233.0 / 255, green: 233.0 / 255, blue: 233.0 / 255, alpha: 1)))
                 .cornerRadius(15.0)
                 
-                Link(destination: URL(string: "https://twitter.com/nikoghosyan11")!, label: {
+                Link(destination: URL(string: settingsViewModel.twitterURL)!, label: {
                     HStack {
-                        Image("twitter")
+                        Image(settingsViewModel.twitterImage)
                             .resizable()
                             .frame(width: 30, height: 30)
-                        Text("Follow us")
+                        Text(settingsViewModel.followUsString)
                             .font(.title3)
                             .foregroundColor(.black)
                         
@@ -69,12 +68,12 @@ struct SettingsView: View {
                 .background(Color.init(UIColor(red: 233.0 / 255, green: 233.0 / 255, blue: 233.0 / 255, alpha: 1)))
                 .cornerRadius(15.0)
                 
-                Link(destination: URL(string: "mailto:karen1111996@gmail.com")!, label: {
+                Link(destination: URL(string: settingsViewModel.emailURL)!, label: {
                     HStack {
-                        Image("email")
+                        Image(settingsViewModel.emailImage)
                             .resizable()
                             .frame(width: 30, height: 30)
-                        Text("Contact us")
+                        Text(settingsViewModel.contactUsString)
                             .font(.title3)
                             .foregroundColor(.black)
                     }
@@ -94,10 +93,10 @@ struct SettingsView: View {
                     NotificationCenter.default.post(name: .MoveToLogin, object: nil, userInfo: nil)
                 }, label: {
                     HStack {
-                        Image("logout")
+                        Image(settingsViewModel.logoutImage)
                             .resizable()
                             .frame(width: 30.0, height: 30.0)
-                        Text("Log Out")
+                        Text(settingsViewModel.logoutString)
                             .font(.title3)
                             .foregroundColor(.red)
                     }
@@ -107,15 +106,14 @@ struct SettingsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color.init(UIColor.init(red: 233.0 / 255, green: 233.0 / 255, blue: 233.0 / 255, alpha: 1)))
                 .cornerRadius(15.0)
-                .sheet(isPresented: $showingImagePicker, onDismiss: loadImage, content: {
+                .sheet(isPresented: $settingsViewModel.showingImagePicker, onDismiss: loadImage, content: {
                     ImagePicker(image: self.$inputImage)
                 })
                 .onAppear(perform: {
-                    guard let data = UserDefaults.standard.getProfileImage(),
+                    guard let data = settingsViewModel.getImageFromUserDefaults(),
                           let imageTemp = UIImage(data: data) else {return}
                     image = Image(uiImage: imageTemp)
                 })
-                
             }
         }
     }
@@ -125,7 +123,7 @@ struct SettingsView: View {
         image = Image(uiImage: inputImage)
         
         guard let data = inputImage.jpegData(compressionQuality: 1) else {return}
-        UserDefaults.standard.setProfileImage(imageData: data)
+        settingsViewModel.setImageToUserDefaults(imageData: data)
     }
 }
 
