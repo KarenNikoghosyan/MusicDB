@@ -80,6 +80,7 @@
 		78BACE5D26923F1B00D75B97 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BACE5C26923F1B00D75B97 /* String+Extensions.swift */; };
 		78BE5F8726B5A07900992659 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BE5F8626B5A07900992659 /* UIDevice+Extensions.swift */; };
 		78BED23A2699F9B000058859 /* LikedMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BED2392699F9B000058859 /* LikedMusicViewController.swift */; };
+		78C10ED828211C4D00FBC28F /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C10ED728211C4D00FBC28F /* SettingsViewModel.swift */; };
 		78C5180326A4ED6E00D9378B /* UICollectionReusableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C5180226A4ED6E00D9378B /* UICollectionReusableView+Extensions.swift */; };
 		78C5180626A4F5F200D9378B /* GenreMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C5180526A4F5F200D9378B /* GenreMusicViewController.swift */; };
 		78C5180826A57BF400D9378B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C5180726A57BF400D9378B /* BaseViewController.swift */; };
@@ -172,6 +173,7 @@
 		78BACE5C26923F1B00D75B97 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		78BE5F8626B5A07900992659 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		78BED2392699F9B000058859 /* LikedMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedMusicViewController.swift; sourceTree = "<group>"; };
+		78C10ED728211C4D00FBC28F /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		78C5180226A4ED6E00D9378B /* UICollectionReusableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+Extensions.swift"; sourceTree = "<group>"; };
 		78C5180526A4F5F200D9378B /* GenreMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreMusicViewController.swift; sourceTree = "<group>"; };
 		78C5180726A57BF400D9378B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				783A35BD27AEEF79009CBBAB /* Intro */,
 				7801BAF327AF24F800DB837C /* Login */,
 				7857CBB1281AD70C00367149 /* Main */,
+				78C10ED628211C3000FBC28F /* SwiftUI */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -267,7 +270,7 @@
 		781B0C4226C017F800DAC68E /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				78481CD626BAC2AD006F9036 /* Settings */,
+				78481CD726BAC3B9006F9036 /* SettingsView.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -280,12 +283,12 @@
 			path = swiftUI;
 			sourceTree = "<group>";
 		};
-		781F1C7B26B0924A00648A1D /* details */ = {
+		781F1C7B26B0924A00648A1D /* Details */ = {
 			isa = PBXGroup;
 			children = (
 				781F1C7C26B0926400648A1D /* DetailsTableViewCell.swift */,
 			);
-			path = details;
+			path = Details;
 			sourceTree = "<group>";
 		};
 		7828BB3326907FF1001CA735 /* Login */ = {
@@ -313,38 +316,30 @@
 			path = Intro;
 			sourceTree = "<group>";
 		};
-		78402C2C26B875D6002828AF /* albums */ = {
+		78402C2C26B875D6002828AF /* Albums */ = {
 			isa = PBXGroup;
 			children = (
 				7887761726B02250006A18F2 /* AlbumsTableViewCell.swift */,
 				7887761826B02250006A18F2 /* AlbumsTableViewCell.xib */,
 			);
-			path = albums;
+			path = Albums;
 			sourceTree = "<group>";
 		};
-		78402C3126B88128002828AF /* liked_tracks */ = {
+		78402C3126B88128002828AF /* LikedTracks */ = {
 			isa = PBXGroup;
 			children = (
 				78402C3226B88146002828AF /* LikedTracksTableViewCell.swift */,
 				78402C3326B88146002828AF /* LikedTracksTableViewCell.xib */,
 			);
-			path = liked_tracks;
+			path = LikedTracks;
 			sourceTree = "<group>";
 		};
-		78481CD626BAC2AD006F9036 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				78481CD726BAC3B9006F9036 /* SettingsView.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		78538EAE26B4AE0F003DBDE1 /* search */ = {
+		78538EAE26B4AE0F003DBDE1 /* Search */ = {
 			isa = PBXGroup;
 			children = (
 				78538EAF26B4AE74003DBDE1 /* SearchMusicTableViewCell.swift */,
 			);
-			path = search;
+			path = Search;
 			sourceTree = "<group>";
 		};
 		7857CBB1281AD70C00367149 /* Main */ = {
@@ -387,22 +382,22 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		7887761626B02235006A18F2 /* liked_albums */ = {
+		7887761626B02235006A18F2 /* LikedAlbums */ = {
 			isa = PBXGroup;
 			children = (
 				78402C2D26B8760B002828AF /* LikedAlbumsTableViewCell.swift */,
 				78402C2E26B8760B002828AF /* LikedAlbumsTableViewCell.xib */,
 			);
-			path = liked_albums;
+			path = LikedAlbums;
 			sourceTree = "<group>";
 		};
-		78892CAD26888C5E00A12F41 /* home */ = {
+		78892CAD26888C5E00A12F41 /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				78892CB82688CD4D00A12F41 /* header */,
 				78892CB52688CD2500A12F41 /* cell */,
 			);
-			path = home;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		78892CB42688C2E100A12F41 /* datasource */ = {
@@ -489,13 +484,13 @@
 		788A758E267B9F2400DFE2B0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				78402C2C26B875D6002828AF /* albums */,
-				781F1C7B26B0924A00648A1D /* details */,
-				78402C3126B88128002828AF /* liked_tracks */,
-				7887761626B02235006A18F2 /* liked_albums */,
-				78F0FB9426AB6641005B0DDC /* liked_genre */,
-				78538EAE26B4AE0F003DBDE1 /* search */,
-				78892CAD26888C5E00A12F41 /* home */,
+				78402C2C26B875D6002828AF /* Albums */,
+				781F1C7B26B0924A00648A1D /* Details */,
+				78402C3126B88128002828AF /* LikedTracks */,
+				7887761626B02235006A18F2 /* LikedAlbums */,
+				78F0FB9426AB6641005B0DDC /* LikedGenre */,
+				78538EAE26B4AE0F003DBDE1 /* Search */,
+				78892CAD26888C5E00A12F41 /* Home */,
 				781B0C4226C017F800DAC68E /* SwiftUI */,
 			);
 			path = Views;
@@ -531,6 +526,14 @@
 			path = Loading;
 			sourceTree = "<group>";
 		};
+		78C10ED628211C3000FBC28F /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				78C10ED728211C4D00FBC28F /* SettingsViewModel.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		78EA417E267F504B009828DD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -547,13 +550,13 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		78F0FB9426AB6641005B0DDC /* liked_genre */ = {
+		78F0FB9426AB6641005B0DDC /* LikedGenre */ = {
 			isa = PBXGroup;
 			children = (
 				78C5180926A585C000D9378B /* LikedGenreTableViewCell.swift */,
 				78C5180A26A585C000D9378B /* LikedGenreTableViewCell.xib */,
 			);
-			path = liked_genre;
+			path = LikedGenre;
 			sourceTree = "<group>";
 		};
 		F92BD59442FCC4C9BFE16A53 /* Pods */ = {
@@ -730,6 +733,7 @@
 				78F0FB9826ACB436005B0DDC /* Notification.Name+Extensions.swift in Sources */,
 				7862B8672697A2D2000E3056 /* SingleTrackAPIDataSource.swift in Sources */,
 				78892CBE2688EEA700A12F41 /* DanceCollectionReusableView.swift in Sources */,
+				78C10ED828211C4D00FBC28F /* SettingsViewModel.swift in Sources */,
 				78CB8FF226892F8700E90CE4 /* TopArtistsAPIDataSource.swift in Sources */,
 				78C5180826A57BF400D9378B /* BaseViewController.swift in Sources */,
 				78AD8C23268D0A74004BF30C /* ConnectionManager.swift in Sources */,
