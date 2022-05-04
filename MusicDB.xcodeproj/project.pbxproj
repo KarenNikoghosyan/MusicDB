@@ -275,12 +275,12 @@
 			path = SwiftUI;
 			sourceTree = "<group>";
 		};
-		781B0C4326C01C6300DAC68E /* swiftUI */ = {
+		781B0C4326C01C6300DAC68E /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
 				781B0C4626C01EC100DAC68E /* ImagePicker.swift */,
 			);
-			path = swiftUI;
+			path = SwiftUI;
 			sourceTree = "<group>";
 		};
 		781F1C7B26B0924A00648A1D /* Details */ = {
@@ -373,7 +373,7 @@
 		78715FA92819897B002868C1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				781B0C4326C01C6300DAC68E /* swiftUI */,
+				781B0C4326C01C6300DAC68E /* SwiftUI */,
 				78538EAC26B44100003DBDE1 /* FirestoreManager.swift */,
 				78AD8C22268D0A74004BF30C /* ConnectionManager.swift */,
 				7876D20B26828D2A009D0669 /* MediaPlayer.swift */,

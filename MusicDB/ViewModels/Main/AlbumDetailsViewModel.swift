@@ -22,13 +22,13 @@ protocol AlbumDetailsViewModelDelegate: AnyObject {
 class AlbumDetailsViewModel {
     weak var delegate: AlbumDetailsViewModelDelegate?
     
+    let albumTracksDS = AlbumTrackAPIDataSource()
+    
     var albumTracks: [AlbumTrack] = []
     var album: TopAlbums?
     var prevIndexPath: IndexPath?
     var arrIndexPaths: [IndexPath] = []
-    
-    let albumTracksDS = AlbumTrackAPIDataSource()
-    
+        
     var isLiked: Bool = false
     
     var indexPath: IndexPath?
