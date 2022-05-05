@@ -7,16 +7,27 @@
 
 import UIKit
 import SDWebImage
+import MarqueeLabel
 
 class SearchMusicTableViewCell: UITableViewCell {
     @IBOutlet private weak var trackImageView: UIImageView!
-    @IBOutlet private weak var trackTitleLabel: UILabel!
+    @IBOutlet private weak var trackTitleLabel: MarqueeLabel!
     @IBOutlet private weak var trackArtistNameLabel: UILabel!
     @IBOutlet private weak var trackDurationLabel: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        setupLabels()
+    }
 }
 
 //MARK: - Functions
 extension SearchMusicTableViewCell {
+    
+    private func setupLabels() {
+        trackTitleLabel.animationCurve = .linear
+    }
     
     func populate(track: Track) {
         guard let str = track.album?.cover,

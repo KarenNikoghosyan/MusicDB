@@ -25,10 +25,10 @@
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="YoI-mz-IzH">
-                        <rect key="frame" x="156" y="54.666666666666664" width="84.666666666666686" height="18.666666666666664"/>
+                        <rect key="frame" x="156" y="54.333333333333336" width="192" height="18.333333333333336"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Artist:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TeS-oH-Uiv">
-                                <rect key="frame" x="0.0" y="0.0" width="46" height="18.666666666666668"/>
+                                <rect key="frame" x="0.0" y="0.0" width="46" height="18.333333333333332"/>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -36,11 +36,16 @@
                                     <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWM-uX-h1D">
-                                <rect key="frame" x="50" y="0.0" width="34.666666666666657" height="18.666666666666668"/>
-                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWM-uX-h1D" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                                <rect key="frame" x="50" y="0.0" width="142" height="18.333333333333332"/>
+                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="13"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="trailingBuffer">
+                                        <real key="value" value="6"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </label>
                         </subviews>
                     </stackView>
@@ -63,10 +68,10 @@
                         </state>
                     </button>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="a09-zm-fDr">
-                        <rect key="frame" x="156" y="24" width="74.333333333333314" height="18.666666666666671"/>
+                        <rect key="frame" x="156" y="24" width="192" height="18.333333333333329"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JeE-Qq-xT3">
-                                <rect key="frame" x="0.0" y="0.0" width="35.666666666666664" height="18.666666666666668"/>
+                                <rect key="frame" x="0.0" y="0.0" width="35.666666666666664" height="18.333333333333332"/>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -74,11 +79,16 @@
                                     <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5x-qb-cIC">
-                                <rect key="frame" x="39.666666666666657" y="0.0" width="34.666666666666657" height="18.666666666666668"/>
-                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A5x-qb-cIC" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                                <rect key="frame" x="39.666666666666657" y="0.0" width="152.33333333333334" height="18.333333333333332"/>
+                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="13"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="trailingBuffer">
+                                        <real key="value" value="6"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </label>
                         </subviews>
                     </stackView>
@@ -87,10 +97,12 @@
                 <constraints>
                     <constraint firstItem="eXv-ze-2R8" firstAttribute="bottom" secondItem="kVC-zW-cH5" secondAttribute="bottom" id="2JO-CO-5SV"/>
                     <constraint firstAttribute="bottom" secondItem="kVC-zW-cH5" secondAttribute="bottom" constant="16" id="2rN-z0-5qW"/>
+                    <constraint firstAttribute="trailing" secondItem="a09-zm-fDr" secondAttribute="trailing" id="5Ns-cu-dSq"/>
                     <constraint firstItem="a09-zm-fDr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="80l-pk-iNV"/>
                     <constraint firstAttribute="trailing" secondItem="kVC-zW-cH5" secondAttribute="trailing" constant="10" id="FtF-pX-k4R"/>
                     <constraint firstItem="0YG-fP-oCz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="NRU-qm-dHC"/>
                     <constraint firstItem="YoI-mz-IzH" firstAttribute="top" secondItem="a09-zm-fDr" secondAttribute="bottom" constant="12" id="Pj5-LW-Lqb"/>
+                    <constraint firstAttribute="trailing" secondItem="YoI-mz-IzH" secondAttribute="trailing" id="SZX-Os-0Hb"/>
                     <constraint firstItem="eXv-ze-2R8" firstAttribute="leading" secondItem="0YG-fP-oCz" secondAttribute="trailing" constant="8" id="UHq-xB-dCK"/>
                     <constraint firstItem="eXv-ze-2R8" firstAttribute="top" secondItem="kVC-zW-cH5" secondAttribute="top" id="pcx-cc-NrO"/>
                     <constraint firstItem="a09-zm-fDr" firstAttribute="leading" secondItem="0YG-fP-oCz" secondAttribute="trailing" constant="12" id="pe4-eU-fE9"/>
@@ -101,9 +113,9 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
-                <outlet property="albumArtistNameLabel" destination="cWM-uX-h1D" id="ak7-Xt-nAw"/>
+                <outlet property="albumArtistNameLabel" destination="cWM-uX-h1D" id="Rh1-Dm-Nx7"/>
                 <outlet property="albumImageView" destination="0YG-fP-oCz" id="AUG-gi-CJ6"/>
-                <outlet property="albumTitleLabel" destination="A5x-qb-cIC" id="94e-xM-CPo"/>
+                <outlet property="albumTitleLabel" destination="A5x-qb-cIC" id="139-39-6fD"/>
                 <outlet property="imageViewHeightConstraint" destination="8sn-4Q-ihH" id="Vte-QQ-U77"/>
                 <outlet property="likedButton" destination="kVC-zW-cH5" id="76X-wb-SAx"/>
                 <outlet property="openWebsiteButton" destination="eXv-ze-2R8" id="2I7-dP-xgS"/>

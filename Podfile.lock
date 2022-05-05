@@ -771,6 +771,7 @@ PODS:
   - Libuv-gRPC/Interface (0.0.10)
   - loady (1.0.7)
   - Loaf (0.7.0)
+  - MarqueeLabel (4.3.0)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -798,6 +799,7 @@ DEPENDENCIES:
   - LGButton
   - loady
   - Loaf
+  - MarqueeLabel
   - NVActivityIndicatorView
   - paper-onboarding
   - PKHUD
@@ -830,6 +832,7 @@ SPEC REPOS:
     - Libuv-gRPC
     - loady
     - Loaf
+    - MarqueeLabel
     - nanopb
     - NVActivityIndicatorView
     - paper-onboarding
@@ -863,6 +866,7 @@ SPEC CHECKSUMS:
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   loady: f2acbcbd53bdeb55425e478304da2f7ff3ec706e
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
+  MarqueeLabel: 02f5ac8fd6877c94564556cb93fa86c70c08baeb
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   paper-onboarding: fede1799b1da6988f3788e3b71654583c6f3bce1
@@ -874,6 +878,6 @@ SPEC CHECKSUMS:
   ViewAnimator: a9ceed80266e00fd435ec4fb99b2df64d580d0e4
   WCLShineButton: 315ee9b0024b1cc56dba34fb6a8878937eb8d0b1
 
-PODFILE CHECKSUM: 8eb732bd9633614dab3b9cadb66ce85bf3a82a1d
+PODFILE CHECKSUM: ff58bfadcc9781749cbbe84dfe14d8378335ee8e
 
 COCOAPODS: 1.11.2

@@ -7,17 +7,19 @@
 
 import UIKit
 import SDWebImage
+import MarqueeLabel
 
 class HomeTracksCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "topChartsCell"
     
-    private let label = UILabel()
+    private let label = MarqueeLabel()
     let imageView = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        label.animationCurve = .linear
         label.font = UIFont.init(name: "Futura", size: 14)
         label.textColor = .white
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)

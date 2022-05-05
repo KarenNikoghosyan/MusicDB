@@ -9,16 +9,23 @@ import UIKit
 import SDWebImage
 import WCLShineButton
 import FirebaseAuth
+import MarqueeLabel
 
 class AlbumsTableViewCell: UITableViewCell {
     var isLiked: Bool = false
 
     @IBOutlet private weak var imageViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var albumImageView: UIImageView!
-    @IBOutlet private weak var albumTitleLabel: UILabel!
-    @IBOutlet private weak var albumArtistNameLabel: UILabel!
+    @IBOutlet private weak var albumTitleLabel: MarqueeLabel!
+    @IBOutlet private weak var albumArtistNameLabel: MarqueeLabel!
     @IBOutlet private weak var likedButton: WCLShineButton!
     @IBOutlet weak var openWebsiteButton: UIButton!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        setupLabels()
+    }
     
     @IBAction func likedButtonTapped(_ sender: WCLShineButton) {
         if likedButton.isSelected {
@@ -31,6 +38,11 @@ class AlbumsTableViewCell: UITableViewCell {
 
 //MARK: - Functions
 extension AlbumsTableViewCell {
+    
+    private func setupLabels() {
+        albumTitleLabel.animationCurve = .linear
+        albumArtistNameLabel.animationCurve = .linear
+    }
     
     func setupCellConstraints() {
         switch UIDevice().type {

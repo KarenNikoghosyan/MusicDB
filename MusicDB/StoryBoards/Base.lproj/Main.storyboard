@@ -84,11 +84,16 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="XMW-id-7lP">
                                                     <rect key="frame" x="89" y="5" width="52" height="65"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oGh-d2-7hz">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oGh-d2-7hz" customClass="MarqueeLabel" customModule="MarqueeLabel">
                                                             <rect key="frame" x="0.0" y="0.0" width="52" height="30.666666666666668"/>
                                                             <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="18"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="trailingBuffer">
+                                                                    <real key="value" value="6"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t5B-M4-Eri">
                                                             <rect key="frame" x="0.0" y="34.666666666666664" width="52" height="30.333333333333336"/>
@@ -122,7 +127,7 @@
                                             <outlet property="trackArtistNameLabel" destination="t5B-M4-Eri" id="dmw-FY-c6H"/>
                                             <outlet property="trackDurationLabel" destination="UXW-vm-Y1j" id="Wgt-Ym-KEw"/>
                                             <outlet property="trackImageView" destination="VOh-iI-xUf" id="SB6-Bw-o2e"/>
-                                            <outlet property="trackTitleLabel" destination="oGh-d2-7hz" id="UNg-M8-8y8"/>
+                                            <outlet property="trackTitleLabel" destination="oGh-d2-7hz" id="ufE-TR-nBg"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -215,13 +220,13 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Gii-ey-9ii">
-                                <rect key="frame" x="214" y="116" width="198" height="147"/>
+                                <rect key="frame" x="214" y="116" width="198" height="146"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="inE-Se-iHw">
-                                        <rect key="frame" x="0.0" y="0.0" width="198" height="18.666666666666668"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="198" height="18.333333333333332"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Artist Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5OX-sI-an2">
-                                                <rect key="frame" x="0.0" y="0.0" width="95.666666666666671" height="18.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Artist:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5OX-sI-an2">
+                                                <rect key="frame" x="0.0" y="0.0" width="46" height="18.333333333333332"/>
                                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -229,19 +234,19 @@
                                                     <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                                 </variation>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cbr-ub-r2y">
-                                                <rect key="frame" x="99.666666666666686" y="0.0" width="98.333333333333314" height="18.666666666666668"/>
-                                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cbr-ub-r2y" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                                                <rect key="frame" x="50" y="0.0" width="148" height="18.333333333333332"/>
+                                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="hz4-WW-BVu">
-                                        <rect key="frame" x="0.0" y="38.666666666666657" width="198" height="18.666666666666671"/>
+                                        <rect key="frame" x="0.0" y="38.333333333333343" width="198" height="18.333333333333329"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Album Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbV-9g-9Ye">
-                                                <rect key="frame" x="0.0" y="0.0" width="89" height="18.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Album:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbV-9g-9Ye">
+                                                <rect key="frame" x="0.0" y="0.0" width="53.666666666666664" height="18.333333333333332"/>
                                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -249,19 +254,19 @@
                                                     <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                                 </variation>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WC3-Dt-a8g">
-                                                <rect key="frame" x="93" y="0.0" width="105" height="18.666666666666668"/>
-                                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WC3-Dt-a8g" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                                                <rect key="frame" x="57.666666666666686" y="0.0" width="140.33333333333334" height="18.333333333333332"/>
+                                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="leV-Fz-pYX">
-                                        <rect key="frame" x="0.0" y="77.333333333333343" width="198" height="18.666666666666671"/>
+                                        <rect key="frame" x="0.0" y="76.666666666666657" width="198" height="18.333333333333329"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Duration:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GxC-Xt-1vC">
-                                                <rect key="frame" x="0.0" y="0.0" width="70.666666666666671" height="18.666666666666668"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="70.666666666666671" height="18.333333333333332"/>
                                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -269,16 +274,16 @@
                                                     <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                                 </variation>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mfw-eD-dyq">
-                                                <rect key="frame" x="74.666666666666686" y="0.0" width="123.33333333333331" height="18.666666666666668"/>
-                                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mfw-eD-dyq" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                                                <rect key="frame" x="74.666666666666686" y="0.0" width="123.33333333333331" height="18.333333333333332"/>
+                                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wFv-Wf-muY">
-                                        <rect key="frame" x="0.0" y="116" width="198" height="31"/>
+                                        <rect key="frame" x="0.0" y="115" width="198" height="31"/>
                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                         <state key="normal" title="OPEN IN WEBSITE">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -318,11 +323,16 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="TgU-wU-xg9">
                                                     <rect key="frame" x="93" y="5" width="52" height="65"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mPT-Xp-XvN">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mPT-Xp-XvN" customClass="MarqueeLabel" customModule="MarqueeLabel">
                                                             <rect key="frame" x="0.0" y="0.0" width="52" height="30.666666666666668"/>
                                                             <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="18"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="trailingBuffer">
+                                                                    <real key="value" value="6"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gX6-ww-MdQ">
                                                             <rect key="frame" x="0.0" y="34.666666666666664" width="52" height="30.333333333333336"/>
@@ -370,7 +380,7 @@
                                             <outlet property="trackArtistNameLabel" destination="gX6-ww-MdQ" id="GeZ-wO-ce4"/>
                                             <outlet property="trackDurationLabel" destination="P7C-ef-zC5" id="py1-EC-A7h"/>
                                             <outlet property="trackImageView" destination="XlZ-Hm-rLb" id="mkX-Au-o97"/>
-                                            <outlet property="trackTitleLabel" destination="mPT-Xp-XvN" id="odg-WW-zxa"/>
+                                            <outlet property="trackTitleLabel" destination="mPT-Xp-XvN" id="oS4-2t-uCn"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -429,14 +439,11 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="albumTitleLabel" destination="tbV-9g-9Ye" id="TwP-mB-hpX"/>
-                        <outlet property="artistNameLabel" destination="5OX-sI-an2" id="wrR-yq-PQ8"/>
                         <outlet property="artistTableView" destination="bvc-qO-0W5" id="yBL-IO-UHN"/>
-                        <outlet property="detailsAlbumTitleLabel" destination="WC3-Dt-a8g" id="J4F-NA-6es"/>
-                        <outlet property="detailsArtistNameLabel" destination="Cbr-ub-r2y" id="ckn-BR-czc"/>
-                        <outlet property="detailsDurationLabel" destination="Mfw-eD-dyq" id="Ry5-UV-fZe"/>
+                        <outlet property="detailsAlbumTitleLabel" destination="WC3-Dt-a8g" id="wUJ-gl-7rT"/>
+                        <outlet property="detailsArtistNameLabel" destination="Cbr-ub-r2y" id="Kd7-84-jNT"/>
+                        <outlet property="detailsDurationLabel" destination="Mfw-eD-dyq" id="jwU-pc-fEM"/>
                         <outlet property="detailsImageView" destination="XqL-lN-KxK" id="uBV-TK-cuW"/>
-                        <outlet property="durationLabel" destination="GxC-Xt-1vC" id="4zj-Pe-z83"/>
                         <outlet property="goToWebsiteButton" destination="wFv-Wf-muY" id="chO-YY-0mV"/>
                         <outlet property="imageViewHeightConstraint" destination="7KT-Wh-LPA" id="JqU-WV-dZs"/>
                         <outlet property="likedButton" destination="yOf-8L-nfW" id="ln5-kz-YTx"/>
@@ -690,7 +697,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="YIf-mf-1eM">
                                                     <rect key="frame" x="89" y="5" width="52" height="65"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fgp-Ph-nIm">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fgp-Ph-nIm" customClass="MarqueeLabel" customModule="MarqueeLabel">
                                                             <rect key="frame" x="0.0" y="0.0" width="52" height="30.666666666666668"/>
                                                             <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="18"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -990,8 +997,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="NqS-Qw-gks"/>
-        <segue reference="lzi-Zl-BTK"/>
+        <segue reference="xnO-3r-6cj"/>
+        <segue reference="i6h-vK-J6Q"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>

@@ -9,18 +9,25 @@ import UIKit
 import SDWebImage
 import WCLShineButton
 import FirebaseAuth
+import MarqueeLabel
 
 class LikedGenreTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var imageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet private weak var trackImageView: UIImageView!
-    @IBOutlet private weak var trackTitleLabel: UILabel!
-    @IBOutlet private weak var trackArtistNameLabel: UILabel!
-    @IBOutlet private weak var trackAlbumNameLabel: UILabel!
+    @IBOutlet private weak var trackTitleLabel: MarqueeLabel!
+    @IBOutlet private weak var trackArtistNameLabel: MarqueeLabel!
+    @IBOutlet private weak var trackAlbumNameLabel: MarqueeLabel!
     @IBOutlet private weak var trackDurationLabel: UILabel!
     @IBOutlet private weak var likedButton: WCLShineButton!
     
     private var isLiked: Bool = false
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        setupLabels()
+    }
     
     @IBAction private func likedButtonTapped(_ sender: WCLShineButton) {
         if likedButton.isSelected {
@@ -41,6 +48,12 @@ extension LikedGenreTableViewCell {
         default:
             imageViewWidthConstraint.constant = 130
         }
+    }
+    
+    private func setupLabels() {
+        trackTitleLabel.animationCurve = .linear
+        trackArtistNameLabel.animationCurve = .linear
+        trackArtistNameLabel.animationCurve = .linear
     }
  
     func populate(track: Track) {
