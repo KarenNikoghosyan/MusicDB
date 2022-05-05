@@ -7,17 +7,28 @@
 
 import UIKit
 import SDWebImage
+import MarqueeLabel
 
 class DetailsTableViewCell: UITableViewCell {
     @IBOutlet private weak var trackImageView: UIImageView!
-    @IBOutlet private weak var trackTitleLabel: UILabel!
+    @IBOutlet private weak var trackTitleLabel: MarqueeLabel!
     @IBOutlet private weak var trackArtistNameLabel: UILabel!
     @IBOutlet private weak var trackDurationLabel: UILabel!
     @IBOutlet weak var playButton: UIButton!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        setupLabels()
+    }
 }
 
 //MARK: - Functions
 extension DetailsTableViewCell {
+    
+    private func setupLabels() {
+        trackTitleLabel.animationCurve = .linear
+    }
     
     func populate(album: TopAlbums, track: AlbumTrack) {
         guard let str = album.cover,

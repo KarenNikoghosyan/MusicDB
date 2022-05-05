@@ -35,15 +35,15 @@ extension LoadingViewController {
     
     private func isDeviceOrientation() {
         if UIDevice.current.orientation.isLandscape {
-            landscapeConstraints()
+            setupLandscapeConstraints()
         } else {
-            portraitConstraints()
+            setupPortraitConstraints()
         }
     }
     
     //Checks the current running device and loads the appropriate constraints based on the device.
     //potrait orientation
-    private func portraitConstraints() {
+    private func setupPortraitConstraints() {
         switch UIDevice().type {
         case .iPod7:
             imageViewHeightConstraint.constant = 130
@@ -60,7 +60,7 @@ extension LoadingViewController {
     }
     
     //landscape orientation
-    private func landscapeConstraints() {
+    private func setupLandscapeConstraints() {
         switch UIDevice().type {
         case .iPod7:
             imageViewHeightConstraint.constant = 100

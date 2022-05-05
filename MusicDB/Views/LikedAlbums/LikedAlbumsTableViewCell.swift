@@ -7,18 +7,30 @@
 
 import UIKit
 import SDWebImage
+import MarqueeLabel
 
 class LikedAlbumsTableViewCell: UITableViewCell {
 
     @IBOutlet private weak var imageViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var albumImageView: UIImageView!
-    @IBOutlet private weak var albumTitleLabel: UILabel!
-    @IBOutlet private weak var albumArtistNameLabel: UILabel!
+    @IBOutlet private weak var albumTitleLabel: MarqueeLabel!
+    @IBOutlet private weak var albumArtistNameLabel: MarqueeLabel!
     @IBOutlet weak var openWebsiteButton: UIButton!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        setupLabels()
+    }
 }
 
 //MARK: - Functions
 extension LikedAlbumsTableViewCell {
+    
+    private func setupLabels() {
+        albumTitleLabel.animationCurve = .linear
+        albumArtistNameLabel.animationCurve = .linear
+    }
     
     func setupCellConstraints() {
         switch UIDevice().type {

@@ -7,19 +7,32 @@
 
 import UIKit
 import SDWebImage
+import MarqueeLabel
 
 class LikedTracksTableViewCell: UITableViewCell {
 
     @IBOutlet private weak var imageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet private weak var trackImageView: UIImageView!
-    @IBOutlet private weak var trackTitleLabel: UILabel!
-    @IBOutlet private weak var trackArtistNameLabel: UILabel!
-    @IBOutlet private weak var trackAlbumNameLabel: UILabel!
+    @IBOutlet private weak var trackTitleLabel: MarqueeLabel!
+    @IBOutlet private weak var trackArtistNameLabel: MarqueeLabel!
+    @IBOutlet private weak var trackAlbumNameLabel: MarqueeLabel!
     @IBOutlet private weak var trackDurationLabel: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        setupLabels()
+    }
 }
 
 //MARK: - Functions
 extension LikedTracksTableViewCell {
+    
+    private func setupLabels() {
+        trackTitleLabel.animationCurve = .linear
+        trackArtistNameLabel.animationCurve = .linear
+        trackAlbumNameLabel.animationCurve = .linear
+    }
     
     func setupCellConstraints() {
         switch UIDevice().type {

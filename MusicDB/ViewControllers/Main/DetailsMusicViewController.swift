@@ -12,6 +12,7 @@ import Loady
 import ViewAnimator
 import WCLShineButton
 import Loaf
+import MarqueeLabel
 
 class DetailsMusicViewController: BaseViewController {
     
@@ -23,12 +24,9 @@ class DetailsMusicViewController: BaseViewController {
     @IBOutlet private weak var imageViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var artistTableView: UITableView!
     @IBOutlet private weak var detailsImageView: UIImageView!
-    @IBOutlet private weak var artistNameLabel: UILabel!
-    @IBOutlet private weak var detailsArtistNameLabel: UILabel!
-    @IBOutlet private weak var albumTitleLabel: UILabel!
-    @IBOutlet private weak var detailsAlbumTitleLabel: UILabel!
-    @IBOutlet private weak var durationLabel: UILabel!
-    @IBOutlet private weak var detailsDurationLabel: UILabel!
+    @IBOutlet private weak var detailsArtistNameLabel: MarqueeLabel!
+    @IBOutlet private weak var detailsAlbumTitleLabel: MarqueeLabel!
+    @IBOutlet private weak var detailsDurationLabel: MarqueeLabel!
     @IBOutlet private weak var goToWebsiteButton: UIButton!
     @IBOutlet private weak var previewButton: LoadyButton!
     @IBOutlet private weak var likedButton: WCLShineButton!
@@ -44,7 +42,8 @@ class DetailsMusicViewController: BaseViewController {
             detailsMusicViewModel.setupBaseObservers()
         }
         
-        self.title = detailsMusicViewModel.track?.titleShort
+        setupTitle()
+        setupLabels()
         setupLikeButton()
         setupNoTracksLabel()
         setupDelegates()
@@ -186,6 +185,16 @@ extension DetailsMusicViewController {
         }
     }
     
+    private func setupTitle() {
+        self.title = detailsMusicViewModel.track?.titleShort
+    }
+    
+    private func setupLabels() {
+        detailsArtistNameLabel.animationCurve = .linear
+        detailsAlbumTitleLabel.animationCurve = .linear
+        detailsDurationLabel.animationCurve = .linear
+    }
+    
     //Sets up the views
     private func setUpViewsFromTrack() {
         self.previewButton.addTarget(self, action: #selector(animateButton(_:)), for: .touchUpInside)
@@ -233,7 +242,7 @@ extension DetailsMusicViewController {
         detailsImageView.sd_setImage(with: url)
         
         detailsArtistNameLabel.text = detailsMusicViewModel.track?.artist.name
-        detailsAlbumTitleLabel.text = detailsMusicViewModel.track?.album?.title
+        detailsAlbumTitleLabel.text = detailsMusicViewModel.album?.title
         
         detailsDurationLabel.text = "\(detailsMusicViewModel.getMinutesAndSeconds().0):\(detailsMusicViewModel.getMinutesAndSeconds().1)"
     }
