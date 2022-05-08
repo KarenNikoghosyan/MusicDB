@@ -222,7 +222,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Gii-ey-9ii">
                                 <rect key="frame" x="214" y="116" width="198" height="146"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="inE-Se-iHw">
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="inE-Se-iHw">
                                         <rect key="frame" x="0.0" y="0.0" width="198" height="18.333333333333332"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Artist:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5OX-sI-an2">
@@ -235,14 +235,14 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cbr-ub-r2y" customClass="MarqueeLabel" customModule="MarqueeLabel">
-                                                <rect key="frame" x="50" y="0.0" width="148" height="18.333333333333332"/>
+                                                <rect key="frame" x="50" y="0.0" width="148" height="17.333333333333332"/>
                                                 <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="hz4-WW-BVu">
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="hz4-WW-BVu">
                                         <rect key="frame" x="0.0" y="38.333333333333343" width="198" height="18.333333333333329"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Album:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbV-9g-9Ye">
@@ -255,14 +255,14 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WC3-Dt-a8g" customClass="MarqueeLabel" customModule="MarqueeLabel">
-                                                <rect key="frame" x="57.666666666666686" y="0.0" width="140.33333333333334" height="18.333333333333332"/>
+                                                <rect key="frame" x="57.666666666666686" y="0.0" width="140.33333333333334" height="17.333333333333332"/>
                                                 <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="leV-Fz-pYX">
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="leV-Fz-pYX">
                                         <rect key="frame" x="0.0" y="76.666666666666657" width="198" height="18.333333333333329"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Duration:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GxC-Xt-1vC">
@@ -275,7 +275,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mfw-eD-dyq" customClass="MarqueeLabel" customModule="MarqueeLabel">
-                                                <rect key="frame" x="74.666666666666686" y="0.0" width="123.33333333333331" height="18.333333333333332"/>
+                                                <rect key="frame" x="74.666666666666686" y="0.0" width="123.33333333333331" height="17.333333333333332"/>
                                                 <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -996,6 +996,26 @@
             <point key="canvasLocation" x="-1347.1962616822429" y="3353.7796976241902"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="Cbr-ub-r2y">
+            <size key="intrinsicContentSize" width="32" height="17.333333333333332"/>
+        </designable>
+        <designable name="Fgp-Ph-nIm">
+            <size key="intrinsicContentSize" width="52" height="23.666666666666668"/>
+        </designable>
+        <designable name="Mfw-eD-dyq">
+            <size key="intrinsicContentSize" width="32" height="17.333333333333332"/>
+        </designable>
+        <designable name="WC3-Dt-a8g">
+            <size key="intrinsicContentSize" width="32" height="17.333333333333332"/>
+        </designable>
+        <designable name="mPT-Xp-XvN">
+            <size key="intrinsicContentSize" width="52" height="23.666666666666668"/>
+        </designable>
+        <designable name="oGh-d2-7hz">
+            <size key="intrinsicContentSize" width="52" height="23.666666666666668"/>
+        </designable>
+    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="xnO-3r-6cj"/>
         <segue reference="i6h-vK-J6Q"/>
