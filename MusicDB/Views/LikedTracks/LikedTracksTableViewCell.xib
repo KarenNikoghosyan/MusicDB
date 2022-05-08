@@ -148,4 +148,15 @@
             <point key="canvasLocation" x="150.72463768115944" y="130.24553571428572"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="TTC-OC-H81">
+            <size key="intrinsicContentSize" width="32" height="17.5"/>
+        </designable>
+        <designable name="d2l-Nq-JpD">
+            <size key="intrinsicContentSize" width="32" height="17.5"/>
+        </designable>
+        <designable name="qEL-53-TdR">
+            <size key="intrinsicContentSize" width="32" height="17.5"/>
+        </designable>
+    </designables>
 </document>

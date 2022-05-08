@@ -147,4 +147,15 @@
             <point key="canvasLocation" x="150.72463768115944" y="130.24553571428572"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="PfL-uz-VmS">
+            <size key="intrinsicContentSize" width="32" height="17.5"/>
+        </designable>
+        <designable name="SDv-Al-WMO">
+            <size key="intrinsicContentSize" width="32" height="17.5"/>
+        </designable>
+        <designable name="xW7-FV-q1Q">
+            <size key="intrinsicContentSize" width="32" height="17.5"/>
+        </designable>
+    </designables>
 </document>
