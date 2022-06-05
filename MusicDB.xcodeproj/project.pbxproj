@@ -919,6 +919,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1.0;
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = NO;
 				MOMC_SUPPRESS_INVERSE_TRANSIENT_ERROR = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.karen.nikoghosyan.MusicDB;
@@ -943,6 +944,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1.0;
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = NO;
 				MOMC_SUPPRESS_INVERSE_TRANSIENT_ERROR = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.karen.nikoghosyan.MusicDB;

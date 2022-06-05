@@ -26,6 +26,7 @@ class SearchMusicViewController: BaseViewController {
         setupNavigationItems()
         setupSearchLabel()
         setupNoTracksLabel()
+        dismissKeyboardOnScroll()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -92,6 +93,10 @@ extension SearchMusicViewController {
               let track = sender as? Track else {return}
         
         targetController.detailsMusicViewModel.track = track
+    }
+    
+    private func dismissKeyboardOnScroll() {
+        searchTracksTableView.keyboardDismissMode = .onDrag
     }
 }
 
