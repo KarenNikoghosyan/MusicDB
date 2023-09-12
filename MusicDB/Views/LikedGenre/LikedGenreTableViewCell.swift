@@ -76,8 +76,8 @@ extension LikedGenreTableViewCell {
         trackAlbumNameLabel.text = track.album?.title
         
         let minutes = track.duration / 60
-        let seconds = track.duration % 60
-        trackDurationLabel.text = "\(minutes):\(seconds)"
+        let formattedSeconds = String(format: "%02d", track.duration % 60)
+        trackDurationLabel.text = "\(minutes):\(formattedSeconds)"
         
         guard let url = URL(string: "\(track.album?.cover ?? "No Image Found")") else {
             trackImageView.tintColor = .white

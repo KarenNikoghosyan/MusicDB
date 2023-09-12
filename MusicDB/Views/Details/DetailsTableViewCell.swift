@@ -52,9 +52,8 @@ extension DetailsTableViewCell {
         trackArtistNameLabel.text = track.artist.name
         
         let minutes = track.duration / 60
-        let seconds = track.duration % 60
-        let newDuration = "\(minutes):\(seconds)"
-        trackDurationLabel.text = newDuration
+        let formattedSeconds = String(format: "%02d", track.duration % 60)
+        trackDurationLabel.text = "\(minutes):\(formattedSeconds)"
     }
     
     func populateTrack(track: Track) {
@@ -79,8 +78,7 @@ extension DetailsTableViewCell {
         trackArtistNameLabel.text = track.artist.name
         
         let minutes = track.duration / 60
-        let seconds = track.duration % 60
-        let newDuration = "\(minutes):\(seconds)"
-        trackDurationLabel.text = newDuration
+        let formattedSeconds = String(format: "%02d", track.duration % 60)
+        trackDurationLabel.text = "\(minutes):\(formattedSeconds)"
     }
 }

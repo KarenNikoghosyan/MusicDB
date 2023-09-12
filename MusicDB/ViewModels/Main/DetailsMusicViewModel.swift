@@ -99,8 +99,9 @@ extension DetailsMusicViewModel {
         }
     }
     
-    func getMinutesAndSeconds() -> (Int, Int) {
-        return ((track?.duration ?? 0) / 60, (track?.duration ?? 0) % 60)
+    func getMinutesAndSeconds() -> (Int, String) {
+        let formattedSeconds = String(format: "%02d", (track?.duration ?? 0) % 60)
+        return ((track?.duration ?? 0) / 60, formattedSeconds)
     }
     
     //Checks the liked status of a track(liked/unliked)

@@ -51,7 +51,7 @@ extension SearchMusicTableViewCell {
         trackArtistNameLabel.text = track.artist.name
         
         let minutes = track.duration / 60
-        let seconds = track.duration % 60
-        trackDurationLabel.text = "\(minutes):\(seconds)"
+        let formattedSeconds = String(format: "%02d", track.duration % 60)
+        trackDurationLabel.text = "\(minutes):\(formattedSeconds)"
     }
 }
