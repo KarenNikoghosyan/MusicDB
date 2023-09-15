@@ -19,8 +19,10 @@
 #import "FIRFirestoreSource.h"
 #import "FIRListenerRegistration.h"
 
+@class FIRAggregateQuery;
 @class FIRFieldPath;
 @class FIRFirestore;
+@class FIRFilter;
 @class FIRQuerySnapshot;
 @class FIRDocumentSnapshot;
 
@@ -30,7 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
  * A block type used to handle failable snapshot method callbacks.
  */
 typedef void (^FIRQuerySnapshotBlock)(FIRQuerySnapshot *_Nullable snapshot,
-                                      NSError *_Nullable error);
+                                      NSError *_Nullable error)
+    NS_SWIFT_UNAVAILABLE("Use Swift's closure syntax instead.");
 
 /**
  * A `Query` refers to a query which you can read or listen to. You can also construct
@@ -41,7 +44,7 @@ NS_SWIFT_NAME(Query)
 /** :nodoc: */
 - (id)init __attribute__((unavailable("FIRQuery cannot be created directly.")));
 
-/** The `Firestore` for the Firestore database (useful for performing transactions, etc.). */
+/** The `Firestore` instance that created this query (useful for performing transactions, etc.). */
 @property(nonatomic, strong, readonly) FIRFirestore *firestore;
 
 #pragma mark - Retrieving Data
@@ -56,7 +59,8 @@ NS_SWIFT_NAME(Query)
  * @param completion a block to execute once the documents have been successfully read.
  *     documentSet will be `nil` only if error is `non-nil`.
  */
-- (void)getDocumentsWithCompletion:(FIRQuerySnapshotBlock)completion
+- (void)getDocumentsWithCompletion:
+    (void (^)(FIRQuerySnapshot *_Nullable snapshot, NSError *_Nullable error))completion
     NS_SWIFT_NAME(getDocuments(completion:));
 
 /**
@@ -69,7 +73,8 @@ NS_SWIFT_NAME(Query)
  *     documentSet will be `nil` only if error is `non-nil`.
  */
 - (void)getDocumentsWithSource:(FIRFirestoreSource)source
-                    completion:(FIRQuerySnapshotBlock)completion
+                    completion:(void (^)(FIRQuerySnapshot *_Nullable snapshot,
+                                         NSError *_Nullable error))completion
     NS_SWIFT_NAME(getDocuments(source:completion:));
 
 /**
@@ -77,9 +82,10 @@ NS_SWIFT_NAME(Query)
  *
  * @param listener The listener to attach.
  *
- * @return A `ListenerRegistration` that can be used to remove this listener.
+ * @return A `ListenerRegistration` object that can be used to remove this listener.
  */
-- (id<FIRListenerRegistration>)addSnapshotListener:(FIRQuerySnapshotBlock)listener
+- (id<FIRListenerRegistration>)addSnapshotListener:
+    (void (^)(FIRQuerySnapshot *_Nullable snapshot, NSError *_Nullable error))listener
     NS_SWIFT_NAME(addSnapshotListener(_:));
 
 /**
@@ -93,10 +99,19 @@ NS_SWIFT_NAME(Query)
  */
 - (id<FIRListenerRegistration>)
     addSnapshotListenerWithIncludeMetadataChanges:(BOOL)includeMetadataChanges
-                                         listener:(FIRQuerySnapshotBlock)listener
+                                         listener:(void (^)(FIRQuerySnapshot *_Nullable snapshot,
+                                                            NSError *_Nullable error))listener
     NS_SWIFT_NAME(addSnapshotListener(includeMetadataChanges:listener:));
 
 #pragma mark - Filtering Data
+/**
+ * Creates and returns a new Query with the additional filter.
+ *
+ * @param filter The new filter to apply to the existing query.
+ * @return The newly created Query.
+ */
+- (FIRQuery *)queryWhereFilter:(FIRFilter *)filter NS_SWIFT_NAME(whereFilter(_:));
+
 /**
  * Creates and returns a new `Query` with the additional filter that documents must
  * contain the specified field and the value must be equal to the specified value.
@@ -536,6 +551,18 @@ NS_SWIFT_NAME(Query)
  * @return The created `Query`.
  */
 - (FIRQuery *)queryEndingAtValues:(NSArray *)fieldValues NS_SWIFT_NAME(end(at:));
+
+#pragma mark - Aggregation
+
+/**
+ * A query that counts the documents in the result set of this query, without actually downloading
+ * the documents.
+ *
+ * Using this `AggregateQuery` to count the documents is efficient because only the final count,
+ * not the documents' data, is downloaded. The query can even count the documents if the result
+ * set would be prohibitively large to download entirely (e.g. thousands of documents).
+ */
+@property(nonatomic, readonly) FIRAggregateQuery *count;
 
 @end
 

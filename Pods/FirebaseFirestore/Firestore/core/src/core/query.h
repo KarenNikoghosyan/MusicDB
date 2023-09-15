@@ -28,7 +28,6 @@
 #include "Firestore/core/src/core/filter.h"
 #include "Firestore/core/src/core/order_by.h"
 #include "Firestore/core/src/core/target.h"
-#include "Firestore/core/src/immutable/append_only_list.h"
 #include "Firestore/core/src/model/model_fwd.h"
 #include "Firestore/core/src/model/resource_path.h"
 
@@ -63,8 +62,8 @@ class Query {
    */
   Query(model::ResourcePath path,
         CollectionGroupId collection_group,
-        FilterList filters,
-        OrderByList explicit_order_bys,
+        std::vector<Filter> filters,
+        std::vector<OrderBy> explicit_order_bys,
         int32_t limit,
         LimitType limit_type,
         absl::optional<Bound> start_at,
@@ -108,7 +107,7 @@ class Query {
   bool MatchesAllDocuments() const;
 
   /** The filters on the documents returned by the query. */
-  const FilterList& filters() const {
+  const std::vector<Filter>& filters() const {
     return filters_;
   }
 
@@ -122,8 +121,8 @@ class Query {
    * Checks if any of the provided filter operators are included in the query
    * and returns the first one that is, or null if none are.
    */
-  absl::optional<FieldFilter::Operator> FindOperator(
-      const std::vector<FieldFilter::Operator>& ops) const;
+  absl::optional<core::FieldFilter::Operator> FindOpInsideFilters(
+      const std::vector<core::FieldFilter::Operator>& ops) const;
 
   /**
    * Returns the list of ordering constraints that were explicitly requested on
@@ -132,20 +131,24 @@ class Query {
    * Note that the actual query performed might add additional sort orders to
    * match the behavior of the backend.
    */
-  const OrderByList& explicit_order_bys() const {
+  const std::vector<OrderBy>& explicit_order_bys() const {
     return explicit_order_bys_;
   }
 
   /**
-   * Returns the full list of ordering constraints on the query.
+   * Returns the normalized list of ordering constraints on the query.
    *
    * This might include additional sort orders added implicitly to match the
    * backend behavior.
    */
-  const OrderByList& order_bys() const;
+  const std::vector<OrderBy>& normalized_order_bys() const;
 
   /** Returns the first field in an order-by constraint, or nullptr if none. */
   const model::FieldPath* FirstOrderByField() const;
+
+  bool has_limit() const {
+    return limit_ != Target::kNoLimit;
+  }
 
   bool has_limit_to_first() const {
     return limit_type_ == LimitType::First && limit_ != Target::kNoLimit;
@@ -231,7 +234,7 @@ class Query {
    */
   model::DocumentComparator Comparator() const;
 
-  const std::string CanonicalId() const;
+  std::string CanonicalId() const;
 
   std::string ToString() const;
 
@@ -240,6 +243,14 @@ class Query {
    * and local store.
    */
   const Target& ToTarget() const&;
+
+  /**
+   * Returns a `Target` instance this query will be mapped to in backend
+   * and local store, for use within an aggregate query. Unlike targets
+   * for non-aggregate queries, aggregate query targets do not contain
+   * normalized order-bys, they only contain explicit order-bys.
+   */
+  const Target& ToAggregateTarget() const&;
 
   friend std::ostream& operator<<(std::ostream& os, const Query& query);
 
@@ -256,17 +267,18 @@ class Query {
   std::shared_ptr<const std::string> collection_group_;
 
   // Filters are shared across related Query instance. i.e. when you call
-  // Query::Filter(f), a new Query instance is created that contains all of the
-  // existing filters, plus the new one. (Both Query and Filter objects are
-  // immutable.) Filters are not shared across unrelated Query instances.
-  FilterList filters_;
+  // Query::AddingFilter(f), a new Query instance is created that contains
+  // all of the existing filters, plus the new one. (Both Query and Filter
+  // objects are immutable.) Filters are not shared across unrelated Query
+  // instances.
+  std::vector<Filter> filters_;
 
   // A list of fields given to sort by. This does not include the implicit key
   // sort at the end.
-  OrderByList explicit_order_bys_;
+  std::vector<OrderBy> explicit_order_bys_;
 
   // The memoized list of sort orders.
-  mutable OrderByList memoized_order_bys_;
+  mutable std::vector<OrderBy> memoized_normalized_order_bys_;
 
   int32_t limit_ = Target::kNoLimit;
   LimitType limit_type_ = LimitType::None;
@@ -276,6 +288,14 @@ class Query {
 
   // The corresponding Target of this Query instance.
   mutable std::shared_ptr<const Target> memoized_target;
+
+  // The corresponding aggregate Target of this Query instance. Unlike targets
+  // for non-aggregate queries, aggregate query targets do not contain
+  // normalized order-bys, they only contain explicit order-bys.
+  mutable std::shared_ptr<const Target> memoized_aggregate_target;
+
+  const std::shared_ptr<const Target> ToTarget(
+      const std::vector<OrderBy>& order_bys) const&;
 };
 
 bool operator==(const Query& lhs, const Query& rhs);
