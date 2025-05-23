@@ -1,0 +1,57 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+
+# macOS
+.DS_Store
+
+# Xcode project user settings
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+
+# SwiftPM
+.swiftpm/
+Package.resolved
+
+# Carthage
+Carthage/Build/
+
+# CocoaPods
+Pods/
+
+# Firebase/Crashlytics
+*.dSYM.zip
+*.dSYM
+
+# Fastlane
+fastlane/report.xml
+fastlane/screenshots
+fastlane/test_output
+fastlane/*.log
+
+# Archives
+*.xcarchive
+
+# Workspace data
+*.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
+
+# Bundler
+.bundle
+
+# Ruby
+Gemfile.lock
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+
+# Xcode Preview canvas
+CanvasPreview/
+
+# Test output
+test-results/
