@@ -12,6 +12,7 @@ class TabBarController: SwipeableTabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let viewControllers = viewControllers {
             selectedViewController = viewControllers[1]
         }
@@ -20,6 +21,10 @@ class TabBarController: SwipeableTabBarController {
 
         tabBar.tintColor = .yellow
         tabBar.barTintColor = UIColor(red: 80.0/255, green: 80.0/255, blue: 80.0/255, alpha: 1)
+        
+        if #available(iOS 26.0, *) {
+            tabBar.backgroundColor = .clear
+        }
     }
     
     //Tab bar tap animation

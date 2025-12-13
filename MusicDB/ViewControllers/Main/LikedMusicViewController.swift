@@ -65,7 +65,15 @@ extension LikedMusicViewController {
     private func setUpSegmentedControl() {
         let tintColor = UIColor.white
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: tintColor], for: .normal)
-        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.black], for: .selected)
+        
+        let foregroundColor: UIColor
+        if #available(iOS 26.0, *) {
+            foregroundColor = .white
+        } else {
+            foregroundColor = .black
+        }
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: foregroundColor], for: .selected)
+        
         segmentedControl.addTarget(self, action: #selector(segmentTapped(_:)), for: .valueChanged)
     }
     
